@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Stories of the Quran — IslamApp</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>(function(){try{if(localStorage.getItem('islamapp-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
+<link rel="stylesheet" href="theme.css">
+<script src="theme.js" defer></script>
+<style>
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #faf6ed;
+    color: #1c2d20;
+    background-image:
+      radial-gradient(circle at 10% 10%, rgba(201,169,97,0.08) 0%, transparent 40%),
+      radial-gradient(circle at 90% 90%, rgba(6,78,59,0.06) 0%, transparent 40%);
+    background-attachment: fixed;
+  }
+  .arabic { font-family: 'Amiri', serif; direction: rtl; }
+  .display { font-family: 'Cormorant Garamond', serif; }
+  .geo-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23064e3b' fill-opacity='0.05'%3E%3Cpath d='M30 0l7.5 22.5H60L41.25 37.5l7.5 22.5L30 45l-18.75 15 7.5-22.5L0 22.5h22.5z'/%3E%3C/g%3E%3C/svg%3E");
+  }
+  .story-card {
+    background: #fff;
+    border: 1px solid rgba(201,169,97,0.35);
+    border-radius: 14px 14px 6px 6px;
+    transition: all 0.25s ease;
+    position: relative;
+  }
+  .story-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px -10px rgba(6,78,59,0.25);
+    border-color: #c9a961;
+  }
+  .story-card::before {
+    content: '';
+    position: absolute;
+    top: -1px; left: 50%;
+    transform: translateX(-50%);
+    width: 35%; height: 10px;
+    background: linear-gradient(180deg, rgba(201,169,97,0.2), transparent);
+    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+    border-top: 1px solid rgba(201,169,97,0.4);
+  }
+  .gold-line { height: 1px; background: linear-gradient(to right, transparent, #c9a961, transparent); }
+  .section-heading {
+    display: flex; align-items: center; gap: 12px;
+    color: #a8863f;
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin: 3rem 0 1.5rem;
+  }
+  .section-heading::before, .section-heading::after {
+    content: '';
+    flex: 1; height: 1px;
+    background: linear-gradient(to right, transparent, #c9a961, transparent);
+  }
+</style>
+</head>
+<body class="geo-pattern min-h-screen">
+
+<div class="max-w-5xl mx-auto px-5 py-12">
+
+  <nav class="mb-8">
+    <a href="index.html" class="text-emerald-900 hover:text-amber-700 text-sm font-semibold">← Curriculum</a>
+  </nav>
+
+  <header class="text-center mb-10">
+    <div class="gold-line mb-5 max-w-[180px] mx-auto"></div>
+    <div class="arabic text-4xl text-emerald-900 mb-3">قَصَص القُرْآن</div>
+    <h1 class="display text-5xl md:text-6xl text-emerald-950 font-semibold mb-3">Stories of the Quran</h1>
+    <p class="text-stone-600 max-w-xl mx-auto">Roughly a third of the Quran is narrative — the prophets, past nations, and a few remarkable souls outside the prophetic line.</p>
+    <div class="gold-line mt-5 max-w-[180px] mx-auto"></div>
+  </header>
+
+  <div class="section-heading">The Prophets</div>
+  <div id="prophets-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+
+  <div class="section-heading">Other Stories</div>
+  <div id="others-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+
+  <footer class="mt-16 text-center">
+    <div class="gold-line mb-6 max-w-xs mx-auto"></div>
+    <div class="arabic text-2xl text-emerald-800 mb-1">لَقَدْ كَانَ فِي قَصَصِهِمْ عِبْرَةٌ</div>
+    <div class="text-xs italic text-stone-500">"In their stories is a lesson for those of understanding." — Quran 12:111</div>
+  </footer>
+
+</div>
+
+<script>
+const prophets = [
+  { name: "Adam", arabic: "آدَم", gloss: "The first human, created by God; deceived by Satan, then forgiven.", refs: "2:30–39, 7:11–27, 20:115–123", href: "story-adam.html" },
+  { name: "Idris", arabic: "إِدْرِيس", gloss: "Raised to a lofty station by God. Identified with Enoch.", refs: "19:56–57, 21:85" },
+  { name: "Nuh (Noah)", arabic: "نُوح", gloss: "Preached 950 years; the Flood; the ark; the disbelieving son.", refs: "Surah 71, 11:25–49" },
+  { name: "Hud", arabic: "هُود", gloss: "Sent to the people of ʿAd, destroyed by a roaring wind.", refs: "7:65–72, 11:50–60, 46:21–26" },
+  { name: "Salih", arabic: "صَالِح", gloss: "Sent to Thamud; the miraculous she-camel; the earthquake.", refs: "7:73–79, 11:61–68, 26:141–159" },
+  { name: "Ibrahim (Abraham)", arabic: "إِبْرَاهِيم", gloss: "Smashed the idols; the fire that did not burn; the vision of sacrificing his son.", refs: "Surah 14, 37:83–113, 6:74–83" },
+  { name: "Lut (Lot)", arabic: "لُوط", gloss: "His people's destruction; his wife's fate.", refs: "7:80–84, 11:77–83, 29:28–35" },
+  { name: "Ismail (Ishmael)", arabic: "إِسْمَاعِيل", gloss: "Abraham's firstborn; helped build the Kaʿba; ancestor of the Arabs.", refs: "2:125–127, 19:54–55, 37:100–107" },
+  { name: "Ishaq (Isaac)", arabic: "إِسْحَاق", gloss: "Abraham's son, promised in his old age; father of Jacob.", refs: "11:69–73, 37:112–113" },
+  { name: "Yaqub (Jacob)", arabic: "يَعْقُوب", gloss: "Also called Israel; father of Joseph; lost his sight from grief.", refs: "Surah 12, 2:132–133" },
+  { name: "Yusuf (Joseph)", arabic: "يُوسُف", gloss: "The dream, the pit, slavery, prison, interpretation of Pharaoh's dream, reunion. The single longest continuous narrative.", refs: "Surah 12 (all)" },
+  { name: "Shuayb (Jethro)", arabic: "شُعَيْب", gloss: "Sent to the people of Madyan; preached against cheating in trade.", refs: "7:85–93, 11:84–95, 26:176–191" },
+  { name: "Ayyub (Job)", arabic: "أَيُّوب", gloss: "The model of patience; tested with loss and illness, restored.", refs: "21:83–84, 38:41–44" },
+  { name: "Dhul-Kifl", arabic: "ذُو الكِفْل", gloss: "Mentioned briefly among the patient and righteous.", refs: "21:85–86, 38:48" },
+  { name: "Musa (Moses)", arabic: "مُوسَى", gloss: "The infant in the basket; the burning bush; the staff; the plagues; the parting of the sea; the golden calf; the tablets; the journey with Khidr. Most mentioned prophet.", refs: "Many — Surahs 7, 20, 26, 28" },
+  { name: "Harun (Aaron)", arabic: "هَارُون", gloss: "Moses' brother; the eloquent one; left in charge during Moses' absence.", refs: "20:29–36, 28:34–35, 37:114–122" },
+  { name: "Dawud (David)", arabic: "دَاوُود", gloss: "Slew Goliath; received the Psalms (Zabur); mountains and birds glorified with him.", refs: "2:251, 38:17–26, 21:78–80" },
+  { name: "Sulayman (Solomon)", arabic: "سُلَيْمَان", gloss: "Commanded the jinn and the wind; understood the speech of ants and birds; the Queen of Sheba.", refs: "27:15–44, 38:30–40, 21:81–82" },
+  { name: "Ilyas (Elijah)", arabic: "إِلْيَاس", gloss: "Confronted the worshippers of Baʿl.", refs: "37:123–132, 6:85" },
+  { name: "Alyasa (Elisha)", arabic: "الْيَسَع", gloss: "Named among the chosen.", refs: "6:86, 38:48" },
+  { name: "Yunus (Jonah)", arabic: "يُونُس", gloss: "Fled his people; swallowed by the great fish; cried out from the darkness and was saved.", refs: "Surah 10 (namesake), 21:87–88, 37:139–148, 68:48–50" },
+  { name: "Zakariya (Zechariah)", arabic: "زَكَرِيَّا", gloss: "Prayed for an heir in his old age; guardian of Mary.", refs: "3:37–41, 19:2–15, 21:89–90" },
+  { name: "Yahya (John the Baptist)", arabic: "يَحْيَى", gloss: "Son of Zechariah, given wisdom as a child.", refs: "3:39, 19:12–15, 21:90" },
+  { name: "Isa (Jesus)", arabic: "عِيسَى", gloss: "Virgin birth; spoke in the cradle; healed the blind and lepers; raised the dead by God's permission; was not crucified but raised to God.", refs: "Surah 3, Surah 19, 4:157–158, 5:110–120" },
+  { name: "Muhammad ﷺ", arabic: "مُحَمَّد", gloss: "The final messenger. The Night Journey, the opening of his chest, the migration, the victory at Badr.", refs: "Surah 93, 94, 108, and throughout", href: "story-muhammad.html" }
+];
+
+const others = [
+  { name: "Maryam (Mary)", arabic: "مَرْيَم", gloss: "Not a prophet but the most-mentioned woman; her chapter is named for her.", refs: "Surah 19, 3:35–47, 66:12" },
+  { name: "The People of the Cave", arabic: "أَصْحَاب الكَهْف", gloss: "Young believers who fled persecution and slept in a cave for centuries.", refs: "18:9–26" },
+  { name: "Dhul-Qarnayn", arabic: "ذُو القَرْنَيْن", gloss: "A righteous ruler who travelled east and west; built a wall against Gog and Magog.", refs: "18:83–98" },
+  { name: "Moses & Khidr", arabic: "مُوسَى وَالخَضِر", gloss: "Moses travels with a mysterious servant of God and learns that apparent injustices hold hidden wisdom.", refs: "18:60–82" },
+  { name: "Qarun (Korah)", arabic: "قَارُون", gloss: "Immensely wealthy, arrogant, and swallowed by the earth.", refs: "28:76–82" },
+  { name: "Companions of the Elephant", arabic: "أَصْحَاب الفِيل", gloss: "Abraha's army marching on the Kaʿba; destroyed by birds dropping stones.", refs: "Surah 105" },
+  { name: "The Owners of the Garden", arabic: "أَصْحَاب الجَنَّة", gloss: "Greedy brothers who plotted to deny the poor their share; their garden was destroyed overnight.", refs: "68:17–33" },
+  { name: "Saba (Sheba)", arabic: "سَبَأ", gloss: "A prosperous people whose ingratitude caused the collapse of their dam.", refs: "34:15–21" },
+  { name: "Luqman the Wise", arabic: "لُقْمَان", gloss: "A sage (not a prophet) whose advice to his son is preserved.", refs: "Surah 31, 31:12–19" },
+  { name: "The Two Sons of Adam", arabic: "ابْنَا آدَم", gloss: "The first murder; Cain and Abel.", refs: "5:27–32" },
+  { name: "Pharaoh's Wife (Asiya)", arabic: "امْرَأَة فِرْعَوْن", gloss: "A believing woman in a disbelieving household.", refs: "28:9, 66:11" },
+  { name: "Queen of Sheba (Bilqis)", arabic: "مَلِكَة سَبَأ", gloss: "The queen who accepted monotheism through Solomon.", refs: "27:22–44" }
+];
+
+function renderGrid(el, items) {
+  el.innerHTML = items.map((s, i) => {
+    const href = s.href || `placeholder.html?id=STORY-${encodeURIComponent(s.name)}&title=${encodeURIComponent(s.name)}&tier=Library&tierName=${encodeURIComponent('Stories of the Quran')}`;
+    const ready = !!s.href;
+    return `
+    <a href="${href}" class="story-card block p-5 relative">
+      <div class="flex items-baseline justify-between mb-3">
+        <div class="arabic text-2xl text-emerald-900">${s.arabic}</div>
+        <div class="text-[10px] uppercase tracking-widest text-amber-700/80 font-semibold">${String(i+1).padStart(2,'0')}</div>
+      </div>
+      <div class="display text-xl text-emerald-950 font-semibold mb-2">${s.name}</div>
+      <p class="text-sm text-stone-600 mb-3 leading-snug">${s.gloss}</p>
+      <div class="text-[11px] text-amber-700/90 font-mono">${s.refs}</div>
+      ${ready ? '<div class="absolute top-3 right-8 text-[9px] uppercase tracking-widest text-emerald-700 font-semibold">ready</div>' : ''}
+    </a>
+    `;
+  }).join("");
+}
+
+renderGrid(document.getElementById("prophets-grid"), prophets);
+renderGrid(document.getElementById("others-grid"), others);
+</script>
+
+</body>
+</html>

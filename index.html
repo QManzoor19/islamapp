@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>IslamApp — Curriculum</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>(function(){try{if(localStorage.getItem('islamapp-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
+<link rel="stylesheet" href="theme.css">
+<script src="theme.js" defer></script>
+<style>
+  :root {
+    --cream: #faf6ed;
+    --cream-2: #f4ecd8;
+    --green-1: #064e3b;
+    --green-2: #022c22;
+    --green-3: #0f766e;
+    --gold-1: #c9a961;
+    --gold-2: #a8863f;
+    --ink: #1c2d20;
+  }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    background-image:
+      radial-gradient(circle at 10% 10%, rgba(201,169,97,0.08) 0%, transparent 40%),
+      radial-gradient(circle at 90% 90%, rgba(6,78,59,0.06) 0%, transparent 40%);
+    background-attachment: fixed;
+  }
+  .arabic { font-family: 'Amiri', serif; direction: rtl; }
+  .display { font-family: 'Cormorant Garamond', serif; }
+
+  .geo-pattern {
+    background-color: transparent;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23064e3b' fill-opacity='0.05'%3E%3Cpath d='M30 0l7.5 22.5H60L41.25 37.5l7.5 22.5L30 45l-18.75 15 7.5-22.5L0 22.5h22.5z'/%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  .mihrab-card {
+    position: relative;
+    background: #fff;
+    border: 1px solid rgba(201,169,97,0.35);
+    border-radius: 14px 14px 6px 6px;
+    transition: all 0.25s ease;
+  }
+  .mihrab-card::before {
+    content: '';
+    position: absolute;
+    top: -1px; left: 50%;
+    transform: translateX(-50%);
+    width: 40%; height: 14px;
+    background: linear-gradient(180deg, rgba(201,169,97,0.18), transparent);
+    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+    border-top: 1px solid rgba(201,169,97,0.4);
+    border-left: 1px solid rgba(201,169,97,0.3);
+    border-right: 1px solid rgba(201,169,97,0.3);
+  }
+  .mihrab-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px -10px rgba(6,78,59,0.25);
+    border-color: var(--gold-1);
+  }
+
+  .module.locked { opacity: 0.55; }
+  .module.locked .mihrab-card:hover { transform: none; box-shadow: none; }
+
+  .status-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .status-done { background: var(--green-3); box-shadow: 0 0 0 3px rgba(15,118,110,0.2); }
+  .status-inprogress { background: var(--gold-1); box-shadow: 0 0 0 3px rgba(201,169,97,0.3); }
+  .status-available { background: #d6d3d1; }
+  .status-locked { background: #e7e5e4; }
+
+  .gold-line {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold-1), transparent);
+  }
+  .gold-divider {
+    display: flex; align-items: center; gap: 12px;
+    color: var(--gold-2);
+  }
+  .gold-divider::before, .gold-divider::after {
+    content: '';
+    flex: 1; height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold-1), transparent);
+  }
+
+  .tier-header {
+    background: linear-gradient(135deg, var(--green-2) 0%, var(--green-1) 100%);
+    color: var(--cream);
+    border: 1px solid var(--gold-1);
+    position: relative;
+    overflow: hidden;
+  }
+  .tier-header::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23c9a961' fill-opacity='0.08'%3E%3Cpath d='M40 0l10 30h30L55 50l10 30L40 60 15 80l10-30L0 30h30z'/%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.6;
+    pointer-events: none;
+  }
+  .tier-num {
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--gold-1);
+  }
+
+  .hero-arch {
+    position: relative;
+    padding: 3rem 2rem 2.5rem;
+    text-align: center;
+    border: 1px solid rgba(201,169,97,0.4);
+    border-radius: 50% 50% 8px 8px / 35% 35% 8px 8px;
+    background: linear-gradient(180deg, #fff 0%, var(--cream) 100%);
+    box-shadow: 0 20px 40px -20px rgba(6,78,59,0.2);
+  }
+  .hero-arch::before {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border: 1px solid rgba(201,169,97,0.3);
+    border-radius: 50% 50% 4px 4px / 35% 35% 4px 4px;
+    pointer-events: none;
+  }
+
+  .reset-btn:hover { color: var(--gold-2); }
+
+  .level-banner {
+    position: relative;
+    padding: 3rem 1.5rem 2.5rem;
+    margin: 2rem 0 2.5rem;
+    text-align: center;
+    border-top: 1px solid rgba(201,169,97,0.5);
+    border-bottom: 1px solid rgba(201,169,97,0.3);
+    background: linear-gradient(180deg, rgba(201,169,97,0.1) 0%, rgba(250,246,237,0) 100%);
+  }
+  .level-banner::before, .level-banner::after {
+    content: '✦';
+    position: absolute;
+    top: -10px;
+    color: var(--gold-1);
+    font-size: 1.25rem;
+    background: var(--cream);
+    padding: 0 0.75rem;
+  }
+  .level-banner::before { left: 50%; transform: translateX(calc(-50% - 140px)); }
+  .level-banner::after { left: 50%; transform: translateX(calc(-50% + 140px)); }
+  .level-locked { filter: grayscale(0.3); opacity: 0.65; }
+
+  .library-card {
+    background: #fff;
+    border: 1px solid rgba(201,169,97,0.4);
+    border-radius: 14px;
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .library-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 35px -15px rgba(6,78,59,0.3);
+    border-color: var(--gold-1);
+  }
+  .library-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(to right, var(--gold-1), var(--green-1), var(--gold-1));
+  }
+  .library-ai {
+    background: linear-gradient(135deg, var(--green-2) 0%, var(--green-1) 100%);
+    color: var(--cream);
+    border-color: var(--gold-1);
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    font: inherit;
+  }
+  .library-ai:hover { box-shadow: 0 20px 35px -15px rgba(6,78,59,0.5); }
+
+  .ai-fab {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--green-1) 0%, var(--green-2) 100%);
+    color: var(--cream);
+    border: 2px solid var(--gold-1);
+    box-shadow: 0 10px 25px -5px rgba(6,78,59,0.5);
+    cursor: pointer;
+    z-index: 50;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem;
+    transition: transform 0.2s ease;
+  }
+  .ai-fab:hover { transform: scale(1.08); }
+
+  .ai-modal {
+    position: fixed; inset: 0;
+    background: rgba(28, 45, 32, 0.6);
+    backdrop-filter: blur(4px);
+    display: none;
+    align-items: center; justify-content: center;
+    z-index: 100;
+    padding: 1rem;
+  }
+  .ai-modal.open { display: flex; }
+  .ai-panel {
+    background: var(--cream);
+    border: 1px solid var(--gold-1);
+    border-radius: 20px;
+    width: 100%; max-width: 560px;
+    height: min(640px, 90vh);
+    display: flex; flex-direction: column;
+    box-shadow: 0 40px 80px -20px rgba(0,0,0,0.4);
+  }
+  .ai-header {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid rgba(201,169,97,0.3);
+    display: flex; align-items: center; justify-content: space-between;
+    background: linear-gradient(135deg, var(--green-2), var(--green-1));
+    color: var(--cream);
+    border-radius: 20px 20px 0 0;
+  }
+  .ai-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.25rem;
+    display: flex; flex-direction: column; gap: 0.75rem;
+  }
+  .ai-msg {
+    max-width: 85%;
+    padding: 0.75rem 1rem;
+    border-radius: 14px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  .ai-msg.user { background: var(--green-1); color: var(--cream); align-self: flex-end; border-bottom-right-radius: 4px; }
+  .ai-msg.bot { background: #fff; border: 1px solid rgba(201,169,97,0.3); align-self: flex-start; border-bottom-left-radius: 4px; }
+  .ai-msg.bot .bot-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--gold-2); font-weight: 600; margin-bottom: 4px; }
+  .ai-input-row {
+    padding: 1rem;
+    border-top: 1px solid rgba(201,169,97,0.3);
+    display: flex; gap: 0.5rem;
+  }
+  .ai-input {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    border: 1px solid rgba(201,169,97,0.4);
+    border-radius: 999px;
+    background: #fff;
+    font: inherit;
+    font-size: 0.9rem;
+  }
+  .ai-input:focus { outline: 2px solid var(--gold-1); outline-offset: 2px; }
+  .ai-send {
+    padding: 0.75rem 1.5rem;
+    background: var(--green-1);
+    color: var(--cream);
+    border: 1px solid var(--gold-1);
+    border-radius: 999px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .ai-send:hover { background: var(--green-2); }
+  .ai-close {
+    background: transparent;
+    border: none;
+    color: var(--cream);
+    font-size: 1.5rem;
+    cursor: pointer;
+    line-height: 1;
+  }
+</style>
+</head>
+<body class="geo-pattern min-h-screen">
+
+<div class="max-w-5xl mx-auto px-5 py-12">
+
+  <section class="hero-arch mb-12">
+    <div class="arabic text-5xl text-emerald-900 mb-3">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+    <div class="gold-divider text-xs uppercase tracking-[0.3em] mb-5 max-w-sm mx-auto">IslamApp</div>
+    <h1 class="display text-5xl md:text-6xl text-emerald-950 font-semibold mb-3">A Path of Learning</h1>
+    <p class="text-stone-600 max-w-xl mx-auto">Three levels. Nineteen tiers. A complete path from the first words of faith to the scholar's library.</p>
+  </section>
+
+  <section class="mb-10 bg-white rounded-xl border border-amber-200/60 p-6 shadow-sm">
+    <div class="flex items-center justify-between mb-3">
+      <div>
+        <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold">Your Progress</div>
+        <div class="display text-2xl text-emerald-900"><span id="done-count">0</span> <span class="text-stone-400">/</span> <span id="total-count">41</span> modules</div>
+      </div>
+      <button id="reset-btn" class="reset-btn text-xs text-stone-500 underline">Reset progress</button>
+    </div>
+    <div class="w-full bg-stone-100 rounded-full h-2 overflow-hidden">
+      <div id="overall-progress" class="h-2 rounded-full transition-all duration-500" style="width: 0%; background: linear-gradient(to right, #064e3b, #c9a961);"></div>
+    </div>
+  </section>
+
+  <section class="mb-14">
+    <div class="text-center mb-6">
+      <div class="text-xs uppercase tracking-[0.3em] text-amber-700 font-semibold mb-1">The Library</div>
+      <div class="display text-2xl text-emerald-950 font-semibold">Reference & Tools</div>
+      <div class="gold-line mt-3 max-w-[120px] mx-auto"></div>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
+      <a href="stories.html" class="library-card p-5 block">
+        <div class="text-3xl mb-2">📖</div>
+        <div class="arabic text-lg text-emerald-900 mb-1">قَصَص</div>
+        <div class="display text-lg font-semibold text-emerald-950 mb-1">Stories</div>
+        <p class="text-xs text-stone-600">Prophets, past nations, and the remarkable souls of the Quran.</p>
+      </a>
+      <a href="hadiths.html" class="library-card p-5 block">
+        <div class="text-3xl mb-2">📜</div>
+        <div class="arabic text-lg text-emerald-900 mb-1">حَدِيث</div>
+        <div class="display text-lg font-semibold text-emerald-950 mb-1">Hadiths</div>
+        <p class="text-xs text-stone-600">The canonical collections and how they are graded.</p>
+      </a>
+      <a href="keywords.html" class="library-card p-5 block">
+        <div class="text-3xl mb-2">🔑</div>
+        <div class="arabic text-lg text-emerald-900 mb-1">مُصْطَلَحَات</div>
+        <div class="display text-lg font-semibold text-emerald-950 mb-1">Keywords</div>
+        <p class="text-xs text-stone-600">A searchable glossary of terms you will keep meeting.</p>
+      </a>
+      <a href="resources.html" class="library-card p-5 block">
+        <div class="text-3xl mb-2">🏛️</div>
+        <div class="arabic text-lg text-emerald-900 mb-1">مَصَادِر</div>
+        <div class="display text-lg font-semibold text-emerald-950 mb-1">Resources</div>
+        <p class="text-xs text-stone-600">Books, websites, apps, courses, and scholars worth knowing.</p>
+      </a>
+      <button id="open-ai" class="library-card library-ai p-5">
+        <div class="text-3xl mb-2">✨</div>
+        <div class="arabic text-lg text-amber-200/90 mb-1">اسْأَل</div>
+        <div class="display text-lg font-semibold mb-1">Ask the AI</div>
+        <p class="text-xs text-amber-100/80">Open a conversation about anything you are learning.</p>
+      </button>
+    </div>
+  </section>
+
+  <main id="tiers"></main>
+
+  <footer class="mt-16 text-center">
+    <div class="gold-line mb-6 max-w-xs mx-auto"></div>
+    <div class="arabic text-2xl text-emerald-800 mb-1">وَقُل رَّبِّ زِدْنِي عِلْمًا</div>
+    <div class="text-xs italic text-stone-500">"And say: My Lord, increase me in knowledge." — Quran 20:114</div>
+  </footer>
+
+</div>
+
+<button class="ai-fab" id="ai-fab" title="Ask the AI">✨</button>
+
+<div class="ai-modal" id="ai-modal" role="dialog" aria-modal="true">
+  <div class="ai-panel">
+    <div class="ai-header">
+      <div>
+        <div class="arabic text-sm text-amber-200/80">المُسَاعِد</div>
+        <div class="display text-lg font-semibold">Ask the AI</div>
+      </div>
+      <button class="ai-close" id="ai-close" aria-label="Close">✕</button>
+    </div>
+    <div class="ai-messages" id="ai-messages">
+      <div class="ai-msg bot">
+        <div class="bot-label">Assistant</div>
+        Assalāmu ʿalaykum. Ask me anything about what you are studying — a verse, a hadith, a ruling, a historical event, or any term you have come across.
+        <div class="text-xs text-stone-500 italic mt-3">Note: this is a UI stub. Wire it to an LLM API to get real answers.</div>
+      </div>
+    </div>
+    <form class="ai-input-row" id="ai-form">
+      <input class="ai-input" id="ai-input" type="text" placeholder="Type your question…" autocomplete="off" />
+      <button class="ai-send" type="submit">Send</button>
+    </form>
+  </div>
+</div>
+
+<script>
+const levels = [
+  { num: 1, name: "Foundations", arabic: "الأُسُس", blurb: "What every Muslim needs day one — belief, practice, script, memorization." },
+  { num: 2, name: "Intermediate", arabic: "المَرْحَلَة الوُسْطَى", blurb: "The Prophet's life, the Quran's themes, practical jurisprudence, the first centuries." },
+  { num: 3, name: "The Scholar's Track", arabic: "طَرِيق العَالِم", blurb: "The classical Islamic sciences, read through their primary texts." }
+];
+
+const curriculum = [
+  {
+    tier: 1, level: 1,
+    name: "The Essentials",
+    arabic: "الأَسَاسِيَّات",
+    blurb: "The bedrock — what a Muslim believes and practices, in broad strokes.",
+    modules: [
+      { id: "1-1", title: "The Shahada & the Five Pillars", minutes: 15, built: true, href: "pillars.html" },
+      { id: "1-2", title: "The Six Articles of Faith", minutes: 15, built: true, href: "iman.html" },
+      { id: "1-3", title: "Core Vocabulary", minutes: 10, built: true, href: "vocab.html" },
+      { id: "1-4", title: "The Islamic Calendar", minutes: 10, built: true, href: "calendar.html" }
+    ]
+  },
+  {
+    tier: 2, level: 1,
+    name: "Purification & Prayer",
+    arabic: "الطَّهَارَة وَالصَّلَاة",
+    blurb: "The body of worship — how to be ritually clean, how to pray.",
+    modules: [
+      { id: "2-1", title: "Wudu (Ablution)", minutes: 15, built: true, href: "wudu.html" },
+      { id: "2-2", title: "Ghusl (Full Purification)", minutes: 10, built: true, href: "ghusl.html" },
+      { id: "2-3", title: "The Full Salah Walkthrough", minutes: 30, built: true, href: "depth.html" },
+      { id: "2-4", title: "Prayer Times & Conditions", minutes: 15, built: true, href: "times.html" },
+      { id: "2-5", title: "Jumuʿah (Friday Prayer)", minutes: 15, built: true, href: "jumuah.html" }
+    ]
+  },
+  {
+    tier: 3, level: 1,
+    name: "Arabic Script",
+    arabic: "الحُرُوف العَرَبِيَّة",
+    blurb: "The alphabet unlocks everything that follows — Quran, duas, vocabulary.",
+    modules: [
+      { id: "3-1", title: "The 28 Letters", minutes: 25, built: true, href: "alphabet.html" },
+      { id: "3-2", title: "Connecting Letters", minutes: 20, built: true, href: "connecting.html" },
+      { id: "3-3", title: "Short Vowels & Sukun", minutes: 20, built: true, href: "vowels.html" },
+      { id: "3-4", title: "Reading Drills", minutes: 30, built: true, href: "reading.html" }
+    ]
+  },
+  {
+    tier: 4, level: 1,
+    name: "Essential Memorization",
+    arabic: "الحِفْظ",
+    blurb: "The passages you need at hand every day — prayer, morning, evening.",
+    modules: [
+      { id: "4-1", title: "Surah Al-Fatiha", minutes: 20, built: true, href: "fatiha.html" },
+      { id: "4-2", title: "The Last 10 Surahs of Juz Amma", minutes: 45, built: true, href: "juz-amma.html" },
+      { id: "4-3", title: "Ayat al-Kursi", minutes: 15, built: true, href: "kursi.html" },
+      { id: "4-4", title: "Daily Duas", minutes: 25, built: true, href: "duas.html" }
+    ]
+  },
+
+  {
+    tier: 5, level: 2,
+    name: "The Quran — Text & Themes",
+    arabic: "القُرْآن",
+    blurb: "How the Book came to be, how it is structured, and the six kinds of content woven through it.",
+    modules: [
+      { id: "5-1", title: "Revelation & Compilation", minutes: 20, built: true, href: "revelation.html" },
+      { id: "5-2", title: "Structure — Chapters, Verses, Parts", minutes: 15, built: false },
+      { id: "5-3", title: "Meccan vs Medinan Revelation", minutes: 15, built: false },
+      { id: "5-4", title: "Content: Creed & Beliefs About God", minutes: 20, built: false },
+      { id: "5-5", title: "Content: Stories of Prophets & Past Nations", minutes: 25, built: false },
+      { id: "5-6", title: "Content: Laws & Rulings", minutes: 25, built: false },
+      { id: "5-7", title: "Content: Ethics & Moral Exhortation", minutes: 20, built: false },
+      { id: "5-8", title: "Content: The Afterlife", minutes: 20, built: false },
+      { id: "5-9", title: "Content: Parables & Signs in Creation", minutes: 20, built: false },
+      { id: "5-10", title: "Tafsir: Al-Fatiha Verse-by-Verse", minutes: 25, built: false },
+      { id: "5-11", title: "Tafsir: Ayat al-Kursi & Al-Ikhlas", minutes: 25, built: false },
+      { id: "5-12", title: "Tajweed Basics", minutes: 30, built: false }
+    ]
+  },
+  {
+    tier: 6, level: 2,
+    name: "The Life of the Prophet",
+    arabic: "السِّيرَة النَّبَوِيَّة",
+    blurb: "The Prophet Muhammad ﷺ — the context for everything that follows.",
+    modules: [
+      { id: "6-1", title: "Pre-Islamic Arabia", minutes: 20, built: false },
+      { id: "6-2", title: "Birth to First Revelation", minutes: 20, built: false },
+      { id: "6-3", title: "The Meccan Period", minutes: 25, built: false },
+      { id: "6-4", title: "The Migration to Medina", minutes: 15, built: false },
+      { id: "6-5", title: "The Medinan Period", minutes: 30, built: false },
+      { id: "6-6", title: "The Farewell & Legacy", minutes: 15, built: false },
+      { id: "6-7", title: "The Companions", minutes: 25, built: false }
+    ]
+  },
+  {
+    tier: 7, level: 2,
+    name: "Beliefs in Depth",
+    arabic: "العَقِيدَة",
+    blurb: "Creed unpacked — what the six articles of faith actually mean.",
+    modules: [
+      { id: "7-1", title: "Tawhid — the Three Categories", minutes: 25, built: false },
+      { id: "7-2", title: "The 99 Names of Allah", minutes: 40, built: false },
+      { id: "7-3", title: "Angels, Books, Prophets in Depth", minutes: 30, built: false },
+      { id: "7-4", title: "The Afterlife in Detail", minutes: 25, built: false },
+      { id: "7-5", title: "Qadar — Divine Decree", minutes: 20, built: false }
+    ]
+  },
+  {
+    tier: 8, level: 2,
+    name: "Practical Jurisprudence",
+    arabic: "الفِقْه العَمَلِي",
+    blurb: "Applied fiqh — zakat, fasting, Hajj, marriage, halal and haram.",
+    modules: [
+      { id: "8-1", title: "Zakat (with Calculator)", minutes: 25, built: false },
+      { id: "8-2", title: "Fasting Rules & Exemptions", minutes: 20, built: false },
+      { id: "8-3", title: "Hajj Step-by-Step", minutes: 40, built: false },
+      { id: "8-4", title: "Halal & Haram", minutes: 25, built: false },
+      { id: "8-5", title: "Marriage & Family Basics", minutes: 25, built: false },
+      { id: "8-6", title: "The Four Sunni Schools — Overview", minutes: 20, built: false }
+    ]
+  },
+  {
+    tier: 9, level: 2,
+    name: "Early Islamic History",
+    arabic: "التَّارِيخ الإِسْلَامِي",
+    blurb: "From the first caliphate through the Abbasid golden age and the gunpowder empires.",
+    modules: [
+      { id: "9-1", title: "The Rightly-Guided Caliphs", minutes: 30, built: false },
+      { id: "9-2", title: "The Umayyad Caliphate", minutes: 25, built: false },
+      { id: "9-3", title: "The Abbasid Golden Age", minutes: 30, built: false },
+      { id: "9-4", title: "Islamic Spain (al-Andalus)", minutes: 25, built: false },
+      { id: "9-5", title: "Crusades & Mongol Invasion", minutes: 20, built: false },
+      { id: "9-6", title: "The Three Early-Modern Empires", minutes: 25, built: false }
+    ]
+  },
+
+  {
+    tier: 10, level: 3,
+    name: "Quranic Sciences",
+    arabic: "عُلُوم القُرْآن",
+    blurb: "How scholars read the Quran: occasions of revelation, abrogation, variant readings, and the great commentaries.",
+    modules: [
+      { id: "10-1", title: "Occasions of Revelation", minutes: 25, built: false },
+      { id: "10-2", title: "Abrogation (Naskh)", minutes: 25, built: false },
+      { id: "10-3", title: "Clear vs Ambiguous Verses", minutes: 20, built: false },
+      { id: "10-4", title: "The Variant Readings (Qira'at)", minutes: 30, built: false },
+      { id: "10-5", title: "The Inimitability of the Quran (I'jaz)", minutes: 25, built: false },
+      { id: "10-6", title: "Schools of Tafsir — Narration vs Reason", minutes: 30, built: false },
+      { id: "10-7", title: "The Great Commentators", minutes: 40, built: false }
+    ]
+  },
+  {
+    tier: 11, level: 3,
+    name: "Hadith Sciences",
+    arabic: "عُلُوم الحَدِيث",
+    blurb: "Authenticating the Prophet's words: chains, grading, the six canonical collections, and the science of narrator evaluation.",
+    modules: [
+      { id: "11-1", title: "Chain & Text — How Reports Work", minutes: 25, built: false },
+      { id: "11-2", title: "Grading: Sahih, Hasan, Da'if, Mawdu'", minutes: 30, built: false },
+      { id: "11-3", title: "The Six Canonical Books", minutes: 30, built: false },
+      { id: "11-4", title: "The Science of Narrator Evaluation (Rijal)", minutes: 30, built: false },
+      { id: "11-5", title: "Ibn al-Salah's Introduction to Hadith", minutes: 35, built: false },
+      { id: "11-6", title: "The 40 Hadith of Nawawi", minutes: 60, built: false }
+    ]
+  },
+  {
+    tier: 12, level: 3,
+    name: "Legal Theory",
+    arabic: "أُصُول الفِقْه",
+    blurb: "The engine of Islamic law — sources, methods, legal maxims, and the higher objectives of the law.",
+    modules: [
+      { id: "12-1", title: "The Four Primary Sources", minutes: 30, built: false },
+      { id: "12-2", title: "Secondary Sources — Discretion, Public Interest, Custom", minutes: 30, built: false },
+      { id: "12-3", title: "Ijtihad vs Taqlid", minutes: 25, built: false },
+      { id: "12-4", title: "Legal Maxims", minutes: 30, built: false },
+      { id: "12-5", title: "Higher Objectives of the Law (Maqasid)", minutes: 30, built: false },
+      { id: "12-6", title: "Reading al-Shafi'i's Risala", minutes: 45, built: false },
+      { id: "12-7", title: "Reading al-Shatibi's Muwafaqat", minutes: 45, built: false }
+    ]
+  },
+  {
+    tier: 13, level: 3,
+    name: "Comparative Jurisprudence",
+    arabic: "الفِقْه المُقَارَن",
+    blurb: "The four Sunni schools, Shia jurisprudence, and contemporary applied fields.",
+    modules: [
+      { id: "13-1", title: "The Hanafi School", minutes: 30, built: false },
+      { id: "13-2", title: "The Maliki School", minutes: 30, built: false },
+      { id: "13-3", title: "The Shafi'i School", minutes: 30, built: false },
+      { id: "13-4", title: "The Hanbali School", minutes: 30, built: false },
+      { id: "13-5", title: "Shia Jurisprudence (Ja'fari & Zaidi)", minutes: 30, built: false },
+      { id: "13-6", title: "Contemporary Islamic Finance", minutes: 35, built: false },
+      { id: "13-7", title: "Islamic Bioethics", minutes: 30, built: false },
+      { id: "13-8", title: "Fiqh for Muslim Minorities", minutes: 25, built: false }
+    ]
+  },
+  {
+    tier: 14, level: 3,
+    name: "Theology",
+    arabic: "عِلْم الكَلَام",
+    blurb: "The great debates — divine attributes, free will, the created Quran, philosophy vs revelation.",
+    modules: [
+      { id: "14-1", title: "The Three Schools — Ash'ari, Maturidi, Athari", minutes: 35, built: false },
+      { id: "14-2", title: "The Mu'tazili Episode & the Mihna", minutes: 30, built: false },
+      { id: "14-3", title: "Divine Attributes", minutes: 30, built: false },
+      { id: "14-4", title: "Free Will & Divine Decree", minutes: 30, built: false },
+      { id: "14-5", title: "The Createdness of the Quran", minutes: 25, built: false },
+      { id: "14-6", title: "Seeing God in the Afterlife", minutes: 20, built: false },
+      { id: "14-7", title: "Ibn Taymiyyah's Critique of Theology", minutes: 30, built: false },
+      { id: "14-8", title: "al-Ghazali vs Ibn Rushd on Philosophy", minutes: 40, built: false }
+    ]
+  },
+  {
+    tier: 15, level: 3,
+    name: "Spirituality & the Inner Path",
+    arabic: "التَّصَوُّف",
+    blurb: "The Sufi tradition — al-Ghazali, the brotherhoods, stations of the soul, and its reformist critics.",
+    modules: [
+      { id: "15-1", title: "al-Qushayri's Epistle", minutes: 35, built: false },
+      { id: "15-2", title: "al-Ghazali's Revival of the Religious Sciences", minutes: 50, built: false },
+      { id: "15-3", title: "Stations & States of the Soul", minutes: 30, built: false },
+      { id: "15-4", title: "The Brotherhoods — Qadiri, Naqshbandi, Shadhili, Chishti", minutes: 35, built: false },
+      { id: "15-5", title: "Ibn Arabi & the Unity-of-Being Controversy", minutes: 35, built: false },
+      { id: "15-6", title: "The Salafi–Sufi Debate", minutes: 30, built: false },
+      { id: "15-7", title: "Dhikr & Spiritual Practice", minutes: 25, built: false }
+    ]
+  },
+  {
+    tier: 16, level: 3,
+    name: "Classical Arabic",
+    arabic: "العَرَبِيَّة الكِلَاسِيكِيَّة",
+    blurb: "Grammar, morphology, and rhetoric — the keys to reading the primary texts in the original.",
+    modules: [
+      { id: "16-1", title: "Grammar Foundations (al-Ajurrumiyya)", minutes: 45, built: false },
+      { id: "16-2", title: "Morphology (Sarf)", minutes: 40, built: false },
+      { id: "16-3", title: "Ibn Malik's Alfiyya", minutes: 60, built: false },
+      { id: "16-4", title: "Rhetoric — Ma'ani, Bayan, Badi'", minutes: 45, built: false },
+      { id: "16-5", title: "Reading Classical Prose", minutes: 40, built: false },
+      { id: "16-6", title: "Pre-Islamic Poetry", minutes: 35, built: false }
+    ]
+  },
+  {
+    tier: 17, level: 3,
+    name: "Islamic History in Depth",
+    arabic: "التَّارِيخ الإِسْلَامِي المُعَمَّق",
+    blurb: "The early-modern empires, colonial collapse, and the modern reform movements.",
+    modules: [
+      { id: "17-1", title: "The Ottoman Empire", minutes: 35, built: false },
+      { id: "17-2", title: "The Safavid Empire", minutes: 30, built: false },
+      { id: "17-3", title: "The Mughal Empire", minutes: 30, built: false },
+      { id: "17-4", title: "Colonial Collapse", minutes: 30, built: false },
+      { id: "17-5", title: "Modern Reform — the Salafi Movement", minutes: 30, built: false },
+      { id: "17-6", title: "Modern Reform — Islamism", minutes: 30, built: false },
+      { id: "17-7", title: "Neo-Traditionalism", minutes: 25, built: false },
+      { id: "17-8", title: "Progressive / Modernist Islam", minutes: 25, built: false }
+    ]
+  },
+  {
+    tier: 18, level: 3,
+    name: "Islamic Philosophy",
+    arabic: "الفَلْسَفَة الإِسْلَامِيَّة",
+    blurb: "The parallel tradition — the philosophers the Latin West read, and their modern successors.",
+    modules: [
+      { id: "18-1", title: "al-Kindi & al-Farabi", minutes: 35, built: false },
+      { id: "18-2", title: "Avicenna (Ibn Sina)", minutes: 40, built: false },
+      { id: "18-3", title: "Averroes (Ibn Rushd)", minutes: 35, built: false },
+      { id: "18-4", title: "Suhrawardi & Illuminationism", minutes: 30, built: false },
+      { id: "18-5", title: "Mulla Sadra", minutes: 35, built: false },
+      { id: "18-6", title: "Muhammad Iqbal", minutes: 30, built: false },
+      { id: "18-7", title: "Modern Voices — Nursi, Rahman, Nasr, Hallaq", minutes: 40, built: false }
+    ]
+  },
+  {
+    tier: 19, level: 3,
+    name: "Contemporary Questions",
+    arabic: "القَضَايَا المُعَاصِرَة",
+    blurb: "Islam and modernity, gender, economics, bioethics, the West, and the scholarly fight over Orientalism.",
+    modules: [
+      { id: "19-1", title: "Islam & Modernity", minutes: 30, built: false },
+      { id: "19-2", title: "Gender Discourse", minutes: 35, built: false },
+      { id: "19-3", title: "Islamic Economics & Finance", minutes: 30, built: false },
+      { id: "19-4", title: "Bioethics", minutes: 30, built: false },
+      { id: "19-5", title: "Islam in the West", minutes: 30, built: false },
+      { id: "19-6", title: "Orientalism & Its Critics", minutes: 35, built: false }
+    ]
+  }
+];
+
+const STORAGE_KEY = "islamapp-progress-v1";
+
+function loadProgress() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
+  catch { return {}; }
+}
+function saveProgress(p) { localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); }
+
+function moduleStatus(module, progress, isUnlocked) {
+  const state = progress[module.id];
+  if (state === "done") return "done";
+  if (state === "inprogress") return "inprogress";
+  return isUnlocked ? "available" : "locked";
+}
+
+function totalModules() {
+  return curriculum.reduce((n, t) => n + t.modules.length, 0);
+}
+function doneModules(progress) {
+  return Object.values(progress).filter(s => s === "done").length;
+}
+
+function render() {
+  const progress = loadProgress();
+  const tiersEl = document.getElementById("tiers");
+
+  const levelComplete = {};
+  levels.forEach(lv => {
+    const mods = curriculum.filter(t => t.level === lv.num).flatMap(t => t.modules);
+    levelComplete[lv.num] = mods.length > 0 && mods.every(m => progress[m.id] === "done");
+  });
+
+  const levelUnlocked = { 1: true };
+  for (let i = 2; i <= levels.length; i++) {
+    levelUnlocked[i] = levelUnlocked[i-1] && levelComplete[i-1];
+  }
+
+  let html = "";
+  levels.forEach(lv => {
+    const levelTiers = curriculum.filter(t => t.level === lv.num);
+    const modsInLevel = levelTiers.flatMap(t => t.modules);
+    const doneInLevel = modsInLevel.filter(m => progress[m.id] === "done").length;
+
+    html += `
+      <div class="level-banner">
+        <div class="arabic text-4xl text-amber-700/80 mb-3">${lv.arabic}</div>
+        <div class="text-xs uppercase tracking-[0.35em] text-amber-700 font-semibold mb-2">Level ${lv.num}</div>
+        <div class="display text-4xl md:text-5xl text-emerald-950 font-semibold mb-3">${lv.name}</div>
+        <p class="text-stone-600 italic max-w-xl mx-auto text-sm mb-3">${lv.blurb}</p>
+        <div class="text-xs text-stone-500">${doneInLevel} of ${modsInLevel.length} modules complete</div>
+      </div>
+    `;
+
+    levelTiers.forEach(tier => {
+      const modulesHTML = tier.modules.map(m => {
+        const status = moduleStatus(m, progress, true);
+        const locked = false;
+        const href = (m.built && m.href) ? m.href : `placeholder.html?id=${m.id}&title=${encodeURIComponent(m.title)}&tier=${tier.tier}&tierName=${encodeURIComponent(tier.name)}`;
+        const clickable = true;
+        const statusLabel = { done: "Completed", inprogress: "In progress", available: "Begin" }[status];
+
+        return `
+          <${clickable ? 'a href="' + href + '"' : 'div'} class="module ${locked ? 'locked' : ''} block relative">
+            <div class="mihrab-card p-5 h-full flex flex-col">
+              <div class="flex items-start justify-between mb-3">
+                <div class="text-xs tracking-widest text-amber-700/80 font-semibold">MODULE ${m.id}</div>
+                <span class="status-dot status-${status}" title="${statusLabel}"></span>
+              </div>
+              <div class="display text-lg text-emerald-950 font-semibold mb-2 leading-snug">${m.title}</div>
+              <div class="mt-auto flex items-center justify-between text-xs text-stone-500 pt-3">
+                <span>≈ ${m.minutes} min</span>
+                <span class="text-amber-700/90">${statusLabel} ${clickable ? '→' : ''}</span>
+              </div>
+              ${m.built ? '<div class="absolute top-3 right-8 text-[9px] uppercase tracking-widest text-emerald-700 font-semibold">ready</div>' : ''}
+            </div>
+          </${clickable ? 'a' : 'div'}>
+        `;
+      }).join("");
+
+      html += `
+        <section class="mb-12">
+          <div class="tier-header rounded-xl px-6 py-5 mb-6">
+            <div class="flex items-center justify-between relative z-10">
+              <div class="flex items-center gap-5">
+                <div class="tier-num text-5xl leading-none">${String(tier.tier).padStart(2,'0')}</div>
+                <div>
+                  <div class="arabic text-xl text-amber-200/90 mb-1">${tier.arabic}</div>
+                  <div class="display text-2xl font-semibold text-amber-50">${tier.name}</div>
+                </div>
+              </div>
+              <div class="text-right hidden sm:block">
+                <div class="text-xs uppercase tracking-widest text-amber-300/80">Tier ${tier.tier}</div>
+                <div class="text-sm text-amber-100/80">${tier.modules.length} modules</div>
+              </div>
+            </div>
+            <p class="text-amber-100/70 text-sm mt-3 italic relative z-10">${tier.blurb}</p>
+          </div>
+          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            ${modulesHTML}
+          </div>
+        </section>
+      `;
+    });
+  });
+
+  tiersEl.innerHTML = html;
+
+  document.getElementById("done-count").textContent = doneModules(progress);
+  document.getElementById("total-count").textContent = totalModules();
+  document.getElementById("overall-progress").style.width = (doneModules(progress) / totalModules() * 100) + "%";
+}
+
+document.getElementById("reset-btn").addEventListener("click", () => {
+  if (confirm("Reset all progress?")) {
+    localStorage.removeItem(STORAGE_KEY);
+    render();
+  }
+});
+
+const aiModal = document.getElementById("ai-modal");
+const aiMessages = document.getElementById("ai-messages");
+const aiForm = document.getElementById("ai-form");
+const aiInput = document.getElementById("ai-input");
+
+function openAI() { aiModal.classList.add("open"); setTimeout(() => aiInput.focus(), 50); }
+function closeAI() { aiModal.classList.remove("open"); }
+
+document.getElementById("ai-fab").addEventListener("click", openAI);
+document.getElementById("open-ai").addEventListener("click", openAI);
+document.getElementById("ai-close").addEventListener("click", closeAI);
+aiModal.addEventListener("click", e => { if (e.target === aiModal) closeAI(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape" && aiModal.classList.contains("open")) closeAI(); });
+
+aiForm.addEventListener("submit", e => {
+  e.preventDefault();
+  const text = aiInput.value.trim();
+  if (!text) return;
+
+  const userMsg = document.createElement("div");
+  userMsg.className = "ai-msg user";
+  userMsg.textContent = text;
+  aiMessages.appendChild(userMsg);
+
+  aiInput.value = "";
+  aiMessages.scrollTop = aiMessages.scrollHeight;
+
+  setTimeout(() => {
+    const botMsg = document.createElement("div");
+    botMsg.className = "ai-msg bot";
+    botMsg.innerHTML = `
+      <div class="bot-label">Assistant</div>
+      I have not been connected to a live model yet. When you wire this up to an LLM endpoint, your question — <em>"${text.replace(/</g, '&lt;')}"</em> — will get a real answer here.
+    `;
+    aiMessages.appendChild(botMsg);
+    aiMessages.scrollTop = aiMessages.scrollHeight;
+  }, 400);
+});
+
+render();
+</script>
+
+</body>
+</html>

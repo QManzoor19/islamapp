@@ -1,0 +1,244 @@
+[data-theme="dark"] { color-scheme: dark; }
+
+[data-theme="dark"] body {
+  background: #0a1510 !important;
+  color: #e7e2d0 !important;
+  background-image:
+    radial-gradient(circle at 10% 10%, rgba(201,169,97,0.07) 0%, transparent 40%),
+    radial-gradient(circle at 90% 90%, rgba(15,118,110,0.1) 0%, transparent 40%) !important;
+}
+
+[data-theme="dark"] .geo-pattern {
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23c9a961' fill-opacity='0.05'%3E%3Cpath d='M30 0l7.5 22.5H60L41.25 37.5l7.5 22.5L30 45l-18.75 15 7.5-22.5L0 22.5h22.5z'/%3E%3C/g%3E%3C/svg%3E") !important;
+}
+
+[data-theme="dark"] .bg-white,
+[data-theme="dark"] .bg-white\/60 { background-color: #142420 !important; }
+[data-theme="dark"] .bg-white\/10 { background-color: rgba(255,255,255,0.06) !important; }
+[data-theme="dark"] .bg-white\/15 { background-color: rgba(255,255,255,0.09) !important; }
+[data-theme="dark"] .bg-stone-100 { background-color: #1e2e25 !important; }
+
+[data-theme="dark"] .bg-emerald-50 { background-color: rgba(6,78,59,0.3) !important; }
+[data-theme="dark"] .bg-emerald-50\/50 { background-color: rgba(6,78,59,0.25) !important; }
+[data-theme="dark"] .bg-emerald-100 { background-color: rgba(6,78,59,0.4) !important; }
+[data-theme="dark"] .bg-amber-50 { background-color: rgba(168,134,63,0.15) !important; }
+[data-theme="dark"] .bg-amber-50\/50 { background-color: rgba(168,134,63,0.12) !important; }
+[data-theme="dark"] .bg-amber-100 { background-color: rgba(168,134,63,0.2) !important; }
+[data-theme="dark"] .bg-red-50\/50 { background-color: rgba(153,27,27,0.2) !important; }
+
+[data-theme="dark"] .text-stone-400 { color: #a8a29e !important; }
+[data-theme="dark"] .text-stone-500 { color: #b8b2a3 !important; }
+[data-theme="dark"] .text-stone-600 { color: #c4beb0 !important; }
+[data-theme="dark"] .text-stone-700 { color: #d6d0c2 !important; }
+[data-theme="dark"] .text-stone-800 { color: #e7e2d0 !important; }
+[data-theme="dark"] .text-stone-900 { color: #f0ebd9 !important; }
+[data-theme="dark"] .text-gray-600 { color: #c4beb0 !important; }
+[data-theme="dark"] .text-gray-700 { color: #d6d0c2 !important; }
+[data-theme="dark"] .text-gray-800 { color: #e7e2d0 !important; }
+
+[data-theme="dark"] .text-emerald-700 { color: #34d399 !important; }
+[data-theme="dark"] .text-emerald-800 { color: #e7e2d0 !important; }
+[data-theme="dark"] .text-emerald-900 { color: #f0ebd9 !important; }
+[data-theme="dark"] .text-emerald-950 { color: #f5f0df !important; }
+[data-theme="dark"] .text-amber-50 { color: #f5f0df !important; }
+
+[data-theme="dark"] .border-amber-100 { border-color: rgba(201,169,97,0.2) !important; }
+[data-theme="dark"] .border-amber-200 { border-color: rgba(201,169,97,0.3) !important; }
+[data-theme="dark"] .border-amber-300 { border-color: rgba(201,169,97,0.4) !important; }
+[data-theme="dark"] .border-emerald-100 { border-color: rgba(15,118,110,0.3) !important; }
+[data-theme="dark"] .border-emerald-200 { border-color: rgba(15,118,110,0.4) !important; }
+[data-theme="dark"] .border-stone-200,
+[data-theme="dark"] .border-stone-300 { border-color: #2a3b32 !important; }
+
+[data-theme="dark"] .mihrab-card,
+[data-theme="dark"] .story-card,
+[data-theme="dark"] .book-card,
+[data-theme="dark"] .term-card,
+[data-theme="dark"] .resource-card,
+[data-theme="dark"] .article-card,
+[data-theme="dark"] .hadith-card,
+[data-theme="dark"] .arch-card,
+[data-theme="dark"] .library-card {
+  background: #142420 !important;
+  border-color: rgba(201,169,97,0.3) !important;
+}
+
+[data-theme="dark"] .library-card::before {
+  background: linear-gradient(to right, #c9a961, #0f766e, #c9a961) !important;
+}
+
+[data-theme="dark"] .hero-arch {
+  background: linear-gradient(180deg, #142420 0%, #0a1510 100%) !important;
+  box-shadow: 0 20px 40px -20px rgba(0,0,0,0.6) !important;
+}
+
+[data-theme="dark"] .btn-secondary {
+  background: #142420 !important;
+  color: #e7e2d0 !important;
+}
+[data-theme="dark"] .btn-secondary:hover { background: #1e2e25 !important; }
+
+[data-theme="dark"] .level-banner::before,
+[data-theme="dark"] .level-banner::after { background: #0a1510 !important; }
+
+[data-theme="dark"] .grade-sahih { background: rgba(16,185,129,0.2) !important; color: #6ee7b7 !important; }
+[data-theme="dark"] .grade-hasan { background: rgba(251,191,36,0.2) !important; color: #fcd34d !important; }
+[data-theme="dark"] .grade-daif { background: rgba(239,68,68,0.2) !important; color: #fca5a5 !important; }
+[data-theme="dark"] .grade-mawdu { background: rgba(245,240,223,0.9) !important; color: #1c1917 !important; }
+
+[data-theme="dark"] .cat-theology { background: rgba(16,185,129,0.2) !important; color: #6ee7b7 !important; }
+[data-theme="dark"] .cat-worship { background: rgba(251,191,36,0.2) !important; color: #fcd34d !important; }
+[data-theme="dark"] .cat-law { background: rgba(96,165,250,0.2) !important; color: #93c5fd !important; }
+[data-theme="dark"] .cat-phrase { background: rgba(236,72,153,0.2) !important; color: #f9a8d4 !important; }
+[data-theme="dark"] .cat-people { background: rgba(167,139,250,0.2) !important; color: #c4b5fd !important; }
+[data-theme="dark"] .cat-places { background: rgba(56,189,248,0.2) !important; color: #7dd3fc !important; }
+[data-theme="dark"] .cat-concept { background: rgba(156,163,175,0.2) !important; color: #d1d5db !important; }
+
+[data-theme="dark"] input,
+[data-theme="dark"] select,
+[data-theme="dark"] textarea {
+  background: #142420 !important;
+  color: #e7e2d0 !important;
+  border-color: rgba(201,169,97,0.3) !important;
+}
+[data-theme="dark"] input::placeholder { color: #8b857a !important; }
+
+[data-theme="dark"] .ai-panel { background: #0f1d18 !important; border-color: rgba(201,169,97,0.4) !important; }
+[data-theme="dark"] .ai-msg.bot { background: #142420 !important; color: #e7e2d0 !important; border-color: rgba(201,169,97,0.2) !important; }
+[data-theme="dark"] .ai-input { background: #142420 !important; color: #e7e2d0 !important; }
+
+[data-theme="dark"] .choice {
+  background: #142420 !important;
+  border-color: #2a3b32 !important;
+  color: #e7e2d0 !important;
+}
+[data-theme="dark"] .step-btn { color: #e7e2d0 !important; }
+[data-theme="dark"] .step-btn:hover { background: rgba(201,169,97,0.1) !important; }
+[data-theme="dark"] .step-btn.active { background: #0f766e !important; color: #faf6ed !important; border-color: #c9a961 !important; }
+
+[data-theme="dark"] .position-figure {
+  background: linear-gradient(135deg, rgba(168,134,63,0.25) 0%, rgba(120,85,30,0.35) 100%) !important;
+  border-color: #c9a961 !important;
+}
+
+[data-theme="dark"] .tier-header {
+  background: linear-gradient(135deg, #0a1510 0%, #142420 100%) !important;
+}
+
+/* ─── Custom-styled card backgrounds (these use inline color values, not Tailwind classes) ─── */
+[data-theme="dark"] .verse-quote,
+[data-theme="dark"] .verse-card,
+[data-theme="dark"] .surah-card,
+[data-theme="dark"] .phrase-block,
+[data-theme="dark"] .holiday-card,
+[data-theme="dark"] .prayer-card,
+[data-theme="dark"] .condition-card,
+[data-theme="dark"] .req-card,
+[data-theme="dark"] .timeline-card,
+[data-theme="dark"] .timeline-item,
+[data-theme="dark"] .etiquette-card,
+[data-theme="dark"] .reveal-card,
+[data-theme="dark"] .verse-word,
+[data-theme="dark"] .vocab-row,
+[data-theme="dark"] .pillar-tile,
+[data-theme="dark"] .wudu-step,
+[data-theme="dark"] .obligatory-row,
+[data-theme="dark"] .position-card,
+[data-theme="dark"] .group-card,
+[data-theme="dark"] .num-step,
+[data-theme="dark"] .occasion-row,
+[data-theme="dark"] .level-card,
+[data-theme="dark"] .breaker,
+[data-theme="dark"] .faq-q,
+[data-theme="dark"] .avoid-card,
+[data-theme="dark"] .makruh-card,
+[data-theme="dark"] .dua-card,
+[data-theme="dark"] .month-tile,
+[data-theme="dark"] .letter-tile,
+[data-theme="dark"] .flashcard-front,
+[data-theme="dark"] .hadith-block { background: #142420 !important; }
+
+/* ─── Arabic glyph text — was dark green on white, needs to be light on dark ─── */
+[data-theme="dark"] .verse-arabic,
+[data-theme="dark"] .verse-quote .ar,
+[data-theme="dark"] .dua-arabic,
+[data-theme="dark"] .word-arabic,
+[data-theme="dark"] .practice-arabic,
+[data-theme="dark"] .read-arabic,
+[data-theme="dark"] .vowel-display,
+[data-theme="dark"] .position-glyph,
+[data-theme="dark"] .letter-glyph,
+[data-theme="dark"] .verse-card .arabic,
+[data-theme="dark"] .form-table td.glyph,
+[data-theme="dark"] .stat-num,
+[data-theme="dark"] .hadith-block .arabic { color: #f0ebd9 !important; }
+
+/* ─── Transliteration text (italic green) ─── */
+[data-theme="dark"] .verse-trans,
+[data-theme="dark"] .verse-quote .tr,
+[data-theme="dark"] .dua-trans { color: #6ee7b7 !important; }
+
+/* ─── English meaning text (was dark grey) ─── */
+[data-theme="dark"] .verse-eng,
+[data-theme="dark"] .verse-quote .en,
+[data-theme="dark"] .dua-eng { color: #e7e2d0 !important; }
+
+/* ─── Verse / source references (gold) ─── */
+[data-theme="dark"] .verse-quote .ref,
+[data-theme="dark"] .dua-source { color: #fcd34d !important; }
+
+/* ─── Commentary / hadith blocks (special treatment) ─── */
+[data-theme="dark"] .commentary {
+  background: linear-gradient(135deg, rgba(168,134,63,0.25), rgba(168,134,63,0.12)) !important;
+  border-color: #c9a961 !important;
+  color: #e7e2d0 !important;
+}
+[data-theme="dark"] .commentary .label { color: #fcd34d !important; }
+[data-theme="dark"] .commentary > div { color: #e7e2d0 !important; }
+[data-theme="dark"] .hadith-block .label { color: #6ee7b7 !important; }
+[data-theme="dark"] .hadith-block .arabic { color: #f0ebd9 !important; }
+
+/* ─── Special-tinted tiles (sacred / heavy / etc.) ─── */
+[data-theme="dark"] .month-tile.sacred,
+[data-theme="dark"] .pillar-tile.highlight,
+[data-theme="dark"] .stat-card,
+[data-theme="dark"] .letter-tile.heavy {
+  background: linear-gradient(135deg, rgba(168,134,63,0.3), rgba(168,134,63,0.15)) !important;
+  border-color: #c9a961 !important;
+}
+[data-theme="dark"] .letter-tile.throat {
+  background: linear-gradient(135deg, rgba(220,38,38,0.25), rgba(220,38,38,0.1)) !important;
+  border-color: rgba(220,38,38,0.4) !important;
+}
+
+/* ─── Surah verse separators ─── */
+[data-theme="dark"] .surah-card .verse-line { border-bottom-color: rgba(201,169,97,0.15) !important; }
+
+/* ─── Today banner already gradient — keep light text ─── */
+[data-theme="dark"] .today-banner { color: #faf6ed !important; }
+
+/* ─── Faq summary heading (interactive disclosure) ─── */
+[data-theme="dark"] .faq-q summary { color: #6ee7b7 !important; }
+
+.theme-toggle {
+  position: fixed;
+  top: 20px; right: 20px;
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid rgba(201,169,97,0.4);
+  cursor: pointer;
+  z-index: 60;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  color: #1c2d20;
+  box-shadow: 0 4px 12px -4px rgba(0,0,0,0.15);
+  transition: transform 0.25s ease, background 0.2s ease, color 0.2s ease;
+}
+.theme-toggle:hover { transform: rotate(25deg) scale(1.05); }
+[data-theme="dark"] .theme-toggle {
+  background: #142420;
+  border-color: rgba(201,169,97,0.4);
+  color: #fcd34d;
+  box-shadow: 0 4px 12px -4px rgba(0,0,0,0.6);
+}

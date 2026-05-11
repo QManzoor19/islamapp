@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Reading Drills — IslamApp</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>(function(){try{if(localStorage.getItem('islamapp-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
+<link rel="stylesheet" href="theme.css">
+<script src="theme.js" defer></script>
+<style>
+  body { font-family: 'Inter', sans-serif; background: #faf6ed; color: #1c2d20;
+    background-image: radial-gradient(circle at 10% 10%, rgba(201,169,97,0.08) 0%, transparent 40%), radial-gradient(circle at 90% 90%, rgba(6,78,59,0.06) 0%, transparent 40%);
+    background-attachment: fixed; }
+  .arabic { font-family: 'Amiri', serif; direction: rtl; line-height: 1.7; }
+  .display { font-family: 'Cormorant Garamond', serif; }
+  .geo-pattern { background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23064e3b' fill-opacity='0.05'%3E%3Cpath d='M30 0l7.5 22.5H60L41.25 37.5l7.5 22.5L30 45l-18.75 15 7.5-22.5L0 22.5h22.5z'/%3E%3C/g%3E%3C/svg%3E"); }
+  .step-btn.active { background: #064e3b; color: #faf6ed; border-color: #c9a961; }
+  .gold-line { height: 1px; background: linear-gradient(to right, transparent, #c9a961, transparent); }
+  .btn-primary { background: linear-gradient(135deg, #064e3b 0%, #022c22 100%); color: #faf6ed; border: 1px solid #c9a961; }
+  .btn-primary:hover { background: linear-gradient(135deg, #0f766e 0%, #064e3b 100%); }
+  .btn-secondary { background: #fff; border: 1px solid #c9a961; color: #064e3b; }
+  .btn-secondary:hover { background: #faf6ed; }
+  .article-card { background: #fff; border: 1px solid rgba(201,169,97,0.4); border-radius: 14px 14px 6px 6px; }
+  .article-card::before { content: ''; display: block; height: 12px; margin: -1px -1px 0 -1px;
+    background: linear-gradient(180deg, rgba(201,169,97,0.25), transparent); border-radius: 14px 14px 0 0; border-bottom: 1px solid rgba(201,169,97,0.25); }
+  .read-row { display: grid; grid-template-columns: 1.4fr 1fr 1.6fr; gap: 1rem; padding: 0.85rem 1rem;
+    border-radius: 8px; background: #fff; border: 1px solid rgba(201,169,97,0.3); align-items: center; }
+  .read-row + .read-row { margin-top: 0.5rem; }
+  .read-arabic { font-family: 'Amiri', serif; font-size: 1.8rem; color: #064e3b; text-align: center; }
+  .reveal-card { background: #fff; border: 1px solid rgba(201,169,97,0.3); border-radius: 12px; padding: 1.25rem;
+    cursor: pointer; transition: all 0.2s ease; }
+  .reveal-card:hover { border-color: #c9a961; transform: translateY(-2px); }
+  .reveal-card .answer { display: none; }
+  .reveal-card.revealed .answer { display: block; }
+  .reveal-card.revealed .prompt { color: #a8863f; }
+  .verse-word { background: #fff; border: 1px solid rgba(201,169,97,0.3); border-radius: 10px; padding: 1rem 0.75rem;
+    text-align: center; min-width: 110px; }
+  .choice { text-align: left; padding: 0.75rem 1rem; border: 2px solid #e7e5e4; border-radius: 8px; background: #fff; cursor: pointer;
+    transition: all 0.15s ease; font: inherit; width: 100%; }
+  .choice:hover { background: #ecfdf5; border-color: #059669; }
+  .choice.correct { background: #d1fae5; border-color: #059669; color: #064e3b; }
+  .choice.wrong { background: #fee2e2; border-color: #dc2626; color: #7f1d1d; }
+  .choice:disabled { cursor: default; }
+</style>
+</head>
+<body class="geo-pattern min-h-screen">
+
+<div class="max-w-6xl mx-auto px-6 py-10">
+
+  <nav class="flex justify-between items-center mb-6">
+    <a href="index.html" class="text-emerald-900 hover:text-amber-700 text-sm font-semibold">← Curriculum</a>
+    <div class="text-xs uppercase tracking-[0.25em] text-amber-700 font-semibold hidden sm:block">Tier 3 · Module 3-4</div>
+    <div class="text-sm text-stone-500"><span id="step-num">1</span> / <span id="step-total">9</span></div>
+  </nav>
+
+  <header class="text-center mb-8">
+    <div class="gold-line mb-4 max-w-[180px] mx-auto"></div>
+    <div class="arabic text-3xl text-emerald-900 mb-2">القِرَاءَة</div>
+    <h1 class="display text-4xl md:text-5xl text-emerald-950 font-semibold">Reading Drills</h1>
+    <div class="gold-line mt-4 max-w-[180px] mx-auto"></div>
+  </header>
+
+  <div class="grid md:grid-cols-[220px_1fr] gap-6">
+    <aside class="md:sticky md:top-6 md:self-start">
+      <div class="article-card p-3 shadow-sm">
+        <div class="text-xs uppercase tracking-wider text-amber-700 font-semibold mb-2 px-2">Steps</div>
+        <nav id="step-nav" class="space-y-1"></nav>
+      </div>
+    </aside>
+    <main id="step-container"></main>
+  </div>
+
+  <div class="flex justify-between mt-8 gap-4">
+    <button id="prev-step" class="btn-secondary flex-1 md:flex-none px-6 py-3 rounded-lg font-semibold disabled:opacity-30 disabled:cursor-not-allowed">← Previous</button>
+    <button id="next-step" class="btn-primary flex-1 md:flex-none px-6 py-3 rounded-lg font-semibold">Next →</button>
+  </div>
+
+</div>
+
+<script>
+const drillItems = [
+  { ar: "بَا", t: "bā", note: "fatḥa + alif (long ā)" },
+  { ar: "كِي", t: "kī", note: "kasra + yāʾ (long ī)" },
+  { ar: "نُو", t: "nū", note: "ḍamma + wāw (long ū)" },
+  { ar: "مَنْ", t: "man", note: "fatḥa + sukūn — \"who\"" },
+  { ar: "فِي", t: "fī", note: "kasra + yāʾ — \"in\"" },
+  { ar: "هُوَ", t: "huwa", note: "ḍamma + fatḥa — \"he\"" },
+  { ar: "هِيَ", t: "hiya", note: "kasra + fatḥa — \"she\"" },
+  { ar: "أَنْتَ", t: "anta", note: "fatḥa, sukūn, fatḥa — \"you (m.)\"" }
+];
+
+const wordItems = [
+  { ar: "نُور", t: "nūr", meaning: "light" },
+  { ar: "قَلْب", t: "qalb", meaning: "heart" },
+  { ar: "بَيْت", t: "bayt", meaning: "house" },
+  { ar: "كِتَاب", t: "kitāb", meaning: "book" },
+  { ar: "عِلْم", t: "ʿilm", meaning: "knowledge" },
+  { ar: "سَلَام", t: "salām", meaning: "peace" },
+  { ar: "دِين", t: "dīn", meaning: "religion" },
+  { ar: "جَنَّة", t: "janna", meaning: "paradise / garden" }
+];
+
+const phraseItems = [
+  { ar: "اللَّه", t: "Allāh", meaning: "God" },
+  { ar: "رَبّ", t: "Rabb", meaning: "Lord" },
+  { ar: "الرَّحْمَٰن", t: "Ar-Raḥmān", meaning: "The Most Merciful" },
+  { ar: "الرَّحِيم", t: "Ar-Raḥīm", meaning: "The Most Compassionate" },
+  { ar: "بِسْمِ ٱللَّهِ", t: "Bismillāh", meaning: "In the name of God" },
+  { ar: "ٱلْحَمْدُ لِلَّهِ", t: "Alḥamdulillāh", meaning: "All praise is for God" },
+  { ar: "ٱللَّهُ أَكْبَر", t: "Allāhu akbar", meaning: "God is the greatest" },
+  { ar: "إِنْ شَاءَ ٱللَّهُ", t: "InshāʾAllāh", meaning: "If God wills" }
+];
+
+const fatiha1Words = [
+  { ar: "بِسْمِ", t: "Bismi", meaning: "In the name of" },
+  { ar: "ٱللَّهِ", t: "Allāhi", meaning: "Allah" },
+  { ar: "ٱلرَّحْمَٰنِ", t: "ar-Raḥmāni", meaning: "the Most Merciful" },
+  { ar: "ٱلرَّحِيمِ", t: "ar-Raḥīm", meaning: "the Most Compassionate" }
+];
+
+const finalWords = [
+  { ar: "كِتَاب", correct: "kitāb", wrongs: ["kataba", "kabīr", "katib"] },
+  { ar: "نُور", correct: "nūr", wrongs: ["nār", "nahr", "nazr"] },
+  { ar: "ٱلْحَمْدُ", correct: "alḥamdu", wrongs: ["aḥmadu", "alḥawdu", "ḥamīd"] },
+  { ar: "رَبّ", correct: "rabb", wrongs: ["rib", "rūb", "rab"] },
+  { ar: "بَيْت", correct: "bayt", wrongs: ["bāt", "bīt", "bit"] },
+  { ar: "سَلَام", correct: "salām", wrongs: ["silm", "sallam", "muslim"] },
+  { ar: "ٱلصَّلَاة", correct: "aṣ-ṣalāh", wrongs: ["ʿalāqa", "salāma", "aṣ-ṣilā"] },
+  { ar: "كَتَبَ", correct: "kataba", wrongs: ["kitāb", "kāttib", "kutub"] }
+];
+
+const steps = [
+  {
+    title: "What you can do now",
+    icon: "🎯",
+    body: `
+      <p class="text-gray-700 mb-4 text-lg">In three modules you have learned:</p>
+      <ul class="list-disc list-inside text-gray-700 mb-4 space-y-1">
+        <li><strong>3-1:</strong> Names and sounds of all 28 letters.</li>
+        <li><strong>3-2:</strong> How letters change shape based on position.</li>
+        <li><strong>3-3:</strong> Short vowels, sukūn, shadda, tanwīn, and long vowels.</li>
+      </ul>
+      <p class="text-gray-700 mb-4">That is everything you need to read fully-vowelled Arabic — which is how the Quran is always written. Now we put it together.</p>
+      <div class="bg-emerald-50/80 border-l-4 border-emerald-700 p-5 rounded-r-lg my-5">
+        <p class="text-emerald-900 mb-2"><strong>Plan for this module:</strong></p>
+        <ol class="list-decimal list-inside text-emerald-900 text-sm space-y-1">
+          <li>Drill simple letter+vowel combinations.</li>
+          <li>Practice three-letter words.</li>
+          <li>Read common Quranic words and phrases.</li>
+          <li>Read the opening verse of Al-Fatiha word by word.</li>
+          <li>Final test.</li>
+        </ol>
+      </div>
+      <p class="text-gray-700 text-sm italic">No new material — only application. Take your time.</p>
+    `
+  },
+  {
+    title: "Letter + vowel combinations",
+    icon: "🔤",
+    body: `
+      <p class="text-gray-700 mb-4">Read each one out loud. Click any card to reveal the transliteration.</p>
+      <div class="grid sm:grid-cols-2 gap-3 mb-5" id="drill-grid">
+        ${drillItems.map((d, i) => `
+          <div class="reveal-card" data-i="${i}">
+            <div class="read-arabic mb-2">${d.ar}</div>
+            <div class="prompt text-xs text-amber-700/80 text-center">click to reveal</div>
+            <div class="answer text-center mt-2">
+              <div class="display text-lg font-semibold text-emerald-950">${d.t}</div>
+              <div class="text-xs text-stone-600 italic">${d.note}</div>
+            </div>
+          </div>
+        `).join("")}
+      </div>
+      <p class="text-gray-700 text-sm italic">Read each row before clicking. The answer reveals on click — use it as a check, not a crutch.</p>
+    `,
+    onShow: () => {
+      document.querySelectorAll("#drill-grid .reveal-card").forEach(c => {
+        c.addEventListener("click", () => c.classList.toggle("revealed"));
+      });
+    }
+  },
+  {
+    title: "Three-letter words",
+    icon: "📝",
+    body: `
+      <p class="text-gray-700 mb-4">Most Arabic words are built from a three-letter <strong>root</strong>. These are concrete nouns you'll see often. Read each, then click to reveal.</p>
+      <div class="grid sm:grid-cols-2 gap-3 mb-5" id="word-grid">
+        ${wordItems.map((w, i) => `
+          <div class="reveal-card" data-i="${i}">
+            <div class="read-arabic mb-2">${w.ar}</div>
+            <div class="prompt text-xs text-amber-700/80 text-center">click to reveal</div>
+            <div class="answer text-center mt-2">
+              <div class="display text-lg font-semibold text-emerald-950">${w.t}</div>
+              <div class="text-xs text-stone-600 italic">"${w.meaning}"</div>
+            </div>
+          </div>
+        `).join("")}
+      </div>
+    `,
+    onShow: () => {
+      document.querySelectorAll("#word-grid .reveal-card").forEach(c => {
+        c.addEventListener("click", () => c.classList.toggle("revealed"));
+      });
+    }
+  },
+  {
+    title: "Quranic words you already know",
+    icon: "📖",
+    body: `
+      <p class="text-gray-700 mb-4">From your earlier modules — now in the Arabic you can actually read.</p>
+      <div class="grid sm:grid-cols-2 gap-3 mb-5" id="phrase-grid">
+        ${phraseItems.map((p, i) => `
+          <div class="reveal-card" data-i="${i}">
+            <div class="read-arabic mb-2">${p.ar}</div>
+            <div class="prompt text-xs text-amber-700/80 text-center">click to reveal</div>
+            <div class="answer text-center mt-2">
+              <div class="display text-lg font-semibold text-emerald-950">${p.t}</div>
+              <div class="text-xs text-stone-600 italic">"${p.meaning}"</div>
+            </div>
+          </div>
+        `).join("")}
+      </div>
+      <p class="text-gray-700 text-sm italic">If you can read these out loud, you can already follow most simple Islamic recitations.</p>
+    `,
+    onShow: () => {
+      document.querySelectorAll("#phrase-grid .reveal-card").forEach(c => {
+        c.addEventListener("click", () => c.classList.toggle("revealed"));
+      });
+    }
+  },
+  {
+    title: "Al-Fatiha — verse 1 word by word",
+    icon: "🕋",
+    body: `
+      <p class="text-gray-700 mb-4">The first verse of the Quran's first chapter. Four words. Read right to left — words in the row below match the order you'd read them.</p>
+      <div class="bg-white border border-amber-200 rounded-xl p-5 mb-4">
+        <div class="arabic text-3xl text-emerald-900 text-center mb-4 leading-relaxed">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
+        <div class="flex flex-wrap justify-center gap-2">
+          ${fatiha1Words.map(w => `
+            <div class="verse-word">
+              <div class="read-arabic" style="font-size: 1.6rem;">${w.ar}</div>
+              <div class="display text-sm font-semibold text-emerald-950 mt-1">${w.t}</div>
+              <div class="text-xs text-stone-600 italic">${w.meaning}</div>
+            </div>
+          `).join("")}
+        </div>
+      </div>
+      <p class="text-gray-700 mb-3"><strong>Reading altogether:</strong> <em>Bismi-llāhi r-raḥmāni r-raḥīm</em> — "In the name of Allah, the Most Merciful, the Most Compassionate."</p>
+      <div class="bg-emerald-50/80 border-l-4 border-emerald-700 p-5 rounded-r-lg mb-4">
+        <p class="text-emerald-900 text-sm mb-2"><strong>What to notice:</strong></p>
+        <ul class="text-emerald-900 text-sm list-disc list-inside space-y-1">
+          <li>The "ٱ" at the start of the last three words — a special alif you don't pronounce when running words together.</li>
+          <li>The shadda over the <strong>ل</strong> in "ٱللَّهِ" — doubled.</li>
+          <li>The shadda over the <strong>ر</strong> in "ٱلرَّحْمَٰنِ" — sun-letter rule from Module 3-1.</li>
+        </ul>
+      </div>
+      <p class="text-gray-700 text-sm italic">This is the most-recited verse on earth — said before nearly every action a Muslim takes. The rest of Al-Fatiha (six more verses) is the next step in your reading life.</p>
+    `
+  },
+  {
+    title: "Final drill — what does it say?",
+    icon: "🎯",
+    body: `
+      <p class="text-gray-700 mb-4">Eight words. Pick the correct transliteration for each. No clicking through — read it from the script.</p>
+      <div id="final-drill"></div>
+      <div id="final-result" class="hidden mt-6 p-6 rounded-xl text-center"></div>
+      <div class="mt-4 text-center">
+        <button id="restart-final" class="btn-secondary px-4 py-2 rounded-lg text-sm font-semibold">New round</button>
+      </div>
+    `,
+    isFinal: true
+  },
+  {
+    title: "Quick check",
+    icon: "✍️",
+    body: `
+      <p class="text-gray-700 mb-6">Five questions on what you've learned across the tier.</p>
+      <div id="quiz"></div>
+      <div id="quiz-result" class="hidden mt-6 p-6 rounded-xl text-center"></div>
+    `,
+    isQuiz: true
+  },
+  {
+    title: "Where to go from here",
+    icon: "🎓",
+    body: `
+      <p class="text-gray-700 mb-4">You can read fully-voweled Arabic. The next steps build fluency rather than introduce new rules:</p>
+      <div class="grid sm:grid-cols-2 gap-3 mb-4">
+        <div class="bg-white border border-amber-200 rounded-lg p-4">
+          <div class="display text-base font-semibold text-emerald-950 mb-1">Module 4-1: Memorize Al-Fatiha</div>
+          <p class="text-xs text-stone-600">Now that you can read it, the next tier guides you through memorizing it. The opening of every prayer.</p>
+        </div>
+        <div class="bg-white border border-amber-200 rounded-lg p-4">
+          <div class="display text-base font-semibold text-emerald-950 mb-1">Module 4-2: Last 10 surahs</div>
+          <p class="text-xs text-stone-600">The shortest chapters of the Quran. Often the first ones memorized by Muslim children.</p>
+        </div>
+        <div class="bg-white border border-amber-200 rounded-lg p-4">
+          <div class="display text-base font-semibold text-emerald-950 mb-1">Read the Quran daily</div>
+          <p class="text-xs text-stone-600">Even five minutes a day. Speed will come with mileage. <a href="resources.html" class="underline text-emerald-800">quran.com</a> highlights word-by-word.</p>
+        </div>
+        <div class="bg-white border border-amber-200 rounded-lg p-4">
+          <div class="display text-base font-semibold text-emerald-950 mb-1">Module 5-5: Tajweed Basics</div>
+          <p class="text-xs text-stone-600">Tier 5 covers tajweed — the rules of beautiful recitation that go beyond just pronunciation.</p>
+        </div>
+      </div>
+      <p class="text-gray-700 text-sm italic">If you skipped any of the practice cards, go back. Repetition over weeks beats one intense session.</p>
+    `
+  },
+  {
+    title: "Tier 3 complete",
+    icon: "🏆",
+    body: `
+      <p class="text-gray-700 mb-4">You finished <strong>Tier 3: Arabic Script</strong>. This is the tier most learners get stuck on — and you didn't.</p>
+      <div class="grid sm:grid-cols-2 gap-3 mb-5">
+        <div class="bg-white border border-amber-200 rounded-lg p-4">
+          <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold mb-1">3-1</div>
+          <div class="display text-base font-semibold text-emerald-950">The 28 Letters</div>
+        </div>
+        <div class="bg-white border border-amber-200 rounded-lg p-4">
+          <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold mb-1">3-2</div>
+          <div class="display text-base font-semibold text-emerald-950">Connecting Letters</div>
+        </div>
+        <div class="bg-white border border-amber-200 rounded-lg p-4">
+          <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold mb-1">3-3</div>
+          <div class="display text-base font-semibold text-emerald-950">Short Vowels &amp; Sukun</div>
+        </div>
+        <div class="bg-white border border-amber-200 rounded-lg p-4">
+          <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold mb-1">3-4</div>
+          <div class="display text-base font-semibold text-emerald-950">Reading Drills</div>
+        </div>
+      </div>
+      <div class="bg-gradient-to-r from-emerald-50 to-amber-50 border border-amber-300 rounded-xl p-6 text-center my-6">
+        <div class="arabic text-2xl text-emerald-900 mb-1">رَبِّ زِدْنِي عِلْمًا</div>
+        <div class="text-sm italic text-stone-600 mb-4">"My Lord, increase me in knowledge." — Quran 20:114</div>
+        <div class="text-sm text-gray-700">Hit <strong>Finish</strong> to complete Tier 3.</div>
+        <div class="text-sm text-gray-700 mt-2">Next: <strong>Tier 4: Essential Memorization</strong> — Al-Fatiha, the short surahs, Ayat al-Kursi, and daily duas.</div>
+      </div>
+      <div class="text-center text-sm">
+        <a href="index.html" class="text-emerald-800 underline font-semibold">Back to curriculum →</a>
+      </div>
+    `
+  }
+];
+
+const quizQuestions = [
+  { q: "Arabic words are mostly built from how many root letters?", choices: ["Two", "Three", "Four", "Five"], answer: 1 },
+  { q: "When reading 'بِسْمِ', what comes first?", choices: ["The kasra", "The بـ in initial form", "The م", "The sukūn"], answer: 1 },
+  { q: "How many words are in the first verse of Al-Fatiha?", choices: ["Three", "Four", "Five", "Seven"], answer: 1 },
+  { q: "If you can read fully-voweled Arabic, you can read…", choices: ["Only the Quran", "Newspapers but not the Quran", "The Quran (always voweled)", "Any text instantly"], answer: 2 },
+  { q: "What's the next tier after Arabic Script?", choices: ["Quran Engagement", "Essential Memorization", "Seerah", "Aqeedah"], answer: 1 }
+];
+
+let currentStep = 0; let quizScore = 0; let quizAnswered = new Set();
+let finalQuestions = []; let finalScore = 0; let finalAnswered = new Set();
+
+const nav = document.getElementById("step-nav");
+const container = document.getElementById("step-container");
+const stepNum = document.getElementById("step-num");
+const stepTotal = document.getElementById("step-total");
+const prevBtn = document.getElementById("prev-step");
+const nextBtn = document.getElementById("next-step");
+stepTotal.textContent = steps.length;
+
+function shuffled(arr) { const a = arr.slice(); for (let i = a.length-1; i>0; i--) { const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+
+function renderFinal() {
+  finalScore = 0; finalAnswered = new Set();
+  finalQuestions = shuffled(finalWords).slice(0, 6).map(w => {
+    const choices = shuffled([w.correct, ...w.wrongs]);
+    return { ar: w.ar, choices, answer: choices.indexOf(w.correct) };
+  });
+  const el = document.getElementById("final-drill"); if (!el) return;
+  el.innerHTML = finalQuestions.map((q, i) => `
+    <div class="mb-5 p-5 bg-white border border-amber-200 rounded-xl">
+      <div class="text-center mb-3">
+        <div class="read-arabic" style="font-size: 2.5rem;">${q.ar}</div>
+      </div>
+      <div class="grid grid-cols-2 gap-2" data-fi="${i}">
+        ${q.choices.map((c, ci) => `<button class="choice text-center" data-c="${ci}">${c}</button>`).join("")}
+      </div>
+    </div>
+  `).join("");
+  document.getElementById("final-result").classList.add("hidden");
+  el.querySelectorAll(".choice").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const group = btn.closest("[data-fi]"); const fi = parseInt(group.dataset.fi);
+      if (finalAnswered.has(fi)) return;
+      const choice = parseInt(btn.dataset.c); const correct = finalQuestions[fi].answer;
+      finalAnswered.add(fi);
+      group.querySelectorAll(".choice").forEach((b, i) => { b.disabled = true; if (i === correct) b.classList.add("correct"); else if (i === choice) b.classList.add("wrong"); });
+      if (choice === correct) finalScore++;
+      if (finalAnswered.size === 6) {
+        const r = document.getElementById("final-result"); r.classList.remove("hidden");
+        const pct = finalScore / 6;
+        let msg, color;
+        if (pct === 1) { msg = "Perfect. You're reading."; color = "bg-emerald-100 text-emerald-900"; }
+        else if (pct >= 0.66) { msg = `${finalScore} of 6.`; color = "bg-emerald-100 text-emerald-900"; }
+        else { msg = `${finalScore} of 6 — go back through the drills.`; color = "bg-amber-100 text-amber-900"; }
+        r.className = "mt-6 p-6 rounded-xl text-center " + color;
+        r.innerHTML = `<div class="text-4xl font-bold mb-2">${finalScore} / 6</div><div>${msg}</div>`;
+      }
+    });
+  });
+  document.getElementById("restart-final").addEventListener("click", renderFinal);
+}
+
+function renderQuiz() {
+  const quizEl = document.getElementById("quiz"); if (!quizEl) return;
+  quizScore = 0; quizAnswered = new Set();
+  quizEl.innerHTML = quizQuestions.map((q, qi) => `
+    <div class="mb-5 p-5 bg-white border border-amber-200 rounded-xl">
+      <div class="font-semibold text-gray-800 mb-3">${qi + 1}. ${q.q}</div>
+      <div class="grid gap-2" data-qindex="${qi}">${q.choices.map((c, ci) => `<button class="choice" data-choice="${ci}">${c}</button>`).join("")}</div>
+    </div>`).join("");
+  quizEl.querySelectorAll(".choice").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const group = btn.closest("[data-qindex]"); const qi = parseInt(group.dataset.qindex);
+      if (quizAnswered.has(qi)) return;
+      const choice = parseInt(btn.dataset.choice); const correct = quizQuestions[qi].answer;
+      quizAnswered.add(qi);
+      group.querySelectorAll(".choice").forEach((b, i) => { b.disabled = true; if (i === correct) b.classList.add("correct"); else if (i === choice) b.classList.add("wrong"); });
+      if (choice === correct) quizScore++;
+      if (quizAnswered.size === quizQuestions.length) showQuizResult();
+    });
+  });
+}
+function showQuizResult() {
+  const r = document.getElementById("quiz-result"); r.classList.remove("hidden");
+  const pct = quizScore / quizQuestions.length;
+  let msg, color;
+  if (pct === 1) { msg = "Perfect."; color = "bg-emerald-100 text-emerald-900"; }
+  else if (pct >= 0.6) { msg = "Solid."; color = "bg-emerald-100 text-emerald-900"; }
+  else { msg = "Worth another pass."; color = "bg-amber-100 text-amber-900"; }
+  r.className = "mt-6 p-6 rounded-xl text-center " + color;
+  r.innerHTML = `<div class="text-4xl font-bold mb-2">${quizScore} / ${quizQuestions.length}</div><div>${msg}</div>`;
+}
+
+function render() {
+  nav.innerHTML = steps.map((s, i) => `<button class="step-btn w-full text-left px-3 py-2 rounded-lg border border-transparent text-sm hover:bg-amber-50 ${i === currentStep ? 'active' : ''}" data-i="${i}"><span class="mr-2">${s.icon}</span>${s.title}</button>`).join("");
+  container.innerHTML = `<article class="article-card shadow-sm p-8"><div class="flex items-center gap-4 mb-6 pb-4 border-b border-amber-100"><div class="text-5xl">${steps[currentStep].icon}</div><div><div class="text-xs text-amber-700 font-semibold uppercase tracking-widest">Step ${currentStep + 1}</div><h2 class="display text-3xl text-emerald-950 font-semibold">${steps[currentStep].title}</h2></div></div><div>${steps[currentStep].body}</div></article>`;
+  stepNum.textContent = currentStep + 1; prevBtn.disabled = currentStep === 0;
+  nextBtn.textContent = currentStep === steps.length - 1 ? "Finish" : "Next →";
+  if (steps[currentStep].isFinal) renderFinal();
+  if (steps[currentStep].isQuiz) renderQuiz();
+  if (typeof steps[currentStep].onShow === "function") steps[currentStep].onShow();
+  nav.querySelectorAll(".step-btn").forEach(b => { b.addEventListener("click", () => { currentStep = parseInt(b.dataset.i); render(); }); });
+}
+
+const MODULE_ID = "3-4"; const STORAGE_KEY = "islamapp-progress-v1";
+function loadProgress() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; } }
+function markInProgress() { const p = loadProgress(); if (p[MODULE_ID] !== "done") { p[MODULE_ID] = "inprogress"; localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); } }
+function markComplete() { const p = loadProgress(); p[MODULE_ID] = "done"; localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); }
+
+prevBtn.addEventListener("click", () => { if (currentStep > 0) { currentStep--; render(); } });
+nextBtn.addEventListener("click", () => { if (currentStep < steps.length - 1) { currentStep++; render(); } else { markComplete(); window.location.href = "index.html"; } });
+
+document.addEventListener("keydown", (e) => {
+  if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.isContentEditable) return;
+  if (e.key === "ArrowLeft" && !prevBtn.disabled) prevBtn.click();
+  else if (e.key === "ArrowRight") nextBtn.click();
+});
+
+markInProgress(); render();
+</script>
+
+</body>
+</html>

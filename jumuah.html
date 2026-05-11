@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Jumuʿah — Friday Prayer — IslamApp</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>(function(){try{if(localStorage.getItem('islamapp-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
+<link rel="stylesheet" href="theme.css">
+<script src="theme.js" defer></script>
+<style>
+  body { font-family: 'Inter', sans-serif; background: #faf6ed; color: #1c2d20;
+    background-image: radial-gradient(circle at 10% 10%, rgba(201,169,97,0.08) 0%, transparent 40%), radial-gradient(circle at 90% 90%, rgba(6,78,59,0.06) 0%, transparent 40%);
+    background-attachment: fixed; }
+  .arabic { font-family: 'Amiri', serif; direction: rtl; line-height: 1.7; }
+  .display { font-family: 'Cormorant Garamond', serif; }
+  .geo-pattern { background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23064e3b' fill-opacity='0.05'%3E%3Cpath d='M30 0l7.5 22.5H60L41.25 37.5l7.5 22.5L30 45l-18.75 15 7.5-22.5L0 22.5h22.5z'/%3E%3C/g%3E%3C/svg%3E"); }
+  .step-btn.active { background: #064e3b; color: #faf6ed; border-color: #c9a961; }
+  .gold-line { height: 1px; background: linear-gradient(to right, transparent, #c9a961, transparent); }
+  .btn-primary { background: linear-gradient(135deg, #064e3b 0%, #022c22 100%); color: #faf6ed; border: 1px solid #c9a961; }
+  .btn-primary:hover { background: linear-gradient(135deg, #0f766e 0%, #064e3b 100%); }
+  .btn-secondary { background: #fff; border: 1px solid #c9a961; color: #064e3b; }
+  .btn-secondary:hover { background: #faf6ed; }
+  .article-card { background: #fff; border: 1px solid rgba(201,169,97,0.4); border-radius: 14px 14px 6px 6px; }
+  .article-card::before { content: ''; display: block; height: 12px; margin: -1px -1px 0 -1px;
+    background: linear-gradient(180deg, rgba(201,169,97,0.25), transparent); border-radius: 14px 14px 0 0; border-bottom: 1px solid rgba(201,169,97,0.25); }
+  .timeline-item { display: flex; gap: 1rem; padding: 0.85rem 1rem; background: #fff;
+    border: 1px solid rgba(201,169,97,0.3); border-left: 4px solid #c9a961; border-radius: 8px; }
+  .timeline-num { flex-shrink: 0; width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, #064e3b, #0f766e);
+    color: #faf6ed; display: flex; align-items: center; justify-content: center; font-weight: 700; font-family: 'Cormorant Garamond', serif; font-size: 0.9rem; }
+  .etiquette-card { background: #fff; border: 1px solid rgba(201,169,97,0.3); border-left: 4px solid #0f766e;
+    border-radius: 8px; padding: 0.85rem 1rem; }
+  .avoid-card { background: #fff; border: 1px solid rgba(220,38,38,0.3); border-left: 4px solid #dc2626;
+    border-radius: 8px; padding: 0.85rem 1rem; }
+  .req-card { background: #fff; border: 1px solid rgba(201,169,97,0.3); border-radius: 8px; padding: 0.85rem 1rem; }
+  .choice { text-align: left; padding: 0.75rem 1rem; border: 2px solid #e7e5e4; border-radius: 8px; background: #fff; cursor: pointer;
+    transition: all 0.15s ease; font: inherit; width: 100%; }
+  .choice:hover { background: #ecfdf5; border-color: #059669; }
+  .choice.correct { background: #d1fae5; border-color: #059669; color: #064e3b; }
+  .choice.wrong { background: #fee2e2; border-color: #dc2626; color: #7f1d1d; }
+  .choice:disabled { cursor: default; }
+</style>
+</head>
+<body class="geo-pattern min-h-screen">
+
+<div class="max-w-6xl mx-auto px-6 py-10">
+
+  <nav class="flex justify-between items-center mb-6">
+    <a href="index.html" class="text-emerald-900 hover:text-amber-700 text-sm font-semibold">← Curriculum</a>
+    <div class="text-xs uppercase tracking-[0.25em] text-amber-700 font-semibold hidden sm:block">Tier 2 · Module 2-5</div>
+    <div class="text-sm text-stone-500"><span id="step-num">1</span> / <span id="step-total">8</span></div>
+  </nav>
+
+  <header class="text-center mb-8">
+    <div class="gold-line mb-4 max-w-[180px] mx-auto"></div>
+    <div class="arabic text-3xl text-emerald-900 mb-2">صَلَاة الجُمُعَة</div>
+    <h1 class="display text-4xl md:text-5xl text-emerald-950 font-semibold">Jumuʿah — the Friday Prayer</h1>
+    <div class="gold-line mt-4 max-w-[180px] mx-auto"></div>
+  </header>
+
+  <div class="grid md:grid-cols-[220px_1fr] gap-6">
+    <aside class="md:sticky md:top-6 md:self-start">
+      <div class="article-card p-3 shadow-sm">
+        <div class="text-xs uppercase tracking-wider text-amber-700 font-semibold mb-2 px-2">Steps</div>
+        <nav id="step-nav" class="space-y-1"></nav>
+      </div>
+    </aside>
+    <main id="step-container"></main>
+  </div>
+
+  <div class="flex justify-between mt-8 gap-4">
+    <button id="prev-step" class="btn-secondary flex-1 md:flex-none px-6 py-3 rounded-lg font-semibold disabled:opacity-30 disabled:cursor-not-allowed">← Previous</button>
+    <button id="next-step" class="btn-primary flex-1 md:flex-none px-6 py-3 rounded-lg font-semibold">Next →</button>
+  </div>
+
+</div>
+
+<script>
+const timeline = [
+  { n: 1, title: "The call to prayer (adhan)", body: "Given when Dhuhr time enters. Some mosques give a second adhan (the Uthmanic addition) closer to the khutbah." },
+  { n: 2, title: "First khutbah (sermon)", body: "The imam stands on the minbar (pulpit). Begins with praise of Allah, salutations on the Prophet, recitation of Quran, and a topical lesson. Usually 15–20 minutes." },
+  { n: 3, title: "Brief sitting", body: "The imam sits briefly between the two khutbahs — a short pause that distinguishes the two parts." },
+  { n: 4, title: "Second khutbah", body: "Shorter than the first. Closes with supplications and prayers for the Muslim community." },
+  { n: 5, title: "Iqama (call to stand)", body: "The signal that the prayer itself is about to begin." },
+  { n: 6, title: "Two rakʿāt led by the imam", body: "Performed aloud — the imam recites Al-Fatiha and another surah audibly. The congregation listens and follows the movements." }
+];
+
+const requirements = [
+  { who: "✓ Required", text: "Adult, sane, free Muslim men who are residents (not travelers)." },
+  { who: "○ Encouraged but not required", text: "Women — they may attend but Dhuhr at home is also valid for them." },
+  { who: "○ Exempt", text: "Travelers, the seriously ill, and those for whom attending would cause hardship." },
+  { who: "✗ Not held", text: "If three Fridays are missed without valid reason, hadiths warn of grave spiritual consequence — 'a seal placed over the heart.'" }
+];
+
+const etiquettes = [
+  { icon: "🚿", title: "Take a ghusl", note: "A full ritual bath before going. Considered strongly recommended; some scholars say required." },
+  { icon: "🧴", title: "Apply perfume", note: "The Prophet ﷺ used perfume on Fridays. (Men only — perfume of a kind that does not project beyond the wearer is encouraged.)" },
+  { icon: "👔", title: "Wear your best clothes", note: "Clean, presentable, ideally white. The day deserves it." },
+  { icon: "🦷", title: "Brush teeth (siwāk)", note: "Use a miswak or toothbrush before going." },
+  { icon: "🚶", title: "Walk to the mosque if possible", note: "Each step is recorded — every step earns reward equivalent to a year of fasting and prayer, per a hadith in Tirmidhi." },
+  { icon: "🕐", title: "Arrive early", note: "The Prophet ﷺ said: \"Whoever comes in the first hour, it is as if he sacrificed a camel; the second, a cow; the third, a ram…\" Earlier is much better." },
+  { icon: "🤫", title: "Listen silently to the khutbah", note: "Talking during the khutbah is forbidden — even saying 'be quiet' to someone else is wrong, per a hadith." },
+  { icon: "📖", title: "Read Surah Al-Kahf", note: "Recommended at any point on Friday (or Thursday night). Whoever reads it has a light from one Friday to the next." }
+];
+
+const avoid = [
+  { title: "Talking during the khutbah", note: "Even brief comments are forbidden — including telling someone else to be quiet (use a gesture instead)." },
+  { title: "Stepping over people's necks", note: "If you arrive late, sit at the back rather than push through rows of people." },
+  { title: "Conducting business after the call to prayer", note: "Quran 62:9–10: 'Hasten to the remembrance of Allah and leave off business.' Trade resumes after the prayer ends." },
+  { title: "Skipping it for trivial reasons", note: "Work meetings, errands, sleeping in. The threshold for missing is real hardship, not inconvenience." }
+];
+
+const steps = [
+  {
+    title: "What is Jumuʿah?",
+    icon: "🕌",
+    body: `
+      <p class="text-gray-700 mb-4 text-lg"><strong>Jumuʿah</strong> means "gathering." On Fridays, the Dhuhr (midday) prayer is replaced by a special <strong>congregational</strong> prayer that includes a sermon. It is the most important weekly observance in Islam.</p>
+      <div class="bg-emerald-50/80 border-l-4 border-emerald-700 p-5 rounded-r-lg my-5">
+        <div class="arabic text-xl text-emerald-900 mb-2 leading-relaxed">يَا أَيُّهَا الَّذِينَ آمَنُوا إِذَا نُودِيَ لِلصَّلَاةِ مِن يَوْمِ الْجُمُعَةِ فَاسْعَوْا إِلَىٰ ذِكْرِ اللَّهِ</div>
+        <p class="text-emerald-900 italic text-sm">"O you who believe, when the call to prayer is made on the day of Jumuʿah, hasten to the remembrance of Allah." — Quran 62:9</p>
+      </div>
+      <p class="text-gray-700 mb-3">A few things make it different from a regular prayer:</p>
+      <ul class="list-disc list-inside space-y-1 text-sm text-gray-700 mb-4">
+        <li>It must be performed in a <strong>congregation</strong> at a mosque (not alone at home).</li>
+        <li>It includes a <strong>khutbah</strong> (sermon) by an imam or preacher.</li>
+        <li>It replaces Dhuhr — only <strong>two</strong> rakʿāt are prayed instead of four.</li>
+        <li>Attendance is <strong>obligatory</strong> for adult Muslim men (with some exemptions).</li>
+      </ul>
+      <p class="text-gray-700 text-sm italic">Friday is also called <em>Sayyid al-Ayyām</em> — "the master of days." Hadith literature treats it as the most blessed day of the week, the day Adam was created, the day he entered Paradise, and the day the Last Day will fall.</p>
+    `
+  },
+  {
+    title: "The structure",
+    icon: "📋",
+    body: `
+      <p class="text-gray-700 mb-5">A walk through what happens, in order. Most mosques follow this same shape worldwide.</p>
+      <div class="space-y-2 mb-4">
+        ${timeline.map(t => `
+          <div class="timeline-item">
+            <div class="timeline-num">${t.n}</div>
+            <div class="flex-1">
+              <div class="display font-semibold text-emerald-950 mb-1">${t.title}</div>
+              <div class="text-sm text-gray-700">${t.body}</div>
+            </div>
+          </div>
+        `).join("")}
+      </div>
+      <div class="bg-amber-50/60 border border-amber-200 rounded-lg p-4 text-sm text-stone-700">
+        <strong class="text-amber-800">Total time:</strong> usually 30–45 minutes from start to end. Many people pray additional voluntary prayers (sunnah) before or after.
+      </div>
+      <p class="text-gray-700 text-sm italic mt-3">If you miss the khutbah and only catch the prayer, in most schools you must pray a full Dhuhr (4 rakʿāt) instead of 2 — the khutbah is what makes Jumuʿah <em>Jumuʿah</em>.</p>
+    `
+  },
+  {
+    title: "Who must attend",
+    icon: "👥",
+    body: `
+      <p class="text-gray-700 mb-4">The four classical schools differ on details, but the broad pattern is:</p>
+      <div class="space-y-2 mb-5">
+        ${requirements.map(r => `
+          <div class="req-card">
+            <div class="display font-semibold text-emerald-950 mb-1">${r.who}</div>
+            <div class="text-sm text-stone-700">${r.text}</div>
+          </div>
+        `).join("")}
+      </div>
+      <div class="bg-emerald-50/80 border-l-4 border-emerald-700 p-5 rounded-r-lg">
+        <p class="text-emerald-900 text-sm">A famous hadith: <em>"Whoever leaves three Jumuʿahs out of negligence, Allah will set a seal upon his heart."</em> — Abu Dawud 1052, Tirmidhi 500.</p>
+      </div>
+    `
+  },
+  {
+    title: "Etiquette &amp; Sunnah",
+    icon: "✨",
+    body: `
+      <p class="text-gray-700 mb-4">Things the Prophet ﷺ recommended for the day. None are individually obligatory, but together they shape what Friday is supposed to feel like.</p>
+      <div class="space-y-2 mb-5">
+        ${etiquettes.map(e => `
+          <div class="etiquette-card flex gap-3">
+            <div class="text-2xl">${e.icon}</div>
+            <div class="flex-1">
+              <div class="display font-semibold text-emerald-950">${e.title}</div>
+              <div class="text-sm text-stone-600">${e.note}</div>
+            </div>
+          </div>
+        `).join("")}
+      </div>
+    `
+  },
+  {
+    title: "The hour of acceptance",
+    icon: "🌟",
+    body: `
+      <p class="text-gray-700 mb-4">There is a specific hour on Friday in which any sincere supplication is said to be answered. The Prophet ﷺ said:</p>
+      <div class="bg-white border-l-4 border-amber-600 p-5 rounded-r-lg my-4 shadow-sm">
+        <p class="text-gray-800 italic text-sm mb-2">"On Friday, there is an hour during which no Muslim servant who stands in prayer asking Allah for something good — except that He gives it to him."</p>
+        <p class="text-xs text-stone-500">— Bukhari 935, Muslim 852</p>
+      </div>
+      <p class="text-gray-700 mb-3">Scholars differ on which hour exactly. The two strongest opinions:</p>
+      <div class="grid sm:grid-cols-2 gap-3 mb-4">
+        <div class="bg-white border border-amber-200 rounded-lg p-4">
+          <div class="display text-base font-semibold text-emerald-950 mb-1">Between the two khutbahs</div>
+          <p class="text-xs text-stone-600">Or while the imam is sitting on the minbar — i.e., during the prayer service itself.</p>
+        </div>
+        <div class="bg-white border border-amber-200 rounded-lg p-4">
+          <div class="display text-base font-semibold text-emerald-950 mb-1">The last hour before sunset</div>
+          <p class="text-xs text-stone-600">From mid-afternoon until Maghrib — the more widely-held view.</p>
+        </div>
+      </div>
+      <p class="text-gray-700 text-sm">Most Muslims try to make extra duas at both moments to be safe.</p>
+    `
+  },
+  {
+    title: "Things to avoid",
+    icon: "🚫",
+    body: `
+      <p class="text-gray-700 mb-4">A handful of things that diminish or invalidate the rewards of Friday.</p>
+      <div class="space-y-2 mb-5">
+        ${avoid.map(a => `
+          <div class="avoid-card">
+            <div class="display font-semibold text-emerald-950 mb-1">${a.title}</div>
+            <div class="text-sm text-stone-600">${a.note}</div>
+          </div>
+        `).join("")}
+      </div>
+    `
+  },
+  {
+    title: "Quick check",
+    icon: "✍️",
+    body: `
+      <p class="text-gray-700 mb-6">Six questions on Jumuʿah.</p>
+      <div id="quiz"></div>
+      <div id="quiz-result" class="hidden mt-6 p-6 rounded-xl text-center"></div>
+    `,
+    isQuiz: true
+  },
+  {
+    title: "Tier 2 complete",
+    icon: "🏆",
+    body: `
+      <p class="text-gray-700 mb-4">You finished Module 2-5 — and that completes <strong>Tier 2: Purification &amp; Prayer</strong>. Here is what Tier 2 gave you:</p>
+      <div class="grid sm:grid-cols-2 gap-3 mb-5">
+        <div class="bg-white border border-amber-200 rounded-lg p-4">
+          <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold mb-1">2-1</div>
+          <div class="display text-base font-semibold text-emerald-950">Wudu</div>
+        </div>
+        <div class="bg-white border border-amber-200 rounded-lg p-4">
+          <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold mb-1">2-2</div>
+          <div class="display text-base font-semibold text-emerald-950">Ghusl</div>
+        </div>
+        <div class="bg-white border border-amber-200 rounded-lg p-4">
+          <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold mb-1">2-3</div>
+          <div class="display text-base font-semibold text-emerald-950">The Salah Walkthrough</div>
+        </div>
+        <div class="bg-white border border-amber-200 rounded-lg p-4">
+          <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold mb-1">2-4</div>
+          <div class="display text-base font-semibold text-emerald-950">Prayer Times &amp; Conditions</div>
+        </div>
+        <div class="bg-white border border-amber-200 rounded-lg p-4 sm:col-span-2">
+          <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold mb-1">2-5</div>
+          <div class="display text-base font-semibold text-emerald-950">Jumuʿah</div>
+        </div>
+      </div>
+      <div class="bg-gradient-to-r from-emerald-50 to-amber-50 border border-amber-300 rounded-xl p-6 text-center my-6">
+        <div class="arabic text-2xl text-emerald-900 mb-1">جُمُعَة مُبَارَكَة</div>
+        <div class="text-sm italic text-stone-600 mb-4">Jumuʿah Mubāraka — "blessed Friday."</div>
+        <div class="text-sm text-gray-700">Hit <strong>Finish</strong> to mark this module — and Tier 2 — complete.</div>
+        <div class="text-sm text-gray-700 mt-2">Next: <strong>Tier 3: Arabic Script</strong> begins to unlock the Quran in its original language.</div>
+      </div>
+      <div class="text-center text-sm">
+        <a href="index.html" class="text-emerald-800 underline font-semibold">Back to curriculum →</a>
+      </div>
+    `
+  }
+];
+
+const quizQuestions = [
+  { q: "Jumuʿah replaces which prayer?", choices: ["Fajr", "Dhuhr", "ʿAsr", "Maghrib"], answer: 1 },
+  { q: "How many rakʿāt is the Friday prayer itself?", choices: ["Two", "Three", "Four", "Five"], answer: 0 },
+  { q: "During the khutbah you must…", choices: ["Repeat after the imam", "Listen silently", "Pray on the side", "Recite Al-Fatiha"], answer: 1 },
+  { q: "Which surah is recommended to read on Fridays?", choices: ["Al-Fatiha", "Al-Kahf", "Yāsīn", "Al-Mulk"], answer: 1 },
+  { q: "Which is NOT a Sunnah etiquette of Jumuʿah?", choices: ["Taking a ghusl", "Wearing perfume", "Arriving late", "Walking to the mosque"], answer: 2 },
+  { q: "Hadith warns of a 'seal on the heart' for someone who…", choices: ["Misses three Jumuʿahs without excuse", "Eats during the khutbah", "Does not wear white", "Sits at the back"], answer: 0 }
+];
+
+let currentStep = 0; let quizScore = 0; let quizAnswered = new Set();
+const nav = document.getElementById("step-nav");
+const container = document.getElementById("step-container");
+const stepNum = document.getElementById("step-num");
+const stepTotal = document.getElementById("step-total");
+const prevBtn = document.getElementById("prev-step");
+const nextBtn = document.getElementById("next-step");
+stepTotal.textContent = steps.length;
+
+function renderQuiz() {
+  const quizEl = document.getElementById("quiz"); if (!quizEl) return;
+  quizScore = 0; quizAnswered = new Set();
+  quizEl.innerHTML = quizQuestions.map((q, qi) => `
+    <div class="mb-5 p-5 bg-white border border-amber-200 rounded-xl">
+      <div class="font-semibold text-gray-800 mb-3">${qi + 1}. ${q.q}</div>
+      <div class="grid gap-2" data-qindex="${qi}">${q.choices.map((c, ci) => `<button class="choice" data-choice="${ci}">${c}</button>`).join("")}</div>
+    </div>`).join("");
+  quizEl.querySelectorAll(".choice").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const group = btn.closest("[data-qindex]"); const qi = parseInt(group.dataset.qindex);
+      if (quizAnswered.has(qi)) return;
+      const choice = parseInt(btn.dataset.choice); const correct = quizQuestions[qi].answer;
+      quizAnswered.add(qi);
+      group.querySelectorAll(".choice").forEach((b, i) => { b.disabled = true; if (i === correct) b.classList.add("correct"); else if (i === choice) b.classList.add("wrong"); });
+      if (choice === correct) quizScore++;
+      if (quizAnswered.size === quizQuestions.length) showResult();
+    });
+  });
+}
+function showResult() {
+  const r = document.getElementById("quiz-result"); r.classList.remove("hidden");
+  const pct = quizScore / quizQuestions.length;
+  let msg, color;
+  if (pct === 1) { msg = "Perfect."; color = "bg-emerald-100 text-emerald-900"; }
+  else if (pct >= 0.6) { msg = "Solid."; color = "bg-emerald-100 text-emerald-900"; }
+  else { msg = "Worth another pass."; color = "bg-amber-100 text-amber-900"; }
+  r.className = "mt-6 p-6 rounded-xl text-center " + color;
+  r.innerHTML = `<div class="text-4xl font-bold mb-2">${quizScore} / ${quizQuestions.length}</div><div>${msg}</div>`;
+}
+
+function render() {
+  nav.innerHTML = steps.map((s, i) => `<button class="step-btn w-full text-left px-3 py-2 rounded-lg border border-transparent text-sm hover:bg-amber-50 ${i === currentStep ? 'active' : ''}" data-i="${i}"><span class="mr-2">${s.icon}</span>${s.title}</button>`).join("");
+  container.innerHTML = `<article class="article-card shadow-sm p-8"><div class="flex items-center gap-4 mb-6 pb-4 border-b border-amber-100"><div class="text-5xl">${steps[currentStep].icon}</div><div><div class="text-xs text-amber-700 font-semibold uppercase tracking-widest">Step ${currentStep + 1}</div><h2 class="display text-3xl text-emerald-950 font-semibold">${steps[currentStep].title}</h2></div></div><div>${steps[currentStep].body}</div></article>`;
+  stepNum.textContent = currentStep + 1; prevBtn.disabled = currentStep === 0;
+  nextBtn.textContent = currentStep === steps.length - 1 ? "Finish" : "Next →";
+  if (steps[currentStep].isQuiz) renderQuiz();
+  nav.querySelectorAll(".step-btn").forEach(b => { b.addEventListener("click", () => { currentStep = parseInt(b.dataset.i); render(); }); });
+}
+
+const MODULE_ID = "2-5"; const STORAGE_KEY = "islamapp-progress-v1";
+function loadProgress() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; } }
+function markInProgress() { const p = loadProgress(); if (p[MODULE_ID] !== "done") { p[MODULE_ID] = "inprogress"; localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); } }
+function markComplete() { const p = loadProgress(); p[MODULE_ID] = "done"; localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); }
+
+prevBtn.addEventListener("click", () => { if (currentStep > 0) { currentStep--; render(); } });
+nextBtn.addEventListener("click", () => { if (currentStep < steps.length - 1) { currentStep++; render(); } else { markComplete(); window.location.href = "index.html"; } });
+
+document.addEventListener("keydown", (e) => {
+  if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.isContentEditable) return;
+  if (e.key === "ArrowLeft" && !prevBtn.disabled) prevBtn.click();
+  else if (e.key === "ArrowRight") nextBtn.click();
+});
+
+markInProgress(); render();
+</script>
+
+</body>
+</html>

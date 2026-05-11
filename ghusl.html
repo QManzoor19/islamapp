@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ghusl — Full Purification — IslamApp</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>(function(){try{if(localStorage.getItem('islamapp-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
+<link rel="stylesheet" href="theme.css">
+<script src="theme.js" defer></script>
+<style>
+  body { font-family: 'Inter', sans-serif; background: #faf6ed; color: #1c2d20;
+    background-image: radial-gradient(circle at 10% 10%, rgba(201,169,97,0.08) 0%, transparent 40%), radial-gradient(circle at 90% 90%, rgba(6,78,59,0.06) 0%, transparent 40%);
+    background-attachment: fixed; }
+  .arabic { font-family: 'Amiri', serif; direction: rtl; line-height: 1.7; }
+  .display { font-family: 'Cormorant Garamond', serif; }
+  .geo-pattern { background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23064e3b' fill-opacity='0.05'%3E%3Cpath d='M30 0l7.5 22.5H60L41.25 37.5l7.5 22.5L30 45l-18.75 15 7.5-22.5L0 22.5h22.5z'/%3E%3C/g%3E%3C/svg%3E"); }
+  .step-btn.active { background: #064e3b; color: #faf6ed; border-color: #c9a961; }
+  .gold-line { height: 1px; background: linear-gradient(to right, transparent, #c9a961, transparent); }
+  .btn-primary { background: linear-gradient(135deg, #064e3b 0%, #022c22 100%); color: #faf6ed; border: 1px solid #c9a961; }
+  .btn-primary:hover { background: linear-gradient(135deg, #0f766e 0%, #064e3b 100%); }
+  .btn-secondary { background: #fff; border: 1px solid #c9a961; color: #064e3b; }
+  .btn-secondary:hover { background: #faf6ed; }
+  .article-card { background: #fff; border: 1px solid rgba(201,169,97,0.4); border-radius: 14px 14px 6px 6px; }
+  .article-card::before { content: ''; display: block; height: 12px; margin: -1px -1px 0 -1px;
+    background: linear-gradient(180deg, rgba(201,169,97,0.25), transparent); border-radius: 14px 14px 0 0; border-bottom: 1px solid rgba(201,169,97,0.25); }
+  .num-step { background: #fff; border: 1px solid rgba(201,169,97,0.3); border-left: 4px solid #0f766e; border-radius: 10px;
+    padding: 1rem 1.25rem; display: flex; gap: 1rem; align-items: flex-start; }
+  .num-bubble { flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #064e3b, #0f766e);
+    color: #faf6ed; display: flex; align-items: center; justify-content: center; font-weight: 700; font-family: 'Cormorant Garamond', serif; }
+  .occasion-row { display: flex; gap: 0.85rem; align-items: center; padding: 0.75rem 1rem; background: #fff;
+    border: 1px solid rgba(201,169,97,0.3); border-radius: 8px; }
+  .choice { text-align: left; padding: 0.75rem 1rem; border: 2px solid #e7e5e4; border-radius: 8px; background: #fff; cursor: pointer;
+    transition: all 0.15s ease; font: inherit; width: 100%; }
+  .choice:hover { background: #ecfdf5; border-color: #059669; }
+  .choice.correct { background: #d1fae5; border-color: #059669; color: #064e3b; }
+  .choice.wrong { background: #fee2e2; border-color: #dc2626; color: #7f1d1d; }
+  .choice:disabled { cursor: default; }
+</style>
+</head>
+<body class="geo-pattern min-h-screen">
+
+<div class="max-w-6xl mx-auto px-6 py-10">
+
+  <nav class="flex justify-between items-center mb-6">
+    <a href="index.html" class="text-emerald-900 hover:text-amber-700 text-sm font-semibold">← Curriculum</a>
+    <div class="text-xs uppercase tracking-[0.25em] text-amber-700 font-semibold hidden sm:block">Tier 2 · Module 2-2</div>
+    <div class="text-sm text-stone-500"><span id="step-num">1</span> / <span id="step-total">7</span></div>
+  </nav>
+
+  <header class="text-center mb-8">
+    <div class="gold-line mb-4 max-w-[180px] mx-auto"></div>
+    <div class="arabic text-3xl text-emerald-900 mb-2">الغُسْل</div>
+    <h1 class="display text-4xl md:text-5xl text-emerald-950 font-semibold">Ghusl — Full Purification</h1>
+    <div class="gold-line mt-4 max-w-[180px] mx-auto"></div>
+  </header>
+
+  <div class="grid md:grid-cols-[220px_1fr] gap-6">
+    <aside class="md:sticky md:top-6 md:self-start">
+      <div class="article-card p-3 shadow-sm">
+        <div class="text-xs uppercase tracking-wider text-amber-700 font-semibold mb-2 px-2">Steps</div>
+        <nav id="step-nav" class="space-y-1"></nav>
+      </div>
+    </aside>
+    <main id="step-container"></main>
+  </div>
+
+  <div class="flex justify-between mt-8 gap-4">
+    <button id="prev-step" class="btn-secondary flex-1 md:flex-none px-6 py-3 rounded-lg font-semibold disabled:opacity-30 disabled:cursor-not-allowed">← Previous</button>
+    <button id="next-step" class="btn-primary flex-1 md:flex-none px-6 py-3 rounded-lg font-semibold">Next →</button>
+  </div>
+
+</div>
+
+<script>
+const required = [
+  { icon: "💑", title: "Sexual relations or seminal release", note: "Whether through intercourse or otherwise. Required even if no fluid was emitted in the case of intercourse." },
+  { icon: "🩸", title: "End of menstruation", note: "Once a woman's monthly period ends, ghusl is required before resuming prayer and other acts of worship." },
+  { icon: "🌸", title: "End of post-natal bleeding", note: "After childbirth, when the post-natal bleeding (<em>nifās</em>) ends — usually within 40 days." },
+  { icon: "✨", title: "Conversion to Islam", note: "A new Muslim performs ghusl as their first act in their new state." }
+];
+
+const recommended = [
+  { icon: "🕌", title: "Before Friday prayer (Jumuʿah)", note: "Strongly recommended; some scholars consider it obligatory." },
+  { icon: "🎉", title: "Before the two Eids", note: "Eid al-Fitr and Eid al-Adha." },
+  { icon: "🕋", title: "Entering ihrām for Hajj or Umrah", note: "When putting on the white pilgrimage garments." },
+  { icon: "🏞️", title: "Visiting Arafat on the Day of Arafa", note: "The peak day of Hajj." },
+  { icon: "💀", title: "After washing the deceased", note: "After participating in the funeral ablution of another." },
+  { icon: "👶", title: "After regaining consciousness", note: "After fainting or recovery from major illness, recommended." }
+];
+
+const fullSteps = [
+  { n: 1, title: "Intention", body: "Form the silent intention in your heart that you are performing ghusl to remove ritual impurity. Say <em>Bismillāh</em>." },
+  { n: 2, title: "Wash the hands ×3", body: "Then wash the private parts and any visibly soiled area." },
+  { n: 3, title: "Perform a complete wudu", body: "Just like for prayer — except some scholars defer washing the feet to the very end." },
+  { n: 4, title: "Pour water over the head ×3", body: "Make sure water reaches the scalp. Run fingers through the hair so the roots are wetted." },
+  { n: 5, title: "Pour water over the right side, then left", body: "Whole body, including under the arms, between the toes, the navel, behind the ears." },
+  { n: 6, title: "Rub thoroughly", body: "Make sure no part of the skin remains dry. Water must reach <strong>every</strong> part of the body for the ghusl to be valid." },
+  { n: 7, title: "(Optional) Wash the feet last", body: "If you deferred them in step 3, finish by washing the feet now." }
+];
+
+const steps = [
+  {
+    title: "What is Ghusl?",
+    icon: "🚿",
+    body: `
+      <p class="text-gray-700 mb-4 text-lg"><strong>Ghusl</strong> is the major ritual washing of the entire body — required after certain states of major impurity (<em>janāba</em>), and recommended on a number of other occasions.</p>
+      <p class="text-gray-700 mb-4">Wudu is for the small things — using the bathroom, sleeping. Ghusl is for the big things — sexual contact, end of menstruation, conversion. The pattern: <strong>after a major change of state, the whole body is reset.</strong></p>
+      <div class="bg-emerald-50/80 border-l-4 border-emerald-700 p-5 rounded-r-lg my-5">
+        <div class="arabic text-xl text-emerald-900 mb-2 leading-relaxed">وَإِن كُنتُمْ جُنُبًا فَاطَّهَّرُوا</div>
+        <p class="text-emerald-900 italic text-sm mb-1">"And if you are in a state of janāba, purify yourselves." — Quran 5:6</p>
+      </div>
+      <p class="text-gray-700">Ghusl is one of those areas of fiqh where every Muslim eventually needs to know the rules — and where ignorance leads to invalid prayers.</p>
+    `
+  },
+  {
+    title: "When ghusl is required",
+    icon: "📋",
+    body: `
+      <p class="text-gray-700 mb-4">Four scenarios make ghusl <strong>obligatory</strong> before you can pray, fast, recite the Quran from a copy, or enter a mosque:</p>
+      <div class="space-y-2 mb-5">
+        ${required.map((r, i) => `
+          <div class="occasion-row">
+            <div class="text-2xl">${r.icon}</div>
+            <div class="flex-1">
+              <div class="display font-semibold text-emerald-950">${i+1}. ${r.title}</div>
+              <div class="text-sm text-stone-600">${r.note}</div>
+            </div>
+          </div>
+        `).join("")}
+      </div>
+      <div class="bg-amber-50/60 border border-amber-200 rounded-lg p-4 text-sm text-stone-700">
+        <strong class="text-amber-800">Important:</strong> while in a state requiring ghusl, you may not pray, touch the Arabic Quran, perform tawaf, or enter a mosque. Sleeping, eating, walking — all permissible. Only the worship-related restrictions apply.
+      </div>
+    `
+  },
+  {
+    title: "The minimum method",
+    icon: "✓",
+    body: `
+      <p class="text-gray-700 mb-4">If you are in a hurry or constrained, ghusl is still valid with three things:</p>
+      <div class="space-y-2 mb-4">
+        <div class="num-step">
+          <div class="num-bubble">1</div>
+          <div class="flex-1">
+            <div class="display font-semibold text-emerald-950 mb-1">Intention</div>
+            <div class="text-sm text-gray-700">In the heart — that this is ghusl to remove ritual impurity.</div>
+          </div>
+        </div>
+        <div class="num-step">
+          <div class="num-bubble">2</div>
+          <div class="flex-1">
+            <div class="display font-semibold text-emerald-950 mb-1">Rinse the mouth and nose</div>
+            <div class="text-sm text-gray-700">Hanafi school requires this; Maliki and Shafiʿi do not consider it obligatory but strongly recommend it.</div>
+          </div>
+        </div>
+        <div class="num-step">
+          <div class="num-bubble">3</div>
+          <div class="flex-1">
+            <div class="display font-semibold text-emerald-950 mb-1">Water over the entire body</div>
+            <div class="text-sm text-gray-700">Every part of the skin and every strand of hair must be wetted. If even a single dry spot remains, the ghusl is not valid.</div>
+          </div>
+        </div>
+      </div>
+      <p class="text-gray-700 text-sm italic">Just standing under a shower with the right intention, ensuring water reaches every part of the body, fulfills the obligation. The full Sunnah method (next) is the more thorough form taught by the Prophet ﷺ.</p>
+    `
+  },
+  {
+    title: "The full Sunnah method",
+    icon: "🌊",
+    body: `
+      <p class="text-gray-700 mb-5">The Prophet ﷺ taught a fuller method, narrated by his wife ʿĀʾisha and others. This is what most Muslims do.</p>
+      <div class="space-y-2 mb-4">
+        ${fullSteps.map(s => `
+          <div class="num-step">
+            <div class="num-bubble">${s.n}</div>
+            <div class="flex-1">
+              <div class="display font-semibold text-emerald-950 mb-1">${s.title}</div>
+              <div class="text-sm text-gray-700">${s.body}</div>
+            </div>
+          </div>
+        `).join("")}
+      </div>
+      <div class="bg-amber-50/60 border border-amber-200 rounded-lg p-4 text-sm text-stone-700">
+        <strong class="text-amber-800">After ghusl:</strong> wudu is automatically included — you don't need to repeat it before prayer (unless something then breaks your wudu, like using the bathroom). One ghusl covers everything until the next breaker.
+      </div>
+    `
+  },
+  {
+    title: "When ghusl is recommended",
+    icon: "✨",
+    body: `
+      <p class="text-gray-700 mb-4">Beyond the obligatory cases, ghusl is recommended (<em>mustaḥabb</em>) on a number of occasions. Doing it earns reward; skipping it is not sinful.</p>
+      <div class="space-y-2 mb-5">
+        ${recommended.map(r => `
+          <div class="occasion-row">
+            <div class="text-2xl">${r.icon}</div>
+            <div class="flex-1">
+              <div class="display font-semibold text-emerald-950">${r.title}</div>
+              <div class="text-sm text-stone-600">${r.note}</div>
+            </div>
+          </div>
+        `).join("")}
+      </div>
+      <p class="text-gray-700 text-sm italic">Outside these specific contexts, regular bathing for hygiene is also encouraged — the Prophet ﷺ valued cleanliness highly.</p>
+    `
+  },
+  {
+    title: "Quick check",
+    icon: "✍️",
+    body: `
+      <p class="text-gray-700 mb-6">Five questions on ghusl.</p>
+      <div id="quiz"></div>
+      <div id="quiz-result" class="hidden mt-6 p-6 rounded-xl text-center"></div>
+    `,
+    isQuiz: true
+  },
+  {
+    title: "Wrap-up",
+    icon: "✨",
+    body: `
+      <p class="text-gray-700 mb-4">You now know the difference between wudu and ghusl, when each is required, and how to perform both. The two together cover all of Islam's ritual purity requirements.</p>
+      <div class="bg-gradient-to-r from-emerald-50 to-amber-50 border border-amber-300 rounded-xl p-6 text-center my-6">
+        <div class="arabic text-2xl text-emerald-900 mb-1">إِنَّ ٱللَّهَ يُحِبُّ ٱلْمُتَطَهِّرِينَ</div>
+        <div class="text-sm italic text-stone-600 mb-4">"Indeed, Allah loves those who purify themselves." — Quran 9:108</div>
+        <div class="text-sm text-gray-700">Hit <strong>Finish</strong> below to mark this module complete.</div>
+        <div class="text-sm text-gray-700 mt-2">Next: <strong>Module 2-3</strong> (the Salah Walkthrough — already built) or <strong>Module 2-4</strong> (Prayer Times &amp; Conditions).</div>
+      </div>
+      <div class="text-center text-sm">
+        <a href="index.html" class="text-emerald-800 underline font-semibold">Back to curriculum →</a>
+      </div>
+    `
+  }
+];
+
+const quizQuestions = [
+  { q: "Which of these requires ghusl?", choices: ["Using the bathroom", "End of menstruation", "Sleeping deeply", "Eating"], answer: 1 },
+  { q: "While in a state requiring ghusl, you may NOT…", choices: ["Sleep", "Eat", "Pray", "Walk"], answer: 2 },
+  { q: "The minimum requirement for valid ghusl is…", choices: ["Three buckets of water", "Water reaching every part of the body, with intention", "Standing in a river", "Reciting the Quran"], answer: 1 },
+  { q: "Ghusl is recommended (not required) before…", choices: ["Friday prayer", "Eating breakfast", "Driving", "Going to bed"], answer: 0 },
+  { q: "After performing ghusl, you must perform wudu before prayer…", choices: ["Yes, always", "No — wudu is included unless something then breaks it", "Only on Fridays", "Only if you forgot intention"], answer: 1 }
+];
+
+let currentStep = 0; let quizScore = 0; let quizAnswered = new Set();
+const nav = document.getElementById("step-nav");
+const container = document.getElementById("step-container");
+const stepNum = document.getElementById("step-num");
+const stepTotal = document.getElementById("step-total");
+const prevBtn = document.getElementById("prev-step");
+const nextBtn = document.getElementById("next-step");
+stepTotal.textContent = steps.length;
+
+function renderQuiz() {
+  const quizEl = document.getElementById("quiz"); if (!quizEl) return;
+  quizScore = 0; quizAnswered = new Set();
+  quizEl.innerHTML = quizQuestions.map((q, qi) => `
+    <div class="mb-5 p-5 bg-white border border-amber-200 rounded-xl">
+      <div class="font-semibold text-gray-800 mb-3">${qi + 1}. ${q.q}</div>
+      <div class="grid gap-2" data-qindex="${qi}">${q.choices.map((c, ci) => `<button class="choice" data-choice="${ci}">${c}</button>`).join("")}</div>
+    </div>`).join("");
+  quizEl.querySelectorAll(".choice").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const group = btn.closest("[data-qindex]"); const qi = parseInt(group.dataset.qindex);
+      if (quizAnswered.has(qi)) return;
+      const choice = parseInt(btn.dataset.choice); const correct = quizQuestions[qi].answer;
+      quizAnswered.add(qi);
+      group.querySelectorAll(".choice").forEach((b, i) => { b.disabled = true; if (i === correct) b.classList.add("correct"); else if (i === choice) b.classList.add("wrong"); });
+      if (choice === correct) quizScore++;
+      if (quizAnswered.size === quizQuestions.length) showResult();
+    });
+  });
+}
+function showResult() {
+  const r = document.getElementById("quiz-result"); r.classList.remove("hidden");
+  const pct = quizScore / quizQuestions.length;
+  let msg, color;
+  if (pct === 1) { msg = "Perfect."; color = "bg-emerald-100 text-emerald-900"; }
+  else if (pct >= 0.6) { msg = "Solid."; color = "bg-emerald-100 text-emerald-900"; }
+  else { msg = "Worth another pass."; color = "bg-amber-100 text-amber-900"; }
+  r.className = "mt-6 p-6 rounded-xl text-center " + color;
+  r.innerHTML = `<div class="text-4xl font-bold mb-2">${quizScore} / ${quizQuestions.length}</div><div>${msg}</div>`;
+}
+
+function render() {
+  nav.innerHTML = steps.map((s, i) => `<button class="step-btn w-full text-left px-3 py-2 rounded-lg border border-transparent text-sm hover:bg-amber-50 ${i === currentStep ? 'active' : ''}" data-i="${i}"><span class="mr-2">${s.icon}</span>${s.title}</button>`).join("");
+  container.innerHTML = `<article class="article-card shadow-sm p-8"><div class="flex items-center gap-4 mb-6 pb-4 border-b border-amber-100"><div class="text-5xl">${steps[currentStep].icon}</div><div><div class="text-xs text-amber-700 font-semibold uppercase tracking-widest">Step ${currentStep + 1}</div><h2 class="display text-3xl text-emerald-950 font-semibold">${steps[currentStep].title}</h2></div></div><div>${steps[currentStep].body}</div></article>`;
+  stepNum.textContent = currentStep + 1; prevBtn.disabled = currentStep === 0;
+  nextBtn.textContent = currentStep === steps.length - 1 ? "Finish" : "Next →";
+  if (steps[currentStep].isQuiz) renderQuiz();
+  nav.querySelectorAll(".step-btn").forEach(b => { b.addEventListener("click", () => { currentStep = parseInt(b.dataset.i); render(); }); });
+}
+
+const MODULE_ID = "2-2"; const STORAGE_KEY = "islamapp-progress-v1";
+function loadProgress() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; } }
+function markInProgress() { const p = loadProgress(); if (p[MODULE_ID] !== "done") { p[MODULE_ID] = "inprogress"; localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); } }
+function markComplete() { const p = loadProgress(); p[MODULE_ID] = "done"; localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); }
+
+prevBtn.addEventListener("click", () => { if (currentStep > 0) { currentStep--; render(); } });
+nextBtn.addEventListener("click", () => { if (currentStep < steps.length - 1) { currentStep++; render(); } else { markComplete(); window.location.href = "index.html"; } });
+
+document.addEventListener("keydown", (e) => {
+  if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.isContentEditable) return;
+  if (e.key === "ArrowLeft" && !prevBtn.disabled) prevBtn.click();
+  else if (e.key === "ArrowRight") nextBtn.click();
+});
+
+markInProgress(); render();
+</script>
+
+</body>
+</html>

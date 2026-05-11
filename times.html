@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Prayer Times & Conditions — IslamApp</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>(function(){try{if(localStorage.getItem('islamapp-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
+<link rel="stylesheet" href="theme.css">
+<script src="theme.js" defer></script>
+<style>
+  body { font-family: 'Inter', sans-serif; background: #faf6ed; color: #1c2d20;
+    background-image: radial-gradient(circle at 10% 10%, rgba(201,169,97,0.08) 0%, transparent 40%), radial-gradient(circle at 90% 90%, rgba(6,78,59,0.06) 0%, transparent 40%);
+    background-attachment: fixed; }
+  .arabic { font-family: 'Amiri', serif; direction: rtl; line-height: 1.7; }
+  .display { font-family: 'Cormorant Garamond', serif; }
+  .geo-pattern { background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23064e3b' fill-opacity='0.05'%3E%3Cpath d='M30 0l7.5 22.5H60L41.25 37.5l7.5 22.5L30 45l-18.75 15 7.5-22.5L0 22.5h22.5z'/%3E%3C/g%3E%3C/svg%3E"); }
+  .step-btn.active { background: #064e3b; color: #faf6ed; border-color: #c9a961; }
+  .gold-line { height: 1px; background: linear-gradient(to right, transparent, #c9a961, transparent); }
+  .btn-primary { background: linear-gradient(135deg, #064e3b 0%, #022c22 100%); color: #faf6ed; border: 1px solid #c9a961; }
+  .btn-primary:hover { background: linear-gradient(135deg, #0f766e 0%, #064e3b 100%); }
+  .btn-secondary { background: #fff; border: 1px solid #c9a961; color: #064e3b; }
+  .btn-secondary:hover { background: #faf6ed; }
+  .article-card { background: #fff; border: 1px solid rgba(201,169,97,0.4); border-radius: 14px 14px 6px 6px; }
+  .article-card::before { content: ''; display: block; height: 12px; margin: -1px -1px 0 -1px;
+    background: linear-gradient(180deg, rgba(201,169,97,0.25), transparent); border-radius: 14px 14px 0 0; border-bottom: 1px solid rgba(201,169,97,0.25); }
+  .prayer-card { background: #fff; border: 1px solid rgba(201,169,97,0.3); border-radius: 12px; padding: 1.25rem;
+    border-left: 6px solid var(--accent, #c9a961); }
+  .sun-arc { width: 100%; height: 80px; position: relative; margin: 0.5rem 0 1rem; }
+  .sun-arc svg { width: 100%; height: 100%; }
+  .condition-card { background: #fff; border: 1px solid rgba(201,169,97,0.3); border-left: 4px solid #064e3b;
+    border-radius: 8px; padding: 0.85rem 1rem; }
+  .makruh-card { background: #fff; border: 1px solid rgba(220,38,38,0.3); border-left: 4px solid #dc2626;
+    border-radius: 8px; padding: 0.85rem 1rem; }
+  .choice { text-align: left; padding: 0.75rem 1rem; border: 2px solid #e7e5e4; border-radius: 8px; background: #fff; cursor: pointer;
+    transition: all 0.15s ease; font: inherit; width: 100%; }
+  .choice:hover { background: #ecfdf5; border-color: #059669; }
+  .choice.correct { background: #d1fae5; border-color: #059669; color: #064e3b; }
+  .choice.wrong { background: #fee2e2; border-color: #dc2626; color: #7f1d1d; }
+  .choice:disabled { cursor: default; }
+</style>
+</head>
+<body class="geo-pattern min-h-screen">
+
+<div class="max-w-6xl mx-auto px-6 py-10">
+
+  <nav class="flex justify-between items-center mb-6">
+    <a href="index.html" class="text-emerald-900 hover:text-amber-700 text-sm font-semibold">← Curriculum</a>
+    <div class="text-xs uppercase tracking-[0.25em] text-amber-700 font-semibold hidden sm:block">Tier 2 · Module 2-4</div>
+    <div class="text-sm text-stone-500"><span id="step-num">1</span> / <span id="step-total">9</span></div>
+  </nav>
+
+  <header class="text-center mb-8">
+    <div class="gold-line mb-4 max-w-[180px] mx-auto"></div>
+    <div class="arabic text-3xl text-emerald-900 mb-2">مَوَاقِيت الصَّلَاة</div>
+    <h1 class="display text-4xl md:text-5xl text-emerald-950 font-semibold">Prayer Times &amp; Conditions</h1>
+    <div class="gold-line mt-4 max-w-[180px] mx-auto"></div>
+  </header>
+
+  <div class="grid md:grid-cols-[220px_1fr] gap-6">
+    <aside class="md:sticky md:top-6 md:self-start">
+      <div class="article-card p-3 shadow-sm">
+        <div class="text-xs uppercase tracking-wider text-amber-700 font-semibold mb-2 px-2">Steps</div>
+        <nav id="step-nav" class="space-y-1"></nav>
+      </div>
+    </aside>
+    <main id="step-container"></main>
+  </div>
+
+  <div class="flex justify-between mt-8 gap-4">
+    <button id="prev-step" class="btn-secondary flex-1 md:flex-none px-6 py-3 rounded-lg font-semibold disabled:opacity-30 disabled:cursor-not-allowed">← Previous</button>
+    <button id="next-step" class="btn-primary flex-1 md:flex-none px-6 py-3 rounded-lg font-semibold">Next →</button>
+  </div>
+
+</div>
+
+<script>
+const prayers = [
+  { name: "Fajr", arabic: "الفَجْر", units: 2, accent: "#1e293b",
+    when: "Dawn — when the first true light appears on the horizon, until just before sunrise.",
+    detail: "The hardest one to keep, but the most rewarded. The Prophet ﷺ said: \"If they knew what was in Fajr and ʿIshāʾ, they would come even crawling.\"" },
+  { name: "Dhuhr", arabic: "الظُّهْر", units: 4, accent: "#f59e0b",
+    when: "After the sun passes its zenith (noon) and begins to descend.",
+    detail: "Lasts until an object's shadow equals its own length. The middle prayer of the day." },
+  { name: "ʿAsr", arabic: "العَصْر", units: 4, accent: "#ea580c",
+    when: "When an object's shadow becomes longer than itself, until just before sunset.",
+    detail: "The Quran calls it <em>al-ṣalāh al-wusṭā</em> — \"the middle prayer\" — and singles it out for special protection." },
+  { name: "Maghrib", arabic: "المَغْرِب", units: 3, accent: "#dc2626",
+    when: "Just after sunset.",
+    detail: "Should be prayed promptly — its window is the shortest of the five. Lasts until the red glow leaves the sky." },
+  { name: "ʿIshāʾ", arabic: "العِشَاء", units: 4, accent: "#1e3a8a",
+    when: "When the red twilight has fully disappeared, until midnight (or before Fajr).",
+    detail: "Followed by <em>witr</em> — an odd-numbered prayer (1, 3, 5…) that closes the day." }
+];
+
+const conditions = [
+  { icon: "🕐", title: "Time has entered", note: "The window for the prayer must have begun. Praying before is invalid." },
+  { icon: "💧", title: "Ritual purity", note: "Wudu (or ghusl if required). No prayer is valid without it." },
+  { icon: "🧥", title: "Covering of the body", note: "For men: navel to knees minimum. For women: everything except face and hands." },
+  { icon: "🧭", title: "Facing the qibla", note: "Direction of the Kaʿba in Mecca. Apps determine it precisely." },
+  { icon: "🧠", title: "Intention", note: "Knowing in your heart which prayer you are about to perform." },
+  { icon: "✨", title: "Cleanliness of body, clothes, place", note: "Free from najāsa (ritual impurity — blood, urine, etc.)." }
+];
+
+const makruhTimes = [
+  { title: "From Fajr until ~15 min after sunrise", note: "Voluntary prayers discouraged. Make-up of missed prayers is allowed." },
+  { title: "When the sun is at its zenith (~5 min before Dhuhr)", note: "Brief window when the sun is exactly overhead." },
+  { title: "After ʿAsr until sunset", note: "Voluntary prayers discouraged in this window." }
+];
+
+const steps = [
+  {
+    title: "Why timing matters",
+    icon: "⏰",
+    body: `
+      <p class="text-gray-700 mb-4 text-lg">Each prayer has a specific <strong>window</strong> tied to the position of the sun. Pray before the window opens — invalid. Pray after the window closes — you owe a make-up prayer. The five-times-a-day rhythm of Islam is fundamentally a sun-tracking practice.</p>
+      <div class="bg-emerald-50/80 border-l-4 border-emerald-700 p-5 rounded-r-lg my-5">
+        <div class="arabic text-xl text-emerald-900 mb-2 leading-relaxed">إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَّوْقُوتًا</div>
+        <p class="text-emerald-900 italic text-sm">"Indeed, prayer is for the believers a decree of specified times." — Quran 4:103</p>
+      </div>
+      <p class="text-gray-700 mb-3">Modern apps (Athan Pro, Muslim Pro, Quran.com) calculate the exact times for your location each day — they account for latitude, season, and the calculation method preferred by your tradition.</p>
+      <p class="text-gray-700 text-sm italic">In northern latitudes during summer (where the sun barely sets), or polar regions where it doesn't set at all, scholars have specific accommodations — usually following the times of the nearest "normal" location.</p>
+    `
+  },
+  {
+    title: "The five prayer windows",
+    icon: "🌅",
+    body: `
+      <p class="text-gray-700 mb-5">Each prayer has a precise start, an end, and a recommended early portion.</p>
+      <div class="space-y-3">
+        ${prayers.map(p => `
+          <div class="prayer-card" style="--accent: ${p.accent};">
+            <div class="flex items-baseline justify-between mb-2 flex-wrap gap-2">
+              <div class="flex items-baseline gap-3">
+                <div class="display text-2xl text-emerald-950 font-semibold">${p.name}</div>
+                <div class="arabic text-xl text-emerald-900">${p.arabic}</div>
+              </div>
+              <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold">${p.units} units (rakʿāt)</div>
+            </div>
+            <p class="text-sm text-gray-700 mb-2"><strong>When:</strong> ${p.when}</p>
+            <p class="text-sm text-gray-600 italic">${p.detail}</p>
+          </div>
+        `).join("")}
+      </div>
+    `
+  },
+  {
+    title: "How times are calculated",
+    icon: "☀️",
+    body: `
+      <p class="text-gray-700 mb-4">All five times are derived from the sun's position. Two require some interpretation — and that is where the calculation methods differ.</p>
+      <div class="bg-white border border-amber-200 rounded-xl p-5 mb-4">
+        <div class="space-y-3 text-sm">
+          <div><strong class="text-emerald-900">Fajr</strong> — when the sun is a certain angle <em>below</em> the eastern horizon. Methods differ: 15°, 18°, or 19.5° below. The Egyptian, Muslim World League, ISNA, and Umm al-Qura methods each use a different angle.</div>
+          <div><strong class="text-emerald-900">Sunrise</strong> — when the upper edge of the sun crosses the horizon. Marks the end of Fajr.</div>
+          <div><strong class="text-emerald-900">Dhuhr</strong> — when the sun is at its highest point in the sky (zenith), plus a few minutes for safety.</div>
+          <div><strong class="text-emerald-900">ʿAsr</strong> — when an object's shadow exceeds its length. The Hanafi school uses <em>twice</em> the length — meaning ʿAsr starts later for Hanafis.</div>
+          <div><strong class="text-emerald-900">Maghrib</strong> — sunset.</div>
+          <div><strong class="text-emerald-900">ʿIshāʾ</strong> — when the sun is a certain angle below the horizon (twilight has ended). Again 15°–18° depending on method.</div>
+        </div>
+      </div>
+      <p class="text-gray-700 mb-3">In practice: pick a calculation method matching your community, set it once in your prayer app, and trust the times.</p>
+      <p class="text-gray-700 text-sm italic">Common methods: ISNA (North America), MWL (most international), Umm al-Qura (Saudi Arabia), Egyptian, Karachi (South Asia, Hanafi).</p>
+    `
+  },
+  {
+    title: "Validity conditions",
+    icon: "✓",
+    body: `
+      <p class="text-gray-700 mb-4">Six conditions must be met for a prayer to be valid. Miss any of them and the prayer must be repeated.</p>
+      <div class="space-y-2">
+        ${conditions.map(c => `
+          <div class="condition-card flex gap-3 items-center">
+            <div class="text-2xl">${c.icon}</div>
+            <div class="flex-1">
+              <div class="display font-semibold text-emerald-950">${c.title}</div>
+              <div class="text-sm text-stone-600">${c.note}</div>
+            </div>
+          </div>
+        `).join("")}
+      </div>
+    `
+  },
+  {
+    title: "Times to avoid",
+    icon: "🚫",
+    body: `
+      <p class="text-gray-700 mb-4">Three windows in which voluntary prayer is <em>discouraged</em> (<em>makrūh</em>) — based on hadiths in which the Prophet ﷺ disallowed prayer when the sun was rising, at its zenith, or setting.</p>
+      <div class="space-y-2 mb-5">
+        ${makruhTimes.map(m => `
+          <div class="makruh-card">
+            <div class="display font-semibold text-emerald-950 mb-1">${m.title}</div>
+            <div class="text-sm text-stone-600">${m.note}</div>
+          </div>
+        `).join("")}
+      </div>
+      <div class="bg-amber-50/60 border border-amber-200 rounded-lg p-4 text-sm text-stone-700">
+        <strong class="text-amber-800">Important:</strong> these restrictions apply to <strong>voluntary</strong> prayer. The five obligatory daily prayers — and the prayer at a person's funeral — are never restricted by these times.
+      </div>
+    `
+  },
+  {
+    title: "Missed prayers (Qaḍāʾ)",
+    icon: "⏪",
+    body: `
+      <p class="text-gray-700 mb-4">If you miss a prayer — slept through it, were unconscious, simply forgot — you owe a <strong>qaḍāʾ</strong> (make-up). It must be performed as soon as you remember, before the next prayer if possible.</p>
+      <div class="bg-white border border-amber-200 rounded-xl p-5 mb-4">
+        <p class="text-gray-700 mb-3"><strong>How to make up:</strong> pray the missed prayer in its original form (same number of rakʿāt) with the intention of qaḍāʾ for that specific prayer.</p>
+        <p class="text-gray-700 mb-3"><strong>Order:</strong> if you missed several, perform them in chronological order, then the current prayer.</p>
+        <p class="text-gray-700"><strong>Years of missed prayers:</strong> there are several scholarly approaches. One common method: pray one extra full set (Fajr + Dhuhr + ʿAsr + Maghrib + ʿIshāʾ) per day along with your current prayers, until you have caught up.</p>
+      </div>
+      <div class="bg-emerald-50/80 border-l-4 border-emerald-700 p-5 rounded-r-lg">
+        <p class="text-emerald-900 text-sm">A famous hadith: <em>"Whoever sleeps through a prayer or forgets it, let him pray it when he remembers — that is its expiation."</em> — Bukhari 597, Muslim 684.</p>
+      </div>
+    `
+  },
+  {
+    title: "Travel — shortening &amp; combining",
+    icon: "✈️",
+    body: `
+      <p class="text-gray-700 mb-4">When traveling beyond a certain distance (~88 km / 55 mi in most schools), Islam allows two concessions:</p>
+      <div class="grid sm:grid-cols-2 gap-4 mb-4">
+        <div class="bg-white border border-amber-200 rounded-xl p-5">
+          <div class="display text-xl text-emerald-950 font-semibold mb-2">Qaṣr — shortening</div>
+          <p class="text-sm text-gray-700 mb-2">The four-rakʿah prayers (Dhuhr, ʿAsr, ʿIshāʾ) are shortened to <strong>two</strong>.</p>
+          <p class="text-xs text-stone-500">Fajr (2) and Maghrib (3) are not shortened.</p>
+        </div>
+        <div class="bg-white border border-amber-200 rounded-xl p-5">
+          <div class="display text-xl text-emerald-950 font-semibold mb-2">Jamʿ — combining</div>
+          <p class="text-sm text-gray-700 mb-2">Dhuhr + ʿAsr can be prayed together; Maghrib + ʿIshāʾ can be prayed together.</p>
+          <p class="text-xs text-stone-500">Either at the time of the earlier or the later — your choice.</p>
+        </div>
+      </div>
+      <div class="bg-amber-50/60 border border-amber-200 rounded-lg p-4 text-sm text-stone-700">
+        <strong class="text-amber-800">When does it apply?</strong> While you are traveling. If you settle somewhere for more than ~3-4 days (varies by school), you generally resume full prayers. Combining is also permitted in non-travel situations like heavy rain or illness, with school differences.
+      </div>
+      <p class="text-gray-700 text-sm italic mt-4">The Prophet ﷺ regularly shortened on his journeys; ʿĀʾisha narrated this. The concession is not mandatory in every school but it is highly emphasized.</p>
+    `
+  },
+  {
+    title: "Quick check",
+    icon: "✍️",
+    body: `
+      <p class="text-gray-700 mb-6">Seven questions across the topic.</p>
+      <div id="quiz"></div>
+      <div id="quiz-result" class="hidden mt-6 p-6 rounded-xl text-center"></div>
+    `,
+    isQuiz: true
+  },
+  {
+    title: "Wrap-up",
+    icon: "✨",
+    body: `
+      <p class="text-gray-700 mb-4">You now know when each prayer is, what makes one valid, when to avoid praying, what to do when you miss one, and how travel changes the rules.</p>
+      <div class="bg-gradient-to-r from-emerald-50 to-amber-50 border border-amber-300 rounded-xl p-6 text-center my-6">
+        <div class="arabic text-2xl text-emerald-900 mb-1">حَافِظُوا عَلَى الصَّلَوَاتِ</div>
+        <div class="text-sm italic text-stone-600 mb-4">"Guard strictly the prayers." — Quran 2:238</div>
+        <div class="text-sm text-gray-700">Hit <strong>Finish</strong> below to mark this module complete.</div>
+        <div class="text-sm text-gray-700 mt-2">Next: <strong>Module 2-5: Jumuʿah</strong> — the Friday prayer.</div>
+      </div>
+      <div class="text-center text-sm">
+        <a href="index.html" class="text-emerald-800 underline font-semibold">Back to curriculum →</a>
+      </div>
+    `
+  }
+];
+
+const quizQuestions = [
+  { q: "Which prayer is performed at dawn?", choices: ["Dhuhr", "Fajr", "ʿAsr", "ʿIshāʾ"], answer: 1 },
+  { q: "How many units (rakʿāt) is Maghrib?", choices: ["Two", "Three", "Four", "Five"], answer: 1 },
+  { q: "ʿAsr begins when an object's shadow…", choices: ["Disappears", "Equals its own length", "Is exactly half its length", "Faces north"], answer: 1 },
+  { q: "Which is NOT a condition for a valid prayer?", choices: ["Facing the qibla", "Ritual purity", "Praying out loud", "The time has entered"], answer: 2 },
+  { q: "Voluntary prayer is discouraged…", choices: ["At sunrise, zenith, and sunset", "On Fridays", "While sitting", "In the mosque"], answer: 0 },
+  { q: "While traveling, four-rakʿah prayers are…", choices: ["Skipped", "Shortened to two", "Doubled", "Made silent"], answer: 1 },
+  { q: "If you miss a prayer, you owe a…", choices: ["Charity payment", "Qaḍāʾ — a make-up of that prayer", "Fast", "Pilgrimage"], answer: 1 }
+];
+
+let currentStep = 0; let quizScore = 0; let quizAnswered = new Set();
+const nav = document.getElementById("step-nav");
+const container = document.getElementById("step-container");
+const stepNum = document.getElementById("step-num");
+const stepTotal = document.getElementById("step-total");
+const prevBtn = document.getElementById("prev-step");
+const nextBtn = document.getElementById("next-step");
+stepTotal.textContent = steps.length;
+
+function renderQuiz() {
+  const quizEl = document.getElementById("quiz"); if (!quizEl) return;
+  quizScore = 0; quizAnswered = new Set();
+  quizEl.innerHTML = quizQuestions.map((q, qi) => `
+    <div class="mb-5 p-5 bg-white border border-amber-200 rounded-xl">
+      <div class="font-semibold text-gray-800 mb-3">${qi + 1}. ${q.q}</div>
+      <div class="grid gap-2" data-qindex="${qi}">${q.choices.map((c, ci) => `<button class="choice" data-choice="${ci}">${c}</button>`).join("")}</div>
+    </div>`).join("");
+  quizEl.querySelectorAll(".choice").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const group = btn.closest("[data-qindex]"); const qi = parseInt(group.dataset.qindex);
+      if (quizAnswered.has(qi)) return;
+      const choice = parseInt(btn.dataset.choice); const correct = quizQuestions[qi].answer;
+      quizAnswered.add(qi);
+      group.querySelectorAll(".choice").forEach((b, i) => { b.disabled = true; if (i === correct) b.classList.add("correct"); else if (i === choice) b.classList.add("wrong"); });
+      if (choice === correct) quizScore++;
+      if (quizAnswered.size === quizQuestions.length) showResult();
+    });
+  });
+}
+function showResult() {
+  const r = document.getElementById("quiz-result"); r.classList.remove("hidden");
+  const pct = quizScore / quizQuestions.length;
+  let msg, color;
+  if (pct === 1) { msg = "Perfect."; color = "bg-emerald-100 text-emerald-900"; }
+  else if (pct >= 0.6) { msg = "Strong."; color = "bg-emerald-100 text-emerald-900"; }
+  else { msg = "Worth another look."; color = "bg-amber-100 text-amber-900"; }
+  r.className = "mt-6 p-6 rounded-xl text-center " + color;
+  r.innerHTML = `<div class="text-4xl font-bold mb-2">${quizScore} / ${quizQuestions.length}</div><div>${msg}</div>`;
+}
+
+function render() {
+  nav.innerHTML = steps.map((s, i) => `<button class="step-btn w-full text-left px-3 py-2 rounded-lg border border-transparent text-sm hover:bg-amber-50 ${i === currentStep ? 'active' : ''}" data-i="${i}"><span class="mr-2">${s.icon}</span>${s.title}</button>`).join("");
+  container.innerHTML = `<article class="article-card shadow-sm p-8"><div class="flex items-center gap-4 mb-6 pb-4 border-b border-amber-100"><div class="text-5xl">${steps[currentStep].icon}</div><div><div class="text-xs text-amber-700 font-semibold uppercase tracking-widest">Step ${currentStep + 1}</div><h2 class="display text-3xl text-emerald-950 font-semibold">${steps[currentStep].title}</h2></div></div><div>${steps[currentStep].body}</div></article>`;
+  stepNum.textContent = currentStep + 1; prevBtn.disabled = currentStep === 0;
+  nextBtn.textContent = currentStep === steps.length - 1 ? "Finish" : "Next →";
+  if (steps[currentStep].isQuiz) renderQuiz();
+  nav.querySelectorAll(".step-btn").forEach(b => { b.addEventListener("click", () => { currentStep = parseInt(b.dataset.i); render(); }); });
+}
+
+const MODULE_ID = "2-4"; const STORAGE_KEY = "islamapp-progress-v1";
+function loadProgress() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; } }
+function markInProgress() { const p = loadProgress(); if (p[MODULE_ID] !== "done") { p[MODULE_ID] = "inprogress"; localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); } }
+function markComplete() { const p = loadProgress(); p[MODULE_ID] = "done"; localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); }
+
+prevBtn.addEventListener("click", () => { if (currentStep > 0) { currentStep--; render(); } });
+nextBtn.addEventListener("click", () => { if (currentStep < steps.length - 1) { currentStep++; render(); } else { markComplete(); window.location.href = "index.html"; } });
+
+document.addEventListener("keydown", (e) => {
+  if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.isContentEditable) return;
+  if (e.key === "ArrowLeft" && !prevBtn.disabled) prevBtn.click();
+  else if (e.key === "ArrowRight") nextBtn.click();
+});
+
+markInProgress(); render();
+</script>
+
+</body>
+</html>

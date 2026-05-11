@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Muhammad ﷺ — Deep Dive — IslamApp</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>(function(){try{if(localStorage.getItem('islamapp-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
+<link rel="stylesheet" href="theme.css">
+<script src="theme.js" defer></script>
+<style>
+  body { font-family: 'Inter', sans-serif; background: #faf6ed; color: #1c2d20;
+    background-image: radial-gradient(circle at 10% 10%, rgba(201,169,97,0.08) 0%, transparent 40%), radial-gradient(circle at 90% 90%, rgba(6,78,59,0.06) 0%, transparent 40%);
+    background-attachment: fixed; }
+  .arabic { font-family: 'Amiri', serif; direction: rtl; line-height: 1.9; }
+  .display { font-family: 'Cormorant Garamond', serif; }
+  .geo-pattern { background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23064e3b' fill-opacity='0.05'%3E%3Cpath d='M30 0l7.5 22.5H60L41.25 37.5l7.5 22.5L30 45l-18.75 15 7.5-22.5L0 22.5h22.5z'/%3E%3C/g%3E%3C/svg%3E"); }
+  .step-btn.active { background: #064e3b; color: #faf6ed; border-color: #c9a961; }
+  .gold-line { height: 1px; background: linear-gradient(to right, transparent, #c9a961, transparent); }
+  .btn-primary { background: linear-gradient(135deg, #064e3b 0%, #022c22 100%); color: #faf6ed; border: 1px solid #c9a961; }
+  .btn-primary:hover { background: linear-gradient(135deg, #0f766e 0%, #064e3b 100%); }
+  .btn-secondary { background: #fff; border: 1px solid #c9a961; color: #064e3b; }
+  .btn-secondary:hover { background: #faf6ed; }
+  .article-card { background: #fff; border: 1px solid rgba(201,169,97,0.4); border-radius: 14px 14px 6px 6px; }
+  .article-card::before { content: ''; display: block; height: 12px; margin: -1px -1px 0 -1px;
+    background: linear-gradient(180deg, rgba(201,169,97,0.25), transparent); border-radius: 14px 14px 0 0; border-bottom: 1px solid rgba(201,169,97,0.25); }
+  .verse-quote { background: #fff; border-left: 4px solid #c9a961; padding: 1rem 1.25rem; border-radius: 0 8px 8px 0; margin: 1rem 0; }
+  .verse-quote .ar { font-family: 'Amiri', serif; font-size: 1.4rem; color: #064e3b; line-height: 1.9; text-align: center; margin-bottom: 0.5rem; }
+  .verse-quote .tr { font-style: italic; color: #047857; font-size: 0.85rem; text-align: center; margin-bottom: 0.4rem; }
+  .verse-quote .en { color: #1f2937; font-size: 0.9rem; text-align: center; }
+  .verse-quote .ref { display: block; text-align: center; margin-top: 0.5rem; font-size: 0.7rem; color: #a8863f; font-weight: 600; letter-spacing: 0.1em; }
+  .commentary { background: linear-gradient(135deg, #fef3c7 0%, #fde68a 50%); border: 1px solid #c9a961; border-radius: 10px; padding: 1rem 1.25rem; margin: 1rem 0; }
+  .commentary .label { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: #92400e; font-weight: 700; margin-bottom: 0.4rem; }
+  .hadith-block { background: #fff; border: 1px solid rgba(15,118,110,0.3); border-left: 4px solid #0f766e; border-radius: 0 8px 8px 0; padding: 1rem 1.25rem; margin: 1rem 0; }
+  .hadith-block .label { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: #047857; font-weight: 700; margin-bottom: 0.4rem; }
+  .depth-pill { display: inline-flex; gap: 4px; padding: 2px; background: rgba(201,169,97,0.15); border-radius: 999px; }
+  .depth-pill a { padding: 4px 12px; border-radius: 999px; font-size: 0.7rem; letter-spacing: 0.05em; font-weight: 600; text-decoration: none; color: #a8863f; }
+  .depth-pill a.active { background: #064e3b; color: #faf6ed; }
+  .year-badge { display: inline-block; padding: 2px 10px; background: rgba(6,78,59,0.1); color: #064e3b; border-radius: 999px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.05em; }
+</style>
+</head>
+<body class="geo-pattern min-h-screen">
+
+<div class="max-w-6xl mx-auto px-6 py-10">
+
+  <nav class="flex justify-between items-center mb-6 flex-wrap gap-3">
+    <a href="stories.html" class="text-emerald-900 hover:text-amber-700 text-sm font-semibold">← Stories</a>
+    <div class="depth-pill">
+      <a href="story-muhammad.html" data-mode="moderate">Moderate</a>
+      <a href="story-muhammad-deep.html" data-mode="deep">Deep</a>
+      <a href="story-muhammad-deep.html?single=1" data-mode="single">One page</a>
+    </div>
+    <div class="text-sm text-stone-500"><span id="step-num">1</span> / <span id="step-total">16</span></div>
+  </nav>
+
+  <header class="text-center mb-8">
+    <div class="gold-line mb-4 max-w-[180px] mx-auto"></div>
+    <div class="arabic text-3xl text-emerald-900 mb-2">مُحَمَّد ﷺ</div>
+    <h1 class="display text-4xl md:text-5xl text-emerald-950 font-semibold">Muhammad ﷺ — Deep Dive</h1>
+    <div class="text-stone-600 mt-2">The final messenger · 570–632 CE · ~50 minute read</div>
+    <div class="gold-line mt-4 max-w-[180px] mx-auto"></div>
+  </header>
+
+  <div class="grid md:grid-cols-[220px_1fr] gap-6">
+    <aside class="md:sticky md:top-6 md:self-start">
+      <div class="article-card p-3 shadow-sm">
+        <div class="text-xs uppercase tracking-wider text-amber-700 font-semibold mb-2 px-2">Scenes</div>
+        <nav id="step-nav" class="space-y-1"></nav>
+      </div>
+    </aside>
+    <main id="step-container"></main>
+  </div>
+
+  <div class="flex justify-between mt-8 gap-4">
+    <button id="prev-step" class="btn-secondary flex-1 md:flex-none px-6 py-3 rounded-lg font-semibold disabled:opacity-30 disabled:cursor-not-allowed">← Previous</button>
+    <button id="next-step" class="btn-primary flex-1 md:flex-none px-6 py-3 rounded-lg font-semibold">Next →</button>
+  </div>
+
+</div>
+
+<script>
+function v(ar, tr, en, ref) {
+  return `<div class="verse-quote"><div class="ar">${ar}</div><div class="tr">${tr}</div><div class="en">"${en}"</div><span class="ref">${ref}</span></div>`;
+}
+function c(label, body) {
+  return `<div class="commentary"><div class="label">${label}</div><div class="text-sm text-stone-800">${body}</div></div>`;
+}
+function h(label, ar, tr, en, ref) {
+  return `<div class="hadith-block"><div class="label">${label}</div><div class="arabic text-lg text-emerald-900 mb-1 text-center">${ar}</div><div class="italic text-emerald-700 text-sm text-center mb-1">${tr}</div><div class="text-sm text-gray-800 text-center mb-1">"${en}"</div><div class="text-xs text-stone-500 text-center font-mono">${ref}</div></div>`;
+}
+
+const steps = [
+  {
+    title: "Arabia before Islam",
+    icon: "🏜️",
+    body: `
+      <p class="text-gray-700 mb-4 text-lg">By the mid-sixth century, the Arabian peninsula was a society of <strong>tribes</strong>. There was no central state. Wealth, protection, and identity all flowed through one's lineage. Tribal warfare was endemic — feuds could span generations.</p>
+      <p class="text-gray-700 mb-3">Religion was a patchwork. Most Arabs were <strong>polytheists</strong>, worshipping deities tied to specific shrines and tribes. The biggest sanctuary was the <em>Kaʿba</em> in Mecca — a cube-shaped structure that, by tradition, Abraham and his son Ishmael had built thousands of years before for the worship of one God. By Muhammad's ﷺ time, <strong>360 idols</strong> had been placed inside it.</p>
+      <p class="text-gray-700 mb-3">There were also <strong>Christian communities</strong> in the south (Najrān) and on the trade routes, <strong>Jewish tribes</strong> in Yathrib and Khaybar, and a small number of <em>ḥunafāʾ</em> — Arabs who rejected idol-worship and held to the monotheism of Abraham, like Waraqa ibn Nawfal.</p>
+      ${c("The state of women", "Pre-Islamic Arabia had two contradictory customs about women. In some tribes, women had real economic power — Khadīja ran her own trading business. In others, female infants were <strong>buried alive</strong> at birth (a practice the Quran later explicitly condemned, 81:8–9). The reforms of Islam would dramatically improve women's legal standing within a generation.")}
+      <p class="text-gray-700 text-sm italic">This is the world Muhammad ﷺ was born into.</p>
+    `
+  },
+  {
+    title: "Lineage from Ishmael",
+    icon: "🌳",
+    body: `
+      <p class="text-gray-700 mb-3">Muhammad's ﷺ family was the <strong>Banū Hāshim</strong>, a clan of the tribe of <strong>Quraysh</strong>. Quraysh controlled Mecca and were the custodians of the Kaʿba — a sacred role that gave them prestige across the peninsula.</p>
+      <p class="text-gray-700 mb-3">Tradition traces his lineage in <strong>21 generations</strong> to <strong>ʿAdnān</strong>, and ultimately back to <strong>Ishmael</strong> (Ismāʿīl), the son of Abraham. Quraysh therefore considered themselves the spiritual heirs of Abraham — even as they had drifted into polytheism.</p>
+      <div class="bg-white border border-amber-200 rounded-xl p-5 mb-4">
+        <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold mb-2">The immediate family</div>
+        <ul class="text-sm text-gray-700 space-y-1">
+          <li>· <strong>Grandfather</strong> — ʿAbd al-Muṭṭalib, chief of the Banū Hāshim, custodian of the Zamzam well</li>
+          <li>· <strong>Father</strong> — ʿAbdullāh, the youngest of ten sons</li>
+          <li>· <strong>Mother</strong> — Āmina, from the Banū Zuhra of Quraysh</li>
+          <li>· <strong>Uncles</strong> — Abū Ṭālib (who would raise him), Ḥamza (who would become a fierce defender), and Abū Lahab (who would become a fierce opponent)</li>
+        </ul>
+      </div>
+      ${h(
+        "On his lineage",
+        "إِنَّ ٱللَّهَ ٱصْطَفَىٰ كِنَانَةَ مِنْ وَلَدِ إِسْمَاعِيلَ",
+        "Inna llāha ṣṭafā Kinānata min waladi Ismāʿīl",
+        "Allah chose Kināna from the descendants of Ishmael, then chose Quraysh from Kināna, then chose Banū Hāshim from Quraysh, then chose me from Banū Hāshim.",
+        "Muslim 2276 — narrated by Wāthila ibn al-Asqaʿ"
+      )}
+    `
+  },
+  {
+    title: "Birth & infancy",
+    icon: "👶",
+    body: `
+      <p class="text-gray-700 mb-3"><span class="year-badge">~570 CE</span> Muhammad ﷺ was born on a Monday in Rabīʿ al-Awwal. The traditional date is <strong>12 Rabīʿ al-Awwal</strong>, though scholars dispute the exact day.</p>
+      <p class="text-gray-700 mb-3">It was the famous "<strong>Year of the Elephant</strong>" — when Abraha, the Yemeni Christian ruler, marched on Mecca with an army that included elephants, intent on destroying the Kaʿba to redirect Arabian pilgrimage to a cathedral he had built in Sanaʿa. The army was destroyed by birds dropping stones, as the Quran tells in Surah Al-Fīl.</p>
+      <p class="text-gray-700 mb-3">His father had <strong>died on a trading journey before the birth</strong>. He was named Muḥammad — "the praised" — a name very rare in Arabia at the time. Tradition says ʿAbd al-Muṭṭalib was inspired to choose it so that all of creation might one day praise him.</p>
+      ${c("The wet-nurse Ḥalīma", "By Quraysh custom, infant boys were sent to live with Bedouin foster families to be raised in the cleaner desert air and learn the pure dialect. <strong>Ḥalīma of the Banū Saʿd</strong> took him in. She reported unusual prosperity in her family during the years he stayed — her sheep gave more milk, her crops thrived. After two years she returned him, then asked to keep him longer because of how he had blessed her household.")}
+      ${c("The opening of the chest", "Hadith literature records that during his time with Ḥalīma, two angels split open the young Muhammad's ﷺ chest, removed a black clot (a portion that would normally be vulnerable to Satan's whisper), washed his heart with Zamzam water, and replaced it. Ḥalīma, terrified, returned him to Mecca shortly after. The event is referenced in Quran 94:1 — \"Did We not open your chest for you?\" (Muslim 162).")}
+    `
+  },
+  {
+    title: "Childhood losses",
+    icon: "🌒",
+    body: `
+      <p class="text-gray-700 mb-3"><span class="year-badge">576</span> At age 6, after returning to Mecca, his <strong>mother Āmina died</strong> while traveling. He was completely orphaned.</p>
+      <p class="text-gray-700 mb-3"><span class="year-badge">578</span> His grandfather ʿAbd al-Muṭṭalib took him in. The old chief is said to have favored Muhammad ﷺ above his own sons, seating him on the prestigious cushion meant only for himself. Two years later, ʿAbd al-Muṭṭalib also died. Muhammad ﷺ was <strong>8</strong>.</p>
+      <p class="text-gray-700 mb-3">Custody passed to his uncle <strong>Abū Ṭālib</strong> — a poor man with many children of his own, but a deeply honorable one. He treated the boy as his own son. Abū Ṭālib would protect Muhammad ﷺ for the next 42 years.</p>
+      ${v(
+        "أَلَمْ يَجِدْكَ يَتِيمًا فَـَٔاوَىٰ ۝ وَوَجَدَكَ ضَآلًّا فَهَدَىٰ ۝ وَوَجَدَكَ عَآئِلًا فَأَغْنَىٰ",
+        "A-lam yajidka yatīman fa-āwā, wa-wajadaka ḍāllan fa-hadā, wa-wajadaka ʿāʾilan fa-aghnā",
+        "Did He not find you an orphan and shelter you? Did He not find you wandering and guide you? Did He not find you in need and enrich you?",
+        "Quran 93:6–8 — Surah Aḍ-Ḍuḥā, addressed to him directly years later"
+      )}
+      ${c("Why the orphanhood mattered", "Classical commentators see the orphanhood as preparation. A messenger raised in privilege might have spoken from privilege. A messenger raised among the marginalized would carry their concerns into the very structure of his message. The Quran returns constantly to the rights of orphans, widows, slaves, and the poor.")}
+    `
+  },
+  {
+    title: "Young manhood &amp; Khadīja",
+    icon: "💛",
+    body: `
+      <p class="text-gray-700 mb-3">As a youth, Muhammad ﷺ worked as a <strong>shepherd</strong> on the hills around Mecca. (Every prophet, he later said, had shepherded; it teaches gentleness and patience.) In his teens he joined his uncle's <strong>caravans to Syria</strong>.</p>
+      <p class="text-gray-700 mb-3">On one such journey at about age 12, a Christian monk named <strong>Baḥīra</strong> recognized prophetic signs in the boy and warned Abū Ṭālib to protect him — particularly from the Romans, who would seek to harm him if they knew. Abū Ṭālib sent him home.</p>
+      <p class="text-gray-700 mb-3">By his 20s, his reputation for honesty had earned him the title <strong>al-Amīn</strong> — "the Trustworthy." People deposited their valuables with him; he was sought to mediate disputes.</p>
+      <p class="text-gray-700 mb-3"><span class="year-badge">~595 CE</span> <strong>Khadīja bint Khuwaylid</strong> — twice widowed, in her 40s, running a successful trading business — hired him to lead a caravan to Syria. He returned with profits doubled. Her servant Maysara reported not just on the trading, but on the man's character.</p>
+      <p class="text-gray-700 mb-3">She sent her friend Nafīsa with a proposal. He accepted. They were married — <strong>he 25, she 40</strong>. For the next 25 years he took no other wife.</p>
+      ${h(
+        "On Khadīja, said decades later",
+        "وَٱللَّهِ مَآ أَبْدَلَنِيَ ٱللَّهُ خَيْرًا مِنْهَا",
+        "Wa-llāhi mā abdalaniyya llāhu khayran minhā",
+        "By Allah, He has not replaced her with anyone better. She believed in me when people rejected me. She affirmed me when people called me a liar. She gave me her wealth when others denied me. And Allah granted me children through her — and none through any other.",
+        "Aḥmad 24864 — narrated by ʿĀʾisha"
+      )}
+    `
+  },
+  {
+    title: "The rebuilding of the Kaʿba",
+    icon: "🏛️",
+    body: `
+      <p class="text-gray-700 mb-3"><span class="year-badge">~605 CE</span> When Muhammad ﷺ was about 35, a flash flood damaged the Kaʿba. Quraysh decided to <strong>rebuild it</strong>.</p>
+      <p class="text-gray-700 mb-3">After the walls went up, a dispute arose: which clan would have the honor of <strong>placing the Black Stone</strong> back in its corner? Tribes drew swords. Civil war loomed in Mecca.</p>
+      <p class="text-gray-700 mb-3">An old man proposed: let the first man to enter the sanctuary the next morning decide. That man was Muhammad ﷺ — al-Amīn. The tribes accepted his judgment in advance.</p>
+      <p class="text-gray-700 mb-3">He asked for a cloak. Placed the Black Stone in its center. Asked the chief of each clan to <strong>grasp a corner</strong>. Together they lifted it. He placed the stone in the wall himself. <strong>Catastrophe averted by a 35-year-old's wit.</strong></p>
+      ${c("Reading the moment", "The episode is treasured by Muslim biographers because it shows three traits that would define his prophecy: <strong>creative problem-solving</strong>, <strong>willingness to share honor</strong> rather than claim it, and the capacity to <strong>defuse violence</strong> with a single gesture. These same traits would shape his political career in Medina decades later.")}
+      <p class="text-gray-700 text-sm italic">For another five years, his life was outwardly that of a prosperous, peaceful Meccan — a husband, a father, a respected mediator. Then came the cave.</p>
+    `
+  },
+  {
+    title: "The first revelation",
+    icon: "🕯️",
+    body: `
+      <p class="text-gray-700 mb-3"><span class="year-badge">610 CE</span> By his late 30s, Muhammad ﷺ had begun retreating regularly to the <strong>cave of Ḥirāʾ</strong>, a small recess about three miles outside Mecca, on the mountain of Jabal al-Nūr ("the mountain of light").</p>
+      <p class="text-gray-700 mb-3">He would take provisions and spend nights there in solitude, contemplating. The classical biographers (Ibn Isḥāq, Ibn Hishām) describe this as a period of accumulating spiritual unrest, dreams that would come true "like the breaking of dawn," and a deepening pull toward something he could not name.</p>
+      <p class="text-gray-700 mb-3">In Ramadan of his 40th year, the angel Jibrīl came.</p>
+      ${h(
+        "The encounter, as he recounted it",
+        "أَخَذَنِى فَغَطَّنِى حَتَّى بَلَغَ مِنِّى ٱلْجَهْدَ",
+        "Akhadhanī fa-ghaṭṭanī ḥattā balagha minniya l-jahd",
+        "He seized me and squeezed me until I could bear it no more. Then released me and said: 'Read.' I said: 'I cannot read.' He squeezed me again. Then a third time. Then he recited: 'Read! In the name of your Lord who created…'",
+        "Bukhari 3, Muslim 160 — the longest account, narrated by ʿĀʾisha"
+      )}
+      ${v(
+        "ٱقْرَأْ بِٱسْمِ رَبِّكَ ٱلَّذِى خَلَقَ ۝ خَلَقَ ٱلْإِنسَٰنَ مِنْ عَلَقٍ ۝ ٱقْرَأْ وَرَبُّكَ ٱلْأَكْرَمُ ۝ ٱلَّذِى عَلَّمَ بِٱلْقَلَمِ ۝ عَلَّمَ ٱلْإِنسَٰنَ مَا لَمْ يَعْلَمْ",
+        "Iqraʾ bi-smi rabbika lladhī khalaq. Khalaqa l-insāna min ʿalaq. Iqraʾ wa-rabbuka l-akram. Alladhī ʿallama bi-l-qalam. ʿAllama l-insāna mā lam yaʿlam",
+        "Read! In the name of your Lord who created. Created the human from a clinging clot. Read, and your Lord is the Most Generous, who taught by the pen — taught the human what he did not know.",
+        "Quran 96:1–5 — the first words of revelation"
+      )}
+      <p class="text-gray-700 mb-3">He ran home shaking. <em>"Cover me, cover me,"</em> he said to Khadīja. He told her what had happened. <em>"I fear for myself."</em></p>
+      <p class="text-gray-700 mb-3">She replied: <em>"By Allah, He will never disgrace you. You uphold ties of kinship, bear the weak's burden, support the destitute, honor the guest, and assist those struck by calamity."</em></p>
+      <p class="text-gray-700">She took him to her cousin <strong>Waraqa ibn Nawfal</strong>, an old, blind Christian scholar. Waraqa heard the description and said: <em>"This is the Nāmūs — the same that came to Moses. Would that I were young when your people drive you out."</em> Muhammad ﷺ asked: <em>"Will they drive me out?"</em> Waraqa answered: <em>"No man has ever brought what you have without being driven out."</em></p>
+    `
+  },
+  {
+    title: "Secret &amp; public preaching",
+    icon: "🤫",
+    body: `
+      <p class="text-gray-700 mb-3">After a period of silence — the <em>fatra</em>, perhaps two years — revelations resumed. Muhammad ﷺ began to teach <strong>privately</strong>. The first converts were close to him:</p>
+      <div class="bg-white border border-amber-200 rounded-xl p-5 mb-4">
+        <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold mb-2">The first believers</div>
+        <ul class="text-sm text-gray-700 space-y-1">
+          <li>· <strong>Khadīja</strong> — the very first</li>
+          <li>· <strong>ʿAlī ibn Abī Ṭālib</strong> — his young cousin, ~10 years old, raised in his household</li>
+          <li>· <strong>Zayd ibn Ḥāritha</strong> — his freed slave, raised as a son</li>
+          <li>· <strong>Abū Bakr</strong> — his closest friend, the first adult man outside his immediate family</li>
+        </ul>
+      </div>
+      <p class="text-gray-700 mb-3">Abū Bakr in turn brought others — including ʿUthmān, Ṭalḥa, Zubayr, and Saʿd ibn Abī Waqqāṣ — most of whom would become pillars of the early community.</p>
+      <p class="text-gray-700 mb-3"><span class="year-badge">~613 CE</span> After three years of private teaching, the command came:</p>
+      ${v(
+        "وَأَنذِرْ عَشِيرَتَكَ ٱلْأَقْرَبِينَ",
+        "Wa-andhir ʿashīrataka l-aqrabīn",
+        "And warn your nearest kindred.",
+        "Quran 26:214"
+      )}
+      <p class="text-gray-700 mb-3">He climbed the hill of Ṣafā and called the tribes by name. They gathered. He asked: <em>"If I told you that an army was coming from behind this hill to attack you, would you believe me?"</em> They said: <em>"Yes — we have never known you to lie."</em> He said: <em>"Then I warn you of a severe punishment ahead."</em></p>
+      <p class="text-gray-700">His uncle Abū Lahab interrupted: <em>"May you perish for this! Is this why you gathered us?"</em> The Quran's response is preserved as Surah Al-Masad (111).</p>
+    `
+  },
+  {
+    title: "The persecution",
+    icon: "🔥",
+    body: `
+      <p class="text-gray-700 mb-3">The message threatened Quraysh's <strong>religious authority</strong> (the Kaʿba's pilgrimage economy), <strong>social order</strong> (declaring slaves equal to masters), and <strong>economic interests</strong> (forbidding usury and exploitative trade). They responded with mockery, then with violence.</p>
+      <p class="text-gray-700 mb-3">Muhammad ﷺ himself was largely protected by his uncle Abū Ṭālib's status. But the converts who could not be shielded — slaves, freedmen, the weak — bore the brunt:</p>
+      <div class="bg-white border border-amber-200 rounded-xl p-5 mb-4">
+        <div class="space-y-2 text-sm text-gray-700">
+          <div>· <strong>Bilāl</strong>, an Abyssinian slave, was pinned under a rock in the desert sun for refusing to renounce his faith. Abū Bakr eventually bought and freed him.</div>
+          <div>· <strong>Sumayya</strong>, mother of ʿAmmār, was killed by Abū Jahl with a spear — the first martyr of Islam.</div>
+          <div>· <strong>Khabbāb ibn al-Aratt</strong> was branded with hot iron.</div>
+          <div>· The Prophet ﷺ himself had camel entrails thrown on him while prostrating in prayer.</div>
+        </div>
+      </div>
+      <p class="text-gray-700 mb-3"><span class="year-badge">615 CE</span> Conditions grew unbearable. The Prophet ﷺ sent a small group of Muslims — including ʿUthmān, Ruqayya, and Jaʿfar ibn Abī Ṭālib — to seek refuge in <strong>Abyssinia</strong> under the Christian king Najāshī (Negus). When Quraysh sent envoys to demand their extradition, Jaʿfar recited Surah Maryam (chapter 19, on Mary and Jesus). The Negus wept and said: <em>"This and what Jesus brought come from the same lamp."</em> He refused to hand them over.</p>
+      ${v(
+        "أَحَسِبَ ٱلنَّاسُ أَن يُتْرَكُوٓا۟ أَن يَقُولُوٓا۟ ءَامَنَّا وَهُمْ لَا يُفْتَنُونَ",
+        "A-ḥasiba n-nāsu an yutrakū an yaqūlū āmannā wa-hum lā yuftanūn",
+        "Do people think they will be left alone to say 'we believe' and not be tested?",
+        "Quran 29:2"
+      )}
+    `
+  },
+  {
+    title: "The boycott &amp; the Year of Sorrow",
+    icon: "🌒",
+    body: `
+      <p class="text-gray-700 mb-3"><span class="year-badge">617 CE</span> Frustrated, Quraysh imposed a complete <strong>boycott</strong> on the entire Banū Hāshim clan — Muslim and non-Muslim alike. The document was hung inside the Kaʿba. No trade. No marriage. No social contact.</p>
+      <p class="text-gray-700 mb-3">The clan retreated to a valley outside Mecca and was confined there for <strong>three years</strong>. They survived on tree leaves. The cries of starving children could be heard at night.</p>
+      <p class="text-gray-700 mb-3">The boycott ended only when several younger Quraysh members — moved by the suffering of their cousins — confronted the leadership. The document was retrieved from the Kaʿba: <strong>worms had eaten all of it except the words "In Your name, O Allah."</strong></p>
+      <p class="text-gray-700 mb-3"><span class="year-badge">619 CE</span> Shortly after the boycott's end, devastation struck. <strong>Khadīja died.</strong> She was about 65, weakened by the years of deprivation. The Prophet ﷺ was 49.</p>
+      <p class="text-gray-700 mb-3">Within months — <strong>Abū Ṭālib also died</strong>, the uncle who had protected him for 42 years. (Tradition states that Abū Ṭālib did not accept Islam before dying, a sorrow the Prophet ﷺ never fully recovered from. Quran 28:56 was reportedly revealed about him.)</p>
+      <p class="text-gray-700 mb-3">He called this year <strong>ʿĀm al-Ḥuzn</strong> — "the Year of Sorrow."</p>
+      <p class="text-gray-700 mb-3">Without Abū Ṭālib's protection, the harassment intensified. The Prophet ﷺ traveled to <strong>Ṭāʾif</strong>, 60 miles away, to seek allies among the Banū Thaqīf. They refused. They set street children on him to throw stones. His shoes filled with blood.</p>
+      ${h(
+        "His prayer at Ṭāʾif",
+        "اَللَّهُمَّ إِلَيْكَ أَشْكُو ضَعْفَ قُوَّتِي",
+        "Allāhumma ilayka ashkū ḍaʿfa quwwatī",
+        "O Allah, to You I complain of my weakness, my lack of resources, and my lowness before men. O Most Merciful of the merciful, You are the Lord of the weak — and You are my Lord. To whom do You hand me over? To a stranger who would scowl at me? Or to an enemy You've given power over me? If You are not angry with me, I do not care. But Your protection is more comprehensive for me.",
+        "Ibn Hishām · The duʿāʾ of Ṭāʾif"
+      )}
+    `
+  },
+  {
+    title: "The Night Journey",
+    icon: "🌌",
+    body: `
+      <p class="text-gray-700 mb-3">It was in this lowest of seasons — orphaned, widowed, mocked, stoned, with the protection that had shielded him gone — that the Prophet ﷺ was granted the most extraordinary single experience in Islamic tradition.</p>
+      ${v(
+        "سُبْحَٰنَ ٱلَّذِىٓ أَسْرَىٰ بِعَبْدِهِۦ لَيْلًا مِّنَ ٱلْمَسْجِدِ ٱلْحَرَامِ إِلَى ٱلْمَسْجِدِ ٱلْأَقْصَا ٱلَّذِى بَٰرَكْنَا حَوْلَهُۥ لِنُرِيَهُۥ مِنْ ءَايَٰتِنَآ",
+        "Subḥāna lladhī asrā bi-ʿabdihi laylan mina l-masjidi l-ḥarāmi ilā l-masjidi l-aqṣā lladhī bāraknā ḥawlahu li-nuriyahu min āyātinā",
+        "Glory be to Him who took His servant by night from the Sacred Mosque to the Farthest Mosque, whose surroundings We have blessed, to show him of Our signs.",
+        "Quran 17:1 — Surah Al-Isrāʾ, named for this event"
+      )}
+      <p class="text-gray-700 mb-3">In a single night, the Prophet ﷺ was:</p>
+      <div class="bg-white border border-amber-200 rounded-xl p-5 mb-4">
+        <ol class="space-y-2 text-sm text-gray-700 list-decimal list-inside">
+          <li>Taken from Mecca to Jerusalem on a mount called <strong>al-Burāq</strong> (the lightning) — the <em>Isrāʾ</em>.</li>
+          <li>Led the previous prophets — Abraham, Moses, Jesus, and others — in <strong>congregational prayer at al-Aqṣā</strong>.</li>
+          <li>Ascended through the <strong>seven heavens</strong> — the <em>Miʿrāj</em> — meeting Adam, Jesus and John, Joseph, Idrīs, Aaron, Moses, and Abraham at successive levels.</li>
+          <li>Reached the <em>Sidrat al-Muntahā</em> — the Lote-Tree of the Utmost Boundary, beyond which no created being passes.</li>
+          <li>Received directly from Allah the <strong>command of the five daily prayers</strong> (originally fifty, reduced after Moses repeatedly urged him to ask for less).</li>
+        </ol>
+      </div>
+      ${c("The reception in Mecca", "When he told Quraysh the next morning, they laughed openly. Even some Muslims wavered. They went to Abū Bakr: \"Your friend claims he traveled to Jerusalem and back in a night.\" Abū Bakr replied: \"If he said it, it is true. I believe him on things greater than this — about revelation from the heavens.\" He earned the title <strong>aṣ-Ṣiddīq</strong> — \"the truthful affirmer\" — for that response.")}
+      <p class="text-gray-700 text-sm italic">The Quran's account is brief — a single verse for the journey, then more on the ascension in Surah An-Najm (53:1–18). The details come from hadith. For Muslims, the event affirms that at his moment of greatest earthly defeat, the Prophet ﷺ was honored at the highest reaches of creation.</p>
+    `
+  },
+  {
+    title: "The Hijra to Medina",
+    icon: "🐪",
+    body: `
+      <p class="text-gray-700 mb-3"><span class="year-badge">620 CE</span> During the annual Hajj, six men from the city of <strong>Yathrib</strong> — 250 miles north of Mecca — met the Prophet ﷺ at ʿAqaba. They accepted Islam. The next year, twelve returned. Then seventy-three.</p>
+      <p class="text-gray-700 mb-3">Yathrib was unlike Mecca. It was an oasis of farmers — Arab clans (the Aws and Khazraj) at war with each other for generations, and three Jewish tribes. They were exhausted by feuding and looking for an outside arbiter. Some had heard from their Jewish neighbors of a coming prophet.</p>
+      <p class="text-gray-700 mb-3"><span class="year-badge">622</span> The Prophet ﷺ began quietly sending his followers to Yathrib. Within months, almost all the Meccan Muslims had migrated. Only he, Abū Bakr, ʿAlī, and a handful of others remained.</p>
+      <p class="text-gray-700 mb-3">Quraysh, fearing what his political base in Yathrib would mean, resolved to <strong>assassinate</strong> him before he could leave. They selected one young warrior from each clan, so that the blood-debt would be impossible for Banū Hāshim to pursue.</p>
+      <p class="text-gray-700 mb-3">Jibrīl warned him. He had ʿAlī sleep in his bed wrapped in his cloak. He slipped out at night with Abū Bakr. They hid in the <strong>cave of Thawr</strong> south of Mecca for three days — the opposite direction the searchers expected.</p>
+      ${v(
+        "إِذْ هُمَا فِى ٱلْغَارِ إِذْ يَقُولُ لِصَٰحِبِهِۦ لَا تَحْزَنْ إِنَّ ٱللَّهَ مَعَنَا",
+        "Idh humā fī l-ghāri idh yaqūlu li-ṣāḥibihi lā taḥzan inna llāha maʿanā",
+        "When the two were in the cave, and he said to his companion: 'Do not grieve — Allah is with us.'",
+        "Quran 9:40"
+      )}
+      <p class="text-gray-700 mb-3">A spider spun a web across the cave entrance. A dove built a nest. When the search party reached the cave, they saw both and concluded no one had entered recently. They turned back.</p>
+      <p class="text-gray-700 mb-3">The Prophet ﷺ and Abū Bakr emerged after three days and rode north — by a roundabout route to avoid detection. They arrived at the oasis of Qubāʾ, just outside Yathrib, on <strong>12 Rabīʿ al-Awwal, 1 AH</strong>. The Muslims of the city poured out to meet him.</p>
+      <p class="text-gray-700">Yathrib would be renamed <strong>al-Madīna al-Munawwara</strong> — "the radiant city."</p>
+    `
+  },
+  {
+    title: "The Medinan years — battles &amp; consolidation",
+    icon: "🛡️",
+    body: `
+      <p class="text-gray-700 mb-3">Within months of arrival, the Prophet ﷺ drafted the <strong>Constitution of Medina</strong> — a written charter (preserved in Ibn Isḥāq) uniting the Muslim migrants (Muhājirūn), the Medinan helpers (Anṣār), and the Jewish tribes into a single political community with mutual defense obligations. It was the first such document in Arabian history.</p>
+      <p class="text-gray-700 mb-3">Quraysh would not let him be. Permission to fight in self-defense — for the first time — came down:</p>
+      ${v(
+        "أُذِنَ لِلَّذِينَ يُقَٰتَلُونَ بِأَنَّهُمْ ظُلِمُوا۟",
+        "Udhina li-lladhīna yuqātalūna bi-annahum ẓulimū",
+        "Permission has been granted to those who are being fought, because they have been wronged.",
+        "Quran 22:39 — the first verse permitting armed defense"
+      )}
+      <p class="text-gray-700 mb-3">Three major battles, each with its own surah-length resonance in the Quran:</p>
+      <div class="space-y-3 mb-4">
+        <div class="bg-white border border-amber-200 rounded-xl p-4">
+          <div class="display text-lg font-semibold text-emerald-900 mb-1"><span class="year-badge">624</span> Battle of Badr</div>
+          <p class="text-sm text-gray-700">313 Muslims faced an army of ~1,000 Quraysh. The Muslims won decisively. Major Quraysh leaders were killed including Abū Jahl. The Quran calls it <em>"the Day of Distinction"</em> (Q 8:41). It was the foundational military victory of the Muslim community.</p>
+        </div>
+        <div class="bg-white border border-amber-200 rounded-xl p-4">
+          <div class="display text-lg font-semibold text-emerald-900 mb-1"><span class="year-badge">625</span> Battle of Uḥud</div>
+          <p class="text-sm text-gray-700">~700 Muslims vs. ~3,000 Quraysh. The Muslims were winning when the archers Muhammad ﷺ had stationed on a hill abandoned their post to collect spoils. A Meccan cavalry charge from behind turned victory to near-defeat. The Prophet ﷺ was wounded — a tooth broken, his face cut. Ḥamza, his uncle, was killed. A sobering correction (Q 3:152–155).</p>
+        </div>
+        <div class="bg-white border border-amber-200 rounded-xl p-4">
+          <div class="display text-lg font-semibold text-emerald-900 mb-1"><span class="year-badge">627</span> Battle of the Trench</div>
+          <p class="text-sm text-gray-700">A confederate army of ~10,000 — Quraysh, allied tribes, and a betraying Jewish faction — besieged Medina. On the advice of the Persian convert <strong>Salmān al-Fārisī</strong>, the Muslims dug a wide trench around the exposed northern side of the city — a tactic the Arabs had never seen. The army camped for a month, unable to cross, and dispersed. The Quran calls it <em>"a great victory"</em> (Q 33:25). Effectively ended Quraysh's ability to project military power.</p>
+        </div>
+      </div>
+      ${c("The Treaty of Ḥudaybiyya — 628", "The Prophet ﷺ led 1,400 unarmed pilgrims toward Mecca for ʿumra. Quraysh blocked them. After tense negotiation, a treaty was signed: 10-year truce, Muslims could return next year for ʿumra, asymmetric terms that seemed humiliating. ʿUmar nearly broke ranks in protest. Yet within two years, peace allowed conversion to surge across Arabia. The Quran calls it <em>\"a clear victory\"</em> (Q 48:1). It was — at the time of signing — the most strategically important act of the Prophet's ﷺ political career.")}
+    `
+  },
+  {
+    title: "The Conquest of Mecca",
+    icon: "🕋",
+    body: `
+      <p class="text-gray-700 mb-3"><span class="year-badge">630</span> Two years after Ḥudaybiyya, Quraysh's allies broke the treaty by attacking a tribe allied with the Muslims. Quraysh's leader Abū Sufyān himself traveled to Medina to try to renew the treaty. The Prophet ﷺ refused to meet with him.</p>
+      <p class="text-gray-700 mb-3">In Ramadan, the Prophet ﷺ marched on Mecca with <strong>10,000 Muslims</strong> — the largest army ever to leave Medina. The route was kept secret. They arrived outside the city before Quraysh fully realized what was happening.</p>
+      <p class="text-gray-700 mb-3">Abū Sufyān surrendered. The Prophet ﷺ entered the city he had been driven from <strong>without resistance</strong>. The gates were opened. The 10,000 streamed in.</p>
+      <p class="text-gray-700 mb-3">He could have ordered the leaders of Quraysh — the men who had tortured his followers, killed his uncle, mocked him, conspired to assassinate him — to be executed. Every legal and tribal custom of Arabia allowed it.</p>
+      <p class="text-gray-700 mb-3">Instead, he stood before the assembled people of Mecca and asked:</p>
+      <div class="bg-white border-l-4 border-amber-600 p-5 rounded-r-lg my-4">
+        <p class="italic text-gray-800 text-sm mb-2"><em>"O Quraysh — what do you think I will do with you?"</em></p>
+        <p class="text-sm text-gray-700 mb-2">They answered: <em>"Good — a noble brother, son of a noble brother."</em></p>
+        <p class="italic text-gray-800 text-sm">He said: <em>"Go — you are free."</em> (Echoing the words Joseph said to his brothers in Egypt, recorded in Q 12:92.)</p>
+      </div>
+      <p class="text-gray-700 mb-3">He went to the Kaʿba. With his staff he <strong>destroyed the 360 idols</strong>, reciting:</p>
+      ${v(
+        "وَقُلْ جَآءَ ٱلْحَقُّ وَزَهَقَ ٱلْبَٰطِلُ ۚ إِنَّ ٱلْبَٰطِلَ كَانَ زَهُوقًا",
+        "Wa-qul jāʾa l-ḥaqqu wa-zahaqa l-bāṭil, inna l-bāṭila kāna zahūqā",
+        "And say: truth has come and falsehood has vanished. Falsehood is bound to vanish.",
+        "Quran 17:81"
+      )}
+      ${c("The amnesty's scope", "Only a handful of individuals — those who had personally committed specific crimes against named Muslims — were excluded from the general amnesty. Several of them sought intercession and were ultimately pardoned. <strong>Hind</strong>, the woman who had eaten the liver of Ḥamza after Uḥud, came forward as a Muslim. The Prophet ﷺ accepted her Islam without comment. This treatment of former enemies is among the most cited features of his life by Muslim and non-Muslim biographers alike.")}
+    `
+  },
+  {
+    title: "The Farewell Pilgrimage",
+    icon: "🕋",
+    body: `
+      <p class="text-gray-700 mb-3"><span class="year-badge">632</span> In the 10th year after the Hijra, the Prophet ﷺ led his only Hajj. About 100,000 Muslims gathered on the plain of ʿArafāt outside Mecca.</p>
+      <p class="text-gray-700 mb-3">On the 9th of Dhū al-Ḥijja, from atop his camel Qaṣwāʾ, he delivered the <strong>Farewell Sermon</strong> — preserved in multiple hadith collections. The essential passages:</p>
+      <div class="bg-white border border-amber-200 rounded-xl p-5 my-4">
+        <p class="italic text-gray-800 text-sm mb-3">"O people, listen to my words — I do not know if I will ever meet you here again after this year."</p>
+        <p class="italic text-gray-800 text-sm mb-3">"Your blood, your property, and your honor are sacred to one another, like the sanctity of this day, in this month, in this place."</p>
+        <p class="italic text-gray-800 text-sm mb-3">"O people, you owe rights to your women, and they have rights over you. Treat them with kindness — they are your partners and committed helpers."</p>
+        <p class="italic text-gray-800 text-sm mb-3">"All of mankind is from Adam, and Adam was from dust. There is no superiority of an Arab over a non-Arab, nor a non-Arab over an Arab, nor of a white over a black, nor a black over a white — except by piety and good action."</p>
+        <p class="italic text-gray-800 text-sm mb-3">"Every Muslim is a brother to every Muslim. Listen to me — worship your Lord, pray your five prayers, fast your month, give your zakāt, perform your Hajj if you can, and obey those in authority among you — and you will enter the Paradise of your Lord."</p>
+        <p class="italic text-gray-800 text-sm mb-3">"I leave with you two things — the Book of Allah and my Sunnah. Hold to them, and you will never go astray."</p>
+        <p class="italic text-gray-800 text-sm">"O Allah, have I conveyed the message? O Allah, bear witness."</p>
+      </div>
+      <p class="text-gray-700 mb-3">During the sermon, the verse came down:</p>
+      ${v(
+        "ٱلْيَوْمَ أَكْمَلْتُ لَكُمْ دِينَكُمْ وَأَتْمَمْتُ عَلَيْكُمْ نِعْمَتِى وَرَضِيتُ لَكُمُ ٱلْإِسْلَٰمَ دِينًا",
+        "Al-yawma akmaltu lakum dīnakum wa-atmamtu ʿalaykum niʿmatī wa-raḍītu lakumu l-islāma dīnā",
+        "Today I have perfected your religion for you, completed My favor upon you, and chosen Islam as your way.",
+        "Quran 5:3"
+      )}
+      ${c("ʿUmar's tears", "When this verse was recited, the companion <strong>ʿUmar ibn al-Khaṭṭāb wept</strong>. Asked why — others were rejoicing — he answered: <em>\"After perfection, there is only decline. After completion comes the end.\"</em> He understood that the verse signaled the Messenger's earthly mission was finished.")}
+    `
+  },
+  {
+    title: "Death &amp; what he left",
+    icon: "🌙",
+    body: `
+      <p class="text-gray-700 mb-3"><span class="year-badge">632</span> Three months after the Farewell Pilgrimage, the Prophet ﷺ fell ill with high fever and severe headaches. The illness lasted about two weeks.</p>
+      <p class="text-gray-700 mb-3">During it, he visited the graveyard of Baqīʿ at night to pray for the dead — telling those with him: <em>"I have been given the choice between the splendor of this world or what is with my Lord, and I chose what is with my Lord."</em></p>
+      <p class="text-gray-700 mb-3">As the fever worsened, he asked his wives' permission to be nursed in ʿĀʾisha's room, which they granted. He led his last prayer publicly — Maghrib — then a final prayer led by Abū Bakr while he watched from his door, smiling.</p>
+      <p class="text-gray-700 mb-3">On Monday, <strong>12 Rabīʿ al-Awwal, 11 AH</strong> (8 June 632), his head resting in ʿĀʾisha's lap, he passed. His final whispered words: <em>"Rather, the highest companionship."</em> He was <strong>63 years old</strong>.</p>
+      <p class="text-gray-700 mb-3">ʿUmar, in shock, refused to believe he had died and threatened anyone who said so. <strong>Abū Bakr</strong> entered the chamber, uncovered the Prophet's ﷺ face, kissed his forehead, and emerged. He silenced ʿUmar with the verse:</p>
+      ${v(
+        "وَمَا مُحَمَّدٌ إِلَّا رَسُولٌ قَدْ خَلَتْ مِن قَبْلِهِ ٱلرُّسُلُ ۚ أَفَإِيْن مَّاتَ أَوْ قُتِلَ ٱنقَلَبْتُمْ عَلَىٰٓ أَعْقَٰبِكُمْ",
+        "Wa-mā Muḥammadun illā rasūlun qad khalat min qablihi r-rusul, a-fa-in māta aw qutila n-qalabtum ʿalā aʿqābikum",
+        "Muhammad is no more than a messenger — messengers have passed away before him. If he died or were killed, would you turn back on your heels?",
+        "Quran 3:144 — revealed years earlier"
+      )}
+      <p class="text-gray-700 mb-3">He famously added: <em>"Whoever worshipped Muhammad — Muhammad has died. Whoever worships Allah — Allah is alive and does not die."</em></p>
+      <p class="text-gray-700 mb-3">He was buried in the chamber where he died — in ʿĀʾisha's room, beneath the floor of her home. The green-domed structure that now marks the spot, <strong>al-Masjid al-Nabawī</strong> (the Prophet's Mosque), is Islam's second holiest site.</p>
+      <div class="bg-emerald-50/80 border-l-4 border-emerald-700 p-5 rounded-r-lg my-5">
+        <p class="text-emerald-900 mb-2"><strong>What he left:</strong></p>
+        <ul class="text-emerald-900 text-sm space-y-1">
+          <li>· The <strong>Quran</strong>, complete</li>
+          <li>· The <strong>Sunnah</strong> — his teaching and example, captured in tens of thousands of hadith</li>
+          <li>· A <strong>unified Arabia</strong> — for the first time in its history</li>
+          <li>· Roughly <strong>114,000 companions</strong> who had met him as believers (per Ibn Hajar's count)</li>
+          <li>· A community that within 100 years would carry the message from Spain to India</li>
+        </ul>
+      </div>
+      ${v(
+        "وَمَآ أَرْسَلْنَٰكَ إِلَّا رَحْمَةً لِّلْعَٰلَمِينَ",
+        "Wa-mā arsalnāka illā raḥmatan li-l-ʿālamīn",
+        "We have not sent you except as a mercy to all worlds.",
+        "Quran 21:107"
+      )}
+      <div class="bg-gradient-to-r from-emerald-50 to-amber-50 border border-amber-300 rounded-xl p-6 text-center my-6">
+        <div class="arabic text-2xl text-emerald-900 mb-1">صَلَّى ٱللَّهُ عَلَيْهِ وَسَلَّمَ</div>
+        <div class="text-sm italic text-stone-600">Ṣallā Allāhu ʿalayhi wa-sallam</div>
+        <div class="text-xs text-gray-700 mt-2">"May Allah's peace and blessings be upon him" — said by Muslims after every mention of his name.</div>
+      </div>
+      <div class="text-center text-sm space-x-4">
+        <a href="story-muhammad.html" class="text-emerald-800 underline font-semibold">← Moderate version</a>
+        <a href="stories.html" class="text-emerald-800 underline font-semibold">All stories</a>
+      </div>
+    `
+  }
+];
+
+let currentStep = 0;
+const nav = document.getElementById("step-nav");
+const container = document.getElementById("step-container");
+const stepNum = document.getElementById("step-num");
+const stepTotal = document.getElementById("step-total");
+const prevBtn = document.getElementById("prev-step");
+const nextBtn = document.getElementById("next-step");
+stepTotal.textContent = steps.length;
+
+function render() {
+  nav.innerHTML = steps.map((s, i) => `<button class="step-btn w-full text-left px-3 py-2 rounded-lg border border-transparent text-sm hover:bg-amber-50 ${i === currentStep ? 'active' : ''}" data-i="${i}"><span class="mr-2">${s.icon}</span>${s.title}</button>`).join("");
+  container.innerHTML = `<article class="article-card shadow-sm p-8"><div class="flex items-center gap-4 mb-6 pb-4 border-b border-amber-100"><div class="text-5xl">${steps[currentStep].icon}</div><div><div class="text-xs text-amber-700 font-semibold uppercase tracking-widest">Scene ${currentStep + 1}</div><h2 class="display text-3xl text-emerald-950 font-semibold">${steps[currentStep].title}</h2></div></div><div>${steps[currentStep].body}</div></article>`;
+  stepNum.textContent = currentStep + 1; prevBtn.disabled = currentStep === 0;
+  nextBtn.textContent = currentStep === steps.length - 1 ? "Finish" : "Next →";
+  nav.querySelectorAll(".step-btn").forEach(b => { b.addEventListener("click", () => { currentStep = parseInt(b.dataset.i); render(); }); });
+}
+
+const MODULE_ID = "STORY-Muhammad"; const STORAGE_KEY = "islamapp-progress-v1";
+function loadProgress() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; } }
+function markInProgress() { const p = loadProgress(); if (p[MODULE_ID] !== "done") { p[MODULE_ID] = "inprogress"; localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); } }
+function markComplete() { const p = loadProgress(); p[MODULE_ID] = "done"; localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); }
+
+prevBtn.addEventListener("click", () => { if (currentStep > 0) { currentStep--; render(); } });
+nextBtn.addEventListener("click", () => { if (currentStep < steps.length - 1) { currentStep++; render(); } else { markComplete(); window.location.href = "stories.html"; } });
+
+document.addEventListener("keydown", (e) => {
+  if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.isContentEditable) return;
+  if (e.key === "ArrowLeft" && !prevBtn.disabled) prevBtn.click();
+  else if (e.key === "ArrowRight") nextBtn.click();
+});
+
+const isSingleMode = new URLSearchParams(window.location.search).get('single') === '1';
+const currentMode = isSingleMode ? 'single' : 'deep';
+document.querySelectorAll('.depth-pill a').forEach(a => a.classList.toggle('active', a.dataset.mode === currentMode));
+
+if (isSingleMode) {
+  document.querySelector('aside').style.display = 'none';
+  prevBtn.parentElement.style.display = 'none';
+  document.querySelector('main').parentElement.style.display = 'block';
+  document.querySelector('#step-num').parentElement.style.visibility = 'hidden';
+
+  container.innerHTML = steps.map((s, i) => `
+    <article class="article-card shadow-sm p-8 mb-6">
+      <div class="flex items-center gap-4 mb-6 pb-4 border-b border-amber-100">
+        <div class="text-5xl">${s.icon}</div>
+        <div>
+          <div class="text-xs text-amber-700 font-semibold uppercase tracking-widest">Scene ${i + 1}</div>
+          <h2 class="display text-3xl text-emerald-950 font-semibold">${s.title}</h2>
+        </div>
+      </div>
+      <div>${s.body}</div>
+    </article>
+  `).join("");
+  markInProgress();
+} else {
+  markInProgress();
+  render();
+}
+</script>
+
+</body>
+</html>

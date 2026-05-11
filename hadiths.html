@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hadith Collections — IslamApp</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>(function(){try{if(localStorage.getItem('islamapp-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
+<link rel="stylesheet" href="theme.css">
+<script src="theme.js" defer></script>
+<style>
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #faf6ed;
+    color: #1c2d20;
+    background-image:
+      radial-gradient(circle at 10% 10%, rgba(201,169,97,0.08) 0%, transparent 40%),
+      radial-gradient(circle at 90% 90%, rgba(6,78,59,0.06) 0%, transparent 40%);
+    background-attachment: fixed;
+  }
+  .arabic { font-family: 'Amiri', serif; direction: rtl; line-height: 1.9; }
+  .display { font-family: 'Cormorant Garamond', serif; }
+  .geo-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23064e3b' fill-opacity='0.05'%3E%3Cpath d='M30 0l7.5 22.5H60L41.25 37.5l7.5 22.5L30 45l-18.75 15 7.5-22.5L0 22.5h22.5z'/%3E%3C/g%3E%3C/svg%3E");
+  }
+  .book-card {
+    background: #fff;
+    border: 1px solid rgba(201,169,97,0.35);
+    border-radius: 14px 14px 6px 6px;
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .book-card::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 6px;
+    background: linear-gradient(180deg, #c9a961, #a8863f);
+  }
+  .book-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px -10px rgba(6,78,59,0.25);
+    border-color: #c9a961;
+  }
+  .gold-line { height: 1px; background: linear-gradient(to right, transparent, #c9a961, transparent); }
+  .section-heading {
+    display: flex; align-items: center; gap: 12px;
+    color: #a8863f;
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin: 3rem 0 1.5rem;
+  }
+  .section-heading::before, .section-heading::after {
+    content: '';
+    flex: 1; height: 1px;
+    background: linear-gradient(to right, transparent, #c9a961, transparent);
+  }
+  .hadith-card {
+    background: #fff;
+    border: 1px solid rgba(201,169,97,0.3);
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+  .grade-pill {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .grade-sahih { background: #d1fae5; color: #065f46; }
+  .grade-hasan { background: #fef3c7; color: #92400e; }
+  .grade-daif { background: #fee2e2; color: #991b1b; }
+  .grade-mawdu { background: #1c1917; color: #fef3c7; }
+</style>
+</head>
+<body class="geo-pattern min-h-screen">
+
+<div class="max-w-5xl mx-auto px-5 py-12">
+
+  <nav class="mb-8">
+    <a href="index.html" class="text-emerald-900 hover:text-amber-700 text-sm font-semibold">← Curriculum</a>
+  </nav>
+
+  <header class="text-center mb-10">
+    <div class="gold-line mb-5 max-w-[180px] mx-auto"></div>
+    <div class="arabic text-4xl text-emerald-900 mb-3">الحَدِيث الشَّرِيف</div>
+    <h1 class="display text-5xl md:text-6xl text-emerald-950 font-semibold mb-3">The Hadith</h1>
+    <p class="text-stone-600 max-w-2xl mx-auto">Reports of what the Prophet ﷺ said, did, and approved — collected, chain-verified, and graded by Muslim scholars over the first three centuries.</p>
+    <div class="gold-line mt-5 max-w-[180px] mx-auto"></div>
+  </header>
+
+  <section class="bg-white/60 border border-amber-200/60 rounded-xl p-6 mb-4">
+    <h2 class="display text-2xl text-emerald-950 font-semibold mb-3">How hadith are graded</h2>
+    <p class="text-stone-700 text-sm mb-4">Not every report carries the same weight. Scholars evaluate the <strong>chain of narrators</strong> (who transmitted it) and the <strong>text</strong> (is it consistent with other evidence) and assign a grade:</p>
+    <div class="grid sm:grid-cols-2 gap-3 text-sm">
+      <div class="flex items-start gap-3 p-3 rounded-lg bg-emerald-50/50"><span class="grade-pill grade-sahih">Sahih</span><span class="text-stone-700">Authentic — unbroken chain of reliable narrators.</span></div>
+      <div class="flex items-start gap-3 p-3 rounded-lg bg-amber-50/50"><span class="grade-pill grade-hasan">Hasan</span><span class="text-stone-700">Good — reliable but with a minor issue in the chain.</span></div>
+      <div class="flex items-start gap-3 p-3 rounded-lg bg-red-50/50"><span class="grade-pill grade-daif">Daif</span><span class="text-stone-700">Weak — a flaw in the chain or text.</span></div>
+      <div class="flex items-start gap-3 p-3 rounded-lg bg-stone-100"><span class="grade-pill grade-mawdu">Mawdu</span><span class="text-stone-700">Fabricated — rejected outright.</span></div>
+    </div>
+  </section>
+
+  <div class="section-heading">The Six Canonical Books (Kutub al-Sittah)</div>
+  <div id="six-books" class="grid sm:grid-cols-2 gap-4"></div>
+
+  <div class="section-heading">Other Major Collections</div>
+  <div id="other-books" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+
+  <div class="section-heading">A few well-known hadiths</div>
+  <div id="sample-hadiths" class="space-y-4"></div>
+
+  <footer class="mt-16 text-center">
+    <div class="gold-line mb-6 max-w-xs mx-auto"></div>
+    <p class="text-xs italic text-stone-500 max-w-lg mx-auto">This is a skeleton library. Each collection and hadith will open into its own module with full text and commentary.</p>
+  </footer>
+
+</div>
+
+<script>
+const sixBooks = [
+  { name: "Sahih al-Bukhari", arabic: "صَحِيح البُخَارِي", compiler: "Imam al-Bukhari (d. 870)", count: "~7,500 reports (with repetition)", note: "Considered the most authentic book after the Quran itself. Bukhari applied the strictest conditions." },
+  { name: "Sahih Muslim", arabic: "صَحِيح مُسْلِم", compiler: "Imam Muslim b. al-Hajjaj (d. 875)", count: "~7,500 reports", note: "The second most authentic collection; organized more rigorously by topic." },
+  { name: "Sunan Abu Dawud", arabic: "سُنَن أَبِي دَاوُد", compiler: "Abu Dawud al-Sijistani (d. 889)", count: "~5,200 reports", note: "Focused on legal hadiths used in fiqh." },
+  { name: "Jami' at-Tirmidhi", arabic: "جَامِع التِّرْمِذِي", compiler: "Imam al-Tirmidhi (d. 892)", count: "~4,000 reports", note: "Notable for discussing each hadith's grade and the scholarly opinions on it." },
+  { name: "Sunan an-Nasa'i", arabic: "سُنَن النَّسَائِي", compiler: "Imam al-Nasa'i (d. 915)", count: "~5,700 reports", note: "Strict in grading; near the level of the two Sahihs." },
+  { name: "Sunan Ibn Majah", arabic: "سُنَن ابْن مَاجَه", compiler: "Ibn Majah (d. 887)", count: "~4,300 reports", note: "The sixth of the canonical books; contains some weak reports the others did not include." }
+];
+
+const otherBooks = [
+  { name: "Muwatta Imam Malik", arabic: "مُوَطَّأ مَالِك", note: "The earliest major collection (c. 770); foundational for the Maliki school." },
+  { name: "Musnad Ahmad", arabic: "مُسْنَد أَحْمَد", note: "Ahmad b. Hanbal's enormous compilation (~27,000 reports), arranged by companion." },
+  { name: "Mustadrak al-Hakim", arabic: "المُسْتَدْرَك", note: "Hadiths al-Hakim considered authentic that Bukhari/Muslim had not included." },
+  { name: "Sunan al-Darimi", arabic: "سُنَن الدَّارِمِي", note: "Often cited alongside the six books." },
+  { name: "40 Hadith of Nawawi", arabic: "الأَرْبَعُون النَّوَوِيَّة", note: "A curated set of 42 concise hadiths summarizing the religion — the classic starter collection." },
+  { name: "Riyad al-Salihin", arabic: "رِيَاض الصَّالِحِين", note: "\"Gardens of the Righteous\" — al-Nawawi's thematic anthology of ~1,900 hadiths for spiritual life." }
+];
+
+const sampleHadiths = [
+  {
+    id: 1,
+    grade: "sahih",
+    arabic: "إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ",
+    translation: "\"Actions are judged by intentions.\"",
+    source: "Bukhari 1, Muslim 1907 — narrated by ʿUmar",
+    note: "Traditionally the first hadith taught. It is considered a quarter of the religion by itself."
+  },
+  {
+    id: 2,
+    grade: "sahih",
+    arabic: "مَنْ كَانَ يُؤْمِنُ بِاللَّهِ وَالْيَوْمِ الآخِرِ فَلْيَقُلْ خَيْرًا أَوْ لِيَصْمُتْ",
+    translation: "\"Whoever believes in Allah and the Last Day, let him speak good or remain silent.\"",
+    source: "Bukhari 6018, Muslim 47 — narrated by Abu Hurayra",
+    note: "A six-word summary of Islamic ethics of speech."
+  },
+  {
+    id: 3,
+    grade: "sahih",
+    arabic: "لَا يُؤْمِنُ أَحَدُكُمْ حَتَّى يُحِبَّ لِأَخِيهِ مَا يُحِبُّ لِنَفْسِهِ",
+    translation: "\"None of you truly believes until he loves for his brother what he loves for himself.\"",
+    source: "Bukhari 13, Muslim 45 — narrated by Anas",
+    note: "The Islamic statement of the Golden Rule."
+  },
+  {
+    id: 4,
+    grade: "sahih",
+    arabic: "الدِّينُ النَّصِيحَةُ",
+    translation: "\"The religion is sincere counsel.\"",
+    source: "Muslim 55 — narrated by Tamim al-Dari",
+    note: "Counsel to God, to His book, to His messenger, to the leaders of the Muslims, and to the common people."
+  },
+  {
+    id: 5,
+    grade: "sahih",
+    arabic: "مَنْ رَأَى مِنْكُمْ مُنْكَرًا فَلْيُغَيِّرْهُ بِيَدِهِ، فَإِنْ لَمْ يَسْتَطِعْ فَبِلِسَانِهِ، فَإِنْ لَمْ يَسْتَطِعْ فَبِقَلْبِهِ، وَذَلِكَ أَضْعَفُ الإِيمَانِ",
+    translation: "\"Whoever sees an evil, let him change it with his hand; if he cannot, then with his tongue; if he cannot, then with his heart — and that is the weakest of faith.\"",
+    source: "Muslim 49 — narrated by Abu Saʿid al-Khudri",
+    note: "The core text on calling to what is right and forbidding what is wrong."
+  }
+];
+
+function renderBooks(el, books, isSix) {
+  el.innerHTML = books.map(b => `
+    <a href="placeholder.html?id=BOOK-${encodeURIComponent(b.name)}&title=${encodeURIComponent(b.name)}&tier=Library&tierName=${encodeURIComponent('Hadith Collections')}" class="book-card block p-6 pl-8">
+      <div class="arabic text-2xl text-emerald-900 mb-2">${b.arabic}</div>
+      <div class="display text-xl text-emerald-950 font-semibold mb-2">${b.name}</div>
+      ${b.compiler ? `<div class="text-xs text-stone-500 mb-1">${b.compiler}</div>` : ''}
+      ${b.count ? `<div class="text-xs text-amber-700/90 font-mono mb-3">${b.count}</div>` : ''}
+      <p class="text-sm text-stone-600 leading-snug">${b.note}</p>
+    </a>
+  `).join("");
+}
+
+function renderHadiths(el, hadiths) {
+  el.innerHTML = hadiths.map(h => `
+    <div class="hadith-card">
+      <div class="flex items-center justify-between mb-3">
+        <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold">Hadith #${h.id}</div>
+        <span class="grade-pill grade-${h.grade}">${h.grade}</span>
+      </div>
+      <div class="arabic text-2xl text-emerald-900 mb-3">${h.arabic}</div>
+      <div class="text-stone-800 italic mb-3">${h.translation}</div>
+      <div class="text-xs text-stone-500 mb-2 font-mono">${h.source}</div>
+      <div class="text-sm text-stone-600">${h.note}</div>
+    </div>
+  `).join("");
+}
+
+renderBooks(document.getElementById("six-books"), sixBooks, true);
+renderBooks(document.getElementById("other-books"), otherBooks, false);
+renderHadiths(document.getElementById("sample-hadiths"), sampleHadiths);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Last 10 Surahs of Juz Amma — IslamApp</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>(function(){try{if(localStorage.getItem('islamapp-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
+<link rel="stylesheet" href="theme.css">
+<script src="theme.js" defer></script>
+<style>
+  body { font-family: 'Inter', sans-serif; background: #faf6ed; color: #1c2d20;
+    background-image: radial-gradient(circle at 10% 10%, rgba(201,169,97,0.08) 0%, transparent 40%), radial-gradient(circle at 90% 90%, rgba(6,78,59,0.06) 0%, transparent 40%);
+    background-attachment: fixed; }
+  .arabic { font-family: 'Amiri', serif; direction: rtl; line-height: 1.9; }
+  .display { font-family: 'Cormorant Garamond', serif; }
+  .geo-pattern { background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23064e3b' fill-opacity='0.05'%3E%3Cpath d='M30 0l7.5 22.5H60L41.25 37.5l7.5 22.5L30 45l-18.75 15 7.5-22.5L0 22.5h22.5z'/%3E%3C/g%3E%3C/svg%3E"); }
+  .step-btn.active { background: #064e3b; color: #faf6ed; border-color: #c9a961; }
+  .gold-line { height: 1px; background: linear-gradient(to right, transparent, #c9a961, transparent); }
+  .btn-primary { background: linear-gradient(135deg, #064e3b 0%, #022c22 100%); color: #faf6ed; border: 1px solid #c9a961; }
+  .btn-primary:hover { background: linear-gradient(135deg, #0f766e 0%, #064e3b 100%); }
+  .btn-secondary { background: #fff; border: 1px solid #c9a961; color: #064e3b; }
+  .btn-secondary:hover { background: #faf6ed; }
+  .article-card { background: #fff; border: 1px solid rgba(201,169,97,0.4); border-radius: 14px 14px 6px 6px; }
+  .article-card::before { content: ''; display: block; height: 12px; margin: -1px -1px 0 -1px;
+    background: linear-gradient(180deg, rgba(201,169,97,0.25), transparent); border-radius: 14px 14px 0 0; border-bottom: 1px solid rgba(201,169,97,0.25); }
+  .surah-card { background: #fff; border: 1px solid rgba(201,169,97,0.4); border-radius: 14px;
+    padding: 1.5rem; position: relative; overflow: hidden; margin-bottom: 1rem; }
+  .surah-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(to right, #c9a961, #064e3b, #c9a961); }
+  .surah-num { display: inline-block; padding: 2px 12px; background: #064e3b; color: #faf6ed;
+    border-radius: 999px; font-size: 0.7rem; letter-spacing: 0.1em; font-weight: 600; }
+  .verse-line { padding: 0.6rem 0; border-bottom: 1px solid rgba(201,169,97,0.15); }
+  .verse-line:last-child { border-bottom: none; }
+  .verse-arabic { font-family: 'Amiri', serif; font-size: 1.6rem; color: #064e3b; line-height: 1.9; text-align: center; }
+  .verse-trans { font-style: italic; color: #047857; font-size: 0.85rem; text-align: center; margin-top: 0.25rem; }
+  .verse-eng { color: #1f2937; font-size: 0.85rem; text-align: center; margin-top: 0.15rem; }
+  .verse-num-tag { display: inline-block; padding: 1px 7px; border-radius: 999px;
+    background: rgba(201,169,97,0.2); color: #a8863f; font-size: 0.7rem; font-weight: 600; margin-right: 4px; }
+  .choice { text-align: left; padding: 0.75rem 1rem; border: 2px solid #e7e5e4; border-radius: 8px; background: #fff; cursor: pointer;
+    transition: all 0.15s ease; font: inherit; width: 100%; }
+  .choice:hover { background: #ecfdf5; border-color: #059669; }
+  .choice.correct { background: #d1fae5; border-color: #059669; color: #064e3b; }
+  .choice.wrong { background: #fee2e2; border-color: #dc2626; color: #7f1d1d; }
+  .choice:disabled { cursor: default; }
+</style>
+</head>
+<body class="geo-pattern min-h-screen">
+
+<div class="max-w-6xl mx-auto px-6 py-10">
+
+  <nav class="flex justify-between items-center mb-6">
+    <a href="index.html" class="text-emerald-900 hover:text-amber-700 text-sm font-semibold">← Curriculum</a>
+    <div class="text-xs uppercase tracking-[0.25em] text-amber-700 font-semibold hidden sm:block">Tier 4 · Module 4-2</div>
+    <div class="text-sm text-stone-500"><span id="step-num">1</span> / <span id="step-total">11</span></div>
+  </nav>
+
+  <header class="text-center mb-8">
+    <div class="gold-line mb-4 max-w-[180px] mx-auto"></div>
+    <div class="arabic text-3xl text-emerald-900 mb-2">جُزْء عَمَّ</div>
+    <h1 class="display text-4xl md:text-5xl text-emerald-950 font-semibold">The Last Ten Surahs</h1>
+    <div class="text-stone-600 mt-2">Juz ʿAmma · Surahs 105–114</div>
+    <div class="gold-line mt-4 max-w-[180px] mx-auto"></div>
+  </header>
+
+  <div class="grid md:grid-cols-[220px_1fr] gap-6">
+    <aside class="md:sticky md:top-6 md:self-start">
+      <div class="article-card p-3 shadow-sm">
+        <div class="text-xs uppercase tracking-wider text-amber-700 font-semibold mb-2 px-2">Steps</div>
+        <nav id="step-nav" class="space-y-1"></nav>
+      </div>
+    </aside>
+    <main id="step-container"></main>
+  </div>
+
+  <div class="flex justify-between mt-8 gap-4">
+    <button id="prev-step" class="btn-secondary flex-1 md:flex-none px-6 py-3 rounded-lg font-semibold disabled:opacity-30 disabled:cursor-not-allowed">← Previous</button>
+    <button id="next-step" class="btn-primary flex-1 md:flex-none px-6 py-3 rounded-lg font-semibold">Next →</button>
+  </div>
+
+</div>
+
+<script>
+function surahCard(s) {
+  return `
+    <div class="surah-card">
+      <div class="flex items-center justify-between mb-3 flex-wrap gap-2">
+        <div>
+          <span class="surah-num">SURAH ${s.num}</span>
+          <span class="display text-2xl text-emerald-950 font-semibold ml-3">${s.name}</span>
+          <span class="arabic text-xl text-emerald-900 ml-2">${s.arName}</span>
+        </div>
+        <span class="text-xs text-stone-500">${s.verses} verses · ${s.meccan ? 'Meccan' : 'Medinan'}</span>
+      </div>
+      <p class="text-sm text-gray-700 italic mb-3 text-center">"${s.title}"</p>
+      <div class="my-4">
+        ${s.lines.map((l, i) => `
+          <div class="verse-line">
+            <div class="verse-arabic"><span class="verse-num-tag">${i+1}</span>${l.ar}</div>
+            <div class="verse-trans">${l.t}</div>
+            <div class="verse-eng">"${l.e}"</div>
+          </div>
+        `).join("")}
+      </div>
+      <div class="text-sm text-gray-700 border-t border-amber-100 pt-3">${s.note}</div>
+    </div>
+  `;
+}
+
+const surahs = {
+  105: {
+    num: 105, name: "Al-Fīl", arName: "الْفِيل", title: "The Elephant",
+    verses: 5, meccan: true,
+    note: "Recalls the year of the Prophet's ﷺ birth (~570 CE) when Abraha, the Yemeni governor, marched on Mecca with elephants to destroy the Kaʿba — and was destroyed by birds dropping stones from the sky.",
+    lines: [
+      { ar: "أَلَمْ تَرَ كَيْفَ فَعَلَ رَبُّكَ بِأَصْحَابِ الْفِيلِ", t: "A-lam tara kayfa faʿala rabbuka bi-aṣḥābi l-fīl", e: "Have you not seen how your Lord dealt with the people of the elephant?" },
+      { ar: "أَلَمْ يَجْعَلْ كَيْدَهُمْ فِي تَضْلِيلٍ", t: "A-lam yajʿal kaydahum fī taḍlīl", e: "Did He not bring their plan to ruin?" },
+      { ar: "وَأَرْسَلَ عَلَيْهِمْ طَيْرًا أَبَابِيلَ", t: "Wa-arsala ʿalayhim ṭayran abābīl", e: "And He sent against them flocks of birds," },
+      { ar: "تَرْمِيهِم بِحِجَارَةٍ مِّن سِجِّيلٍ", t: "Tarmīhim bi-ḥijāratin min sijjīl", e: "striking them with stones of baked clay," },
+      { ar: "فَجَعَلَهُمْ كَعَصْفٍ مَّأْكُولٍ", t: "Fa-jaʿalahum ka-ʿaṣfin ma'kūl", e: "and made them like devoured chaff." }
+    ]
+  },
+  106: {
+    num: 106, name: "Quraysh", arName: "قُرَيْش", title: "Quraysh",
+    verses: 4, meccan: true,
+    note: "Continues from Al-Fīl: because Allah protected the Kaʿba, the tribe of Quraysh prospered through their winter and summer trading caravans. They are reminded to worship the Lord of this House.",
+    lines: [
+      { ar: "لِإِيلَافِ قُرَيْشٍ", t: "Li-īlāfi Quraysh", e: "For the protection of Quraysh —" },
+      { ar: "إِيلَافِهِمْ رِحْلَةَ الشِّتَاءِ وَالصَّيْفِ", t: "Īlāfihim riḥlata sh-shitāʾi wa-ṣ-ṣayf", e: "their accustomed journey of winter and summer —" },
+      { ar: "فَلْيَعْبُدُوا رَبَّ هَٰذَا الْبَيْتِ", t: "Fa-l-yaʿbudū rabba hādhā l-bayt", e: "let them worship the Lord of this House," },
+      { ar: "الَّذِي أَطْعَمَهُم مِّن جُوعٍ وَآمَنَهُم مِّنْ خَوْفٍ", t: "Alladhī aṭʿamahum min jūʿin wa-āmanahum min khawf", e: "who fed them from hunger and made them safe from fear." }
+    ]
+  },
+  107: {
+    num: 107, name: "Al-Māʿūn", arName: "الْمَاعُون", title: "Small Kindnesses",
+    verses: 7, meccan: true,
+    note: "A devastating critique: the one who denies the religion is the one who pushes the orphan away, neglects feeding the poor, prays carelessly, prays to be seen, and refuses small kindnesses to neighbors.",
+    lines: [
+      { ar: "أَرَأَيْتَ الَّذِي يُكَذِّبُ بِالدِّينِ", t: "A-raʾayta lladhī yukadhdhibu bi-d-dīn", e: "Have you seen the one who denies the Recompense?" },
+      { ar: "فَذَٰلِكَ الَّذِي يَدُعُّ الْيَتِيمَ", t: "Fa-dhālika lladhī yaduʿʿu l-yatīm", e: "It is the one who pushes the orphan away" },
+      { ar: "وَلَا يَحُضُّ عَلَىٰ طَعَامِ الْمِسْكِينِ", t: "Wa-lā yaḥuḍḍu ʿalā ṭaʿāmi l-miskīn", e: "and does not encourage feeding the poor." },
+      { ar: "فَوَيْلٌ لِّلْمُصَلِّينَ", t: "Fa-waylun li-l-muṣallīn", e: "So woe to those who pray —" },
+      { ar: "الَّذِينَ هُمْ عَن صَلَاتِهِمْ سَاهُونَ", t: "Alladhīna hum ʿan ṣalātihim sāhūn", e: "who are heedless of their prayer," },
+      { ar: "الَّذِينَ هُمْ يُرَاءُونَ", t: "Alladhīna hum yurāʾūn", e: "who only pray to be seen," },
+      { ar: "وَيَمْنَعُونَ الْمَاعُونَ", t: "Wa-yamnaʿūna l-māʿūn", e: "and refuse small kindnesses." }
+    ]
+  },
+  108: {
+    num: 108, name: "Al-Kawthar", arName: "الْكَوْثَر", title: "Abundance",
+    verses: 3, meccan: true,
+    note: "The shortest surah in the Quran. Comforts the Prophet ﷺ after the death of his sons (which his enemies mocked) by promising him abundance — including a river in Paradise called al-Kawthar.",
+    lines: [
+      { ar: "إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ", t: "Innā aʿṭaynāka l-kawthar", e: "Indeed, We have given you abundance." },
+      { ar: "فَصَلِّ لِرَبِّكَ وَانْحَرْ", t: "Fa-ṣalli li-rabbika wa-nḥar", e: "So pray to your Lord and sacrifice." },
+      { ar: "إِنَّ شَانِئَكَ هُوَ الْأَبْتَرُ", t: "Inna shāniʾaka huwa l-abtar", e: "Indeed, your enemy — he is the one cut off." }
+    ]
+  },
+  109: {
+    num: 109, name: "Al-Kāfirūn", arName: "الْكَافِرُون", title: "The Disbelievers",
+    verses: 6, meccan: true,
+    note: "A clear refusal to compromise on faith — when the polytheists offered to alternate religions year by year. Recited in the morning sunnah prayers.",
+    lines: [
+      { ar: "قُلْ يَا أَيُّهَا الْكَافِرُونَ", t: "Qul yā ayyuhā l-kāfirūn", e: "Say: O you who disbelieve," },
+      { ar: "لَا أَعْبُدُ مَا تَعْبُدُونَ", t: "Lā aʿbudu mā taʿbudūn", e: "I do not worship what you worship," },
+      { ar: "وَلَا أَنتُمْ عَابِدُونَ مَا أَعْبُدُ", t: "Wa-lā antum ʿābidūna mā aʿbud", e: "nor do you worship what I worship." },
+      { ar: "وَلَا أَنَا عَابِدٌ مَّا عَبَدتُّمْ", t: "Wa-lā anā ʿābidun mā ʿabadtum", e: "Nor will I worship what you have worshipped," },
+      { ar: "وَلَا أَنتُمْ عَابِدُونَ مَا أَعْبُدُ", t: "Wa-lā antum ʿābidūna mā aʿbud", e: "nor will you worship what I worship." },
+      { ar: "لَكُمْ دِينُكُمْ وَلِيَ دِينِ", t: "Lakum dīnukum wa-liya dīn", e: "For you is your religion, and for me is mine." }
+    ]
+  },
+  110: {
+    num: 110, name: "An-Naṣr", arName: "النَّصْر", title: "The Help",
+    verses: 3, meccan: false,
+    note: "One of the last surahs revealed. Marks the conquest of Mecca and the people entering Islam in waves. The Prophet ﷺ took it as a sign that his mission was nearing completion.",
+    lines: [
+      { ar: "إِذَا جَاءَ نَصْرُ اللَّهِ وَالْفَتْحُ", t: "Idhā jāʾa naṣru llāhi wa-l-fatḥ", e: "When the help of Allah and the victory comes," },
+      { ar: "وَرَأَيْتَ النَّاسَ يَدْخُلُونَ فِي دِينِ اللَّهِ أَفْوَاجًا", t: "Wa-raʾayta n-nāsa yadkhulūna fī dīni llāhi afwājā", e: "and you see people entering Allah's religion in waves," },
+      { ar: "فَسَبِّحْ بِحَمْدِ رَبِّكَ وَاسْتَغْفِرْهُ ۚ إِنَّهُ كَانَ تَوَّابًا", t: "Fa-sabbiḥ bi-ḥamdi rabbika wa-staghfirh, innahu kāna tawwābā", e: "then exalt your Lord with praise and seek His forgiveness. He is ever-accepting of repentance." }
+    ]
+  },
+  111: {
+    num: 111, name: "Al-Masad", arName: "الْمَسَد", title: "The Palm Fiber",
+    verses: 5, meccan: true,
+    note: "Names the Prophet's uncle Abu Lahab — who actively opposed the message — by his nickname. The only person attacked by name in the Quran. His wife also features for spreading thorns in the Prophet's path.",
+    lines: [
+      { ar: "تَبَّتْ يَدَا أَبِي لَهَبٍ وَتَبَّ", t: "Tabbat yadā abī lahabin wa-tabb", e: "May the hands of Abu Lahab be ruined, and ruined is he." },
+      { ar: "مَا أَغْنَىٰ عَنْهُ مَالُهُ وَمَا كَسَبَ", t: "Mā aghnā ʿanhu māluhu wa-mā kasab", e: "His wealth and his earnings will not avail him." },
+      { ar: "سَيَصْلَىٰ نَارًا ذَاتَ لَهَبٍ", t: "Sa-yaṣlā nāran dhāta lahab", e: "He will burn in a Fire of blazing flames" },
+      { ar: "وَامْرَأَتُهُ حَمَّالَةَ الْحَطَبِ", t: "Wa-mraʾatuhu ḥammālata l-ḥaṭab", e: "— and his wife, the carrier of firewood," },
+      { ar: "فِي جِيدِهَا حَبْلٌ مِّن مَّسَدٍ", t: "Fī jīdihā ḥablun min masad", e: "around her neck a rope of palm fiber." }
+    ]
+  },
+  112: {
+    num: 112, name: "Al-Ikhlāṣ", arName: "الْإِخْلَاص", title: "Sincerity",
+    verses: 4, meccan: true,
+    note: "Four lines summarizing pure monotheism. The Prophet ﷺ said reciting it three times equals reciting a third of the Quran. Memorize this one above all.",
+    lines: [
+      { ar: "قُلْ هُوَ اللَّهُ أَحَدٌ", t: "Qul huwa llāhu aḥad", e: "Say: He is Allah, the One." },
+      { ar: "اللَّهُ الصَّمَدُ", t: "Allāhu ṣ-ṣamad", e: "Allah, the Eternal, the Absolute." },
+      { ar: "لَمْ يَلِدْ وَلَمْ يُولَدْ", t: "Lam yalid wa-lam yūlad", e: "He neither begets nor was begotten," },
+      { ar: "وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ", t: "Wa-lam yakun lahu kufuwan aḥad", e: "and there is none equal to Him." }
+    ]
+  },
+  113: {
+    num: 113, name: "Al-Falaq", arName: "الْفَلَق", title: "The Daybreak",
+    verses: 5, meccan: true,
+    note: "First of the two 'seekings of refuge' (al-muʿawwidhatān). Seek protection in Allah from outside evils.",
+    lines: [
+      { ar: "قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ", t: "Qul aʿūdhu bi-rabbi l-falaq", e: "Say: I seek refuge in the Lord of daybreak —" },
+      { ar: "مِن شَرِّ مَا خَلَقَ", t: "Min sharri mā khalaq", e: "from the evil of what He has created," },
+      { ar: "وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ", t: "Wa-min sharri ghāsiqin idhā waqab", e: "from the evil of darkness when it falls," },
+      { ar: "وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ", t: "Wa-min sharri n-naffāthāti fī l-ʿuqad", e: "from the evil of those who blow on knots," },
+      { ar: "وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ", t: "Wa-min sharri ḥāsidin idhā ḥasad", e: "and from the evil of an envier when he envies." }
+    ]
+  },
+  114: {
+    num: 114, name: "An-Nās", arName: "النَّاس", title: "Mankind",
+    verses: 6, meccan: true,
+    note: "The second 'seeking of refuge.' Seek protection from internal evils — the whisperer in the chest. Recited together with Al-Falaq for protection, especially before sleep.",
+    lines: [
+      { ar: "قُلْ أَعُوذُ بِرَبِّ النَّاسِ", t: "Qul aʿūdhu bi-rabbi n-nās", e: "Say: I seek refuge in the Lord of mankind," },
+      { ar: "مَلِكِ النَّاسِ", t: "Maliki n-nās", e: "the King of mankind," },
+      { ar: "إِلَٰهِ النَّاسِ", t: "Ilāhi n-nās", e: "the God of mankind —" },
+      { ar: "مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ", t: "Min sharri l-waswāsi l-khannās", e: "from the evil of the slinking whisperer," },
+      { ar: "الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ", t: "Alladhī yuwaswisu fī ṣudūri n-nās", e: "who whispers in the chests of mankind," },
+      { ar: "مِنَ الْجِنَّةِ وَالنَّاسِ", t: "Mina l-jinnati wa-n-nās", e: "from among jinn and mankind." }
+    ]
+  }
+};
+
+const steps = [
+  {
+    title: "What is Juz ʿAmma?",
+    icon: "📖",
+    body: `
+      <p class="text-gray-700 mb-4 text-lg">The Quran is divided into <strong>30 sections</strong> called <em>juzʾ</em>, each roughly the same length. The 30th and last is named <strong>Juz ʿAmma</strong> — after its first word, <em>ʿamma</em> ("about what?").</p>
+      <p class="text-gray-700 mb-4">Juz ʿAmma contains the <strong>shortest chapters</strong> of the Quran. Most are 3–10 verses. They are usually the <strong>first chapters memorized</strong> by Muslim children — and the chapters most often recited in daily prayer when a longer surah is not chosen.</p>
+      <div class="bg-emerald-50/80 border-l-4 border-emerald-700 p-5 rounded-r-lg my-5">
+        <p class="text-emerald-900"><strong>This module covers the last 10 surahs</strong> — chapters 105 through 114. These are the most-memorized passages in the Quran outside of Al-Fatiha.</p>
+      </div>
+      <p class="text-gray-700 mb-3">Don't try to memorize them all in one session. Pick one a week. Read each one out loud after every prayer. Focus especially on <strong>Al-Ikhlāṣ</strong> (112) and the two <strong>seekings of refuge</strong> (113-114) — these are recited every night before sleep.</p>
+      <p class="text-gray-700 text-sm italic">All 10 are Meccan revelations except for An-Naṣr (110), which came near the end of the Prophet's life.</p>
+    `
+  },
+  { title: "105 · Al-Fīl", icon: "🐘", body: surahCard(surahs[105]) },
+  { title: "106 · Quraysh", icon: "🐪", body: surahCard(surahs[106]) },
+  { title: "107 · Al-Māʿūn", icon: "🤲", body: surahCard(surahs[107]) },
+  { title: "108 · Al-Kawthar", icon: "💧", body: surahCard(surahs[108]) },
+  { title: "109 · Al-Kāfirūn", icon: "🛑", body: surahCard(surahs[109]) },
+  { title: "110 · An-Naṣr", icon: "🌟", body: surahCard(surahs[110]) },
+  { title: "111 · Al-Masad", icon: "🔥", body: surahCard(surahs[111]) },
+  { title: "112 · Al-Ikhlāṣ ★", icon: "✨", body: `<p class="text-gray-700 mb-4">If you memorize one surah from this module, make it this one. Reciting it three times equals a third of the Quran in reward, per a famous hadith.</p>${surahCard(surahs[112])}` },
+  { title: "113-114 · The two seekings of refuge", icon: "🛡️",
+    body: `<p class="text-gray-700 mb-4">The last two surahs are paired — known together as <strong>al-Muʿawwidhatān</strong>, "the two seekings of refuge." The Prophet ﷺ recited them every night before sleep, blowing into his hands and wiping over himself. They are protective in nature.</p>${surahCard(surahs[113])}${surahCard(surahs[114])}` },
+  {
+    title: "Wrap-up",
+    icon: "✨",
+    body: `
+      <p class="text-gray-700 mb-4">You've seen all ten. Now the work is repetition.</p>
+      <div class="bg-white border border-amber-200 rounded-xl p-5 mb-4">
+        <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold mb-2">Suggested order of memorization</div>
+        <ol class="space-y-1 text-sm text-gray-700 list-decimal list-inside">
+          <li><strong>Al-Ikhlāṣ (112)</strong> — start here. Four lines, the heart of Islamic creed.</li>
+          <li><strong>Al-Falaq (113)</strong> — five lines, recited every night.</li>
+          <li><strong>An-Nās (114)</strong> — six lines, paired with Al-Falaq.</li>
+          <li><strong>Al-Kawthar (108)</strong> — three lines, the shortest in the Quran.</li>
+          <li><strong>Al-Kāfirūn (109)</strong> — six lines, often recited in Fajr sunnah.</li>
+          <li>Then the rest in any order.</li>
+        </ol>
+      </div>
+      <div class="bg-emerald-50/80 border-l-4 border-emerald-700 p-5 rounded-r-lg mb-4">
+        <p class="text-emerald-900 text-sm"><strong>The technique:</strong> recite a single verse aloud 10 times in a row. Then add the next verse and recite both 10 times. By verse 5 you'll have the surah. Repeat the next morning. Repeat the next week. It will stick.</p>
+      </div>
+      <div class="bg-gradient-to-r from-emerald-50 to-amber-50 border border-amber-300 rounded-xl p-6 text-center my-6">
+        <div class="arabic text-2xl text-emerald-900 mb-1">وَلَقَدْ يَسَّرْنَا الْقُرْآنَ لِلذِّكْرِ</div>
+        <div class="text-sm italic text-stone-600 mb-4">"And We have certainly made the Quran easy to remember." — Quran 54:17</div>
+        <div class="text-sm text-gray-700">Hit <strong>Finish</strong> to mark this module complete.</div>
+        <div class="text-sm text-gray-700 mt-2">Next: <strong>Module 4-3: Ayat al-Kursi</strong>.</div>
+      </div>
+      <div class="text-center text-sm">
+        <a href="index.html" class="text-emerald-800 underline font-semibold">Back to curriculum →</a>
+      </div>
+    `
+  }
+];
+
+let currentStep = 0;
+const nav = document.getElementById("step-nav");
+const container = document.getElementById("step-container");
+const stepNum = document.getElementById("step-num");
+const stepTotal = document.getElementById("step-total");
+const prevBtn = document.getElementById("prev-step");
+const nextBtn = document.getElementById("next-step");
+stepTotal.textContent = steps.length;
+
+function render() {
+  nav.innerHTML = steps.map((s, i) => `<button class="step-btn w-full text-left px-3 py-2 rounded-lg border border-transparent text-sm hover:bg-amber-50 ${i === currentStep ? 'active' : ''}" data-i="${i}"><span class="mr-2">${s.icon}</span>${s.title}</button>`).join("");
+  container.innerHTML = `<article class="article-card shadow-sm p-8"><div class="flex items-center gap-4 mb-6 pb-4 border-b border-amber-100"><div class="text-5xl">${steps[currentStep].icon}</div><div><div class="text-xs text-amber-700 font-semibold uppercase tracking-widest">Step ${currentStep + 1}</div><h2 class="display text-3xl text-emerald-950 font-semibold">${steps[currentStep].title}</h2></div></div><div>${steps[currentStep].body}</div></article>`;
+  stepNum.textContent = currentStep + 1; prevBtn.disabled = currentStep === 0;
+  nextBtn.textContent = currentStep === steps.length - 1 ? "Finish" : "Next →";
+  nav.querySelectorAll(".step-btn").forEach(b => { b.addEventListener("click", () => { currentStep = parseInt(b.dataset.i); render(); }); });
+}
+
+const MODULE_ID = "4-2"; const STORAGE_KEY = "islamapp-progress-v1";
+function loadProgress() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; } }
+function markInProgress() { const p = loadProgress(); if (p[MODULE_ID] !== "done") { p[MODULE_ID] = "inprogress"; localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); } }
+function markComplete() { const p = loadProgress(); p[MODULE_ID] = "done"; localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); }
+
+prevBtn.addEventListener("click", () => { if (currentStep > 0) { currentStep--; render(); } });
+nextBtn.addEventListener("click", () => { if (currentStep < steps.length - 1) { currentStep++; render(); } else { markComplete(); window.location.href = "index.html"; } });
+
+document.addEventListener("keydown", (e) => {
+  if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.isContentEditable) return;
+  if (e.key === "ArrowLeft" && !prevBtn.disabled) prevBtn.click();
+  else if (e.key === "ArrowRight") nextBtn.click();
+});
+
+markInProgress(); render();
+</script>
+
+</body>
+</html>

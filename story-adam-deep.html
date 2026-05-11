@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Adam — Deep Dive — IslamApp</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>(function(){try{if(localStorage.getItem('islamapp-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
+<link rel="stylesheet" href="theme.css">
+<script src="theme.js" defer></script>
+<style>
+  body { font-family: 'Inter', sans-serif; background: #faf6ed; color: #1c2d20;
+    background-image: radial-gradient(circle at 10% 10%, rgba(201,169,97,0.08) 0%, transparent 40%), radial-gradient(circle at 90% 90%, rgba(6,78,59,0.06) 0%, transparent 40%);
+    background-attachment: fixed; }
+  .arabic { font-family: 'Amiri', serif; direction: rtl; line-height: 1.9; }
+  .display { font-family: 'Cormorant Garamond', serif; }
+  .geo-pattern { background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23064e3b' fill-opacity='0.05'%3E%3Cpath d='M30 0l7.5 22.5H60L41.25 37.5l7.5 22.5L30 45l-18.75 15 7.5-22.5L0 22.5h22.5z'/%3E%3C/g%3E%3C/svg%3E"); }
+  .step-btn.active { background: #064e3b; color: #faf6ed; border-color: #c9a961; }
+  .gold-line { height: 1px; background: linear-gradient(to right, transparent, #c9a961, transparent); }
+  .btn-primary { background: linear-gradient(135deg, #064e3b 0%, #022c22 100%); color: #faf6ed; border: 1px solid #c9a961; }
+  .btn-primary:hover { background: linear-gradient(135deg, #0f766e 0%, #064e3b 100%); }
+  .btn-secondary { background: #fff; border: 1px solid #c9a961; color: #064e3b; }
+  .btn-secondary:hover { background: #faf6ed; }
+  .article-card { background: #fff; border: 1px solid rgba(201,169,97,0.4); border-radius: 14px 14px 6px 6px; }
+  .article-card::before { content: ''; display: block; height: 12px; margin: -1px -1px 0 -1px;
+    background: linear-gradient(180deg, rgba(201,169,97,0.25), transparent); border-radius: 14px 14px 0 0; border-bottom: 1px solid rgba(201,169,97,0.25); }
+  .verse-quote { background: #fff; border-left: 4px solid #c9a961; padding: 1rem 1.25rem; border-radius: 0 8px 8px 0; margin: 1rem 0; }
+  .verse-quote .ar { font-family: 'Amiri', serif; font-size: 1.4rem; color: #064e3b; line-height: 1.9; text-align: center; margin-bottom: 0.5rem; }
+  .verse-quote .tr { font-style: italic; color: #047857; font-size: 0.85rem; text-align: center; margin-bottom: 0.4rem; }
+  .verse-quote .en { color: #1f2937; font-size: 0.9rem; text-align: center; }
+  .verse-quote .ref { display: block; text-align: center; margin-top: 0.5rem; font-size: 0.7rem; color: #a8863f; font-weight: 600; letter-spacing: 0.1em; }
+  .commentary { background: linear-gradient(135deg, #fef3c7 0%, #fde68a 50%); border: 1px solid #c9a961; border-radius: 10px; padding: 1rem 1.25rem; margin: 1rem 0; }
+  .commentary .label { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: #92400e; font-weight: 700; margin-bottom: 0.4rem; }
+  .hadith-block { background: #fff; border: 1px solid rgba(15,118,110,0.3); border-left: 4px solid #0f766e; border-radius: 0 8px 8px 0; padding: 1rem 1.25rem; margin: 1rem 0; }
+  .hadith-block .label { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: #047857; font-weight: 700; margin-bottom: 0.4rem; }
+  .depth-pill { display: inline-flex; gap: 4px; padding: 2px; background: rgba(201,169,97,0.15); border-radius: 999px; }
+  .depth-pill a { padding: 4px 12px; border-radius: 999px; font-size: 0.7rem; letter-spacing: 0.05em; font-weight: 600; text-decoration: none; color: #a8863f; }
+  .depth-pill a.active { background: #064e3b; color: #faf6ed; }
+</style>
+</head>
+<body class="geo-pattern min-h-screen">
+
+<div class="max-w-6xl mx-auto px-6 py-10">
+
+  <nav class="flex justify-between items-center mb-6 flex-wrap gap-3">
+    <a href="stories.html" class="text-emerald-900 hover:text-amber-700 text-sm font-semibold">← Stories</a>
+    <div class="depth-pill">
+      <a href="story-adam.html" data-mode="moderate">Moderate</a>
+      <a href="story-adam-deep.html" data-mode="deep">Deep</a>
+      <a href="story-adam-deep.html?single=1" data-mode="single">One page</a>
+    </div>
+    <div class="text-sm text-stone-500"><span id="step-num">1</span> / <span id="step-total">14</span></div>
+  </nav>
+
+  <header class="text-center mb-8">
+    <div class="gold-line mb-4 max-w-[180px] mx-auto"></div>
+    <div class="arabic text-3xl text-emerald-900 mb-2">آدَم</div>
+    <h1 class="display text-4xl md:text-5xl text-emerald-950 font-semibold">Adam — Deep Dive</h1>
+    <div class="text-stone-600 mt-2">The first man, the first prophet · ~40 minute read</div>
+    <div class="gold-line mt-4 max-w-[180px] mx-auto"></div>
+  </header>
+
+  <div class="grid md:grid-cols-[220px_1fr] gap-6">
+    <aside class="md:sticky md:top-6 md:self-start">
+      <div class="article-card p-3 shadow-sm">
+        <div class="text-xs uppercase tracking-wider text-amber-700 font-semibold mb-2 px-2">Scenes</div>
+        <nav id="step-nav" class="space-y-1"></nav>
+      </div>
+    </aside>
+    <main id="step-container"></main>
+  </div>
+
+  <div class="flex justify-between mt-8 gap-4">
+    <button id="prev-step" class="btn-secondary flex-1 md:flex-none px-6 py-3 rounded-lg font-semibold disabled:opacity-30 disabled:cursor-not-allowed">← Previous</button>
+    <button id="next-step" class="btn-primary flex-1 md:flex-none px-6 py-3 rounded-lg font-semibold">Next →</button>
+  </div>
+
+</div>
+
+<script>
+function v(ar, tr, en, ref) {
+  return `<div class="verse-quote"><div class="ar">${ar}</div><div class="tr">${tr}</div><div class="en">"${en}"</div><span class="ref">${ref}</span></div>`;
+}
+function c(label, body) {
+  return `<div class="commentary"><div class="label">${label}</div><div class="text-sm text-stone-800">${body}</div></div>`;
+}
+function h(label, ar, tr, en, ref) {
+  return `<div class="hadith-block"><div class="label">${label}</div><div class="arabic text-lg text-emerald-900 mb-1 text-center">${ar}</div><div class="italic text-emerald-700 text-sm text-center mb-1">${tr}</div><div class="text-sm text-gray-800 text-center mb-1">"${en}"</div><div class="text-xs text-stone-500 text-center font-mono">${ref}</div></div>`;
+}
+
+const steps = [
+  {
+    title: "Where Adam appears",
+    icon: "📜",
+    body: `
+      <p class="text-gray-700 mb-4 text-lg">Adam — <em>Ādam</em> (آدَم) — is named <strong>25 times</strong> in the Quran, scattered across at least seven major passages. The story is never told in one continuous block. Instead, the Quran retells it from different angles, each pass adding a different emphasis.</p>
+      <div class="bg-white border border-amber-200 rounded-xl p-5 mb-4">
+        <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold mb-2">The seven main passages</div>
+        <ul class="text-sm text-gray-700 space-y-1">
+          <li>· <strong>Q 2:30–39</strong> — the most complete telling: decision, naming, prostration, fall, repentance, descent</li>
+          <li>· <strong>Q 7:11–27</strong> — focuses on the Garden, Iblīs's deception, the words of repentance</li>
+          <li>· <strong>Q 15:26–44</strong> — Adam's creation from clay; Iblīs's reasoning</li>
+          <li>· <strong>Q 17:61–65</strong> — Iblīs's vow to mislead</li>
+          <li>· <strong>Q 18:50</strong> — the verse that clarifies Iblīs was a jinn, not an angel</li>
+          <li>· <strong>Q 20:115–123</strong> — Adam's "forgetting," the descent, prophetic guidance</li>
+          <li>· <strong>Q 38:71–85</strong> — the prostration scene, Iblīs's audience with Allah</li>
+          <li>· <strong>Q 5:27–32</strong> — the two sons (Cain &amp; Abel)</li>
+        </ul>
+      </div>
+      ${c("Why retold?", "Classical commentators offer two reasons. (1) <strong>Each retelling teaches a different lesson</strong> — Q 2 emphasizes vicegerency, Q 7 emphasizes shame and repentance, Q 20 emphasizes forgetting and prophecy. (2) <strong>The Quran's audience changed</strong> over 23 years; the story was returned to as new teachings could be drawn from familiar material.")}
+      <p class="text-gray-700">We will move through the story in narrative order, drawing the strongest verse from wherever it sits, plus the relevant hadith and classical commentary at each turn.</p>
+    `
+  },
+  {
+    title: "The decision &amp; the angels' question",
+    icon: "👑",
+    body: `
+      <p class="text-gray-700 mb-3">Before humanity exists, Allah announces His intention to the angels — and the angels question it.</p>
+      ${v(
+        "وَإِذْ قَالَ رَبُّكَ لِلْمَلَائِكَةِ إِنِّي جَاعِلٌ فِي الْأَرْضِ خَلِيفَةً ۖ قَالُوا أَتَجْعَلُ فِيهَا مَن يُفْسِدُ فِيهَا وَيَسْفِكُ الدِّمَاءَ وَنَحْنُ نُسَبِّحُ بِحَمْدِكَ وَنُقَدِّسُ لَكَ ۖ قَالَ إِنِّي أَعْلَمُ مَا لَا تَعْلَمُونَ",
+        "Wa-idh qāla rabbuka li-l-malāʾikati innī jāʿilun fī l-arḍi khalīfah, qālū a-tajʿalu fīhā man yufsidu fīhā wa-yasfiku d-dimāʾa wa-naḥnu nusabbiḥu bi-ḥamdika wa-nuqaddisu lak, qāla innī aʿlamu mā lā taʿlamūn",
+        "And when your Lord said to the angels: 'I am placing on the earth a vicegerent.' They said: 'Will You place upon it one who will cause corruption there and shed blood, while we glorify You with praise and sanctify You?' He said: 'I know what you do not know.'",
+        "Quran 2:30"
+      )}
+      ${c("Was the angels' question disrespect?", "Classical scholars are unanimous: <strong>no</strong>. Al-Ṭabarī notes that the angels are simply asking. Their nature does not allow disobedience or insolence. Some commentators suggest they may have known of an earlier order of beings — sometimes identified with the jinn — who had spilled blood on earth, and so they are reasonably extrapolating.")}
+      ${c("What is a khalīfa?", "The word means <em>successor</em> or <em>steward</em>. Two senses: (1) successor to the previous earth-dwellers; (2) deputy/steward of God on earth — entrusted with care of the planet. Both senses appear in classical commentary. Modern environmental theology has drawn heavily on the second.")}
+      <p class="text-gray-700 text-sm italic">The angels' worry turns out to be partially accurate — humanity has caused much harm. But Allah's reply, "I know what you do not know," anticipates the next scene: there is something about humans the angels haven't seen.</p>
+    `
+  },
+  {
+    title: "The teaching of names",
+    icon: "📖",
+    body: `
+      <p class="text-gray-700 mb-3">In response to the angels' question, Allah teaches Adam <em>"the names — all of them"</em> and demonstrates what kind of creature this is.</p>
+      ${v(
+        "وَعَلَّمَ آدَمَ الْأَسْمَاءَ كُلَّهَا ثُمَّ عَرَضَهُمْ عَلَى الْمَلَائِكَةِ فَقَالَ أَنبِئُونِي بِأَسْمَاءِ هَٰؤُلَاءِ إِن كُنتُمْ صَادِقِينَ ۝ قَالُوا سُبْحَانَكَ لَا عِلْمَ لَنَا إِلَّا مَا عَلَّمْتَنَا ۖ إِنَّكَ أَنتَ الْعَلِيمُ الْحَكِيمُ",
+        "Wa-ʿallama Ādama l-asmāʾa kullahā thumma ʿaraḍahum ʿalā l-malāʾikati fa-qāla anbiʾūnī bi-asmāʾi hāʾulāʾi in kuntum ṣādiqīn. Qālū subḥānaka lā ʿilma lanā illā mā ʿallamtanā, innaka anta l-ʿalīmu l-ḥakīm",
+        "And He taught Adam the names — all of them — then displayed them to the angels and said: 'Inform Me of the names of these, if you are truthful.' They said: 'Glory be to You. We have no knowledge except what You have taught us. You are the All-Knowing, the All-Wise.'",
+        "Quran 2:31–32"
+      )}
+      ${c("What were 'the names'?", "Three classical interpretations: (1) <strong>Ibn ʿAbbās</strong> — the names of all things in creation, animal by animal, plant by plant. (2) <strong>Mujāhid &amp; al-Ḥasan</strong> — the names of the angels and Adam's descendants. (3) <strong>al-Qurṭubī</strong> — language itself, the very capacity to name. The third view has been most influential in modern thought: humans are the species that names.")}
+      ${c("The point of the demonstration", "The angels did not envy Adam — they admitted ignorance honestly. Allah was not testing the angels; He was <em>showing</em> them why humanity matters. The species capable of receiving knowledge and putting names on things is also the species capable of revelation, prophecy, and a unique kind of relationship with God.")}
+    `
+  },
+  {
+    title: "The prostration &amp; Iblīs's refusal",
+    icon: "🔥",
+    body: `
+      <p class="text-gray-700 mb-3">Allah commands the angels to prostrate to Adam — a gesture of <em>honor</em>, not worship. Worship is reserved for Allah alone. All comply except Iblīs.</p>
+      ${v(
+        "وَإِذْ قُلْنَا لِلْمَلَائِكَةِ اسْجُدُوا لِآدَمَ فَسَجَدُوا إِلَّا إِبْلِيسَ أَبَىٰ وَاسْتَكْبَرَ وَكَانَ مِنَ الْكَافِرِينَ",
+        "Wa-idh qulnā li-l-malāʾikati sjudū li-Ādama fa-sajadū illā Iblīsa abā wa-stakbara wa-kāna mina l-kāfirīn",
+        "And when We said to the angels: 'Prostrate to Adam,' they prostrated — except Iblīs. He refused, was arrogant, and became one of the disbelievers.",
+        "Quran 2:34"
+      )}
+      <p class="text-gray-700 mb-3">A different surah lets us hear Iblīs's <strong>actual reasoning</strong>:</p>
+      ${v(
+        "أَنَا خَيْرٌ مِّنْهُ ۖ خَلَقْتَنِي مِن نَّارٍ وَخَلَقْتَهُ مِن طِينٍ",
+        "Anā khayrun minhu, khalaqtanī min nārin wa-khalaqtahu min ṭīn",
+        "I am better than him. You created me from fire, and You created him from clay.",
+        "Quran 7:12"
+      )}
+      ${c("Why fire vs. clay?", "Classical commentators noted Iblīs's logical error: he assumed fire was <em>obviously</em> superior to clay. But fire is volatile, destructive, useless for building. Clay is fertile, the substance of life, formed by Allah's hand. Iblīs was reasoning from prejudice, not actual analysis. <strong>Pride distorts perception</strong> — that is part of the lesson.")}
+      ${c("This was the first sin", "Note what it was <em>not</em>: lust, greed, gluttony. Iblīs's sin was <strong>kibr</strong> (pride). Throughout the Quran and hadith, pride is treated as the root sin from which all others descend. The Prophet ﷺ said: \"No one with even a mustard seed's weight of pride in his heart will enter Paradise.\" (Muslim 91)")}
+    `
+  },
+  {
+    title: "Was Iblīs an angel?",
+    icon: "👻",
+    body: `
+      <p class="text-gray-700 mb-3">A natural question: if angels in Islam <strong>cannot disobey</strong>, how did Iblīs disobey? Q 18:50 settles it definitively.</p>
+      ${v(
+        "كَانَ مِنَ الْجِنِّ فَفَسَقَ عَنْ أَمْرِ رَبِّهِ",
+        "Kāna mina l-jinni fa-fasaqa ʿan amri rabbih",
+        "He was of the jinn, and he disobeyed the command of his Lord.",
+        "Quran 18:50"
+      )}
+      ${c("So why was he with the angels?", "The classical view (al-Ṭabarī, Ibn Kathīr): Iblīs was a worshipper so devoted that he was <em>elevated</em> to the company of angels. He was not an angel by nature, but he had earned a place among them. When the test came — prostrate to a creature of clay — only his jinn-nature, with its capacity for free will, could fail. The angels, who lack that capacity, all complied automatically.")}
+      ${c("The implications", "Iblīs's story is therefore a cautionary tale about <em>elevated worshippers</em>. He had millennia of obedience. None of it saved him from a single moment of pride. Classical Sufis used this to warn against spiritual pride — the most dangerous kind, because it disguises itself as devotion.")}
+      <p class="text-gray-700 mb-3">After the refusal, Iblīs is cast out. He asks for respite until the Day of Resurrection. Allah grants it — and Iblīs makes his vow:</p>
+      ${v(
+        "فَبِعِزَّتِكَ لَأُغْوِيَنَّهُمْ أَجْمَعِينَ ۝ إِلَّا عِبَادَكَ مِنْهُمُ الْمُخْلَصِينَ",
+        "Fa-bi-ʿizzatika la-ughwiyannahum ajmaʿīn, illā ʿibādaka minhumu l-mukhlaṣīn",
+        "By Your might, I will surely mislead them all — except Your sincere servants among them.",
+        "Quran 38:82–83"
+      )}
+      <p class="text-gray-700 text-sm italic">Iblīs's own words exclude one category from his reach: the <em>mukhlaṣīn</em>, those whose sincerity is genuine. The Quran returns to this theme often.</p>
+    `
+  },
+  {
+    title: "The Garden &amp; Adam's wife",
+    icon: "🌳",
+    body: `
+      <p class="text-gray-700 mb-3">Adam is given a wife and they are placed in a Garden of abundance — with one prohibition.</p>
+      ${v(
+        "وَقُلْنَا يَا آدَمُ اسْكُنْ أَنتَ وَزَوْجُكَ الْجَنَّةَ وَكُلَا مِنْهَا رَغَدًا حَيْثُ شِئْتُمَا وَلَا تَقْرَبَا هَٰذِهِ الشَّجَرَةَ فَتَكُونَا مِنَ الظَّالِمِينَ",
+        "Wa-qulnā yā Ādamu skun anta wa-zawjuka l-jannata wa-kulā minhā raghadan ḥaythu shiʾtumā wa-lā taqrabā hādhihi sh-shajarata fa-takūnā mina ẓ-ẓālimīn",
+        "And We said: 'O Adam, dwell — you and your wife — in the Garden, and eat from it freely wherever you wish. But do not approach this tree, lest you become among the wrongdoers.'",
+        "Quran 2:35"
+      )}
+      ${c("Was this the eternal Paradise?", "Two views: (1) <strong>Most classical Sunni commentators</strong> — yes, the same Jannah promised to the righteous in the afterlife. (2) <strong>Some others</strong> (like the Muʿtazila) — no, a different garden, perhaps on earth. The first view is the dominant one. The objection (\"but how could anyone leave Paradise?\") is answered by: this was a different stage of Adam's existence, before the test was complete.")}
+      ${c("On Adam's wife — Ḥawwāʾ", "The Quran does <strong>not name</strong> her. The name <em>Ḥawwāʾ</em> (Eve) comes from hadith. Crucially, in Islam she is <strong>not blamed</strong> for the fall. The Quran consistently uses the dual form (\"both of you\") in addressing them about the tree. There is no equivalent of the Genesis account in which she is the temptress.")}
+      ${h(
+        "On Eve's creation",
+        "خُلِقَتِ الْمَرْأَةُ مِنْ ضِلَعٍ",
+        "Khuliqati l-marʾatu min ḍilaʿ",
+        "Woman was created from a rib.",
+        "Bukhari 5184, Muslim 1468 — but classically interpreted as a metaphor for women's nature, not a literal anatomy. Many modern scholars (Muhammad Asad, others) read it as referring to a particular aspect of disposition, not origin."
+      )}
+      ${c("On the tree", "<strong>The Quran does not say what tree it was.</strong> Classical guesses: wheat (most common), grapevine, fig, banana. Ibn Kathīr explicitly notes: \"The Quran has not specified what kind of tree it was, and there is no benefit in trying to determine it.\" The point is the principle of obedience, not botany.")}
+    `
+  },
+  {
+    title: "The whisper",
+    icon: "🐍",
+    body: `
+      <p class="text-gray-700 mb-3">Iblīs cannot harm them directly, so he resorts to <em>waswasa</em> — whispering. He approaches them with a lie tailored to their dignity:</p>
+      ${v(
+        "فَوَسْوَسَ لَهُمَا الشَّيْطَانُ لِيُبْدِيَ لَهُمَا مَا وُورِيَ عَنْهُمَا مِن سَوْآتِهِمَا وَقَالَ مَا نَهَاكُمَا رَبُّكُمَا عَنْ هَٰذِهِ الشَّجَرَةِ إِلَّا أَن تَكُونَا مَلَكَيْنِ أَوْ تَكُونَا مِنَ الْخَالِدِينَ",
+        "Fa-waswasa lahumā sh-shayṭānu li-yubdiya lahumā mā wūriya ʿanhumā min sawʾātihimā wa-qāla mā nahākumā rabbukumā ʿan hādhihi sh-shajarati illā an takūnā malakayni aw takūnā mina l-khālidīn",
+        "Then Satan whispered to them, to expose to them what was hidden of their nakedness, and said: 'Your Lord forbade you this tree only because you would become angels, or among the immortals.'",
+        "Quran 7:20"
+      )}
+      ${v(
+        "وَقَاسَمَهُمَا إِنِّي لَكُمَا لَمِنَ النَّاصِحِينَ",
+        "Wa-qāsamahumā innī lakumā la-mina n-nāṣiḥīn",
+        "And he swore to them: 'I am for you both among the sincere advisors.'",
+        "Quran 7:21"
+      )}
+      ${c("Iblīs's tactic", "Classical commentators dissect Satan's pitch: (1) <strong>An appeal to dignity</strong> — \"you'd become angels\" or \"immortals.\" Not gluttony. (2) <strong>A misdirection about Allah's reason</strong> — \"He only forbade it for <em>this</em> reason.\" (3) <strong>An oath</strong> — Adam, having no experience of liars, would not have considered that someone might swear falsely. This is the templates of every temptation: appeal to ego, misrepresent the prohibition, project sincerity.")}
+    `
+  },
+  {
+    title: "The fall &amp; the shame",
+    icon: "🍂",
+    body: `
+      <p class="text-gray-700 mb-3">They eat. The result is immediate.</p>
+      ${v(
+        "فَلَمَّا ذَاقَا الشَّجَرَةَ بَدَتْ لَهُمَا سَوْآتُهُمَا وَطَفِقَا يَخْصِفَانِ عَلَيْهِمَا مِن وَرَقِ الْجَنَّةِ ۖ وَنَادَاهُمَا رَبُّهُمَا أَلَمْ أَنْهَكُمَا عَن تِلْكُمَا الشَّجَرَةِ وَأَقُل لَّكُمَا إِنَّ الشَّيْطَانَ لَكُمَا عَدُوٌّ مُّبِينٌ",
+        "Fa-lammā dhāqā sh-shajarata badat lahumā sawʾātuhumā wa-ṭafiqā yakhṣifāni ʿalayhimā min waraqi l-jannah, wa-nādāhumā rabbuhumā a-lam anhakumā ʿan tilkumā sh-shajarati wa-aqul lakumā inna sh-shayṭāna lakumā ʿaduwwun mubīn",
+        "When they tasted of the tree, their nakedness became apparent to them, and they began to cover themselves with leaves of the Garden. And their Lord called to them: 'Did I not forbid you that tree, and tell you that Satan is to you a clear enemy?'",
+        "Quran 7:22"
+      )}
+      ${c("The shame is the punishment, not added to it", "<strong>Notice the structure</strong>: the verse doesn't say Allah <em>caused</em> their nakedness to be exposed. It says the experience of eating <em>itself</em> exposed them — they came to see themselves differently. Classical commentators read this as: disobedience changes the disobedient. The shame is internal, not imposed.")}
+      ${c("No 'original sin'", "Crucially: in Islam there is <strong>no concept of inherited guilt</strong>. Adam's mistake is Adam's, not yours. You are not born stained, fallen, or in need of cosmic redemption. You are born with <em>fiṭra</em> — the natural orientation toward God, which is then either nurtured or distorted by upbringing. The Prophet ﷺ said: \"Every child is born upon the fiṭra; it is his parents who make him a Jew, a Christian, or a Magian.\" (Bukhari 1358)")}
+    `
+  },
+  {
+    title: "Repentance",
+    icon: "🤲",
+    body: `
+      <p class="text-gray-700 mb-3">Adam and his wife do not blame each other. They do not blame the snake or the angels or the tree. They own the mistake.</p>
+      ${v(
+        "قَالَا رَبَّنَا ظَلَمْنَا أَنفُسَنَا وَإِن لَّمْ تَغْفِرْ لَنَا وَتَرْحَمْنَا لَنَكُونَنَّ مِنَ الْخَاسِرِينَ",
+        "Qālā rabbanā ẓalamnā anfusanā wa-in lam taghfir lanā wa-tarḥamnā la-nakūnanna mina l-khāsirīn",
+        "They said: 'Our Lord, we have wronged ourselves. If You do not forgive us and have mercy on us, we will surely be among the lost.'",
+        "Quran 7:23"
+      )}
+      <p class="text-gray-700 mb-3">Q 2:37 adds a striking detail: Adam <strong>"received words from his Lord"</strong> — the very words of repentance were taught to him. Allah did not just accept his repentance; Allah <em>taught him how to repent</em>.</p>
+      ${v(
+        "فَتَلَقَّىٰ آدَمُ مِن رَّبِّهِ كَلِمَاتٍ فَتَابَ عَلَيْهِ ۚ إِنَّهُ هُوَ التَّوَّابُ الرَّحِيمُ",
+        "Fa-talaqqā Ādamu min rabbihi kalimātin fa-tāba ʿalayh, innahu huwa t-tawwābu r-raḥīm",
+        "Then Adam received words from his Lord, and He turned to him in mercy. Indeed, He is the Acceptor of repentance, the Most Merciful.",
+        "Quran 2:37"
+      )}
+      ${c("Adam vs. Iblīs — the central contrast", "<strong>Both disobeyed.</strong> Iblīs argued back, then doubled down, then asked for time to mislead others. Adam admitted the wrong, asked for forgiveness, and received it. The whole point of the story sits in that contrast — sin is not the dividing line between the saved and the damned. The dividing line is what you do <em>after</em> the sin.")}
+      ${c("The model of Islamic repentance", "Adam's prayer becomes the template. Every Islamic repentance, every act of <em>tawba</em>, follows the same shape: (1) acknowledge what you did, (2) take ownership without deflection, (3) ask Allah for forgiveness and mercy, (4) make a sincere intention not to repeat. \"<em>Ẓalamnā anfusanā</em>\" — \"we have wronged ourselves\" — is one of the most-recited phrases in Muslim prayer.")}
+    `
+  },
+  {
+    title: "The descent",
+    icon: "🌍",
+    body: `
+      <p class="text-gray-700 mb-3">Forgiven, but their stay in the Garden was over. Adam and his wife are sent to earth — to live, work, and continue the human story.</p>
+      ${v(
+        "قَالَ اهْبِطُوا بَعْضُكُمْ لِبَعْضٍ عَدُوٌّ ۖ وَلَكُمْ فِي الْأَرْضِ مُسْتَقَرٌّ وَمَتَاعٌ إِلَىٰ حِينٍ",
+        "Qāla hbiṭū baʿḍukum li-baʿḍin ʿaduww, wa-lakum fī l-arḍi mustaqarrun wa-matāʿun ilā ḥīn",
+        "He said: 'Go down — some of you enemies to others. The earth will be your dwelling and your provision for a time.'",
+        "Quran 7:24"
+      )}
+      <p class="text-gray-700 mb-3">Q 20:123 adds the promise that <strong>guidance will come</strong>:</p>
+      ${v(
+        "فَإِمَّا يَأْتِيَنَّكُم مِّنِّي هُدًى فَمَن تَبِعَ هُدَايَ فَلَا يَضِلُّ وَلَا يَشْقَىٰ",
+        "Fa-immā yaʾtiyannakum minnī hudan fa-man tabiʿa hudāya fa-lā yaḍillu wa-lā yashqā",
+        "Whenever guidance comes to you from Me, whoever follows My guidance will neither go astray nor become wretched.",
+        "Quran 20:123"
+      )}
+      ${c("The earthly mission", "Adam isn't being banished as punishment. Earth was always the destination — that was the whole \"vicegerent\" plan from the start. The Garden was the orientation; earth is the assignment. Classical commentators emphasize this: humans were <em>made for</em> earth. The descent is not a fall in the Christian sense; it is a deployment.")}
+      ${c("Adam as the first prophet", "Some hadith state that Adam was given <strong>scrolls</strong> (ṣuḥuf) — scriptures revealing some early form of guidance to his children. He is universally counted as the first prophet, though his \"prophecy\" was more limited than later messengers. He taught his descendants about Allah; the line of revelation begins with him and runs all the way to Muhammad ﷺ.")}
+      ${h(
+        "On Adam meeting Moses",
+        "احْتَجَّ آدَمُ وَمُوسَى",
+        "Iḥtajja Ādamu wa-Mūsā",
+        "Adam and Moses argued.",
+        "Bukhari 6614 — Moses asked: \"You are the one whose mistake caused us all to be sent to earth!\" Adam replied: \"You are the one who received the Torah — does it not say all this was destined before I was created?\" Adam won the argument."
+      )}
+    `
+  },
+  {
+    title: "The two sons — Cain &amp; Abel",
+    icon: "🩸",
+    body: `
+      <p class="text-gray-700 mb-3">Adam's children grow up. The very first generation of humans contains the very first violence between humans. The Quran (5:27–32) tells the story without naming the brothers; tradition gives them as <em>Qābīl</em> (Cain) and <em>Hābīl</em> (Abel).</p>
+      ${v(
+        "وَاتْلُ عَلَيْهِمْ نَبَأَ ابْنَيْ آدَمَ بِالْحَقِّ إِذْ قَرَّبَا قُرْبَانًا فَتُقُبِّلَ مِنْ أَحَدِهِمَا وَلَمْ يُتَقَبَّلْ مِنَ الْآخَرِ قَالَ لَأَقْتُلَنَّكَ ۖ قَالَ إِنَّمَا يَتَقَبَّلُ اللَّهُ مِنَ الْمُتَّقِينَ",
+        "Wa-tlu ʿalayhim nabaʾa bnay Ādama bi-l-ḥaqqi idh qarrabā qurbānan fa-tuqubbila min aḥadihimā wa-lam yutaqabbal mina l-ākhar, qāla la-aqtulannak, qāla innamā yataqabbalu llāhu mina l-muttaqīn",
+        "Recite to them the truth of the story of Adam's two sons — when they each offered a sacrifice, and it was accepted from one of them but not from the other. He said: 'I will surely kill you.' The other said: 'Allah only accepts from those who fear Him.'",
+        "Quran 5:27"
+      )}
+      ${c("Why one was accepted and not the other", "Classical commentary: it was the <em>state of the heart</em> at the time of giving. One brother gave the best of his herd / produce in sincerity. The other gave the worst of his, to fulfill the form. The verse confirms: \"Allah only accepts from the muttaqīn\" — those with sincere God-consciousness.")}
+      <p class="text-gray-700 mb-3">The threatened brother does not retaliate. His response is striking:</p>
+      ${v(
+        "لَئِن بَسَطتَ إِلَيَّ يَدَكَ لِتَقْتُلَنِي مَا أَنَا بِبَاسِطٍ يَدِيَ إِلَيْكَ لِأَقْتُلَكَ ۖ إِنِّي أَخَافُ اللَّهَ رَبَّ الْعَالَمِينَ",
+        "Laʾin basaṭta ilayya yadaka li-taqtulanī mā anā bi-bāsiṭin yadiya ilayka li-aqtulak, innī akhāfu Allāha rabba l-ʿālamīn",
+        "If you stretch your hand to kill me, I will not stretch mine to kill you. I fear Allah, Lord of all the worlds.",
+        "Quran 5:28"
+      )}
+      <p class="text-gray-700 mb-3">The murder happens. Then comes one of the most-quoted verses in the Quran — and arguably in any scripture:</p>
+      ${v(
+        "مَن قَتَلَ نَفْسًا بِغَيْرِ نَفْسٍ أَوْ فَسَادٍ فِي الْأَرْضِ فَكَأَنَّمَا قَتَلَ النَّاسَ جَمِيعًا وَمَنْ أَحْيَاهَا فَكَأَنَّمَا أَحْيَا النَّاسَ جَمِيعًا",
+        "Man qatala nafsan bi-ghayri nafsin aw fasādin fī l-arḍi fa-kaʾannamā qatala n-nāsa jamīʿan wa-man aḥyāhā fa-kaʾannamā aḥyā n-nāsa jamīʿā",
+        "Whoever kills a soul — unless for a soul, or for corruption in the land — it is as if he had killed all of humanity. And whoever saves one, it is as if he had saved all of humanity.",
+        "Quran 5:32"
+      )}
+      ${c("The crow", "After the killing, the murderer doesn't know what to do with the body. A crow appears, scratches at the ground to bury another dead crow, and teaches the murderer how to bury his brother. The Quran ends the scene with his lament: \"Woe to me — was I not even able to be like this crow, to cover up my brother's body?\" (5:31)")}
+    `
+  },
+  {
+    title: "Hadith additions",
+    icon: "📚",
+    body: `
+      <p class="text-gray-700 mb-4">The Quran tells the story in spare, structural form. Hadith literature adds <strong>texture and detail</strong> — much of it disputed, but worth knowing.</p>
+      ${h(
+        "Adam's height",
+        "خَلَقَ اللَّهُ آدَمَ عَلَىٰ صُورَتِهِ، طُولُهُ سِتُّونَ ذِرَاعًا",
+        "Khalaqa Allāhu Ādama ʿalā ṣūratih, ṭūluhu sittūna dhirāʿan",
+        "Allah created Adam in his form, his height being sixty cubits (~90 ft / 27 m).",
+        "Bukhari 3326. The hadith adds that humanity has been getting shorter ever since."
+      )}
+      ${h(
+        "On the day of his creation",
+        "خَيْرُ يَوْمٍ طَلَعَتْ فِيهِ الشَّمْسُ يَوْمُ الْجُمُعَةِ، فِيهِ خُلِقَ آدَمُ، وَفِيهِ أُدْخِلَ الْجَنَّةَ، وَفِيهِ أُخْرِجَ مِنْهَا",
+        "Khayru yawmin ṭalaʿat fīhi sh-shamsu yawmu l-jumuʿah, fīhi khuliqa Ādam, wa-fīhi udkhila l-jannah, wa-fīhi ukhrija minhā",
+        "The best day on which the sun has risen is Friday. On it Adam was created, on it he was admitted to the Garden, and on it he was sent down from it.",
+        "Muslim 854. This is one reason Friday holds the special status it does in Islam."
+      )}
+      ${h(
+        "On the night journey",
+        "لَقِيتُ آدَمَ فِي السَّمَاءِ الدُّنْيَا",
+        "Laqītu Ādama fī s-samāʾi d-dunyā",
+        "I met Adam in the lowest heaven.",
+        "Bukhari 349, Muslim 162. During the Night Journey, the Prophet ﷺ met Adam in the first heaven, where Adam smiled when he looked toward the souls of the righteous (on his right) and wept when he looked toward the souls of the wicked (on his left)."
+      )}
+      ${c("How to read these", "Classical Sunni scholarship treats these reports as <em>sound</em> (ṣaḥīḥ) but distinguishes between (a) information about the unseen (ghayb), which we accept on faith without trying to picture too literally, and (b) information that has practical implications, which we apply. Adam's height is in category (a). The Friday connection is in category (b). Some modern scholars are more cautious about the height hadith specifically, but the major collections affirm it.")}
+    `
+  },
+  {
+    title: "Themes &amp; theological notes",
+    icon: "💡",
+    body: `
+      <p class="text-gray-700 mb-4">The story carries an unusual density of theological themes. The most important:</p>
+      <div class="space-y-3 mb-5">
+        <div class="bg-white border border-amber-200 rounded-lg p-4">
+          <div class="display font-semibold text-emerald-900 mb-1">Knowledge as the human gift</div>
+          <p class="text-sm text-gray-700">Adam isn't honored for might or beauty but for what he can <em>learn</em>. The species marker for humans is the capacity for language and understanding — and through them, for revelation. Modern Muslim philosophers (Iqbāl) emphasize this as the basis for human dignity.</p>
+        </div>
+        <div class="bg-white border border-amber-200 rounded-lg p-4">
+          <div class="display font-semibold text-emerald-900 mb-1">Pride as the original sin</div>
+          <p class="text-sm text-gray-700">Iblīs's refusal is rooted in feeling superior. The Quran returns to this often. Pride is consistently named the gateway sin — because it makes a creature put their own judgment above their Creator's command.</p>
+        </div>
+        <div class="bg-white border border-amber-200 rounded-lg p-4">
+          <div class="display font-semibold text-emerald-900 mb-1">Owning the mistake</div>
+          <p class="text-sm text-gray-700">"<em>Rabbanā ẓalamnā anfusanā</em>" — the model of Islamic repentance. Don't argue, don't deflect, don't blame. Acknowledge, own, ask. The structural difference between Adam and Iblīs is right here.</p>
+        </div>
+        <div class="bg-white border border-amber-200 rounded-lg p-4">
+          <div class="display font-semibold text-emerald-900 mb-1">No inherited guilt</div>
+          <p class="text-sm text-gray-700">Adam's error was Adam's. You are not born stained or fallen. The Christian doctrine of original sin has no parallel in Islam — every soul comes into the world <em>upon the fiṭra</em>, naturally inclined toward God.</p>
+        </div>
+        <div class="bg-white border border-amber-200 rounded-lg p-4">
+          <div class="display font-semibold text-emerald-900 mb-1">The descent as deployment, not exile</div>
+          <p class="text-sm text-gray-700">Earth was always the destination. Adam wasn't kicked out of Paradise as punishment — he was sent to fulfill the original plan, the plan announced to the angels in Q 2:30. The Garden was where he was readied; earth is where he serves.</p>
+        </div>
+        <div class="bg-white border border-amber-200 rounded-lg p-4">
+          <div class="display font-semibold text-emerald-900 mb-1">The promise of guidance</div>
+          <p class="text-sm text-gray-700">Adam doesn't go to earth abandoned. The verse "guidance will come" (Q 20:123) is the seed of the entire prophetic tradition — every prophet from Noah to Muhammad ﷺ is the fulfillment of that single sentence.</p>
+        </div>
+      </div>
+      ${c("Comparison with Genesis", "Genesis and the Quran share the basic plot — but the differences are theologically decisive. (1) Genesis blames Eve specifically; the Quran blames both equally. (2) Genesis treats the fall as an inherited stain; the Quran treats it as Adam's individual mistake. (3) Genesis treats earth as a consequence; the Quran treats it as the always-intended destination. (4) Genesis says God walks in the Garden; the Quran preserves God's transcendence throughout. The shared bones, the different theology.")}
+    `
+  },
+  {
+    title: "Wrap-up",
+    icon: "✨",
+    body: `
+      <p class="text-gray-700 mb-4">You've been through the story whole. A summary of the Adam arc:</p>
+      <div class="bg-white border border-amber-200 rounded-xl p-5 mb-4">
+        <ol class="space-y-2 text-sm text-gray-700 list-decimal list-inside">
+          <li>Allah announces a vicegerent on earth.</li>
+          <li>Adam is created and given the names — language, knowledge.</li>
+          <li>Angels prostrate; Iblīs refuses out of pride.</li>
+          <li>Adam and his wife placed in the Garden, warned about one tree.</li>
+          <li>Iblīs whispers; they eat; they realize and repent.</li>
+          <li>They are forgiven and sent to earth as the first humans.</li>
+          <li>Their children begin the story of mankind — first conflict, first murder.</li>
+          <li>Guidance is promised. Prophecy will come.</li>
+        </ol>
+      </div>
+      <div class="bg-gradient-to-r from-emerald-50 to-amber-50 border border-amber-300 rounded-xl p-6 text-center my-6">
+        <div class="arabic text-2xl text-emerald-900 mb-1">إِنَّ اللَّهَ اصْطَفَىٰ آدَمَ</div>
+        <div class="text-sm italic text-stone-600 mb-3">"Indeed, Allah chose Adam." — Quran 3:33</div>
+        <div class="text-sm text-gray-700">Hit <strong>Finish</strong> below to mark this story complete.</div>
+      </div>
+      <div class="text-center text-sm space-x-4">
+        <a href="story-adam.html" class="text-emerald-800 underline font-semibold">← Moderate version</a>
+        <a href="stories.html" class="text-emerald-800 underline font-semibold">All stories</a>
+      </div>
+    `
+  }
+];
+
+let currentStep = 0;
+const nav = document.getElementById("step-nav");
+const container = document.getElementById("step-container");
+const stepNum = document.getElementById("step-num");
+const stepTotal = document.getElementById("step-total");
+const prevBtn = document.getElementById("prev-step");
+const nextBtn = document.getElementById("next-step");
+stepTotal.textContent = steps.length;
+
+function render() {
+  nav.innerHTML = steps.map((s, i) => `<button class="step-btn w-full text-left px-3 py-2 rounded-lg border border-transparent text-sm hover:bg-amber-50 ${i === currentStep ? 'active' : ''}" data-i="${i}"><span class="mr-2">${s.icon}</span>${s.title}</button>`).join("");
+  container.innerHTML = `<article class="article-card shadow-sm p-8"><div class="flex items-center gap-4 mb-6 pb-4 border-b border-amber-100"><div class="text-5xl">${steps[currentStep].icon}</div><div><div class="text-xs text-amber-700 font-semibold uppercase tracking-widest">Scene ${currentStep + 1}</div><h2 class="display text-3xl text-emerald-950 font-semibold">${steps[currentStep].title}</h2></div></div><div>${steps[currentStep].body}</div></article>`;
+  stepNum.textContent = currentStep + 1; prevBtn.disabled = currentStep === 0;
+  nextBtn.textContent = currentStep === steps.length - 1 ? "Finish" : "Next →";
+  nav.querySelectorAll(".step-btn").forEach(b => { b.addEventListener("click", () => { currentStep = parseInt(b.dataset.i); render(); }); });
+}
+
+const MODULE_ID = "STORY-Adam"; const STORAGE_KEY = "islamapp-progress-v1";
+function loadProgress() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; } }
+function markInProgress() { const p = loadProgress(); if (p[MODULE_ID] !== "done") { p[MODULE_ID] = "inprogress"; localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); } }
+function markComplete() { const p = loadProgress(); p[MODULE_ID] = "done"; localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); }
+
+prevBtn.addEventListener("click", () => { if (currentStep > 0) { currentStep--; render(); } });
+nextBtn.addEventListener("click", () => { if (currentStep < steps.length - 1) { currentStep++; render(); } else { markComplete(); window.location.href = "stories.html"; } });
+
+document.addEventListener("keydown", (e) => {
+  if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.isContentEditable) return;
+  if (e.key === "ArrowLeft" && !prevBtn.disabled) prevBtn.click();
+  else if (e.key === "ArrowRight") nextBtn.click();
+});
+
+const isSingleMode = new URLSearchParams(window.location.search).get('single') === '1';
+const currentMode = isSingleMode ? 'single' : 'deep';
+document.querySelectorAll('.depth-pill a').forEach(a => a.classList.toggle('active', a.dataset.mode === currentMode));
+
+if (isSingleMode) {
+  document.querySelector('aside').style.display = 'none';
+  prevBtn.parentElement.style.display = 'none';
+  document.querySelector('main').parentElement.style.display = 'block';
+  document.querySelector('#step-num').parentElement.style.visibility = 'hidden';
+
+  container.innerHTML = steps.map((s, i) => `
+    <article class="article-card shadow-sm p-8 mb-6">
+      <div class="flex items-center gap-4 mb-6 pb-4 border-b border-amber-100">
+        <div class="text-5xl">${s.icon}</div>
+        <div>
+          <div class="text-xs text-amber-700 font-semibold uppercase tracking-widest">Scene ${i + 1}</div>
+          <h2 class="display text-3xl text-emerald-950 font-semibold">${s.title}</h2>
+        </div>
+      </div>
+      <div>${s.body}</div>
+    </article>
+  `).join("");
+  markInProgress();
+} else {
+  markInProgress();
+  render();
+}
+</script>
+
+</body>
+</html>

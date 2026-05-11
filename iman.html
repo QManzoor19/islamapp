@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Six Articles of Faith — IslamApp</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>(function(){try{if(localStorage.getItem('islamapp-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
+<link rel="stylesheet" href="theme.css">
+<script src="theme.js" defer></script>
+<style>
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #faf6ed;
+    color: #1c2d20;
+    background-image:
+      radial-gradient(circle at 10% 10%, rgba(201,169,97,0.08) 0%, transparent 40%),
+      radial-gradient(circle at 90% 90%, rgba(6,78,59,0.06) 0%, transparent 40%);
+    background-attachment: fixed;
+  }
+  .arabic { font-family: 'Amiri', serif; direction: rtl; line-height: 1.9; }
+  .display { font-family: 'Cormorant Garamond', serif; }
+  .geo-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23064e3b' fill-opacity='0.05'%3E%3Cpath d='M30 0l7.5 22.5H60L41.25 37.5l7.5 22.5L30 45l-18.75 15 7.5-22.5L0 22.5h22.5z'/%3E%3C/g%3E%3C/svg%3E");
+  }
+  .step-btn.active { background: #064e3b; color: #faf6ed; border-color: #c9a961; }
+  .gold-line { height: 1px; background: linear-gradient(to right, transparent, #c9a961, transparent); }
+  .btn-primary {
+    background: linear-gradient(135deg, #064e3b 0%, #022c22 100%);
+    color: #faf6ed;
+    border: 1px solid #c9a961;
+  }
+  .btn-primary:hover { background: linear-gradient(135deg, #0f766e 0%, #064e3b 100%); }
+  .btn-secondary {
+    background: #fff;
+    border: 1px solid #c9a961;
+    color: #064e3b;
+  }
+  .btn-secondary:hover { background: #faf6ed; }
+  .article-card {
+    background: #fff;
+    border: 1px solid rgba(201,169,97,0.4);
+    border-radius: 14px 14px 6px 6px;
+  }
+  .article-card::before {
+    content: '';
+    display: block;
+    height: 12px;
+    margin: -1px -1px 0 -1px;
+    background: linear-gradient(180deg, rgba(201,169,97,0.25), transparent);
+    border-radius: 14px 14px 0 0;
+    border-bottom: 1px solid rgba(201,169,97,0.25);
+  }
+  .article-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: #064e3b;
+    color: #faf6ed;
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+  .choice {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border: 2px solid #e7e5e4;
+    border-radius: 8px;
+    background: #fff;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    font: inherit;
+    width: 100%;
+  }
+  .choice:hover { background: #ecfdf5; border-color: #059669; }
+  .choice.correct { background: #d1fae5; border-color: #059669; color: #064e3b; }
+  .choice.wrong { background: #fee2e2; border-color: #dc2626; color: #7f1d1d; }
+  .choice:disabled { cursor: default; }
+  .level-card {
+    border-radius: 12px;
+    padding: 1rem;
+    border: 1px solid rgba(201,169,97,0.3);
+  }
+</style>
+</head>
+<body class="geo-pattern min-h-screen">
+
+<div class="max-w-6xl mx-auto px-6 py-10">
+
+  <nav class="flex justify-between items-center mb-6">
+    <a href="index.html" class="text-emerald-900 hover:text-amber-700 text-sm font-semibold">← Curriculum</a>
+    <div class="text-xs uppercase tracking-[0.25em] text-amber-700 font-semibold hidden sm:block">Tier 1 · Module 1-2</div>
+    <div class="text-sm text-stone-500"><span id="step-num">1</span> / <span id="step-total">10</span></div>
+  </nav>
+
+  <header class="text-center mb-8">
+    <div class="gold-line mb-4 max-w-[180px] mx-auto"></div>
+    <div class="arabic text-3xl text-emerald-900 mb-2">أَرْكَان الإِيمَان السِّتَّة</div>
+    <h1 class="display text-4xl md:text-5xl text-emerald-950 font-semibold">The Six Articles of Faith</h1>
+    <div class="gold-line mt-4 max-w-[180px] mx-auto"></div>
+  </header>
+
+  <div class="grid md:grid-cols-[220px_1fr] gap-6">
+
+    <aside class="md:sticky md:top-6 md:self-start">
+      <div class="article-card p-3 shadow-sm">
+        <div class="text-xs uppercase tracking-wider text-amber-700 font-semibold mb-2 px-2">Steps</div>
+        <nav id="step-nav" class="space-y-1"></nav>
+      </div>
+    </aside>
+
+    <main id="step-container"></main>
+
+  </div>
+
+  <div class="flex justify-between mt-8 gap-4">
+    <button id="prev-step" class="btn-secondary flex-1 md:flex-none px-6 py-3 rounded-lg font-semibold disabled:opacity-30 disabled:cursor-not-allowed">← Previous</button>
+    <button id="next-step" class="btn-primary flex-1 md:flex-none px-6 py-3 rounded-lg font-semibold">Next →</button>
+  </div>
+
+</div>
+
+<script>
+const steps = [
+  {
+    title: "Pillars vs articles — what's the difference?",
+    icon: "🌿",
+    body: `
+      <p class="text-gray-700 mb-4 text-lg">In the previous module you met the <strong>Five Pillars</strong> — the outward practices. This module is about the inward counterpart: <strong>īmān</strong>, the <em>belief</em> that those practices are an expression of.</p>
+      <div class="bg-emerald-50/80 border-l-4 border-emerald-700 p-5 rounded-r-lg my-5">
+        <p class="text-emerald-900 mb-2"><strong>Islām</strong> = what you do.</p>
+        <p class="text-emerald-900 mb-2"><strong>Īmān</strong> = what you hold to be true.</p>
+        <p class="text-emerald-900">The pillars without belief are empty motion. The belief without the pillars is empty claim. Each needs the other.</p>
+      </div>
+      <p class="text-gray-700 mb-4">The classical formulation comes from a single hadith — known as the <em>Hadith of Gabriel</em> — where the angel appears to the Prophet ﷺ in human form and asks him: <em>"What is faith?"</em> The answer lists six items.</p>
+      <div class="bg-white border border-amber-200 rounded-xl p-5">
+        <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold mb-3">Belief in:</div>
+        <ol class="grid sm:grid-cols-2 gap-2 text-sm text-gray-800">
+          <li>1. Allah</li>
+          <li>2. His angels</li>
+          <li>3. His books</li>
+          <li>4. His messengers</li>
+          <li>5. The Last Day</li>
+          <li>6. Divine decree — both its good and its harm</li>
+        </ol>
+      </div>
+      <p class="text-gray-700 text-sm italic mt-4">We will take them one at a time.</p>
+    `
+  },
+  {
+    title: "Article 1 — Belief in Allah",
+    icon: "✦",
+    body: `
+      <div class="flex items-center gap-3 mb-5">
+        <span class="article-num">1</span>
+        <div>
+          <div class="display text-2xl text-emerald-950 font-semibold">Allah</div>
+          <div class="text-sm text-stone-600">The One God</div>
+        </div>
+      </div>
+      <p class="text-gray-700 mb-4">The most fundamental article. Not just that <em>a</em> god exists, but that there is <strong>one</strong> God, <strong>unique</strong> in every way, <strong>unlike</strong> anything in creation.</p>
+      <p class="text-gray-700 mb-4">The Quran's most concise statement of this is Surah Al-Ikhlas (chapter 112), only four lines:</p>
+      <div class="bg-white border-l-4 border-amber-600 p-5 rounded-r-lg my-4">
+        <div class="arabic text-2xl text-emerald-900 mb-2 leading-relaxed">قُلْ هُوَ ٱللَّٰهُ أَحَدٌ ۝ ٱللَّٰهُ ٱلصَّمَدُ ۝ لَمْ يَلِدْ وَلَمْ يُولَدْ ۝ وَلَمْ يَكُن لَّهُۥ كُفُوًا أَحَدٌ</div>
+        <p class="text-gray-800 italic text-sm">"Say: He is Allah, the One. Allah, the Eternal Refuge. He does not beget, nor was He begotten. And there is none equal to Him."</p>
+      </div>
+      <p class="text-gray-700 mb-3">Theologians break <strong>tawhid</strong> (oneness) into three categories:</p>
+      <div class="grid gap-3 mb-4">
+        <div class="bg-white border border-amber-200 rounded-lg p-4">
+          <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold mb-1">Lordship</div>
+          <p class="text-sm text-gray-800">He alone creates, sustains, and controls the universe.</p>
+        </div>
+        <div class="bg-white border border-amber-200 rounded-lg p-4">
+          <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold mb-1">Worship</div>
+          <p class="text-sm text-gray-800">He alone deserves worship — no idols, no saints, no intermediaries.</p>
+        </div>
+        <div class="bg-white border border-amber-200 rounded-lg p-4">
+          <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold mb-1">Names &amp; Attributes</div>
+          <p class="text-sm text-gray-800">His attributes (mercy, knowledge, hearing, seeing) are real — but unlike anything in creation. "Nothing is like Him." (Quran 42:11)</p>
+        </div>
+      </div>
+      <p class="text-gray-700 text-sm italic">The 99 Names of Allah are 99 windows into His attributes — Most Merciful, Most Just, the Provider, the Forgiver. Tier 7 has a full module on them.</p>
+    `
+  },
+  {
+    title: "Article 2 — His Angels",
+    icon: "🪶",
+    body: `
+      <div class="flex items-center gap-3 mb-5">
+        <span class="article-num">2</span>
+        <div>
+          <div class="display text-2xl text-emerald-950 font-semibold">Mala'ika</div>
+          <div class="text-sm text-stone-600">The Angels</div>
+        </div>
+      </div>
+      <p class="text-gray-700 mb-4">Created from <strong>light</strong> (humans from clay; jinn from fire). Angels have no free will to disobey — they only do what they are commanded. They are not depicted as winged children; they are immense and varied. The angel Gabriel, in his true form, was once seen by the Prophet ﷺ filling the horizon.</p>
+      <p class="text-gray-700 mb-3">A few who are named:</p>
+      <div class="grid sm:grid-cols-2 gap-3 mb-4">
+        <div class="bg-white border border-amber-200 rounded-lg p-4">
+          <div class="display text-lg font-semibold text-emerald-900 mb-1">Jibrīl <span class="text-stone-500 text-sm font-normal">(Gabriel)</span></div>
+          <p class="text-sm text-gray-700">Brought the revelation of every scripture, including the Quran, to the prophets.</p>
+        </div>
+        <div class="bg-white border border-amber-200 rounded-lg p-4">
+          <div class="display text-lg font-semibold text-emerald-900 mb-1">Mīkāʾīl <span class="text-stone-500 text-sm font-normal">(Michael)</span></div>
+          <p class="text-sm text-gray-700">In charge of provision and rain.</p>
+        </div>
+        <div class="bg-white border border-amber-200 rounded-lg p-4">
+          <div class="display text-lg font-semibold text-emerald-900 mb-1">Isrāfīl</div>
+          <p class="text-sm text-gray-700">Will blow the trumpet to begin the resurrection.</p>
+        </div>
+        <div class="bg-white border border-amber-200 rounded-lg p-4">
+          <div class="display text-lg font-semibold text-emerald-900 mb-1">ʿIzrāʾīl <span class="text-stone-500 text-sm font-normal">(Angel of Death)</span></div>
+          <p class="text-sm text-gray-700">Takes the souls of the dying.</p>
+        </div>
+        <div class="bg-white border border-amber-200 rounded-lg p-4">
+          <div class="display text-lg font-semibold text-emerald-900 mb-1">Munkar &amp; Nakīr</div>
+          <p class="text-sm text-gray-700">Question every soul in the grave about their faith.</p>
+        </div>
+        <div class="bg-white border border-amber-200 rounded-lg p-4">
+          <div class="display text-lg font-semibold text-emerald-900 mb-1">Kirām al-Kātibīn</div>
+          <p class="text-sm text-gray-700">The "noble recorders" — two angels with each person, recording good and bad deeds.</p>
+        </div>
+      </div>
+      <p class="text-gray-700 text-sm italic">Belief in angels means accepting the unseen. You acknowledge a parallel order of created beings carrying out God's commands behind the curtain of the visible world.</p>
+    `
+  },
+  {
+    title: "Article 3 — His Books",
+    icon: "📖",
+    body: `
+      <div class="flex items-center gap-3 mb-5">
+        <span class="article-num">3</span>
+        <div>
+          <div class="display text-2xl text-emerald-950 font-semibold">Kutub</div>
+          <div class="text-sm text-stone-600">The Revealed Scriptures</div>
+        </div>
+      </div>
+      <p class="text-gray-700 mb-4">Allah sent revelation to many prophets across many peoples. The Quran is the final installment, but a Muslim believes in <strong>all the previous scriptures</strong> in their original form — they came from the same God.</p>
+      <div class="bg-white border border-amber-200 rounded-xl p-5 mb-4">
+        <div class="space-y-3">
+          <div class="flex gap-4">
+            <div class="display text-lg font-semibold text-emerald-900 min-w-[120px]">Suḥuf</div>
+            <div class="text-sm text-gray-700"><strong>Scrolls</strong> — given to Abraham (and others). Not preserved.</div>
+          </div>
+          <div class="flex gap-4 border-t border-amber-100 pt-3">
+            <div class="display text-lg font-semibold text-emerald-900 min-w-[120px]">Tawrāt</div>
+            <div class="text-sm text-gray-700"><strong>Torah</strong> — given to Moses.</div>
+          </div>
+          <div class="flex gap-4 border-t border-amber-100 pt-3">
+            <div class="display text-lg font-semibold text-emerald-900 min-w-[120px]">Zabūr</div>
+            <div class="text-sm text-gray-700"><strong>Psalms</strong> — given to David.</div>
+          </div>
+          <div class="flex gap-4 border-t border-amber-100 pt-3">
+            <div class="display text-lg font-semibold text-emerald-900 min-w-[120px]">Injīl</div>
+            <div class="text-sm text-gray-700"><strong>Gospel</strong> — given to Jesus.</div>
+          </div>
+          <div class="flex gap-4 border-t border-amber-100 pt-3">
+            <div class="display text-lg font-semibold text-emerald-900 min-w-[120px]">Quran</div>
+            <div class="text-sm text-gray-700"><strong>The Recitation</strong> — given to Muhammad ﷺ. The final and preserved scripture.</div>
+          </div>
+        </div>
+      </div>
+      <p class="text-gray-700 mb-3">The Muslim view is that earlier scriptures contained truth from God but were altered by humans over time — accidentally and deliberately. The Quran is held to have been preserved verbatim from its revelation to today, and it confirms what was true in the previous books while correcting what was distorted.</p>
+      <p class="text-gray-700 text-sm italic">A Muslim does not consider the current Bible to be the unaltered Tawrāt or Injīl, but does revere the original revelations to Moses and Jesus.</p>
+    `
+  },
+  {
+    title: "Article 4 — His Messengers",
+    icon: "👳",
+    body: `
+      <div class="flex items-center gap-3 mb-5">
+        <span class="article-num">4</span>
+        <div>
+          <div class="display text-2xl text-emerald-950 font-semibold">Rusul</div>
+          <div class="text-sm text-stone-600">The Prophets &amp; Messengers</div>
+        </div>
+      </div>
+      <p class="text-gray-700 mb-4">Allah sent prophets to <strong>every nation</strong>. The Quran names <strong>25</strong> of them; tradition holds the total was around <strong>124,000</strong> across all of human history.</p>
+      <p class="text-gray-700 mb-4">A subtle distinction: every <em>messenger</em> (rasūl) is a <em>prophet</em> (nabī), but not every prophet is a messenger. Messengers are those given a new scripture or law to deliver to a people.</p>
+      <p class="text-gray-700 mb-3">Five are called <strong>Ūlū al-ʿAzm</strong> — "those of firm resolve":</p>
+      <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 mb-4 text-center text-sm">
+        <div class="bg-emerald-50/80 border border-emerald-200 rounded-lg p-3"><div class="display font-semibold">Nūḥ</div><div class="text-xs text-stone-600">Noah</div></div>
+        <div class="bg-emerald-50/80 border border-emerald-200 rounded-lg p-3"><div class="display font-semibold">Ibrāhīm</div><div class="text-xs text-stone-600">Abraham</div></div>
+        <div class="bg-emerald-50/80 border border-emerald-200 rounded-lg p-3"><div class="display font-semibold">Mūsā</div><div class="text-xs text-stone-600">Moses</div></div>
+        <div class="bg-emerald-50/80 border border-emerald-200 rounded-lg p-3"><div class="display font-semibold">ʿĪsā</div><div class="text-xs text-stone-600">Jesus</div></div>
+        <div class="bg-emerald-50/80 border border-emerald-200 rounded-lg p-3"><div class="display font-semibold">Muḥammad ﷺ</div><div class="text-xs text-stone-600">The seal</div></div>
+      </div>
+      <p class="text-gray-700 mb-3"><strong>All prophets preached the same core message:</strong> there is one God, worship Him alone, prepare for the Last Day. Their laws and details differed by audience and era — the core truth did not.</p>
+      <p class="text-gray-700">Muhammad ﷺ is the <strong>Khātam al-Anbiyāʾ</strong>, the <em>Seal of the Prophets</em>. No prophet comes after him; the Quran is the final scripture; Islam is the final form of the religion.</p>
+      <p class="text-gray-700 text-sm italic mt-4">Rejecting any one prophet — including Moses or Jesus — is rejecting the whole chain.</p>
+    `
+  },
+  {
+    title: "Article 5 — The Last Day",
+    icon: "⏳",
+    body: `
+      <div class="flex items-center gap-3 mb-5">
+        <span class="article-num">5</span>
+        <div>
+          <div class="display text-2xl text-emerald-950 font-semibold">Al-Yawm al-Ākhir</div>
+          <div class="text-sm text-stone-600">The Last Day &amp; the Afterlife</div>
+        </div>
+      </div>
+      <p class="text-gray-700 mb-4">Belief that this life is not all there is. After death every person enters the <strong>barzakh</strong> (an intermediate state), and at a moment known only to God the world ends and all souls are resurrected to be judged.</p>
+      <div class="bg-white border border-amber-200 rounded-xl p-5 mb-4">
+        <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold mb-3">The sequence</div>
+        <ol class="space-y-2 text-sm text-gray-800">
+          <li><strong>The trumpet sounds</strong> (Isrāfīl). All life ends.</li>
+          <li><strong>Resurrection.</strong> Bodies rejoin souls.</li>
+          <li><strong>The gathering.</strong> All humanity assembled before God.</li>
+          <li><strong>The reckoning.</strong> Each person sees their record of deeds.</li>
+          <li><strong>The scale.</strong> Good and bad deeds weighed.</li>
+          <li><strong>The bridge (Sirat).</strong> Crossed by all — some smoothly, some slowly, some falling.</li>
+          <li><strong>Final destination.</strong> Paradise (<em>Jannah</em>) or Hellfire (<em>Jahannam</em>).</li>
+        </ol>
+      </div>
+      <p class="text-gray-700 mb-3">The Quran describes both destinations vividly. <strong>Paradise</strong> is a garden of unimaginable pleasure, watered by rivers of milk, honey, and wine — and ultimately defined by the vision of God Himself. <strong>Hell</strong> is fire of correspondingly extreme intensity. For most Muslims, hell is purifying for the believing sinner (eventually exited) and eternal for those who refused belief.</p>
+      <p class="text-gray-700 mb-3">Belief in the Last Day is what gives ethical weight to every choice. Without it, the universe has no moral arc.</p>
+      <p class="text-gray-700 text-sm italic">There are also signs of the Hour — minor (already happening, like the spread of corruption) and major (the appearance of the Dajjāl/Antichrist, the return of Jesus, the rising of the sun from the west).</p>
+    `
+  },
+  {
+    title: "Article 6 — Divine Decree",
+    icon: "🌌",
+    body: `
+      <div class="flex items-center gap-3 mb-5">
+        <span class="article-num">6</span>
+        <div>
+          <div class="display text-2xl text-emerald-950 font-semibold">Qadar</div>
+          <div class="text-sm text-stone-600">Divine Decree</div>
+        </div>
+      </div>
+      <p class="text-gray-700 mb-4">Allah knew everything that would happen <strong>before</strong> creating it, and nothing happens outside His will. The famous addition: <em>"both its good and its harm."</em> Misfortune is also from God.</p>
+      <p class="text-gray-700 mb-3">Scholars classically break qadar into <strong>four levels</strong>, all of which a believer affirms:</p>
+      <div class="grid sm:grid-cols-2 gap-3 mb-4">
+        <div class="bg-white border border-amber-200 rounded-lg p-4">
+          <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold mb-1">1. Knowledge</div>
+          <p class="text-sm text-gray-700">Allah knows all that has been, is, and will be — every leaf that falls, every thought.</p>
+        </div>
+        <div class="bg-white border border-amber-200 rounded-lg p-4">
+          <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold mb-1">2. Writing</div>
+          <p class="text-sm text-gray-700">All of it is recorded in the <em>Lawḥ al-Maḥfūẓ</em>, the Preserved Tablet.</p>
+        </div>
+        <div class="bg-white border border-amber-200 rounded-lg p-4">
+          <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold mb-1">3. Will</div>
+          <p class="text-sm text-gray-700">Nothing happens unless Allah wills it. What He wills, is; what He does not, is not.</p>
+        </div>
+        <div class="bg-white border border-amber-200 rounded-lg p-4">
+          <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold mb-1">4. Creation</div>
+          <p class="text-sm text-gray-700">Everything that exists — including human actions — is created by Allah.</p>
+        </div>
+      </div>
+      <div class="bg-emerald-50/80 border-l-4 border-emerald-700 p-5 rounded-r-lg my-5">
+        <p class="text-emerald-900 font-semibold mb-2">The free-will tension</p>
+        <p class="text-emerald-900 text-sm leading-relaxed">If God knows what I will choose, am I really choosing? The classical Sunni answer: yes — humans have <em>real</em> agency over their actions, but their agency does not escape God's knowledge or will. You author your choices; you do not author the universe in which they are made. Tier 7 takes this debate apart in detail.</p>
+      </div>
+      <p class="text-gray-700">Practically, qadar produces a particular emotional posture: <strong>gratitude in success</strong> (it was God's gift, not just my achievement) and <strong>composure in misfortune</strong> (it was written; complaint changes nothing; my job is response, not regret).</p>
+    `
+  },
+  {
+    title: "Iman, Islam, Ihsan — the three levels",
+    icon: "🪜",
+    body: `
+      <p class="text-gray-700 mb-4">In the same Hadith of Gabriel that gave us the six articles, the angel went on to ask the Prophet ﷺ two more questions, sketching a hierarchy of three levels:</p>
+      <div class="grid gap-3 mb-5">
+        <div class="level-card bg-amber-50/60">
+          <div class="flex items-baseline gap-3 mb-1">
+            <span class="text-xs uppercase tracking-widest text-amber-700 font-semibold">Level 1</span>
+            <span class="display text-lg text-emerald-950 font-semibold">Islām</span>
+            <span class="text-xs text-stone-500 italic">— the body of practice</span>
+          </div>
+          <p class="text-sm text-gray-700">The five pillars. The outward, visible, measurable acts.</p>
+        </div>
+        <div class="level-card bg-emerald-50/60">
+          <div class="flex items-baseline gap-3 mb-1">
+            <span class="text-xs uppercase tracking-widest text-emerald-700 font-semibold">Level 2</span>
+            <span class="display text-lg text-emerald-950 font-semibold">Īmān</span>
+            <span class="text-xs text-stone-500 italic">— the contents of the heart</span>
+          </div>
+          <p class="text-sm text-gray-700">The six articles you just covered. What you actually believe to be true about reality.</p>
+        </div>
+        <div class="level-card bg-stone-50">
+          <div class="flex items-baseline gap-3 mb-1">
+            <span class="text-xs uppercase tracking-widest text-stone-600 font-semibold">Level 3</span>
+            <span class="display text-lg text-emerald-950 font-semibold">Iḥsān</span>
+            <span class="text-xs text-stone-500 italic">— the quality of the connection</span>
+          </div>
+          <p class="text-sm text-gray-700">Defined by the Prophet ﷺ in one sentence: <em>"to worship God as if you see Him — and if you do not see Him, then know that He sees you."</em> The whole of the Sufi tradition is built on developing this.</p>
+        </div>
+      </div>
+      <p class="text-gray-700 mb-3">A useful way to see the three: Islām is the <em>shell</em>, Īmān is the <em>fruit</em>, Iḥsān is the <em>aroma</em>. You cannot have the fruit without the shell, or the aroma without the fruit.</p>
+      <p class="text-gray-700 text-sm italic">The full Quran-and-curriculum tour spirals through these levels again and again, going deeper each loop.</p>
+    `
+  },
+  {
+    title: "Quick check",
+    icon: "✍️",
+    body: `
+      <p class="text-gray-700 mb-6">Six questions, one for each article — plus one bonus.</p>
+      <div id="quiz"></div>
+      <div id="quiz-result" class="hidden mt-6 p-6 rounded-xl text-center"></div>
+    `,
+    isQuiz: true
+  },
+  {
+    title: "Wrap-up",
+    icon: "✨",
+    body: `
+      <p class="text-gray-700 mb-4">You now hold the inward map. Recap:</p>
+      <div class="bg-white border border-amber-200 rounded-xl p-5 mb-4">
+        <ol class="space-y-2 text-sm text-gray-800">
+          <li><span class="article-num mr-2" style="width:24px;height:24px;font-size:0.75rem;">1</span><strong>Allah</strong> — one, unique, unlike anything.</li>
+          <li><span class="article-num mr-2" style="width:24px;height:24px;font-size:0.75rem;">2</span><strong>His angels</strong> — created from light, executing His commands.</li>
+          <li><span class="article-num mr-2" style="width:24px;height:24px;font-size:0.75rem;">3</span><strong>His books</strong> — Torah, Psalms, Gospel, Quran (the final, preserved one).</li>
+          <li><span class="article-num mr-2" style="width:24px;height:24px;font-size:0.75rem;">4</span><strong>His messengers</strong> — from Adam to Muhammad ﷺ, all preaching the same core.</li>
+          <li><span class="article-num mr-2" style="width:24px;height:24px;font-size:0.75rem;">5</span><strong>The Last Day</strong> — resurrection, judgment, paradise or hell.</li>
+          <li><span class="article-num mr-2" style="width:24px;height:24px;font-size:0.75rem;">6</span><strong>Divine decree</strong> — both the good and the harm, from Him; humans still freely choose within it.</li>
+        </ol>
+      </div>
+      <div class="bg-gradient-to-r from-emerald-50 to-amber-50 border border-amber-300 rounded-xl p-6 text-center my-6">
+        <div class="arabic text-2xl text-emerald-900 mb-1">رَّبَّنَا آمَنَّا بِمَا أَنزَلْتَ</div>
+        <div class="text-sm italic text-stone-600 mb-4">Rabbanā āmannā bimā anzalt — "Our Lord, we believe in what You have sent down."</div>
+        <div class="text-sm text-gray-700">Hit <strong>Finish</strong> below to mark this module complete and continue to <strong>Module 1-3: Core Vocabulary</strong>.</div>
+      </div>
+      <div class="text-center text-sm">
+        <a href="index.html" class="text-emerald-800 underline font-semibold">Back to curriculum →</a>
+      </div>
+    `
+  }
+];
+
+const quizQuestions = [
+  { q: "How many articles of faith are there?", choices: ["Four", "Five", "Six", "Seven"], answer: 2 },
+  { q: "Belief that Allah is one and unlike anything in creation is called…", choices: ["Iḥsān", "Tawhid", "Taqwa", "Sirat"], answer: 1 },
+  { q: "Angels were created from…", choices: ["Clay", "Fire", "Light", "Water"], answer: 2 },
+  { q: "Which scripture was given to Moses?", choices: ["Zabūr (Psalms)", "Tawrāt (Torah)", "Injīl (Gospel)", "Suḥuf (Scrolls)"], answer: 1 },
+  { q: "Muhammad ﷺ is called the 'Seal of the Prophets,' meaning…", choices: ["He sealed the Quran with wax", "He is the final prophet", "He is the most senior angel", "He led the Hajj"], answer: 1 },
+  { q: "Belief in qadar means accepting that…", choices: ["Humans have no choices", "Only good things come from God", "Both the good and the harm of life are within God's will", "The future cannot be known"], answer: 2 },
+  { q: "Iḥsān is defined as worshipping God…", choices: ["Loudly and visibly", "As though you see Him", "Five times daily", "Only on Friday"], answer: 1 }
+];
+
+let currentStep = 0;
+let quizScore = 0;
+let quizAnswered = new Set();
+
+const nav = document.getElementById("step-nav");
+const container = document.getElementById("step-container");
+const stepNum = document.getElementById("step-num");
+const stepTotal = document.getElementById("step-total");
+const prevBtn = document.getElementById("prev-step");
+const nextBtn = document.getElementById("next-step");
+
+stepTotal.textContent = steps.length;
+
+function renderQuiz() {
+  const quizEl = document.getElementById("quiz");
+  if (!quizEl) return;
+  quizEl.innerHTML = quizQuestions.map((q, qi) => `
+    <div class="mb-5 p-5 bg-white border border-amber-200 rounded-xl">
+      <div class="font-semibold text-gray-800 mb-3">${qi + 1}. ${q.q}</div>
+      <div class="grid gap-2" data-qindex="${qi}">
+        ${q.choices.map((c, ci) => `
+          <button class="choice" data-choice="${ci}">${c}</button>
+        `).join("")}
+      </div>
+    </div>
+  `).join("");
+
+  quizEl.querySelectorAll(".choice").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const group = btn.closest("[data-qindex]");
+      const qi = parseInt(group.dataset.qindex);
+      if (quizAnswered.has(qi)) return;
+      const choice = parseInt(btn.dataset.choice);
+      const correct = quizQuestions[qi].answer;
+      quizAnswered.add(qi);
+      group.querySelectorAll(".choice").forEach((b, i) => {
+        b.disabled = true;
+        if (i === correct) b.classList.add("correct");
+        else if (i === choice) b.classList.add("wrong");
+      });
+      if (choice === correct) quizScore++;
+      if (quizAnswered.size === quizQuestions.length) showResult();
+    });
+  });
+}
+
+function showResult() {
+  const r = document.getElementById("quiz-result");
+  r.classList.remove("hidden");
+  const pct = quizScore / quizQuestions.length;
+  let msg, color;
+  if (pct === 1) { msg = "All seven. Solid grasp."; color = "bg-emerald-100 text-emerald-900"; }
+  else if (pct >= 0.7) { msg = "Strong. Glance back at the ones you missed."; color = "bg-emerald-100 text-emerald-900"; }
+  else { msg = "Worth another pass through the articles before moving on."; color = "bg-amber-100 text-amber-900"; }
+  r.className = "mt-6 p-6 rounded-xl text-center " + color;
+  r.innerHTML = `<div class="text-4xl font-bold mb-2">${quizScore} / ${quizQuestions.length}</div><div>${msg}</div>`;
+}
+
+function render() {
+  nav.innerHTML = steps.map((s, i) => `
+    <button class="step-btn w-full text-left px-3 py-2 rounded-lg border border-transparent text-sm hover:bg-amber-50 ${i === currentStep ? 'active' : ''}" data-i="${i}">
+      <span class="mr-2">${s.icon}</span>${s.title}
+    </button>
+  `).join("");
+
+  container.innerHTML = `
+    <article class="article-card shadow-sm p-8">
+      <div class="flex items-center gap-4 mb-6 pb-4 border-b border-amber-100">
+        <div class="text-5xl">${steps[currentStep].icon}</div>
+        <div>
+          <div class="text-xs text-amber-700 font-semibold uppercase tracking-widest">Step ${currentStep + 1}</div>
+          <h2 class="display text-3xl text-emerald-950 font-semibold">${steps[currentStep].title}</h2>
+        </div>
+      </div>
+      <div>${steps[currentStep].body}</div>
+    </article>
+  `;
+
+  stepNum.textContent = currentStep + 1;
+  prevBtn.disabled = currentStep === 0;
+  nextBtn.textContent = currentStep === steps.length - 1 ? "Finish" : "Next →";
+
+  if (steps[currentStep].isQuiz) renderQuiz();
+
+  nav.querySelectorAll(".step-btn").forEach(b => {
+    b.addEventListener("click", () => {
+      currentStep = parseInt(b.dataset.i);
+      render();
+         });
+  });
+}
+
+const MODULE_ID = "1-2";
+const STORAGE_KEY = "islamapp-progress-v1";
+function loadProgress() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
+  catch { return {}; }
+}
+function markInProgress() {
+  const p = loadProgress();
+  if (p[MODULE_ID] !== "done") { p[MODULE_ID] = "inprogress"; localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); }
+}
+function markComplete() {
+  const p = loadProgress();
+  p[MODULE_ID] = "done";
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(p));
+}
+
+prevBtn.addEventListener("click", () => {
+  if (currentStep > 0) { currentStep--; render(); window.scrollTo({ top: 0, behavior: "smooth" }); }
+});
+nextBtn.addEventListener("click", () => {
+  if (currentStep < steps.length - 1) { currentStep++; render(); window.scrollTo({ top: 0, behavior: "smooth" }); }
+  else { markComplete(); window.location.href = "index.html"; }
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.isContentEditable) return;
+  if (e.key === "ArrowLeft" && !prevBtn.disabled) prevBtn.click();
+  else if (e.key === "ArrowRight") nextBtn.click();
+});
+
+markInProgress();
+render();
+</script>
+
+</body>
+</html>

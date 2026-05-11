@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Shahada & the Five Pillars — IslamApp</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>(function(){try{if(localStorage.getItem('islamapp-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
+<link rel="stylesheet" href="theme.css">
+<script src="theme.js" defer></script>
+<style>
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #faf6ed;
+    color: #1c2d20;
+    background-image:
+      radial-gradient(circle at 10% 10%, rgba(201,169,97,0.08) 0%, transparent 40%),
+      radial-gradient(circle at 90% 90%, rgba(6,78,59,0.06) 0%, transparent 40%);
+    background-attachment: fixed;
+  }
+  .arabic { font-family: 'Amiri', serif; direction: rtl; line-height: 1.9; }
+  .display { font-family: 'Cormorant Garamond', serif; }
+  .geo-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23064e3b' fill-opacity='0.05'%3E%3Cpath d='M30 0l7.5 22.5H60L41.25 37.5l7.5 22.5L30 45l-18.75 15 7.5-22.5L0 22.5h22.5z'/%3E%3C/g%3E%3C/svg%3E");
+  }
+  .step-btn.active { background: #064e3b; color: #faf6ed; border-color: #c9a961; }
+  .gold-line { height: 1px; background: linear-gradient(to right, transparent, #c9a961, transparent); }
+  .btn-primary {
+    background: linear-gradient(135deg, #064e3b 0%, #022c22 100%);
+    color: #faf6ed;
+    border: 1px solid #c9a961;
+  }
+  .btn-primary:hover { background: linear-gradient(135deg, #0f766e 0%, #064e3b 100%); }
+  .btn-secondary {
+    background: #fff;
+    border: 1px solid #c9a961;
+    color: #064e3b;
+  }
+  .btn-secondary:hover { background: #faf6ed; }
+  .article-card {
+    background: #fff;
+    border: 1px solid rgba(201,169,97,0.4);
+    border-radius: 14px 14px 6px 6px;
+  }
+  .article-card::before {
+    content: '';
+    display: block;
+    height: 12px;
+    margin: -1px -1px 0 -1px;
+    background: linear-gradient(180deg, rgba(201,169,97,0.25), transparent);
+    border-radius: 14px 14px 0 0;
+    border-bottom: 1px solid rgba(201,169,97,0.25);
+  }
+  .pillar-tile {
+    background: #fff;
+    border: 1px solid rgba(201,169,97,0.3);
+    border-radius: 10px;
+    padding: 1rem;
+    transition: all 0.2s ease;
+  }
+  .pillar-tile.highlight {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border-color: #c9a961;
+    transform: scale(1.02);
+  }
+  .pillar-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: #064e3b;
+    color: #faf6ed;
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+  .choice {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border: 2px solid #e7e5e4;
+    border-radius: 8px;
+    background: #fff;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    font: inherit;
+    width: 100%;
+  }
+  .choice:hover { background: #ecfdf5; border-color: #059669; }
+  .choice.correct { background: #d1fae5; border-color: #059669; color: #064e3b; }
+  .choice.wrong { background: #fee2e2; border-color: #dc2626; color: #7f1d1d; }
+  .choice:disabled { cursor: default; }
+</style>
+</head>
+<body class="geo-pattern min-h-screen">
+
+<div class="max-w-6xl mx-auto px-6 py-10">
+
+  <nav class="flex justify-between items-center mb-6">
+    <a href="index.html" class="text-emerald-900 hover:text-amber-700 text-sm font-semibold">← Curriculum</a>
+    <div class="text-xs uppercase tracking-[0.25em] text-amber-700 font-semibold hidden sm:block">Tier 1 · Module 1-1</div>
+    <div class="text-sm text-stone-500"><span id="step-num">1</span> / <span id="step-total">9</span></div>
+  </nav>
+
+  <header class="text-center mb-8">
+    <div class="gold-line mb-4 max-w-[180px] mx-auto"></div>
+    <div class="arabic text-3xl text-emerald-900 mb-2">الشَّهَادَة وَأَرْكَان الإِسْلَام</div>
+    <h1 class="display text-4xl md:text-5xl text-emerald-950 font-semibold">The Shahada & the Five Pillars</h1>
+    <div class="gold-line mt-4 max-w-[180px] mx-auto"></div>
+  </header>
+
+  <div class="grid md:grid-cols-[220px_1fr] gap-6">
+
+    <aside class="md:sticky md:top-6 md:self-start">
+      <div class="article-card p-3 shadow-sm">
+        <div class="text-xs uppercase tracking-wider text-amber-700 font-semibold mb-2 px-2">Steps</div>
+        <nav id="step-nav" class="space-y-1"></nav>
+      </div>
+    </aside>
+
+    <main id="step-container"></main>
+
+  </div>
+
+  <div class="flex justify-between mt-8 gap-4">
+    <button id="prev-step" class="btn-secondary flex-1 md:flex-none px-6 py-3 rounded-lg font-semibold disabled:opacity-30 disabled:cursor-not-allowed">← Previous</button>
+    <button id="next-step" class="btn-primary flex-1 md:flex-none px-6 py-3 rounded-lg font-semibold">Next →</button>
+  </div>
+
+</div>
+
+<script>
+const steps = [
+  {
+    title: "What is Islam?",
+    icon: "🌙",
+    body: `
+      <p class="text-gray-700 mb-4 text-lg">The word <strong>Islam</strong> comes from Arabic roots meaning <em>peace</em> and <em>submission to God</em>. A <strong>Muslim</strong> is one who submits to the will of Allah — the Arabic word for God, the same God worshipped by Jews and Christians.</p>
+      <p class="text-gray-700 mb-4">Islam has roughly <strong>1.9 billion adherents</strong> worldwide — about a quarter of humanity. Its scripture is the Quran, revealed to the Prophet Muhammad ﷺ over 23 years from 610 CE.</p>
+      <div class="bg-emerald-50/80 border-l-4 border-emerald-700 p-5 rounded-r-lg my-6">
+        <p class="text-emerald-900 font-semibold mb-2">The structural skeleton</p>
+        <p class="text-emerald-900 text-sm leading-relaxed">A Muslim's religion is held up by <strong>one sentence</strong> — the Shahada, the declaration of faith — and <strong>five practices</strong> that hold the rest in place: the Five Pillars. This module is exactly that skeleton.</p>
+      </div>
+      <p class="text-gray-700">Once you have these, the rest of the curriculum is filling in detail and depth.</p>
+    `
+  },
+  {
+    title: "The Shahada",
+    icon: "🕋",
+    body: `
+      <p class="text-gray-700 mb-4">A single Arabic sentence. Saying it with sincerity is how a person enters Islam — and the same sentence is repeated daily in prayer for the rest of one's life.</p>
+      <div class="bg-white border-l-4 border-amber-600 p-6 rounded-r-lg my-5 shadow-sm">
+        <div class="arabic text-4xl text-emerald-900 mb-3 leading-snug">لَا إِلَٰهَ إِلَّا ٱللَّٰهُ مُحَمَّدٌ رَسُولُ ٱللَّٰهِ</div>
+        <div class="italic text-emerald-800 mb-2">Lā ilāha illā Allāh, Muḥammadun rasūlu Allāh</div>
+        <div class="text-gray-800 font-semibold">"There is no god but Allah, and Muhammad is the Messenger of Allah."</div>
+      </div>
+      <p class="text-gray-700 mb-3">The sentence has <strong>two clauses</strong> that together summarize Islam's whole creed:</p>
+      <div class="grid sm:grid-cols-2 gap-3 mb-5">
+        <div class="bg-white border border-amber-200 rounded-lg p-4">
+          <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold mb-2">Clause 1</div>
+          <p class="text-gray-800 text-sm"><strong>Pure monotheism.</strong> Not "there is one god" — but "there is <em>nothing</em> worthy of worship besides the One God." Anything else worshipped is by definition false.</p>
+        </div>
+        <div class="bg-white border border-amber-200 rounded-lg p-4">
+          <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold mb-2">Clause 2</div>
+          <p class="text-gray-800 text-sm"><strong>Final messenger.</strong> Muhammad ﷺ is accepted as the last in a long line of prophets that includes Abraham, Moses, and Jesus. Following him means following God's last word.</p>
+        </div>
+      </div>
+      <p class="text-gray-700 text-sm italic">The Shahada is also the first of the five pillars — the one the others rest on.</p>
+    `
+  },
+  {
+    title: "Pillar 2 — Salah",
+    icon: "🕌",
+    body: `
+      <div class="flex items-center gap-3 mb-5">
+        <span class="pillar-num">2</span>
+        <div>
+          <div class="display text-2xl text-emerald-950 font-semibold">Salah</div>
+          <div class="text-sm text-stone-600">The five daily prayers</div>
+        </div>
+      </div>
+      <p class="text-gray-700 mb-4">Five formal prayers a day, at set times, facing the Kaʿba in Mecca. Each takes only a few minutes, but they are the practice a Muslim is held most accountable for on the Day of Judgment.</p>
+      <div class="bg-white border border-amber-200 rounded-xl overflow-hidden mb-4">
+        <table class="w-full text-sm">
+          <thead class="bg-emerald-50/80 text-emerald-900">
+            <tr><th class="text-left py-2 px-4">Name</th><th class="text-left">When</th><th class="text-left">Units</th></tr>
+          </thead>
+          <tbody>
+            <tr class="border-t border-amber-100"><td class="py-2 px-4 font-semibold">Fajr</td><td>dawn, before sunrise</td><td>2</td></tr>
+            <tr class="border-t border-amber-100"><td class="py-2 px-4 font-semibold">Dhuhr</td><td>after midday</td><td>4</td></tr>
+            <tr class="border-t border-amber-100"><td class="py-2 px-4 font-semibold">ʿAsr</td><td>mid-afternoon</td><td>4</td></tr>
+            <tr class="border-t border-amber-100"><td class="py-2 px-4 font-semibold">Maghrib</td><td>just after sunset</td><td>3</td></tr>
+            <tr class="border-t border-amber-100"><td class="py-2 px-4 font-semibold">ʿIshā</td><td>night</td><td>4</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="text-gray-700 mb-3">Each prayer is a sequence of standing, bowing, prostrating, and sitting — with specific recitations from the Quran and short prayers in Arabic. The <strong>Salah Walkthrough</strong> module in Tier 2 walks through one in full.</p>
+      <p class="text-gray-700 text-sm italic">Before prayer, a Muslim performs <em>wudu</em>, a brief ritual washing.</p>
+    `
+  },
+  {
+    title: "Pillar 3 — Zakat",
+    icon: "💰",
+    body: `
+      <div class="flex items-center gap-3 mb-5">
+        <span class="pillar-num">3</span>
+        <div>
+          <div class="display text-2xl text-emerald-950 font-semibold">Zakat</div>
+          <div class="text-sm text-stone-600">The obligatory annual alms</div>
+        </div>
+      </div>
+      <p class="text-gray-700 mb-4">Each year, a Muslim who has had savings above a minimum threshold for a full lunar year owes <strong>2.5%</strong> of those savings to the poor. It is not a charity — it is a <em>right</em> the poor have on the wealthy, and the wealthy are merely passing it along.</p>
+      <div class="bg-white border border-amber-200 rounded-xl p-5 mb-4">
+        <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold mb-3">The eight categories of recipients (Quran 9:60)</div>
+        <ul class="grid sm:grid-cols-2 gap-2 text-sm text-gray-700">
+          <li>· The poor</li>
+          <li>· The needy</li>
+          <li>· Those who collect and distribute it</li>
+          <li>· Those whose hearts are reconciled</li>
+          <li>· To free captives or slaves</li>
+          <li>· Those crushed by debt</li>
+          <li>· In the cause of God</li>
+          <li>· The stranded traveler</li>
+        </ul>
+      </div>
+      <p class="text-gray-700 mb-3">The Arabic root means both <em>purification</em> and <em>growth</em>. By giving from what you have, you purify the rest — and the act is believed to grow your wealth, not shrink it.</p>
+      <p class="text-gray-700 text-sm italic">Voluntary giving (<em>sadaqa</em>) on top of zakat is encouraged at any time, in any amount.</p>
+    `
+  },
+  {
+    title: "Pillar 4 — Sawm",
+    icon: "🌅",
+    body: `
+      <div class="flex items-center gap-3 mb-5">
+        <span class="pillar-num">4</span>
+        <div>
+          <div class="display text-2xl text-emerald-950 font-semibold">Sawm</div>
+          <div class="text-sm text-stone-600">Fasting during Ramadan</div>
+        </div>
+      </div>
+      <p class="text-gray-700 mb-4"><strong>Ramadan</strong> is the 9th month of the Islamic lunar calendar — the month in which the Quran was first revealed. Muslims fast from <strong>dawn to sunset</strong> every day of the month: no food, drink, smoking, or sexual relations during daylight hours.</p>
+      <div class="bg-emerald-50/80 border-l-4 border-emerald-700 p-5 rounded-r-lg my-5">
+        <p class="text-emerald-900 font-semibold mb-2">Why fast?</p>
+        <p class="text-emerald-900 text-sm leading-relaxed">Self-discipline. Empathy with the hungry. A reset of habits. And — most centrally — sustained focus on God, made possible by stripping away the distractions of normal consumption.</p>
+      </div>
+      <p class="text-gray-700 mb-3">Fasting is required of every able adult Muslim. <strong>Exemptions</strong> include illness, travel, menstruation, pregnancy and breastfeeding, and old age. Missed days are made up later — or, if making them up is impossible, fed to the poor.</p>
+      <p class="text-gray-700 mb-3">Each day's fast is broken at sunset with <em>iftar</em>, traditionally with dates and water. The pre-dawn meal is called <em>suhoor</em>.</p>
+      <p class="text-gray-700 text-sm italic">Voluntary fasts on other days (Mondays/Thursdays, the Day of Arafah, the Day of Ashura) are encouraged but not required.</p>
+    `
+  },
+  {
+    title: "Pillar 5 — Hajj",
+    icon: "🕋",
+    body: `
+      <div class="flex items-center gap-3 mb-5">
+        <span class="pillar-num">5</span>
+        <div>
+          <div class="display text-2xl text-emerald-950 font-semibold">Hajj</div>
+          <div class="text-sm text-stone-600">The pilgrimage to Mecca</div>
+        </div>
+      </div>
+      <p class="text-gray-700 mb-4">Once in a lifetime, every adult Muslim who is physically and financially able must travel to <strong>Mecca</strong> to perform the Hajj. It takes place over five days each year during <em>Dhū al-Ḥijja</em>, the 12th month of the Islamic calendar.</p>
+      <p class="text-gray-700 mb-4">Roughly <strong>2 million pilgrims</strong> converge on the city annually — a tide of humanity in identical white garments, performing the same ancient rites.</p>
+      <div class="bg-white border border-amber-200 rounded-xl p-5 mb-4">
+        <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold mb-3">The major rites</div>
+        <ol class="space-y-2 text-sm text-gray-700">
+          <li><strong>Iḥrām</strong> — entering a state of ritual purity in two unstitched white cloths.</li>
+          <li><strong>Ṭawāf</strong> — circling the Kaʿba seven times.</li>
+          <li><strong>Saʿy</strong> — walking between the hills of Safa and Marwa, retracing Hagar's search for water for her son Ishmael.</li>
+          <li><strong>Wuqūf at ʿArafa</strong> — standing on the plain of Arafat from noon to sunset, the spiritual peak of Hajj.</li>
+          <li><strong>Ramī</strong> — symbolically stoning three pillars representing Satan.</li>
+          <li><strong>Sacrifice</strong> — slaughter of an animal, distributed to the poor (Eid al-Adha).</li>
+        </ol>
+      </div>
+      <p class="text-gray-700 text-sm italic">A shorter pilgrimage called <em>ʿumra</em> can be performed any time of year and is recommended but not required.</p>
+    `
+  },
+  {
+    title: "Why \"pillars\"?",
+    icon: "🏛️",
+    body: `
+      <p class="text-gray-700 mb-4">The metaphor is architectural. Picture a building. Without its supporting columns, the roof falls in. Without the foundation, the columns themselves stand on nothing.</p>
+      <div class="bg-white border border-amber-200 rounded-xl p-5 mb-4">
+        <p class="text-gray-800 mb-3">A famous hadith — Bukhari 8, Muslim 16, narrated by Ibn ʿUmar:</p>
+        <div class="arabic text-xl text-emerald-900 mb-2">بُنِيَ الإِسْلَامُ عَلَىٰ خَمْسٍ</div>
+        <div class="italic text-emerald-800 text-sm mb-2">Buniya l-Islāmu ʿalā khams…</div>
+        <p class="text-gray-700 italic">"Islam is built on five: bearing witness that there is no god but Allah and that Muhammad is the Messenger of Allah; establishing the prayer; giving zakat; pilgrimage to the House; and fasting Ramadan."</p>
+      </div>
+      <p class="text-gray-700 mb-4">The Shahada is the <strong>foundation</strong>. The other four are the structural pillars resting on it. A famous companion-hadith (the <em>Hadith of Gabriel</em>) goes further and distinguishes three <em>levels</em>:</p>
+      <div class="grid sm:grid-cols-3 gap-3 mb-4">
+        <div class="bg-amber-50/80 border border-amber-200 rounded-lg p-4">
+          <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold mb-1">Level 1</div>
+          <div class="display text-lg text-emerald-950 font-semibold">Islām</div>
+          <p class="text-xs text-stone-700 mt-1">Submission — the outward five pillars.</p>
+        </div>
+        <div class="bg-emerald-50/80 border border-emerald-200 rounded-lg p-4">
+          <div class="text-xs uppercase tracking-widest text-emerald-700 font-semibold mb-1">Level 2</div>
+          <div class="display text-lg text-emerald-950 font-semibold">Īmān</div>
+          <p class="text-xs text-stone-700 mt-1">Faith — the inward six articles of belief.</p>
+        </div>
+        <div class="bg-stone-100 border border-stone-300 rounded-lg p-4">
+          <div class="text-xs uppercase tracking-widest text-stone-600 font-semibold mb-1">Level 3</div>
+          <div class="display text-lg text-emerald-950 font-semibold">Iḥsān</div>
+          <p class="text-xs text-stone-700 mt-1">Excellence — to worship God as if you see Him.</p>
+        </div>
+      </div>
+      <p class="text-gray-700 text-sm italic">Module 1-2 unpacks the six articles of faith (Īmān). The Tier 3 modules eventually take you toward Iḥsān.</p>
+    `
+  },
+  {
+    title: "Quick check",
+    icon: "✍️",
+    body: `
+      <p class="text-gray-700 mb-6">Five short questions. No pressure — just to see what stuck.</p>
+      <div id="quiz"></div>
+      <div id="quiz-result" class="hidden mt-6 p-6 rounded-xl text-center"></div>
+    `,
+    isQuiz: true
+  },
+  {
+    title: "Wrap-up",
+    icon: "✨",
+    body: `
+      <p class="text-gray-700 mb-4">You now have the structural skeleton. Recap:</p>
+      <div class="bg-white border border-amber-200 rounded-xl p-5 mb-4">
+        <ol class="space-y-2 text-sm text-gray-800">
+          <li><span class="pillar-num mr-2" style="width:24px;height:24px;font-size:0.75rem;">1</span><strong>Shahada</strong> — bear witness to one God and the final messenger.</li>
+          <li><span class="pillar-num mr-2" style="width:24px;height:24px;font-size:0.75rem;">2</span><strong>Salah</strong> — five daily prayers.</li>
+          <li><span class="pillar-num mr-2" style="width:24px;height:24px;font-size:0.75rem;">3</span><strong>Zakat</strong> — 2.5% of saved wealth to the poor each year.</li>
+          <li><span class="pillar-num mr-2" style="width:24px;height:24px;font-size:0.75rem;">4</span><strong>Sawm</strong> — fast from dawn to sunset every day of Ramadan.</li>
+          <li><span class="pillar-num mr-2" style="width:24px;height:24px;font-size:0.75rem;">5</span><strong>Hajj</strong> — pilgrimage to Mecca once in a lifetime if able.</li>
+        </ol>
+      </div>
+      <div class="bg-gradient-to-r from-emerald-50 to-amber-50 border border-amber-300 rounded-xl p-6 text-center my-6">
+        <div class="arabic text-2xl text-emerald-900 mb-1">جَزَاكَ ٱللَّٰهُ خَيْرًا</div>
+        <div class="text-sm italic text-stone-600 mb-4">Jazāk Allāhu khayran — "May Allah reward you with good."</div>
+        <div class="text-sm text-gray-700">Hit <strong>Finish</strong> below to mark this module complete and continue to <strong>Module 1-2: The Six Articles of Faith</strong>.</div>
+      </div>
+      <div class="text-center text-sm">
+        <a href="index.html" class="text-emerald-800 underline font-semibold">Back to curriculum →</a>
+      </div>
+    `
+  }
+];
+
+const quizQuestions = [
+  { q: "How many pillars of Islam are there?", choices: ["Three", "Four", "Five", "Six"], answer: 2 },
+  { q: "Which pillar is the declaration of faith?", choices: ["Salah", "Shahada", "Zakat", "Hajj"], answer: 1 },
+  { q: "Zakat requires giving roughly what percentage of saved wealth annually?", choices: ["1%", "2.5%", "5%", "10%"], answer: 1 },
+  { q: "During Ramadan, the fast is observed…", choices: ["For 24 hours straight", "From sunset to dawn", "From dawn to sunset", "Only on Fridays"], answer: 2 },
+  { q: "Hajj is required of an able Muslim…", choices: ["Once a year", "Every five years", "Once in a lifetime", "Only on retirement"], answer: 2 }
+];
+
+let currentStep = 0;
+let quizScore = 0;
+let quizAnswered = new Set();
+
+const nav = document.getElementById("step-nav");
+const container = document.getElementById("step-container");
+const stepNum = document.getElementById("step-num");
+const stepTotal = document.getElementById("step-total");
+const prevBtn = document.getElementById("prev-step");
+const nextBtn = document.getElementById("next-step");
+
+stepTotal.textContent = steps.length;
+
+function renderQuiz() {
+  const quizEl = document.getElementById("quiz");
+  if (!quizEl) return;
+  quizEl.innerHTML = quizQuestions.map((q, qi) => `
+    <div class="mb-5 p-5 bg-white border border-amber-200 rounded-xl">
+      <div class="font-semibold text-gray-800 mb-3">${qi + 1}. ${q.q}</div>
+      <div class="grid gap-2" data-qindex="${qi}">
+        ${q.choices.map((c, ci) => `
+          <button class="choice" data-choice="${ci}">${c}</button>
+        `).join("")}
+      </div>
+    </div>
+  `).join("");
+
+  quizEl.querySelectorAll(".choice").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const group = btn.closest("[data-qindex]");
+      const qi = parseInt(group.dataset.qindex);
+      if (quizAnswered.has(qi)) return;
+      const choice = parseInt(btn.dataset.choice);
+      const correct = quizQuestions[qi].answer;
+      quizAnswered.add(qi);
+      group.querySelectorAll(".choice").forEach((b, i) => {
+        b.disabled = true;
+        if (i === correct) b.classList.add("correct");
+        else if (i === choice) b.classList.add("wrong");
+      });
+      if (choice === correct) quizScore++;
+      if (quizAnswered.size === quizQuestions.length) showResult();
+    });
+  });
+}
+
+function showResult() {
+  const r = document.getElementById("quiz-result");
+  r.classList.remove("hidden");
+  const pct = quizScore / quizQuestions.length;
+  let msg, color;
+  if (pct === 1) { msg = "Perfect. Five for five."; color = "bg-emerald-100 text-emerald-900"; }
+  else if (pct >= 0.6) { msg = "Solid. Review what you missed and continue."; color = "bg-emerald-100 text-emerald-900"; }
+  else { msg = "Worth another pass. Scroll back through the pillars."; color = "bg-amber-100 text-amber-900"; }
+  r.className = "mt-6 p-6 rounded-xl text-center " + color;
+  r.innerHTML = `<div class="text-4xl font-bold mb-2">${quizScore} / ${quizQuestions.length}</div><div>${msg}</div>`;
+}
+
+function render() {
+  nav.innerHTML = steps.map((s, i) => `
+    <button class="step-btn w-full text-left px-3 py-2 rounded-lg border border-transparent text-sm hover:bg-amber-50 ${i === currentStep ? 'active' : ''}" data-i="${i}">
+      <span class="mr-2">${s.icon}</span>${s.title}
+    </button>
+  `).join("");
+
+  container.innerHTML = `
+    <article class="article-card shadow-sm p-8">
+      <div class="flex items-center gap-4 mb-6 pb-4 border-b border-amber-100">
+        <div class="text-5xl">${steps[currentStep].icon}</div>
+        <div>
+          <div class="text-xs text-amber-700 font-semibold uppercase tracking-widest">Step ${currentStep + 1}</div>
+          <h2 class="display text-3xl text-emerald-950 font-semibold">${steps[currentStep].title}</h2>
+        </div>
+      </div>
+      <div>${steps[currentStep].body}</div>
+    </article>
+  `;
+
+  stepNum.textContent = currentStep + 1;
+  prevBtn.disabled = currentStep === 0;
+  nextBtn.textContent = currentStep === steps.length - 1 ? "Finish" : "Next →";
+
+  if (steps[currentStep].isQuiz) renderQuiz();
+
+  nav.querySelectorAll(".step-btn").forEach(b => {
+    b.addEventListener("click", () => {
+      currentStep = parseInt(b.dataset.i);
+      render();
+         });
+  });
+}
+
+const MODULE_ID = "1-1";
+const STORAGE_KEY = "islamapp-progress-v1";
+function loadProgress() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
+  catch { return {}; }
+}
+function markInProgress() {
+  const p = loadProgress();
+  if (p[MODULE_ID] !== "done") { p[MODULE_ID] = "inprogress"; localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); }
+}
+function markComplete() {
+  const p = loadProgress();
+  p[MODULE_ID] = "done";
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(p));
+}
+
+prevBtn.addEventListener("click", () => {
+  if (currentStep > 0) { currentStep--; render(); window.scrollTo({ top: 0, behavior: "smooth" }); }
+});
+nextBtn.addEventListener("click", () => {
+  if (currentStep < steps.length - 1) { currentStep++; render(); window.scrollTo({ top: 0, behavior: "smooth" }); }
+  else { markComplete(); window.location.href = "index.html"; }
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.isContentEditable) return;
+  if (e.key === "ArrowLeft" && !prevBtn.disabled) prevBtn.click();
+  else if (e.key === "ArrowRight") nextBtn.click();
+});
+
+markInProgress();
+render();
+</script>
+
+</body>
+</html>

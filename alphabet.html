@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The 28 Letters — IslamApp</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>(function(){try{if(localStorage.getItem('islamapp-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
+<link rel="stylesheet" href="theme.css">
+<script src="theme.js" defer></script>
+<style>
+  body { font-family: 'Inter', sans-serif; background: #faf6ed; color: #1c2d20;
+    background-image: radial-gradient(circle at 10% 10%, rgba(201,169,97,0.08) 0%, transparent 40%), radial-gradient(circle at 90% 90%, rgba(6,78,59,0.06) 0%, transparent 40%);
+    background-attachment: fixed; }
+  .arabic { font-family: 'Amiri', serif; direction: rtl; line-height: 1.7; }
+  .display { font-family: 'Cormorant Garamond', serif; }
+  .geo-pattern { background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23064e3b' fill-opacity='0.05'%3E%3Cpath d='M30 0l7.5 22.5H60L41.25 37.5l7.5 22.5L30 45l-18.75 15 7.5-22.5L0 22.5h22.5z'/%3E%3C/g%3E%3C/svg%3E"); }
+  .step-btn.active { background: #064e3b; color: #faf6ed; border-color: #c9a961; }
+  .gold-line { height: 1px; background: linear-gradient(to right, transparent, #c9a961, transparent); }
+  .btn-primary { background: linear-gradient(135deg, #064e3b 0%, #022c22 100%); color: #faf6ed; border: 1px solid #c9a961; }
+  .btn-primary:hover { background: linear-gradient(135deg, #0f766e 0%, #064e3b 100%); }
+  .btn-secondary { background: #fff; border: 1px solid #c9a961; color: #064e3b; }
+  .btn-secondary:hover { background: #faf6ed; }
+  .article-card { background: #fff; border: 1px solid rgba(201,169,97,0.4); border-radius: 14px 14px 6px 6px; }
+  .article-card::before { content: ''; display: block; height: 12px; margin: -1px -1px 0 -1px;
+    background: linear-gradient(180deg, rgba(201,169,97,0.25), transparent); border-radius: 14px 14px 0 0; border-bottom: 1px solid rgba(201,169,97,0.25); }
+  .letter-tile { background: #fff; border: 1px solid rgba(201,169,97,0.3); border-radius: 10px; padding: 0.75rem 0.5rem;
+    text-align: center; transition: all 0.2s ease; }
+  .letter-tile:hover { transform: translateY(-2px); border-color: #c9a961; box-shadow: 0 8px 20px -8px rgba(6,78,59,0.2); }
+  .letter-tile.heavy { background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-color: #c9a961; }
+  .letter-tile.throat { background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); border-color: #f87171; }
+  .letter-glyph { font-family: 'Amiri', serif; font-size: 2.5rem; line-height: 1; color: #064e3b; }
+  .letter-num { font-family: 'Cormorant Garamond', serif; font-size: 0.7rem; color: #a8863f; font-weight: 600; }
+  .letter-name { font-family: 'Cormorant Garamond', serif; font-size: 0.95rem; font-weight: 600; color: #1c2d20; margin-top: 0.25rem; }
+  .letter-roman { font-size: 0.7rem; color: #a8863f; }
+  .group-card { background: #fff; border: 1px solid rgba(201,169,97,0.3); border-radius: 10px; padding: 1rem; }
+  .choice { text-align: left; padding: 0.75rem 1rem; border: 2px solid #e7e5e4; border-radius: 8px; background: #fff; cursor: pointer;
+    transition: all 0.15s ease; font: inherit; width: 100%; }
+  .choice:hover { background: #ecfdf5; border-color: #059669; }
+  .choice.correct { background: #d1fae5; border-color: #059669; color: #064e3b; }
+  .choice.wrong { background: #fee2e2; border-color: #dc2626; color: #7f1d1d; }
+  .choice:disabled { cursor: default; }
+  .practice-arabic { font-family: 'Amiri', serif; font-size: 4rem; line-height: 1.2; color: #064e3b; }
+</style>
+</head>
+<body class="geo-pattern min-h-screen">
+
+<div class="max-w-6xl mx-auto px-6 py-10">
+
+  <nav class="flex justify-between items-center mb-6">
+    <a href="index.html" class="text-emerald-900 hover:text-amber-700 text-sm font-semibold">← Curriculum</a>
+    <div class="text-xs uppercase tracking-[0.25em] text-amber-700 font-semibold hidden sm:block">Tier 3 · Module 3-1</div>
+    <div class="text-sm text-stone-500"><span id="step-num">1</span> / <span id="step-total">8</span></div>
+  </nav>
+
+  <header class="text-center mb-8">
+    <div class="gold-line mb-4 max-w-[180px] mx-auto"></div>
+    <div class="arabic text-3xl text-emerald-900 mb-2">الحُرُوف الثَّمَانِيَة وَالعِشْرُون</div>
+    <h1 class="display text-4xl md:text-5xl text-emerald-950 font-semibold">The 28 Letters</h1>
+    <div class="gold-line mt-4 max-w-[180px] mx-auto"></div>
+  </header>
+
+  <div class="grid md:grid-cols-[220px_1fr] gap-6">
+    <aside class="md:sticky md:top-6 md:self-start">
+      <div class="article-card p-3 shadow-sm">
+        <div class="text-xs uppercase tracking-wider text-amber-700 font-semibold mb-2 px-2">Steps</div>
+        <nav id="step-nav" class="space-y-1"></nav>
+      </div>
+    </aside>
+    <main id="step-container"></main>
+  </div>
+
+  <div class="flex justify-between mt-8 gap-4">
+    <button id="prev-step" class="btn-secondary flex-1 md:flex-none px-6 py-3 rounded-lg font-semibold disabled:opacity-30 disabled:cursor-not-allowed">← Previous</button>
+    <button id="next-step" class="btn-primary flex-1 md:flex-none px-6 py-3 rounded-lg font-semibold">Next →</button>
+  </div>
+
+</div>
+
+<script>
+const letters = [
+  { n: 1, ar: "ا", name: "Alif", roman: "ā / a", sound: "long 'aa' as in 'father'", example: "أَب — father" },
+  { n: 2, ar: "ب", name: "Bāʾ", roman: "b", sound: "as in 'bat'", example: "بَاب — door" },
+  { n: 3, ar: "ت", name: "Tāʾ", roman: "t", sound: "as in 'tea'", example: "تِين — figs" },
+  { n: 4, ar: "ث", name: "Thāʾ", roman: "th", sound: "as in 'think'", example: "ثَلَاثَة — three" },
+  { n: 5, ar: "ج", name: "Jīm", roman: "j", sound: "as in 'jam'", example: "جَمَل — camel" },
+  { n: 6, ar: "ح", name: "Ḥāʾ", roman: "ḥ", sound: "deep h from the throat", example: "حَجّ — pilgrimage", style: "throat" },
+  { n: 7, ar: "خ", name: "Khāʾ", roman: "kh", sound: "as in Scottish 'loch'", example: "خُبْز — bread", style: "throat" },
+  { n: 8, ar: "د", name: "Dāl", roman: "d", sound: "as in 'door'", example: "دَار — house" },
+  { n: 9, ar: "ذ", name: "Dhāl", roman: "dh", sound: "as in 'this'", example: "ذَهَب — gold" },
+  { n: 10, ar: "ر", name: "Rāʾ", roman: "r", sound: "rolled, as in Spanish", example: "رَجُل — man" },
+  { n: 11, ar: "ز", name: "Zāy", roman: "z", sound: "as in 'zoo'", example: "زَيْت — oil" },
+  { n: 12, ar: "س", name: "Sīn", roman: "s", sound: "as in 'sun'", example: "سَلَام — peace" },
+  { n: 13, ar: "ش", name: "Shīn", roman: "sh", sound: "as in 'shoe'", example: "شَمْس — sun" },
+  { n: 14, ar: "ص", name: "Ṣād", roman: "ṣ", sound: "heavy, emphatic 's'", example: "صَلَاة — prayer", style: "heavy" },
+  { n: 15, ar: "ض", name: "Ḍād", roman: "ḍ", sound: "heavy, emphatic 'd'", example: "ضَيْف — guest", style: "heavy" },
+  { n: 16, ar: "ط", name: "Ṭāʾ", roman: "ṭ", sound: "heavy, emphatic 't'", example: "طِفْل — child", style: "heavy" },
+  { n: 17, ar: "ظ", name: "Ẓāʾ", roman: "ẓ", sound: "heavy, emphatic 'th' (as in 'this')", example: "ظِلّ — shade", style: "heavy" },
+  { n: 18, ar: "ع", name: "ʿAyn", roman: "ʿ", sound: "deep throat sound — no English equivalent", example: "عَيْن — eye", style: "throat" },
+  { n: 19, ar: "غ", name: "Ghayn", roman: "gh", sound: "gargled 'g' from the throat", example: "غُلَام — boy", style: "throat" },
+  { n: 20, ar: "ف", name: "Fāʾ", roman: "f", sound: "as in 'fan'", example: "فِيل — elephant" },
+  { n: 21, ar: "ق", name: "Qāf", roman: "q", sound: "deep 'k' from back of throat", example: "قَلْب — heart", style: "throat" },
+  { n: 22, ar: "ك", name: "Kāf", roman: "k", sound: "as in 'kite'", example: "كِتَاب — book" },
+  { n: 23, ar: "ل", name: "Lām", roman: "l", sound: "as in 'lamp'", example: "لَيْل — night" },
+  { n: 24, ar: "م", name: "Mīm", roman: "m", sound: "as in 'mom'", example: "مَاء — water" },
+  { n: 25, ar: "ن", name: "Nūn", roman: "n", sound: "as in 'nun'", example: "نُور — light" },
+  { n: 26, ar: "ه", name: "Hāʾ", roman: "h", sound: "as in 'hat'", example: "هُدَى — guidance" },
+  { n: 27, ar: "و", name: "Wāw", roman: "w / ū", sound: "as in 'water', or long 'oo'", example: "وَرْدَة — rose" },
+  { n: 28, ar: "ي", name: "Yāʾ", roman: "y / ī", sound: "as in 'yes', or long 'ee'", example: "يَد — hand" }
+];
+
+const sunLetters = "ت ث د ذ ر ز س ش ص ض ط ظ ل ن".split(" ");
+const moonLetters = "ا ب ج ح خ ع غ ف ق ك م ه و ي".split(" ");
+
+const nonConnectors = [
+  { ar: "ا", name: "Alif" },
+  { ar: "د", name: "Dāl" },
+  { ar: "ذ", name: "Dhāl" },
+  { ar: "ر", name: "Rāʾ" },
+  { ar: "ز", name: "Zāy" },
+  { ar: "و", name: "Wāw" }
+];
+
+function letterTile(L) {
+  return `
+    <div class="letter-tile ${L.style || ''}" title="${L.sound}">
+      <div class="letter-num">${L.n}</div>
+      <div class="letter-glyph">${L.ar}</div>
+      <div class="letter-name">${L.name}</div>
+      <div class="letter-roman">${L.roman}</div>
+    </div>
+  `;
+}
+
+const steps = [
+  {
+    title: "Why learn the script?",
+    icon: "🔤",
+    body: `
+      <p class="text-gray-700 mb-4 text-lg">The Quran was revealed in Arabic. Every Muslim, regardless of native language, prays in Arabic. Memorizes in Arabic. Reads the original text in Arabic.</p>
+      <p class="text-gray-700 mb-4">You don't need to <em>speak</em> Arabic to be a Muslim — but learning to <strong>read the script</strong> opens up everything else: the Quran, the prayers, the names of God, the calligraphy you'll see in every mosque.</p>
+      <div class="bg-emerald-50/80 border-l-4 border-emerald-700 p-5 rounded-r-lg my-5">
+        <p class="text-emerald-900 mb-2"><strong>The good news:</strong> Arabic has only <strong>28 letters</strong>, written from <strong>right to left</strong>. The hard parts are the throat sounds (which take practice) and the way letters change shape based on position (the next module).</p>
+        <p class="text-emerald-900">Most adult learners read fluently within 4–8 weeks of regular practice.</p>
+      </div>
+      <p class="text-gray-700 mb-3">In this module: meet all 28 letters, see the patterns that connect them, and learn the small handful of rules that decide how a word starts.</p>
+      <p class="text-gray-700 text-sm italic">By the time you finish Tier 3, you'll be reading words.</p>
+    `
+  },
+  {
+    title: "All 28 letters",
+    icon: "📜",
+    body: `
+      <p class="text-gray-700 mb-4">Here they are, in the standard order. <strong>Read right to left</strong> — but for English browsing convenience, the grid below is left-to-right.</p>
+      <div class="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-7 gap-2 mb-5">
+        ${letters.map(letterTile).join("")}
+      </div>
+      <div class="bg-amber-50/60 border border-amber-200 rounded-lg p-4 text-sm text-stone-700 mb-3">
+        <strong class="text-amber-800">Color guide:</strong> Plain tiles are common letters. Gold-tinted are <strong>"heavy" / emphatic</strong> consonants (pronounced with the back of the tongue raised). Red-tinted are <strong>throat sounds</strong> — the trickiest for English speakers.
+      </div>
+      <p class="text-gray-700 text-sm italic">Hover any letter for a brief sound description. Each row of the grid above is a row of related shapes — you'll start seeing the visual logic next.</p>
+    `
+  },
+  {
+    title: "Letters by shape",
+    icon: "🎨",
+    body: `
+      <p class="text-gray-700 mb-4">Many Arabic letters share a basic shape and differ only in the number and position of <strong>dots</strong>. Once you spot the families, the alphabet feels much smaller.</p>
+      <div class="space-y-3 mb-4">
+        <div class="group-card">
+          <div class="display font-semibold text-emerald-900 mb-2">The Bāʾ family</div>
+          <div class="flex gap-3 items-baseline mb-2 flex-wrap">
+            <span class="letter-glyph">ب</span><span class="letter-glyph">ت</span><span class="letter-glyph">ث</span><span class="letter-glyph">ن</span><span class="letter-glyph">ي</span>
+          </div>
+          <p class="text-xs text-stone-600">Same boat shape — just different dots. <strong>ب</strong> (1 below), <strong>ت</strong> (2 above), <strong>ث</strong> (3 above), <strong>ن</strong> (1 above, deeper bowl), <strong>ي</strong> (2 below).</p>
+        </div>
+        <div class="group-card">
+          <div class="display font-semibold text-emerald-900 mb-2">The Jīm family</div>
+          <div class="flex gap-3 items-baseline mb-2 flex-wrap">
+            <span class="letter-glyph">ج</span><span class="letter-glyph">ح</span><span class="letter-glyph">خ</span>
+          </div>
+          <p class="text-xs text-stone-600">Same hooked shape. <strong>ج</strong> (dot inside), <strong>ح</strong> (no dot), <strong>خ</strong> (dot above).</p>
+        </div>
+        <div class="group-card">
+          <div class="display font-semibold text-emerald-900 mb-2">The Dāl &amp; Rāʾ pairs</div>
+          <div class="flex gap-3 items-baseline mb-2 flex-wrap">
+            <span class="letter-glyph">د</span><span class="letter-glyph">ذ</span><span class="letter-glyph">ر</span><span class="letter-glyph">ز</span>
+          </div>
+          <p class="text-xs text-stone-600"><strong>د</strong>/<strong>ذ</strong> share a shape; <strong>ر</strong>/<strong>ز</strong> share a different one. The dotted version is the heavier "th" / "z" sound.</p>
+        </div>
+        <div class="group-card">
+          <div class="display font-semibold text-emerald-900 mb-2">The Sīn &amp; Ṣād families</div>
+          <div class="flex gap-3 items-baseline mb-2 flex-wrap">
+            <span class="letter-glyph">س</span><span class="letter-glyph">ش</span><span class="letter-glyph">ص</span><span class="letter-glyph">ض</span>
+          </div>
+          <p class="text-xs text-stone-600"><strong>س</strong>/<strong>ش</strong> are sharp 's' sounds (with three dots = sh). <strong>ص</strong>/<strong>ض</strong> are their heavy versions.</p>
+        </div>
+        <div class="group-card">
+          <div class="display font-semibold text-emerald-900 mb-2">ʿAyn &amp; Ghayn</div>
+          <div class="flex gap-3 items-baseline mb-2 flex-wrap">
+            <span class="letter-glyph">ع</span><span class="letter-glyph">غ</span>
+          </div>
+          <p class="text-xs text-stone-600">Same shape, distinguished only by the dot above on <strong>غ</strong>.</p>
+        </div>
+      </div>
+      <p class="text-gray-700 text-sm italic">Out of 28 letters, only about 12–15 truly distinct shapes — the rest are dot variations.</p>
+    `
+  },
+  {
+    title: "Sun &amp; moon letters",
+    icon: "☀️",
+    body: `
+      <p class="text-gray-700 mb-4">Arabic's definite article is <strong>al-</strong> (ٱل) — like English "the." But its pronunciation depends on the next letter.</p>
+      <div class="grid sm:grid-cols-2 gap-4 mb-4">
+        <div class="bg-white border border-amber-200 rounded-xl p-5">
+          <div class="display text-xl font-semibold text-emerald-950 mb-2">☀️ Sun letters</div>
+          <p class="text-sm text-gray-700 mb-3">When "al-" attaches to one of these, the <strong>ل (l) becomes silent</strong>, and the next letter doubles. "Al-shams" is pronounced <em>ash-shams</em>.</p>
+          <div class="text-2xl arabic text-emerald-900 mb-1">${sunLetters.join(" ")}</div>
+          <div class="text-xs text-stone-500">14 letters — all "tongue-tip" sounds (t, d, s, n, l, r, etc.)</div>
+        </div>
+        <div class="bg-white border border-amber-200 rounded-xl p-5">
+          <div class="display text-xl font-semibold text-emerald-950 mb-2">🌙 Moon letters</div>
+          <p class="text-sm text-gray-700 mb-3">With these, the <strong>ل is pronounced normally</strong>. "Al-qamar" stays <em>al-qamar</em>.</p>
+          <div class="text-2xl arabic text-emerald-900 mb-1">${moonLetters.join(" ")}</div>
+          <div class="text-xs text-stone-500">14 letters — mostly throat, lip, or back-of-mouth sounds.</div>
+        </div>
+      </div>
+      <div class="bg-emerald-50/80 border-l-4 border-emerald-700 p-5 rounded-r-lg">
+        <p class="text-emerald-900 text-sm mb-2"><strong>Why "sun" and "moon"?</strong> The names come from the test cases:</p>
+        <p class="text-emerald-900 text-sm"><strong>الشَّمْس</strong> (the sun) — pronounced <em>ash-shams</em>. The ل drops.</p>
+        <p class="text-emerald-900 text-sm"><strong>القَمَر</strong> (the moon) — pronounced <em>al-qamar</em>. The ل is heard.</p>
+      </div>
+      <p class="text-gray-700 text-sm italic mt-4">In writing, the silent ل is still spelled — but a shadda (doubling mark) appears above the next letter. You'll cover this in Module 3-3.</p>
+    `
+  },
+  {
+    title: "The 6 non-connectors",
+    icon: "🔗",
+    body: `
+      <p class="text-gray-700 mb-4">Most letters connect to whatever comes after them — like joined-up handwriting. But <strong>six letters refuse to connect forward</strong>. They join to the letter before them, but the letter after them must start fresh.</p>
+      <div class="grid grid-cols-3 sm:grid-cols-6 gap-3 mb-4">
+        ${nonConnectors.map(L => `
+          <div class="letter-tile" style="background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%); border-color: #ec4899;">
+            <div class="letter-glyph">${L.ar}</div>
+            <div class="letter-name">${L.name}</div>
+          </div>
+        `).join("")}
+      </div>
+      <div class="bg-amber-50/60 border border-amber-200 rounded-lg p-4 mb-4">
+        <p class="text-sm text-stone-700 mb-2"><strong class="text-amber-800">Memory hook:</strong> Alif, Dāl, Dhāl, Rāʾ, Zāy, Wāw. All have a single isolated stroke. After any of them, the next letter starts as if it's the beginning of a word.</p>
+      </div>
+      <p class="text-gray-700 mb-3">Example: the word <strong>وَرْدَة</strong> ("rose") contains <strong>و</strong> and <strong>د</strong>. Notice how each one creates a small "break" — they finish but the next letter starts a new fragment.</p>
+      <p class="text-gray-700 text-sm italic">Module 3-2 walks through all of this — how letters change shape based on what's next to them — in detail.</p>
+    `
+  },
+  {
+    title: "Practice — name that letter",
+    icon: "🎯",
+    body: `
+      <p class="text-gray-700 mb-4">Eight letters drawn at random. Click the correct name for each.</p>
+      <div id="practice"></div>
+      <div id="practice-result" class="hidden mt-6 p-5 rounded-xl text-center"></div>
+      <div class="mt-4 text-center">
+        <button id="restart-practice" class="btn-secondary px-4 py-2 rounded-lg text-sm font-semibold">New round</button>
+      </div>
+    `,
+    isPractice: true
+  },
+  {
+    title: "Quick check",
+    icon: "✍️",
+    body: `
+      <p class="text-gray-700 mb-6">Six questions on the alphabet.</p>
+      <div id="quiz"></div>
+      <div id="quiz-result" class="hidden mt-6 p-6 rounded-xl text-center"></div>
+    `,
+    isQuiz: true
+  },
+  {
+    title: "Wrap-up",
+    icon: "✨",
+    body: `
+      <p class="text-gray-700 mb-4">You've now seen all 28 letters and the patterns connecting them. Don't expect to remember them all yet — that takes a few sessions of flashcards. The point of this module was orientation.</p>
+      <div class="bg-white border border-amber-200 rounded-xl p-5 mb-4">
+        <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold mb-2">Suggested practice</div>
+        <ul class="space-y-1 text-sm text-gray-700 list-disc list-inside">
+          <li>Spend 5 minutes a day looking through the table.</li>
+          <li>Cover the names and try to recall them from the glyphs.</li>
+          <li>Then cover the glyphs and try to recall those from the names.</li>
+          <li>Look at any Quran or Arabic text — you should now recognize letters one by one, even if you can't read words yet.</li>
+        </ul>
+      </div>
+      <div class="bg-gradient-to-r from-emerald-50 to-amber-50 border border-amber-300 rounded-xl p-6 text-center my-6">
+        <div class="arabic text-2xl text-emerald-900 mb-1">إِقْرَأْ</div>
+        <div class="text-sm italic text-stone-600 mb-4">Iqraʾ — "Read." The first word revealed of the Quran.</div>
+        <div class="text-sm text-gray-700">Hit <strong>Finish</strong> to mark this module complete.</div>
+        <div class="text-sm text-gray-700 mt-2">Next: <strong>Module 3-2: Connecting Letters</strong> — how letters change shape based on position.</div>
+      </div>
+      <div class="text-center text-sm">
+        <a href="index.html" class="text-emerald-800 underline font-semibold">Back to curriculum →</a>
+      </div>
+    `
+  }
+];
+
+const quizQuestions = [
+  { q: "How many letters are in the Arabic alphabet?", choices: ["26", "28", "30", "33"], answer: 1 },
+  { q: "Arabic is written…", choices: ["Left to right", "Right to left", "Top to bottom", "It varies"], answer: 1 },
+  { q: "How many letters do NOT connect forward?", choices: ["Three", "Four", "Six", "Eight"], answer: 2 },
+  { q: "When 'al-' meets a 'sun letter', the ل…", choices: ["Stays the same", "Becomes silent and the next letter doubles", "Drops out entirely", "Becomes a vowel"], answer: 1 },
+  { q: "Which is a 'heavy' (emphatic) consonant?", choices: ["ب", "ص", "ك", "ل"], answer: 1 },
+  { q: "ع (ʿAyn) is…", choices: ["A vowel", "A throat sound with no English equivalent", "Only used in poetry", "Silent"], answer: 1 }
+];
+
+let currentStep = 0; let quizScore = 0; let quizAnswered = new Set();
+let practiceQuestions = []; let practiceScore = 0; let practiceAnswered = new Set();
+
+const nav = document.getElementById("step-nav");
+const container = document.getElementById("step-container");
+const stepNum = document.getElementById("step-num");
+const stepTotal = document.getElementById("step-total");
+const prevBtn = document.getElementById("prev-step");
+const nextBtn = document.getElementById("next-step");
+stepTotal.textContent = steps.length;
+
+function shuffled(arr) { const a = arr.slice(); for (let i = a.length-1; i>0; i--) { const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+
+function renderPractice() {
+  practiceScore = 0; practiceAnswered = new Set();
+  practiceQuestions = shuffled(letters).slice(0, 8).map(L => {
+    const wrongs = shuffled(letters.filter(x => x.n !== L.n)).slice(0, 3).map(x => x.name);
+    const choices = shuffled([L.name, ...wrongs]);
+    return { letter: L, choices, answer: choices.indexOf(L.name) };
+  });
+  const el = document.getElementById("practice");
+  if (!el) return;
+  el.innerHTML = practiceQuestions.map((q, i) => `
+    <div class="mb-5 p-5 bg-white border border-amber-200 rounded-xl">
+      <div class="flex items-center gap-4 mb-3">
+        <div class="practice-arabic" style="font-size: 3rem;">${q.letter.ar}</div>
+        <div class="text-stone-600 text-sm">Letter ${i+1} of 8 — what is its name?</div>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-2" data-pi="${i}">
+        ${q.choices.map((c, ci) => `<button class="choice" data-c="${ci}">${c}</button>`).join("")}
+      </div>
+    </div>
+  `).join("");
+  document.getElementById("practice-result").classList.add("hidden");
+  el.querySelectorAll(".choice").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const group = btn.closest("[data-pi]"); const pi = parseInt(group.dataset.pi);
+      if (practiceAnswered.has(pi)) return;
+      const choice = parseInt(btn.dataset.c); const correct = practiceQuestions[pi].answer;
+      practiceAnswered.add(pi);
+      group.querySelectorAll(".choice").forEach((b, i) => { b.disabled = true; if (i === correct) b.classList.add("correct"); else if (i === choice) b.classList.add("wrong"); });
+      if (choice === correct) practiceScore++;
+      if (practiceAnswered.size === 8) {
+        const r = document.getElementById("practice-result"); r.classList.remove("hidden");
+        const pct = practiceScore / 8;
+        let msg, color;
+        if (pct === 1) { msg = "Eight for eight."; color = "bg-emerald-100 text-emerald-900"; }
+        else if (pct >= 0.5) { msg = `${practiceScore} of 8. Keep at it.`; color = "bg-emerald-100 text-emerald-900"; }
+        else { msg = `${practiceScore} of 8. Spend time with the table — these come fast with repetition.`; color = "bg-amber-100 text-amber-900"; }
+        r.className = "mt-6 p-5 rounded-xl text-center " + color;
+        r.innerHTML = `<div class="text-3xl font-bold mb-1">${practiceScore} / 8</div><div class="text-sm">${msg}</div>`;
+      }
+    });
+  });
+  document.getElementById("restart-practice").addEventListener("click", renderPractice);
+}
+
+function renderQuiz() {
+  const quizEl = document.getElementById("quiz"); if (!quizEl) return;
+  quizScore = 0; quizAnswered = new Set();
+  quizEl.innerHTML = quizQuestions.map((q, qi) => `
+    <div class="mb-5 p-5 bg-white border border-amber-200 rounded-xl">
+      <div class="font-semibold text-gray-800 mb-3">${qi + 1}. ${q.q}</div>
+      <div class="grid gap-2" data-qindex="${qi}">${q.choices.map((c, ci) => `<button class="choice" data-choice="${ci}">${c}</button>`).join("")}</div>
+    </div>`).join("");
+  quizEl.querySelectorAll(".choice").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const group = btn.closest("[data-qindex]"); const qi = parseInt(group.dataset.qindex);
+      if (quizAnswered.has(qi)) return;
+      const choice = parseInt(btn.dataset.choice); const correct = quizQuestions[qi].answer;
+      quizAnswered.add(qi);
+      group.querySelectorAll(".choice").forEach((b, i) => { b.disabled = true; if (i === correct) b.classList.add("correct"); else if (i === choice) b.classList.add("wrong"); });
+      if (choice === correct) quizScore++;
+      if (quizAnswered.size === quizQuestions.length) showResult();
+    });
+  });
+}
+function showResult() {
+  const r = document.getElementById("quiz-result"); r.classList.remove("hidden");
+  const pct = quizScore / quizQuestions.length;
+  let msg, color;
+  if (pct === 1) { msg = "Perfect."; color = "bg-emerald-100 text-emerald-900"; }
+  else if (pct >= 0.6) { msg = "Solid."; color = "bg-emerald-100 text-emerald-900"; }
+  else { msg = "Worth another pass."; color = "bg-amber-100 text-amber-900"; }
+  r.className = "mt-6 p-6 rounded-xl text-center " + color;
+  r.innerHTML = `<div class="text-4xl font-bold mb-2">${quizScore} / ${quizQuestions.length}</div><div>${msg}</div>`;
+}
+
+function render() {
+  nav.innerHTML = steps.map((s, i) => `<button class="step-btn w-full text-left px-3 py-2 rounded-lg border border-transparent text-sm hover:bg-amber-50 ${i === currentStep ? 'active' : ''}" data-i="${i}"><span class="mr-2">${s.icon}</span>${s.title}</button>`).join("");
+  container.innerHTML = `<article class="article-card shadow-sm p-8"><div class="flex items-center gap-4 mb-6 pb-4 border-b border-amber-100"><div class="text-5xl">${steps[currentStep].icon}</div><div><div class="text-xs text-amber-700 font-semibold uppercase tracking-widest">Step ${currentStep + 1}</div><h2 class="display text-3xl text-emerald-950 font-semibold">${steps[currentStep].title}</h2></div></div><div>${steps[currentStep].body}</div></article>`;
+  stepNum.textContent = currentStep + 1; prevBtn.disabled = currentStep === 0;
+  nextBtn.textContent = currentStep === steps.length - 1 ? "Finish" : "Next →";
+  if (steps[currentStep].isPractice) renderPractice();
+  if (steps[currentStep].isQuiz) renderQuiz();
+  nav.querySelectorAll(".step-btn").forEach(b => { b.addEventListener("click", () => { currentStep = parseInt(b.dataset.i); render(); }); });
+}
+
+const MODULE_ID = "3-1"; const STORAGE_KEY = "islamapp-progress-v1";
+function loadProgress() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; } }
+function markInProgress() { const p = loadProgress(); if (p[MODULE_ID] !== "done") { p[MODULE_ID] = "inprogress"; localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); } }
+function markComplete() { const p = loadProgress(); p[MODULE_ID] = "done"; localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); }
+
+prevBtn.addEventListener("click", () => { if (currentStep > 0) { currentStep--; render(); } });
+nextBtn.addEventListener("click", () => { if (currentStep < steps.length - 1) { currentStep++; render(); } else { markComplete(); window.location.href = "index.html"; } });
+
+document.addEventListener("keydown", (e) => {
+  if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.isContentEditable) return;
+  if (e.key === "ArrowLeft" && !prevBtn.disabled) prevBtn.click();
+  else if (e.key === "ArrowRight") nextBtn.click();
+});
+
+markInProgress(); render();
+</script>
+
+</body>
+</html>

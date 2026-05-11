@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Surah Al-Fatiha — IslamApp</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>(function(){try{if(localStorage.getItem('islamapp-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
+<link rel="stylesheet" href="theme.css">
+<script src="theme.js" defer></script>
+<style>
+  body { font-family: 'Inter', sans-serif; background: #faf6ed; color: #1c2d20;
+    background-image: radial-gradient(circle at 10% 10%, rgba(201,169,97,0.08) 0%, transparent 40%), radial-gradient(circle at 90% 90%, rgba(6,78,59,0.06) 0%, transparent 40%);
+    background-attachment: fixed; }
+  .arabic { font-family: 'Amiri', serif; direction: rtl; line-height: 1.9; }
+  .display { font-family: 'Cormorant Garamond', serif; }
+  .geo-pattern { background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23064e3b' fill-opacity='0.05'%3E%3Cpath d='M30 0l7.5 22.5H60L41.25 37.5l7.5 22.5L30 45l-18.75 15 7.5-22.5L0 22.5h22.5z'/%3E%3C/g%3E%3C/svg%3E"); }
+  .step-btn.active { background: #064e3b; color: #faf6ed; border-color: #c9a961; }
+  .gold-line { height: 1px; background: linear-gradient(to right, transparent, #c9a961, transparent); }
+  .btn-primary { background: linear-gradient(135deg, #064e3b 0%, #022c22 100%); color: #faf6ed; border: 1px solid #c9a961; }
+  .btn-primary:hover { background: linear-gradient(135deg, #0f766e 0%, #064e3b 100%); }
+  .btn-secondary { background: #fff; border: 1px solid #c9a961; color: #064e3b; }
+  .btn-secondary:hover { background: #faf6ed; }
+  .article-card { background: #fff; border: 1px solid rgba(201,169,97,0.4); border-radius: 14px 14px 6px 6px; }
+  .article-card::before { content: ''; display: block; height: 12px; margin: -1px -1px 0 -1px;
+    background: linear-gradient(180deg, rgba(201,169,97,0.25), transparent); border-radius: 14px 14px 0 0; border-bottom: 1px solid rgba(201,169,97,0.25); }
+  .verse-card { background: #fff; border: 1px solid rgba(201,169,97,0.4); border-radius: 14px;
+    padding: 1.5rem; position: relative; overflow: hidden; }
+  .verse-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(to right, #c9a961, #064e3b, #c9a961); }
+  .verse-num { display: inline-block; padding: 2px 12px; background: #064e3b; color: #faf6ed;
+    border-radius: 999px; font-size: 0.7rem; letter-spacing: 0.1em; font-weight: 600; }
+  .verse-arabic { font-family: 'Amiri', serif; font-size: 2rem; color: #064e3b; line-height: 2; text-align: center; }
+  .recite-btn { padding: 0.5rem 1rem; border: 1px solid #c9a961; background: #fff; border-radius: 8px;
+    font-size: 0.85rem; font-weight: 600; color: #064e3b; cursor: pointer; }
+  .recite-btn:hover { background: #faf6ed; }
+  .recite-btn.active { background: #064e3b; color: #faf6ed; }
+  .hidden-word { background: #064e3b; color: #064e3b; user-select: none; transition: all 0.2s; cursor: pointer; border-radius: 4px; padding: 0 4px; }
+  .hidden-word.revealed { background: transparent; color: #064e3b; }
+  .choice { text-align: left; padding: 0.75rem 1rem; border: 2px solid #e7e5e4; border-radius: 8px; background: #fff; cursor: pointer;
+    transition: all 0.15s ease; font: inherit; width: 100%; }
+  .choice:hover { background: #ecfdf5; border-color: #059669; }
+  .choice.correct { background: #d1fae5; border-color: #059669; color: #064e3b; }
+  .choice.wrong { background: #fee2e2; border-color: #dc2626; color: #7f1d1d; }
+  .choice:disabled { cursor: default; }
+</style>
+</head>
+<body class="geo-pattern min-h-screen">
+
+<div class="max-w-6xl mx-auto px-6 py-10">
+
+  <nav class="flex justify-between items-center mb-6">
+    <a href="index.html" class="text-emerald-900 hover:text-amber-700 text-sm font-semibold">← Curriculum</a>
+    <div class="text-xs uppercase tracking-[0.25em] text-amber-700 font-semibold hidden sm:block">Tier 4 · Module 4-1</div>
+    <div class="text-sm text-stone-500"><span id="step-num">1</span> / <span id="step-total">10</span></div>
+  </nav>
+
+  <header class="text-center mb-8">
+    <div class="gold-line mb-4 max-w-[180px] mx-auto"></div>
+    <div class="arabic text-3xl text-emerald-900 mb-2">سُورَة الفَاتِحَة</div>
+    <h1 class="display text-4xl md:text-5xl text-emerald-950 font-semibold">Surah Al-Fatiha</h1>
+    <div class="gold-line mt-4 max-w-[180px] mx-auto"></div>
+  </header>
+
+  <div class="grid md:grid-cols-[220px_1fr] gap-6">
+    <aside class="md:sticky md:top-6 md:self-start">
+      <div class="article-card p-3 shadow-sm">
+        <div class="text-xs uppercase tracking-wider text-amber-700 font-semibold mb-2 px-2">Steps</div>
+        <nav id="step-nav" class="space-y-1"></nav>
+      </div>
+    </aside>
+    <main id="step-container"></main>
+  </div>
+
+  <div class="flex justify-between mt-8 gap-4">
+    <button id="prev-step" class="btn-secondary flex-1 md:flex-none px-6 py-3 rounded-lg font-semibold disabled:opacity-30 disabled:cursor-not-allowed">← Previous</button>
+    <button id="next-step" class="btn-primary flex-1 md:flex-none px-6 py-3 rounded-lg font-semibold">Next →</button>
+  </div>
+
+</div>
+
+<script>
+const verses = [
+  {
+    n: 1,
+    ar: "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ",
+    t: "Bismillāhi r-raḥmāni r-raḥīm",
+    tr: "In the name of Allah, the Most Merciful, the Most Compassionate.",
+    note: "The opening invocation. Said before nearly every action a Muslim takes — eating, entering a home, beginning work."
+  },
+  {
+    n: 2,
+    ar: "ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ",
+    t: "Al-ḥamdu lillāhi rabbi l-ʿālamīn",
+    tr: "All praise is for Allah, Lord of all the worlds.",
+    note: "The Quran's first declaration: praise is the proper response to existence, and it belongs to its source."
+  },
+  {
+    n: 3,
+    ar: "ٱلرَّحْمَٰنِ ٱلرَّحِيمِ",
+    t: "Ar-raḥmāni r-raḥīm",
+    tr: "The Most Merciful, the Most Compassionate.",
+    note: "The two names of mercy repeat — God's mercy is the most-emphasized attribute in the Quran."
+  },
+  {
+    n: 4,
+    ar: "مَٰلِكِ يَوْمِ ٱلدِّينِ",
+    t: "Māliki yawmi d-dīn",
+    tr: "Master of the Day of Judgment.",
+    note: "After mercy comes accountability. The merciful God is also the one to whom every soul will answer."
+  },
+  {
+    n: 5,
+    ar: "إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ",
+    t: "Iyyāka naʿbudu wa-iyyāka nastaʿīn",
+    tr: "You alone we worship, and You alone we ask for help.",
+    note: "The midpoint of the surah and its theological pivot — direct address to God in the first person plural."
+  },
+  {
+    n: 6,
+    ar: "ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ",
+    t: "Ihdinā ṣ-ṣirāṭa l-mustaqīm",
+    tr: "Guide us to the straight path —",
+    note: "The first request, and arguably the most important request a Muslim makes. Said at least 17 times a day."
+  },
+  {
+    n: 7,
+    ar: "صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ",
+    t: "Ṣirāṭa lladhīna anʿamta ʿalayhim ghayri l-maghḍūbi ʿalayhim wa-lā ḍ-ḍāllīn",
+    tr: "the path of those You have blessed — not of those who incurred wrath, nor of those who went astray.",
+    note: "The straight path is identified as the path of the prophets and righteous before us. Followed by 'Āmīn' from the congregation."
+  }
+];
+
+function verseHTML(v) {
+  return `
+    <div class="verse-card">
+      <div class="flex items-center justify-between mb-3">
+        <span class="verse-num">VERSE ${v.n}</span>
+        <span class="text-xs text-stone-500">Al-Fatiha 1:${v.n}</span>
+      </div>
+      <div class="verse-arabic mb-4">${v.ar}</div>
+      <div class="italic text-emerald-800 text-center mb-2">${v.t}</div>
+      <div class="text-gray-800 text-center mb-3">"${v.tr}"</div>
+      <div class="border-t border-amber-100 pt-3 text-sm text-gray-700">${v.note}</div>
+    </div>
+  `;
+}
+
+const steps = [
+  {
+    title: "Why Al-Fatiha?",
+    icon: "🕋",
+    body: `
+      <p class="text-gray-700 mb-4 text-lg"><strong>Al-Fatiha</strong> ("the Opening") is the first chapter of the Quran — seven verses long. It is the most-recited chapter on Earth.</p>
+      <p class="text-gray-700 mb-4">Every Muslim recites it <strong>at least 17 times a day</strong> in the five obligatory prayers. By age 10, an observant Muslim has likely said it tens of thousands of times. Memorizing it is the first non-negotiable step in becoming able to pray.</p>
+      <div class="bg-emerald-50/80 border-l-4 border-emerald-700 p-5 rounded-r-lg my-5">
+        <p class="text-emerald-900 mb-2"><strong>Other names for it:</strong></p>
+        <ul class="text-emerald-900 text-sm space-y-1">
+          <li>· <em>Umm al-Kitāb</em> — "The Mother of the Book"</li>
+          <li>· <em>As-Sabʿ al-Mathānī</em> — "The Seven Oft-Repeated Verses"</li>
+          <li>· <em>Ash-Shifāʾ</em> — "The Cure"</li>
+        </ul>
+      </div>
+      <p class="text-gray-700 mb-3">The structure is striking: the first half is <strong>about</strong> God, the second half is <strong>spoken to</strong> God. Verse 5 is the pivot — "You alone we worship, and You alone we ask for help."</p>
+      <p class="text-gray-700 text-sm italic">This module presents Al-Fatiha verse by verse, with a memorization drill at the end. By the time you finish, you should know the whole thing well enough to attempt your first prayer.</p>
+    `
+  },
+  {
+    title: "The full surah",
+    icon: "📖",
+    body: `
+      <p class="text-gray-700 mb-4">The whole surah at a glance — to be broken down verse by verse over the next steps.</p>
+      <div class="verse-card">
+        <div class="text-center text-xs uppercase tracking-widest text-amber-700 font-semibold mb-3">Surah Al-Fatiha · 7 verses · Meccan</div>
+        <div class="arabic text-2xl text-emerald-900 leading-loose text-center">
+          بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ ۝<br>
+          ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ ۝<br>
+          ٱلرَّحْمَٰنِ ٱلرَّحِيمِ ۝<br>
+          مَٰلِكِ يَوْمِ ٱلدِّينِ ۝<br>
+          إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ ۝<br>
+          ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ ۝<br>
+          صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ ۝
+        </div>
+      </div>
+      <p class="text-gray-700 text-sm italic mt-4">Don't try to absorb it all at once. The next steps walk through one verse at a time.</p>
+    `
+  },
+  { title: "Verse 1 — Bismillāh", icon: "①", body: verseHTML(verses[0]) },
+  { title: "Verse 2 — Alḥamdulillāh", icon: "②", body: verseHTML(verses[1]) },
+  { title: "Verse 3 — Ar-raḥmāni r-raḥīm", icon: "③", body: verseHTML(verses[2]) + verseHTML(verses[3]).replace('verse-card', 'verse-card mt-4') },
+  { title: "Verse 5 — Iyyāka naʿbudu", icon: "④", body: verseHTML(verses[4]) },
+  { title: "Verses 6-7 — Ihdinā", icon: "⑤", body: verseHTML(verses[5]) + verseHTML(verses[6]).replace('verse-card', 'verse-card mt-4') },
+  {
+    title: "Memorization drill",
+    icon: "🧠",
+    body: `
+      <p class="text-gray-700 mb-4">Below, certain words are <strong>hidden</strong> — try to recall them. Click any blacked-out word to reveal it.</p>
+      <div class="flex gap-2 mb-4">
+        <button id="hide-25" class="recite-btn">Hide 25%</button>
+        <button id="hide-50" class="recite-btn active">Hide 50%</button>
+        <button id="hide-75" class="recite-btn">Hide 75%</button>
+        <button id="reveal-all" class="recite-btn">Reveal all</button>
+      </div>
+      <div id="drill" class="verse-card">
+        <div class="arabic text-2xl leading-loose text-center" id="drill-text"></div>
+      </div>
+      <p class="text-gray-700 text-sm italic mt-4">Recite from memory. Click only when stuck. Refresh the hide level to re-randomize.</p>
+    `,
+    isDrill: true
+  },
+  {
+    title: "Quick check",
+    icon: "✍️",
+    body: `
+      <p class="text-gray-700 mb-6">Six questions on Al-Fatiha.</p>
+      <div id="quiz"></div>
+      <div id="quiz-result" class="hidden mt-6 p-6 rounded-xl text-center"></div>
+    `,
+    isQuiz: true
+  },
+  {
+    title: "Wrap-up",
+    icon: "✨",
+    body: `
+      <p class="text-gray-700 mb-4">If you can read Al-Fatiha out loud now without help, you can pray. That is the threshold this module was designed to get you across.</p>
+      <div class="bg-white border border-amber-200 rounded-xl p-5 mb-4">
+        <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold mb-2">Suggested practice</div>
+        <ul class="space-y-1 text-sm text-gray-700 list-disc list-inside">
+          <li>Read it aloud once a day for two weeks. Memorization comes from repetition, not understanding alone.</li>
+          <li>Listen to a recitation by a trained reciter — Mishary al-Afasy and Abdul Basit are the most-loved. Match your rhythm to theirs.</li>
+          <li>Pair this with Module 2-3 (Salah Walkthrough) — Al-Fatiha is the centerpiece of every prayer.</li>
+        </ul>
+      </div>
+      <div class="bg-gradient-to-r from-emerald-50 to-amber-50 border border-amber-300 rounded-xl p-6 text-center my-6">
+        <div class="arabic text-2xl text-emerald-900 mb-1">آمِين</div>
+        <div class="text-sm italic text-stone-600 mb-4">Āmīn — said at the close of every recitation of Al-Fatiha.</div>
+        <div class="text-sm text-gray-700">Hit <strong>Finish</strong> to mark this module complete.</div>
+        <div class="text-sm text-gray-700 mt-2">Next: <strong>Module 4-2: Last 10 Surahs of Juz Amma</strong>.</div>
+      </div>
+      <div class="text-center text-sm">
+        <a href="index.html" class="text-emerald-800 underline font-semibold">Back to curriculum →</a>
+      </div>
+    `
+  }
+];
+
+const quizQuestions = [
+  { q: "How many verses are in Al-Fatiha?", choices: ["Five", "Six", "Seven", "Ten"], answer: 2 },
+  { q: "Which is also called 'The Mother of the Book'?", choices: ["Al-Baqara", "Al-Fatiha", "Yāsīn", "An-Nās"], answer: 1 },
+  { q: "The midpoint of Al-Fatiha is the verse…", choices: ["About God's mercy", "About the Day of Judgment", "Where the speaker addresses God directly", "About the straight path"], answer: 2 },
+  { q: "How many times a day is Al-Fatiha recited (minimum)?", choices: ["5", "12", "17", "30"], answer: 2 },
+  { q: "'Iyyāka naʿbudu' means…", choices: ["In the name of God", "You alone we worship", "Guide us", "All praise to God"], answer: 1 },
+  { q: "What is said by the congregation at the end of Al-Fatiha?", choices: ["Allāhu akbar", "Subhānallāh", "Āmīn", "Bismillāh"], answer: 2 }
+];
+
+let currentStep = 0; let quizScore = 0; let quizAnswered = new Set();
+const nav = document.getElementById("step-nav");
+const container = document.getElementById("step-container");
+const stepNum = document.getElementById("step-num");
+const stepTotal = document.getElementById("step-total");
+const prevBtn = document.getElementById("prev-step");
+const nextBtn = document.getElementById("next-step");
+stepTotal.textContent = steps.length;
+
+function renderDrill(percent) {
+  const fullText = verses.map(v => v.ar).join(" ۝ ") + " ۝";
+  const words = fullText.split(/\s+/).filter(w => w);
+  const hideCount = Math.floor(words.length * percent);
+  const indices = new Set();
+  while (indices.size < hideCount) { indices.add(Math.floor(Math.random() * words.length)); }
+  const html = words.map((w, i) => indices.has(i) ? `<span class="hidden-word">${w}</span>` : w).join(" ");
+  document.getElementById("drill-text").innerHTML = html;
+  document.querySelectorAll(".hidden-word").forEach(el => {
+    el.addEventListener("click", () => el.classList.toggle("revealed"));
+  });
+}
+
+function setupDrill() {
+  renderDrill(0.5);
+  document.getElementById("hide-25").addEventListener("click", e => { setActiveBtn(e.target); renderDrill(0.25); });
+  document.getElementById("hide-50").addEventListener("click", e => { setActiveBtn(e.target); renderDrill(0.5); });
+  document.getElementById("hide-75").addEventListener("click", e => { setActiveBtn(e.target); renderDrill(0.75); });
+  document.getElementById("reveal-all").addEventListener("click", e => { setActiveBtn(e.target); renderDrill(0); });
+}
+function setActiveBtn(btn) {
+  document.querySelectorAll(".recite-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+}
+
+function renderQuiz() {
+  const quizEl = document.getElementById("quiz"); if (!quizEl) return;
+  quizScore = 0; quizAnswered = new Set();
+  quizEl.innerHTML = quizQuestions.map((q, qi) => `
+    <div class="mb-5 p-5 bg-white border border-amber-200 rounded-xl">
+      <div class="font-semibold text-gray-800 mb-3">${qi + 1}. ${q.q}</div>
+      <div class="grid gap-2" data-qindex="${qi}">${q.choices.map((c, ci) => `<button class="choice" data-choice="${ci}">${c}</button>`).join("")}</div>
+    </div>`).join("");
+  quizEl.querySelectorAll(".choice").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const group = btn.closest("[data-qindex]"); const qi = parseInt(group.dataset.qindex);
+      if (quizAnswered.has(qi)) return;
+      const choice = parseInt(btn.dataset.choice); const correct = quizQuestions[qi].answer;
+      quizAnswered.add(qi);
+      group.querySelectorAll(".choice").forEach((b, i) => { b.disabled = true; if (i === correct) b.classList.add("correct"); else if (i === choice) b.classList.add("wrong"); });
+      if (choice === correct) quizScore++;
+      if (quizAnswered.size === quizQuestions.length) showResult();
+    });
+  });
+}
+function showResult() {
+  const r = document.getElementById("quiz-result"); r.classList.remove("hidden");
+  const pct = quizScore / quizQuestions.length;
+  let msg, color;
+  if (pct === 1) { msg = "Perfect."; color = "bg-emerald-100 text-emerald-900"; }
+  else if (pct >= 0.6) { msg = "Solid."; color = "bg-emerald-100 text-emerald-900"; }
+  else { msg = "Worth another pass."; color = "bg-amber-100 text-amber-900"; }
+  r.className = "mt-6 p-6 rounded-xl text-center " + color;
+  r.innerHTML = `<div class="text-4xl font-bold mb-2">${quizScore} / ${quizQuestions.length}</div><div>${msg}</div>`;
+}
+
+function render() {
+  nav.innerHTML = steps.map((s, i) => `<button class="step-btn w-full text-left px-3 py-2 rounded-lg border border-transparent text-sm hover:bg-amber-50 ${i === currentStep ? 'active' : ''}" data-i="${i}"><span class="mr-2">${s.icon}</span>${s.title}</button>`).join("");
+  container.innerHTML = `<article class="article-card shadow-sm p-8"><div class="flex items-center gap-4 mb-6 pb-4 border-b border-amber-100"><div class="text-5xl">${steps[currentStep].icon}</div><div><div class="text-xs text-amber-700 font-semibold uppercase tracking-widest">Step ${currentStep + 1}</div><h2 class="display text-3xl text-emerald-950 font-semibold">${steps[currentStep].title}</h2></div></div><div>${steps[currentStep].body}</div></article>`;
+  stepNum.textContent = currentStep + 1; prevBtn.disabled = currentStep === 0;
+  nextBtn.textContent = currentStep === steps.length - 1 ? "Finish" : "Next →";
+  if (steps[currentStep].isDrill) setupDrill();
+  if (steps[currentStep].isQuiz) renderQuiz();
+  nav.querySelectorAll(".step-btn").forEach(b => { b.addEventListener("click", () => { currentStep = parseInt(b.dataset.i); render(); }); });
+}
+
+const MODULE_ID = "4-1"; const STORAGE_KEY = "islamapp-progress-v1";
+function loadProgress() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; } }
+function markInProgress() { const p = loadProgress(); if (p[MODULE_ID] !== "done") { p[MODULE_ID] = "inprogress"; localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); } }
+function markComplete() { const p = loadProgress(); p[MODULE_ID] = "done"; localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); }
+
+prevBtn.addEventListener("click", () => { if (currentStep > 0) { currentStep--; render(); } });
+nextBtn.addEventListener("click", () => { if (currentStep < steps.length - 1) { currentStep++; render(); } else { markComplete(); window.location.href = "index.html"; } });
+
+document.addEventListener("keydown", (e) => {
+  if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.isContentEditable) return;
+  if (e.key === "ArrowLeft" && !prevBtn.disabled) prevBtn.click();
+  else if (e.key === "ArrowRight") nextBtn.click();
+});
+
+markInProgress(); render();
+</script>
+
+</body>
+</html>

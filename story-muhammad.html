@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Muhammad ﷺ — The Final Messenger — IslamApp</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>(function(){try{if(localStorage.getItem('islamapp-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
+<link rel="stylesheet" href="theme.css">
+<script src="theme.js" defer></script>
+<style>
+  body { font-family: 'Inter', sans-serif; background: #faf6ed; color: #1c2d20;
+    background-image: radial-gradient(circle at 10% 10%, rgba(201,169,97,0.08) 0%, transparent 40%), radial-gradient(circle at 90% 90%, rgba(6,78,59,0.06) 0%, transparent 40%);
+    background-attachment: fixed; }
+  .arabic { font-family: 'Amiri', serif; direction: rtl; line-height: 1.9; }
+  .display { font-family: 'Cormorant Garamond', serif; }
+  .geo-pattern { background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23064e3b' fill-opacity='0.05'%3E%3Cpath d='M30 0l7.5 22.5H60L41.25 37.5l7.5 22.5L30 45l-18.75 15 7.5-22.5L0 22.5h22.5z'/%3E%3C/g%3E%3C/svg%3E"); }
+  .step-btn.active { background: #064e3b; color: #faf6ed; border-color: #c9a961; }
+  .gold-line { height: 1px; background: linear-gradient(to right, transparent, #c9a961, transparent); }
+  .btn-primary { background: linear-gradient(135deg, #064e3b 0%, #022c22 100%); color: #faf6ed; border: 1px solid #c9a961; }
+  .btn-primary:hover { background: linear-gradient(135deg, #0f766e 0%, #064e3b 100%); }
+  .btn-secondary { background: #fff; border: 1px solid #c9a961; color: #064e3b; }
+  .btn-secondary:hover { background: #faf6ed; }
+  .article-card { background: #fff; border: 1px solid rgba(201,169,97,0.4); border-radius: 14px 14px 6px 6px; }
+  .article-card::before { content: ''; display: block; height: 12px; margin: -1px -1px 0 -1px;
+    background: linear-gradient(180deg, rgba(201,169,97,0.25), transparent); border-radius: 14px 14px 0 0; border-bottom: 1px solid rgba(201,169,97,0.25); }
+  .verse-quote { background: #fff; border-left: 4px solid #c9a961; padding: 1rem 1.25rem; border-radius: 0 8px 8px 0; margin: 1rem 0; }
+  .verse-quote .ar { font-family: 'Amiri', serif; font-size: 1.4rem; color: #064e3b; line-height: 1.9; text-align: center; margin-bottom: 0.5rem; }
+  .verse-quote .tr { font-style: italic; color: #047857; font-size: 0.85rem; text-align: center; margin-bottom: 0.4rem; }
+  .verse-quote .en { color: #1f2937; font-size: 0.9rem; text-align: center; }
+  .verse-quote .ref { display: block; text-align: center; margin-top: 0.5rem; font-size: 0.7rem; color: #a8863f; font-weight: 600; letter-spacing: 0.1em; }
+  .depth-pill { display: inline-flex; gap: 4px; padding: 2px; background: rgba(201,169,97,0.15); border-radius: 999px; }
+  .depth-pill a { padding: 4px 12px; border-radius: 999px; font-size: 0.7rem; letter-spacing: 0.05em; font-weight: 600; text-decoration: none; color: #a8863f; }
+  .depth-pill a.active { background: #064e3b; color: #faf6ed; }
+  .year-badge { display: inline-block; padding: 2px 10px; background: rgba(6,78,59,0.1); color: #064e3b; border-radius: 999px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.05em; }
+</style>
+</head>
+<body class="geo-pattern min-h-screen">
+
+<div class="max-w-6xl mx-auto px-6 py-10">
+
+  <nav class="flex justify-between items-center mb-6 flex-wrap gap-3">
+    <a href="stories.html" class="text-emerald-900 hover:text-amber-700 text-sm font-semibold">← Stories</a>
+    <div class="depth-pill">
+      <a href="story-muhammad.html" data-mode="moderate">Moderate</a>
+      <a href="story-muhammad-deep.html" data-mode="deep">Deep</a>
+      <a href="story-muhammad.html?single=1" data-mode="single">One page</a>
+    </div>
+    <div class="text-sm text-stone-500"><span id="step-num">1</span> / <span id="step-total">10</span></div>
+  </nav>
+
+  <header class="text-center mb-8">
+    <div class="gold-line mb-4 max-w-[180px] mx-auto"></div>
+    <div class="arabic text-3xl text-emerald-900 mb-2">مُحَمَّد ﷺ</div>
+    <h1 class="display text-4xl md:text-5xl text-emerald-950 font-semibold">Muhammad ﷺ</h1>
+    <div class="text-stone-600 mt-2">The final messenger · 570–632 CE</div>
+    <div class="gold-line mt-4 max-w-[180px] mx-auto"></div>
+  </header>
+
+  <div class="grid md:grid-cols-[220px_1fr] gap-6">
+    <aside class="md:sticky md:top-6 md:self-start">
+      <div class="article-card p-3 shadow-sm">
+        <div class="text-xs uppercase tracking-wider text-amber-700 font-semibold mb-2 px-2">Scenes</div>
+        <nav id="step-nav" class="space-y-1"></nav>
+      </div>
+    </aside>
+    <main id="step-container"></main>
+  </div>
+
+  <div class="flex justify-between mt-8 gap-4">
+    <button id="prev-step" class="btn-secondary flex-1 md:flex-none px-6 py-3 rounded-lg font-semibold disabled:opacity-30 disabled:cursor-not-allowed">← Previous</button>
+    <button id="next-step" class="btn-primary flex-1 md:flex-none px-6 py-3 rounded-lg font-semibold">Next →</button>
+  </div>
+
+</div>
+
+<script>
+function v(ar, tr, en, ref) {
+  return `<div class="verse-quote"><div class="ar">${ar}</div><div class="tr">${tr}</div><div class="en">"${en}"</div><span class="ref">${ref}</span></div>`;
+}
+
+const steps = [
+  {
+    title: "Before the Prophet",
+    icon: "🏜️",
+    body: `
+      <p class="text-gray-700 mb-4 text-lg">In the year 570 CE, the Arabian peninsula was a tribal society of merchants, raiders, and poets. Most worshipped idols. Three hundred and sixty stood inside the Kaʿba — the cube-shaped sanctuary in Mecca that Abraham and his son Ishmael had built thousands of years before, originally for the worship of one God.</p>
+      <p class="text-gray-700 mb-4">The keepers of the Kaʿba were the tribe of <strong>Quraysh</strong>, the dominant merchants of Mecca. Their privilege brought wealth — pilgrims came from all over Arabia.</p>
+      <p class="text-gray-700 mb-3">Into this Quraysh, in the lineage of Ishmael, into the family of the noble Banū Hāshim, was born a boy in the <strong>Year of the Elephant</strong> — the year an army marched on Mecca with elephants to destroy the Kaʿba and was destroyed by birds. The Quran tells that story in <a href="juz-amma.html" class="underline text-emerald-700">Surah Al-Fīl</a>.</p>
+      <p class="text-gray-700 text-sm italic">His name was Muḥammad, meaning "the praised one."</p>
+    `
+  },
+  {
+    title: "Childhood",
+    icon: "🌱",
+    body: `
+      <p class="text-gray-700 mb-3"><span class="year-badge">570 CE</span> Muhammad ﷺ was born <strong>orphaned</strong>. His father, ʿAbdullāh, had died on a trading journey months before his birth.</p>
+      <p class="text-gray-700 mb-3">As was the custom of noble Quraysh families, he was sent to be raised among the Bedouin in the desert — for the cleaner air, the purer Arabic, and the hardier upbringing. He spent his early years with the woman Ḥalīma of the Banū Saʿd.</p>
+      <p class="text-gray-700 mb-3"><span class="year-badge">576 CE</span> Returned to Mecca at age 6. Soon after, his mother Āmina died while traveling. He was 6 — now <strong>completely orphaned</strong>.</p>
+      <p class="text-gray-700 mb-3"><span class="year-badge">578 CE</span> Two years later his grandfather ʿAbd al-Muṭṭalib — who had taken him in — also died. He was 8. Custody passed to his uncle <strong>Abū Ṭālib</strong>, who would protect him until his own death decades later.</p>
+      <div class="bg-emerald-50/80 border-l-4 border-emerald-700 p-5 rounded-r-lg my-5">
+        <p class="text-emerald-900 text-sm">The Quran addresses this directly later: <em>"Did He not find you an orphan and shelter you?"</em> (93:6). The early hardship would shape his lifelong concern for the marginalized.</p>
+      </div>
+      <p class="text-gray-700">As a young man he became a <strong>shepherd</strong>, then joined his uncle's trading caravans to Syria. By his 20s he had earned the title <em>al-Amīn</em> — "the Trustworthy" — for his honesty in commerce.</p>
+    `
+  },
+  {
+    title: "Khadīja",
+    icon: "💛",
+    body: `
+      <p class="text-gray-700 mb-3"><span class="year-badge">595 CE</span> A wealthy Meccan widow named <strong>Khadīja bint Khuwaylid</strong> — twice widowed, in her 40s, running a successful trading business — heard of Muhammad's ﷺ reputation. She hired him to lead one of her caravans to Syria.</p>
+      <p class="text-gray-700 mb-3">He returned with the profits doubled. Her servant Maysara told her not just about the trading — but about the man's character. Khadīja sent her closest confidante to propose marriage.</p>
+      <p class="text-gray-700 mb-3">He was <strong>25</strong>. She was <strong>40</strong>. They married, and stayed monogamously married for the next 25 years — until her death. He took no other wife while she lived.</p>
+      <p class="text-gray-700 mb-3">They had six children together — four daughters who survived into adulthood (Zaynab, Ruqayya, Umm Kulthūm, and <strong>Fāṭima</strong>) and two sons who died young.</p>
+      <div class="bg-emerald-50/80 border-l-4 border-emerald-700 p-5 rounded-r-lg my-4">
+        <p class="text-emerald-900 text-sm">Khadīja would become the <strong>first person to believe</strong> in his prophethood. The Prophet ﷺ later said: <em>"By Allah, He has not given me a better one than her. She believed in me when people disbelieved me; she affirmed my truth when people called me a liar."</em></p>
+      </div>
+      <p class="text-gray-700 text-sm italic">For the next 15 years, his life was that of a respected, peaceful, prosperous Meccan merchant. Then came the cave.</p>
+    `
+  },
+  {
+    title: "The first revelation",
+    icon: "🕯️",
+    body: `
+      <p class="text-gray-700 mb-3"><span class="year-badge">610 CE</span> Approaching 40, Muhammad ﷺ had a growing habit of retreating to the <strong>cave of Ḥirāʾ</strong>, just outside Mecca, for solitude and reflection.</p>
+      <p class="text-gray-700 mb-3">One night during the month of Ramadan, in that cave, the angel <strong>Jibrīl</strong> (Gabriel) appeared and commanded him: <em>Iqraʾ</em> — "Read." When he protested he could not read, the angel embraced him tightly three times and recited:</p>
+      ${v(
+        "ٱقْرَأْ بِٱسْمِ رَبِّكَ ٱلَّذِى خَلَقَ ۝ خَلَقَ ٱلْإِنسَٰنَ مِنْ عَلَقٍ ۝ ٱقْرَأْ وَرَبُّكَ ٱلْأَكْرَمُ",
+        "Iqraʾ bi-smi rabbika lladhī khalaq. Khalaqa l-insāna min ʿalaq. Iqraʾ wa-rabbuka l-akram",
+        "Read! In the name of your Lord who created. Created the human from a clinging clot. Read, and your Lord is the Most Generous.",
+        "Quran 96:1–3 — the first words revealed"
+      )}
+      <p class="text-gray-700 mb-3">He came home shaking. Khadīja covered him in a cloak. He told her what had happened and said: <em>"I fear for myself."</em></p>
+      <p class="text-gray-700 mb-3">Her response is recorded in every collection of hadith: <em>"By Allah, He will never disgrace you. You uphold ties of kinship, bear the burden of the weak, support the destitute, honor your guest, and assist those struck by calamity."</em></p>
+      <p class="text-gray-700 text-sm italic">She took him to her cousin Waraqa ibn Nawfal, a Christian scholar, who recognized the experience as the same revelation given to Moses. Waraqa said: "You will be driven out by your people." The Prophet ﷺ replied: "Will they drive me out?" Waraqa: "No man has ever brought what you have without being opposed."</p>
+    `
+  },
+  {
+    title: "Meccan persecution",
+    icon: "🔥",
+    body: `
+      <p class="text-gray-700 mb-3">For three years he preached privately. Then came the command: <em>"And warn your nearest kindred"</em> (Q 26:214). He stood on a hill in Mecca and called the tribes by name.</p>
+      <p class="text-gray-700 mb-3">The message was simple — and explosive. Worship one God. Treat the poor with justice. There will be a Day of Judgment. <strong>Every person — slave and master, woman and man — stands equal before God.</strong></p>
+      <p class="text-gray-700 mb-3">This was an attack on Quraysh's entire social and economic order. They responded with mockery, then with violence. Early Muslims — especially the slaves and the weak who could not be protected by family — were tortured. <strong>Bilāl</strong>, an Abyssinian slave, was pinned under a rock in the desert sun for refusing to renounce his faith.</p>
+      <p class="text-gray-700 mb-3"><span class="year-badge">615 CE</span> The Prophet ﷺ sent a group of Muslims to seek refuge in <strong>Abyssinia</strong> under the Christian king Negus, who welcomed them.</p>
+      <p class="text-gray-700 mb-3"><span class="year-badge">617 CE</span> Quraysh imposed a <strong>boycott</strong> on the Prophet's clan, the Banū Hāshim — no trade, no marriage, no contact. For three years the clan was confined to a valley, eating leaves to survive.</p>
+      ${v(
+        "أَحَسِبَ ٱلنَّاسُ أَن يُتْرَكُوٓا۟ أَن يَقُولُوٓا۟ ءَامَنَّا وَهُمْ لَا يُفْتَنُونَ",
+        "A-ḥasiba n-nāsu an yutrakū an yaqūlū āmannā wa-hum lā yuftanūn",
+        "Do people think they will be left alone to say 'we believe' and not be tested?",
+        "Quran 29:2"
+      )}
+    `
+  },
+  {
+    title: "The Year of Sorrow &amp; the Night Journey",
+    icon: "🌌",
+    body: `
+      <p class="text-gray-700 mb-3"><span class="year-badge">619 CE</span> The boycott ended — but two devastating losses followed.</p>
+      <p class="text-gray-700 mb-3"><strong>Khadīja died.</strong> His wife of 25 years, his first believer, his greatest support. Within months, <strong>Abū Ṭālib also died</strong> — the uncle who had shielded him from Quraysh's wrath. The Prophet ﷺ called this year ʿĀm al-Ḥuzn — <strong>"the Year of Sorrow."</strong></p>
+      <p class="text-gray-700 mb-3">Without his uncle's protection, the persecution intensified. He traveled to the nearby city of Ṭāʾif to seek allies. The Ṭāʾifis set their children on him, who threw stones until his shoes filled with blood.</p>
+      <p class="text-gray-700 mb-3">That same year — at the lowest point of his earthly life — came one of the most remarkable events in Islamic tradition.</p>
+      ${v(
+        "سُبْحَٰنَ ٱلَّذِىٓ أَسْرَىٰ بِعَبْدِهِۦ لَيْلًا مِّنَ ٱلْمَسْجِدِ ٱلْحَرَامِ إِلَى ٱلْمَسْجِدِ ٱلْأَقْصَا",
+        "Subḥāna lladhī asrā bi-ʿabdihi laylan mina l-masjidi l-ḥarāmi ilā l-masjidi l-aqṣā",
+        "Glory be to Him who took His servant by night from the Sacred Mosque to the Farthest Mosque…",
+        "Quran 17:1 — the Night Journey"
+      )}
+      <p class="text-gray-700 mb-3">In a single night, he was taken from Mecca to Jerusalem on a mount called al-Burāq, led the previous prophets in prayer at al-Aqṣā, then <strong>ascended through the seven heavens</strong>. Above the seventh, he received the gift that defines a Muslim's day: the obligation of the <strong>five daily prayers</strong>.</p>
+      <p class="text-gray-700 text-sm italic">The journey is called Isrāʾ (the night journey) and Miʿrāj (the ascension). For Muslims it stands as a moment of cosmic affirmation at his moment of greatest earthly defeat.</p>
+    `
+  },
+  {
+    title: "The Hijra",
+    icon: "🐪",
+    body: `
+      <p class="text-gray-700 mb-3"><span class="year-badge">620–622 CE</span> Pilgrims from the oasis city of <strong>Yathrib</strong>, 250 miles north, came to Mecca for the annual fair. The Prophet ﷺ met with some at ʿAqaba. They accepted his message. They returned home and converted others.</p>
+      <p class="text-gray-700 mb-3">Within two years, the leaders of Yathrib invited him to come and govern their city — a place riven by tribal feuds that he might be able to unify.</p>
+      <p class="text-gray-700 mb-3"><span class="year-badge">622 CE</span> Quraysh got word of the plan and resolved to <strong>assassinate</strong> him before he could leave. The Prophet ﷺ slipped out of Mecca by night with Abū Bakr. They hid in the <strong>cave of Thawr</strong> for three days while Quraysh searched.</p>
+      ${v(
+        "إِلَّا تَنصُرُوهُ فَقَدْ نَصَرَهُ ٱللَّهُ إِذْ أَخْرَجَهُ ٱلَّذِينَ كَفَرُوٓا۟ ثَانِىَ ٱثْنَيْنِ إِذْ هُمَا فِى ٱلْغَارِ إِذْ يَقُولُ لِصَٰحِبِهِۦ لَا تَحْزَنْ إِنَّ ٱللَّهَ مَعَنَا",
+        "Illā tanṣurūhu fa-qad naṣarahu llāhu idh akhrajahu lladhīna kafarū thāniya thnayni idh humā fī l-ghāri idh yaqūlu li-ṣāḥibihi lā taḥzan inna llāha maʿanā",
+        "…when the two were in the cave, and he said to his companion: 'Do not grieve — Allah is with us.'",
+        "Quran 9:40"
+      )}
+      <p class="text-gray-700 mb-3">A spider spun a web across the cave entrance; a dove laid eggs. The search party saw both and moved on. The Prophet ﷺ and Abū Bakr then made the journey to Yathrib, which would be renamed <strong>al-Madīna al-Munawwara</strong> — "the radiant city," now simply Medina.</p>
+      <p class="text-gray-700">This migration — the <strong>Hijra</strong> — is so foundational that the Islamic calendar starts not from his birth or first revelation, but from this year. Every Islamic date is "AH" — <em>Anno Hegirae</em>, "after the Hijra."</p>
+    `
+  },
+  {
+    title: "The Medinan years",
+    icon: "🕌",
+    body: `
+      <p class="text-gray-700 mb-3"><span class="year-badge">622 CE</span> In Medina, the Prophet ﷺ did something unprecedented in Arabian history. He drafted a <strong>written constitution</strong> — the <em>Mīthāq al-Madīna</em> — uniting the Muslim migrants, the Medinan helpers, and the Jewish tribes of the city into a single political community.</p>
+      <p class="text-gray-700 mb-3">Quraysh did not let him be. Three major battles followed:</p>
+      <div class="bg-white border border-amber-200 rounded-xl p-5 mb-4">
+        <div class="space-y-3 text-sm">
+          <div><span class="year-badge">624</span> <strong>Battle of Badr.</strong> 313 Muslims defeated 1,000 Quraysh. A foundational victory.</div>
+          <div><span class="year-badge">625</span> <strong>Battle of Uḥud.</strong> A near-defeat after archers abandoned their post. The Prophet ﷺ was wounded. A correction.</div>
+          <div><span class="year-badge">627</span> <strong>Battle of the Trench (Khandaq).</strong> Muslims dug a trench around Medina, repelling a 10,000-strong confederate army without major combat.</div>
+        </div>
+      </div>
+      <p class="text-gray-700 mb-3"><span class="year-badge">628</span> The <strong>Treaty of Ḥudaybiyya</strong> — a 10-year truce with Quraysh that looked humiliating on its surface but proved to be, in the Quran's words, <em>"a clear victory"</em> (48:1). It bought time for the message to spread.</p>
+      <p class="text-gray-700 mb-3"><span class="year-badge">630</span> Quraysh broke the treaty. The Prophet ﷺ marched on Mecca with 10,000 Muslims. The city surrendered <strong>without a battle</strong>. He entered the city he had been driven from — and granted general amnesty.</p>
+      <div class="bg-emerald-50/80 border-l-4 border-emerald-700 p-5 rounded-r-lg my-4">
+        <p class="text-emerald-900 text-sm">His words on entering: <em>"Go, you are free."</em> The 360 idols of the Kaʿba were destroyed. The sanctuary built by Abraham was restored to monotheism.</p>
+      </div>
+    `
+  },
+  {
+    title: "The Farewell Pilgrimage",
+    icon: "🕋",
+    body: `
+      <p class="text-gray-700 mb-3"><span class="year-badge">632 CE</span> In the 10th year after the Hijra, the Prophet ﷺ led his only Hajj — known as the <strong>Farewell Pilgrimage</strong>. Over 100,000 Muslims gathered on the plain of ʿArafāt.</p>
+      <p class="text-gray-700 mb-3">From the back of his camel, he delivered his <strong>final sermon</strong>:</p>
+      <div class="bg-white border border-amber-200 rounded-xl p-5 my-4">
+        <p class="italic text-gray-800 text-sm mb-3">"O people, listen to my words — I do not know if after this year I will ever meet you here again."</p>
+        <p class="italic text-gray-800 text-sm mb-3">"Your blood, your wealth, your honor are sacred to one another, like the sanctity of this day, this month, this place."</p>
+        <p class="italic text-gray-800 text-sm mb-3">"All of mankind is from Adam, and Adam was from dust. An Arab has no superiority over a non-Arab, nor a white over a black — except in piety and good action."</p>
+        <p class="italic text-gray-800 text-sm">"I leave with you two things — the Book of Allah and my Sunnah. If you hold to them, you will never go astray."</p>
+      </div>
+      <p class="text-gray-700 mb-3">During the sermon, the verse came:</p>
+      ${v(
+        "ٱلْيَوْمَ أَكْمَلْتُ لَكُمْ دِينَكُمْ وَأَتْمَمْتُ عَلَيْكُمْ نِعْمَتِى وَرَضِيتُ لَكُمُ ٱلْإِسْلَٰمَ دِينًا",
+        "Al-yawma akmaltu lakum dīnakum wa-atmamtu ʿalaykum niʿmatī wa-raḍītu lakumu l-islāma dīnā",
+        "Today I have perfected your religion for you, completed My favor upon you, and chosen Islam as your way.",
+        "Quran 5:3"
+      )}
+      <p class="text-gray-700 text-sm italic">When ʿUmar heard this verse, he wept — recognizing that perfection meant the work was done, and the messenger's time was near.</p>
+    `
+  },
+  {
+    title: "Death &amp; legacy",
+    icon: "🌙",
+    body: `
+      <p class="text-gray-700 mb-3"><span class="year-badge">632 CE</span> Three months after the Farewell Pilgrimage, the Prophet ﷺ fell ill with fever. He died in Medina, in the chamber of his wife ʿĀʾisha, his head resting in her lap. He was <strong>63 years old</strong>.</p>
+      <p class="text-gray-700 mb-3">His final earthly words: <em>"Rather, the highest companionship."</em> He was buried in that same chamber, where he remains to this day — beneath the green-domed mosque in Medina, the second holiest site in Islam.</p>
+      <div class="bg-emerald-50/80 border-l-4 border-emerald-700 p-5 rounded-r-lg my-5">
+        <p class="text-emerald-900 mb-2"><strong>What he left behind:</strong></p>
+        <ul class="text-emerald-900 text-sm space-y-1">
+          <li>· The <strong>Quran</strong> — complete, scattered across memorized hearts and written fragments</li>
+          <li>· The <strong>Sunnah</strong> — his teaching, captured later in the hadith collections</li>
+          <li>· A <strong>unified Arabia</strong> — for the first time in its history</li>
+          <li>· A <strong>community</strong> that would carry the message across three continents within a century</li>
+        </ul>
+      </div>
+      ${v(
+        "وَمَآ أَرْسَلْنَٰكَ إِلَّا رَحْمَةً لِّلْعَٰلَمِينَ",
+        "Wa-mā arsalnāka illā raḥmatan li-l-ʿālamīn",
+        "We have not sent you except as a mercy to all worlds.",
+        "Quran 21:107"
+      )}
+      <p class="text-gray-700 mb-3">In Islam, he is the <strong>Khātam al-Anbiyāʾ</strong> — the Seal of the Prophets. No prophet comes after him. He is the human being Muslims regard as the most beloved of Allah's creation, and whose example shapes everything from how a Muslim prays to how they greet a neighbor.</p>
+      <div class="bg-gradient-to-r from-emerald-50 to-amber-50 border border-amber-300 rounded-xl p-6 text-center my-6">
+        <div class="arabic text-2xl text-emerald-900 mb-1">صَلَّى ٱللَّهُ عَلَيْهِ وَسَلَّمَ</div>
+        <div class="text-sm italic text-stone-600">Ṣallā Allāhu ʿalayhi wa-sallam — "May Allah's peace and blessings be upon him."</div>
+        <div class="text-xs text-gray-700 mt-3">This is the meaning of the ﷺ symbol said after his name.</div>
+      </div>
+      <div class="text-center text-sm space-x-4">
+        <a href="story-muhammad-deep.html" class="text-emerald-800 underline font-semibold">Deep version →</a>
+        <a href="stories.html" class="text-emerald-800 underline font-semibold">All stories</a>
+      </div>
+    `
+  }
+];
+
+let currentStep = 0;
+const nav = document.getElementById("step-nav");
+const container = document.getElementById("step-container");
+const stepNum = document.getElementById("step-num");
+const stepTotal = document.getElementById("step-total");
+const prevBtn = document.getElementById("prev-step");
+const nextBtn = document.getElementById("next-step");
+stepTotal.textContent = steps.length;
+
+function render() {
+  nav.innerHTML = steps.map((s, i) => `<button class="step-btn w-full text-left px-3 py-2 rounded-lg border border-transparent text-sm hover:bg-amber-50 ${i === currentStep ? 'active' : ''}" data-i="${i}"><span class="mr-2">${s.icon}</span>${s.title}</button>`).join("");
+  container.innerHTML = `<article class="article-card shadow-sm p-8"><div class="flex items-center gap-4 mb-6 pb-4 border-b border-amber-100"><div class="text-5xl">${steps[currentStep].icon}</div><div><div class="text-xs text-amber-700 font-semibold uppercase tracking-widest">Scene ${currentStep + 1}</div><h2 class="display text-3xl text-emerald-950 font-semibold">${steps[currentStep].title}</h2></div></div><div>${steps[currentStep].body}</div></article>`;
+  stepNum.textContent = currentStep + 1; prevBtn.disabled = currentStep === 0;
+  nextBtn.textContent = currentStep === steps.length - 1 ? "Finish" : "Next →";
+  nav.querySelectorAll(".step-btn").forEach(b => { b.addEventListener("click", () => { currentStep = parseInt(b.dataset.i); render(); }); });
+}
+
+const MODULE_ID = "STORY-Muhammad"; const STORAGE_KEY = "islamapp-progress-v1";
+function loadProgress() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; } }
+function markInProgress() { const p = loadProgress(); if (p[MODULE_ID] !== "done") { p[MODULE_ID] = "inprogress"; localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); } }
+function markComplete() { const p = loadProgress(); p[MODULE_ID] = "done"; localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); }
+
+prevBtn.addEventListener("click", () => { if (currentStep > 0) { currentStep--; render(); } });
+nextBtn.addEventListener("click", () => { if (currentStep < steps.length - 1) { currentStep++; render(); } else { markComplete(); window.location.href = "stories.html"; } });
+
+document.addEventListener("keydown", (e) => {
+  if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.isContentEditable) return;
+  if (e.key === "ArrowLeft" && !prevBtn.disabled) prevBtn.click();
+  else if (e.key === "ArrowRight") nextBtn.click();
+});
+
+const isSingleMode = new URLSearchParams(window.location.search).get('single') === '1';
+const currentMode = isSingleMode ? 'single' : 'moderate';
+document.querySelectorAll('.depth-pill a').forEach(a => a.classList.toggle('active', a.dataset.mode === currentMode));
+
+if (isSingleMode) {
+  document.querySelector('aside').style.display = 'none';
+  prevBtn.parentElement.style.display = 'none';
+  document.querySelector('main').parentElement.style.display = 'block';
+  document.querySelector('#step-num').parentElement.style.visibility = 'hidden';
+
+  container.innerHTML = steps.map((s, i) => `
+    <article class="article-card shadow-sm p-8 mb-6">
+      <div class="flex items-center gap-4 mb-6 pb-4 border-b border-amber-100">
+        <div class="text-5xl">${s.icon}</div>
+        <div>
+          <div class="text-xs text-amber-700 font-semibold uppercase tracking-widest">Scene ${i + 1}</div>
+          <h2 class="display text-3xl text-emerald-950 font-semibold">${s.title}</h2>
+        </div>
+      </div>
+      <div>${s.body}</div>
+    </article>
+  `).join("");
+  markInProgress();
+} else {
+  markInProgress();
+  render();
+}
+</script>
+
+</body>
+</html>

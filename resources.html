@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Resources — IslamApp</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>(function(){try{if(localStorage.getItem('islamapp-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
+<link rel="stylesheet" href="theme.css">
+<script src="theme.js" defer></script>
+<style>
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #faf6ed;
+    color: #1c2d20;
+    background-image:
+      radial-gradient(circle at 10% 10%, rgba(201,169,97,0.08) 0%, transparent 40%),
+      radial-gradient(circle at 90% 90%, rgba(6,78,59,0.06) 0%, transparent 40%);
+    background-attachment: fixed;
+  }
+  .arabic { font-family: 'Amiri', serif; direction: rtl; }
+  .display { font-family: 'Cormorant Garamond', serif; }
+  .geo-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23064e3b' fill-opacity='0.05'%3E%3Cpath d='M30 0l7.5 22.5H60L41.25 37.5l7.5 22.5L30 45l-18.75 15 7.5-22.5L0 22.5h22.5z'/%3E%3C/g%3E%3C/svg%3E");
+  }
+  .gold-line { height: 1px; background: linear-gradient(to right, transparent, #c9a961, transparent); }
+  .section-heading {
+    display: flex; align-items: center; gap: 12px;
+    color: #a8863f;
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin: 3rem 0 1.5rem;
+  }
+  .section-heading::before, .section-heading::after {
+    content: '';
+    flex: 1; height: 1px;
+    background: linear-gradient(to right, transparent, #c9a961, transparent);
+  }
+  .resource-card {
+    background: #fff;
+    border: 1px solid rgba(201,169,97,0.3);
+    border-radius: 12px;
+    padding: 1.25rem;
+    transition: all 0.2s ease;
+  }
+  .resource-card:hover { border-color: #c9a961; transform: translateY(-2px); box-shadow: 0 10px 20px -8px rgba(6,78,59,0.2); }
+  .resource-meta {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #a8863f;
+    font-weight: 600;
+  }
+</style>
+</head>
+<body class="geo-pattern min-h-screen">
+
+<div class="max-w-4xl mx-auto px-5 py-12">
+
+  <nav class="mb-8">
+    <a href="index.html" class="text-emerald-900 hover:text-amber-700 text-sm font-semibold">← Curriculum</a>
+  </nav>
+
+  <header class="text-center mb-8">
+    <div class="gold-line mb-5 max-w-[180px] mx-auto"></div>
+    <div class="arabic text-4xl text-emerald-900 mb-3">المَصَادِر</div>
+    <h1 class="display text-5xl md:text-6xl text-emerald-950 font-semibold mb-3">Resources</h1>
+    <p class="text-stone-600 max-w-xl mx-auto">Translations, commentaries, websites, apps, and courses to go deeper on your own.</p>
+    <div class="gold-line mt-5 max-w-[180px] mx-auto"></div>
+  </header>
+
+  <div class="section-heading">Translations of the Quran</div>
+  <div id="translations" class="grid md:grid-cols-2 gap-4"></div>
+
+  <div class="section-heading">Tafsir (Commentary)</div>
+  <div id="tafsir" class="grid md:grid-cols-2 gap-4"></div>
+
+  <div class="section-heading">Seerah (Prophet's Biography)</div>
+  <div id="seerah" class="grid md:grid-cols-2 gap-4"></div>
+
+  <div class="section-heading">Classical & Historical Works</div>
+  <div id="classical" class="grid md:grid-cols-2 gap-4"></div>
+
+  <div class="section-heading">Modern Authors Worth Reading</div>
+  <div id="modern" class="grid md:grid-cols-2 gap-4"></div>
+
+  <div class="section-heading">Websites</div>
+  <div id="websites" class="grid md:grid-cols-2 gap-4"></div>
+
+  <div class="section-heading">Apps</div>
+  <div id="apps" class="grid md:grid-cols-2 gap-4"></div>
+
+  <div class="section-heading">Courses & Seminaries</div>
+  <div id="courses" class="grid md:grid-cols-2 gap-4"></div>
+
+  <footer class="mt-16 text-center">
+    <div class="gold-line mb-6 max-w-xs mx-auto"></div>
+    <p class="text-xs italic text-stone-500 max-w-lg mx-auto">These are widely-respected starting points. They are not endorsements of every position the authors hold — for detailed rulings, always consult a qualified scholar.</p>
+  </footer>
+
+</div>
+
+<script>
+const translations = [
+  { title: "The Clear Quran", meta: "Dr. Mustafa Khattab", note: "Modern, readable English. The most accessible first translation for most people." },
+  { title: "Saheeh International", meta: "Translation by a team of scholars", note: "Conservative and widely respected; often the default on Islamic websites." },
+  { title: "The Quran — A New Translation", meta: "M.A.S. Abdel Haleem", note: "Oxford professor; prose-oriented, published by Oxford World's Classics." },
+  { title: "The Meaning of the Glorious Quran", meta: "Marmaduke Pickthall (1930)", note: "Archaic English but historically the first major English translation by a Muslim." },
+  { title: "The Study Quran", meta: "Ed. Seyyed Hossein Nasr", note: "A one-volume edition with tafsir woven in from Sunni and Shia commentaries." }
+];
+
+const tafsir = [
+  { title: "Tafsir Ibn Kathir", meta: "14th century — abridged English ed. available", note: "The most widely-read classical commentary; narration-heavy." },
+  { title: "Maʿariful Quran", meta: "Mufti Muhammad Shafi", note: "8-volume Hanafi commentary translated into English; clear and contemporary." },
+  { title: "Tafhim al-Quran", meta: "Abul Aʿla Maududi", note: "20th-century thematic commentary emphasizing the social message." },
+  { title: "In the Shade of the Quran", meta: "Sayyid Qutb", note: "Literary and reformist; influential and controversial." }
+];
+
+const seerah = [
+  { title: "The Sealed Nectar", meta: "Safi-ur-Rahman al-Mubarakpuri", note: "Award-winning concise biography; the modern standard." },
+  { title: "Muhammad: His Life Based on the Earliest Sources", meta: "Martin Lings", note: "Lyrical, drawing directly from Ibn Ishaq and Ibn Saʿd. Highly regarded." },
+  { title: "The Life of Muhammad", meta: "Ibn Ishaq / Ibn Hisham, tr. Guillaume", note: "The earliest Arabic biography — the primary source most others draw from." },
+  { title: "In the Footsteps of the Prophet", meta: "Tariq Ramadan", note: "Reflective modern biography aimed at Western readers." }
+];
+
+const classical = [
+  { title: "The Revival of the Religious Sciences", meta: "al-Ghazali, 11th century", note: "Known as the Ihya. Forty books on worship, ethics, and the inner life. The most-read Islamic work after the Quran." },
+  { title: "40 Hadith of Nawawi", meta: "Yahya al-Nawawi, 13th century", note: "A curated starter collection. Most Muslim children memorize it." },
+  { title: "Riyad al-Salihin", meta: "al-Nawawi", note: "\"Gardens of the Righteous\" — thematic hadith anthology for daily practice." },
+  { title: "The Muqaddimah", meta: "Ibn Khaldun, 14th century", note: "Pioneering work of historiography and social theory — foundational for modern sociology." }
+];
+
+const modern = [
+  { title: "Hamza Yusuf", meta: "Co-founder of Zaytuna College", note: "Traditionalist scholar, accessible lectures on YouTube and Sandala." },
+  { title: "Abdal Hakim Murad (Tim Winter)", meta: "Cambridge Muslim College", note: "British theologian; deep essays on Islam and modernity." },
+  { title: "Seyyed Hossein Nasr", meta: "George Washington University", note: "Traditionalist philosopher; influential on Islamic philosophy and the Sophia Perennis." },
+  { title: "Wael Hallaq", meta: "Columbia University", note: "Historian of Islamic law; essential for understanding shariʿa and the modern nation-state." },
+  { title: "Jonathan A.C. Brown", meta: "Georgetown University", note: "Clear writer on hadith sciences and Islamic legal history." },
+  { title: "Fazlur Rahman", meta: "University of Chicago", note: "20th-century reformist; rigorous historical approach to the Quran." }
+];
+
+const websites = [
+  { title: "quran.com", meta: "quran.com", note: "Multiple translations, audio recitations by many qaris, tafsir, word-by-word analysis. The de facto standard." },
+  { title: "sunnah.com", meta: "sunnah.com", note: "The six canonical hadith books in Arabic and English, fully searchable with grading." },
+  { title: "SeekersGuidance", meta: "seekersguidance.org", note: "Free structured online courses across the Islamic sciences. Traditional, Sunni." },
+  { title: "Yaqeen Institute", meta: "yaqeeninstitute.org", note: "Research papers on contemporary questions from a Sunni-traditionalist viewpoint." },
+  { title: "Islam Q&A", meta: "islamqa.info", note: "A large Salafi-leaning fatwa archive; use with awareness of its orientation." },
+  { title: "Lamppost Education", meta: "lamppostedu.org", note: "Audio and articles from classical-leaning scholars." }
+];
+
+const apps = [
+  { title: "Muslim Pro", meta: "iOS / Android", note: "Prayer times, qibla, Quran, athan. The most popular general-purpose app." },
+  { title: "Quran.com app", meta: "iOS / Android", note: "The mobile version of quran.com — audio, translations, bookmarking." },
+  { title: "Athan Pro", meta: "iOS / Android", note: "Reliable prayer times and athan notifications." },
+  { title: "Tarteel", meta: "iOS / Android", note: "AI-powered memorization helper that listens while you recite." },
+  { title: "iQibla / Qibla Compass", meta: "Various", note: "Finds the direction of Mecca from wherever you are." }
+];
+
+const courses = [
+  { title: "Zaytuna College", meta: "Berkeley, CA", note: "The first accredited Muslim liberal arts college in the US." },
+  { title: "Cambridge Muslim College", meta: "Cambridge, UK", note: "Postgraduate traditional Islamic scholarship." },
+  { title: "Bayyinah Institute", meta: "Online + Dallas", note: "Nouman Ali Khan's program — Arabic language and Quranic studies." },
+  { title: "AlMaghrib Institute", meta: "Global weekend seminars", note: "Accessible weekend courses across most Islamic sciences." },
+  { title: "Al-Azhar University", meta: "Cairo, Egypt", note: "The oldest continuously operating university in the world; the historical center of Sunni learning." },
+  { title: "Qalam Institute", meta: "Dallas + online", note: "Seerah, tafsir, and Arabic programs." }
+];
+
+function renderGroup(el, items) {
+  el.innerHTML = items.map(r => `
+    <div class="resource-card">
+      <div class="resource-meta mb-1">${r.meta}</div>
+      <div class="display text-lg text-emerald-950 font-semibold mb-2 leading-snug">${r.title}</div>
+      <p class="text-sm text-stone-600 leading-snug">${r.note}</p>
+    </div>
+  `).join("");
+}
+
+renderGroup(document.getElementById("translations"), translations);
+renderGroup(document.getElementById("tafsir"), tafsir);
+renderGroup(document.getElementById("seerah"), seerah);
+renderGroup(document.getElementById("classical"), classical);
+renderGroup(document.getElementById("modern"), modern);
+renderGroup(document.getElementById("websites"), websites);
+renderGroup(document.getElementById("apps"), apps);
+renderGroup(document.getElementById("courses"), courses);
+</script>
+
+</body>
+</html>

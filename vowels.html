@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Short Vowels & Sukun — IslamApp</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>(function(){try{if(localStorage.getItem('islamapp-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
+<link rel="stylesheet" href="theme.css">
+<script src="theme.js" defer></script>
+<style>
+  body { font-family: 'Inter', sans-serif; background: #faf6ed; color: #1c2d20;
+    background-image: radial-gradient(circle at 10% 10%, rgba(201,169,97,0.08) 0%, transparent 40%), radial-gradient(circle at 90% 90%, rgba(6,78,59,0.06) 0%, transparent 40%);
+    background-attachment: fixed; }
+  .arabic { font-family: 'Amiri', serif; direction: rtl; line-height: 1.7; }
+  .display { font-family: 'Cormorant Garamond', serif; }
+  .geo-pattern { background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23064e3b' fill-opacity='0.05'%3E%3Cpath d='M30 0l7.5 22.5H60L41.25 37.5l7.5 22.5L30 45l-18.75 15 7.5-22.5L0 22.5h22.5z'/%3E%3C/g%3E%3C/svg%3E"); }
+  .step-btn.active { background: #064e3b; color: #faf6ed; border-color: #c9a961; }
+  .gold-line { height: 1px; background: linear-gradient(to right, transparent, #c9a961, transparent); }
+  .btn-primary { background: linear-gradient(135deg, #064e3b 0%, #022c22 100%); color: #faf6ed; border: 1px solid #c9a961; }
+  .btn-primary:hover { background: linear-gradient(135deg, #0f766e 0%, #064e3b 100%); }
+  .btn-secondary { background: #fff; border: 1px solid #c9a961; color: #064e3b; }
+  .btn-secondary:hover { background: #faf6ed; }
+  .article-card { background: #fff; border: 1px solid rgba(201,169,97,0.4); border-radius: 14px 14px 6px 6px; }
+  .article-card::before { content: ''; display: block; height: 12px; margin: -1px -1px 0 -1px;
+    background: linear-gradient(180deg, rgba(201,169,97,0.25), transparent); border-radius: 14px 14px 0 0; border-bottom: 1px solid rgba(201,169,97,0.25); }
+  .vowel-card { background: #fff; border: 1px solid rgba(201,169,97,0.4); border-radius: 12px; padding: 1.25rem; text-align: center;
+    transition: all 0.2s ease; }
+  .vowel-card:hover { transform: translateY(-2px); box-shadow: 0 12px 24px -10px rgba(6,78,59,0.2); }
+  .vowel-display { font-family: 'Amiri', serif; font-size: 4rem; line-height: 1.2; color: #064e3b; }
+  .word-row { display: grid; grid-template-columns: 1.5fr 1fr 1.5fr; gap: 1rem; padding: 0.85rem 1rem;
+    border-radius: 8px; background: #fff; border: 1px solid rgba(201,169,97,0.3); align-items: center; }
+  .word-row + .word-row { margin-top: 0.5rem; }
+  .word-arabic { font-family: 'Amiri', serif; font-size: 1.8rem; color: #064e3b; }
+  .choice { text-align: left; padding: 0.75rem 1rem; border: 2px solid #e7e5e4; border-radius: 8px; background: #fff; cursor: pointer;
+    transition: all 0.15s ease; font: inherit; width: 100%; }
+  .choice:hover { background: #ecfdf5; border-color: #059669; }
+  .choice.correct { background: #d1fae5; border-color: #059669; color: #064e3b; }
+  .choice.wrong { background: #fee2e2; border-color: #dc2626; color: #7f1d1d; }
+  .choice:disabled { cursor: default; }
+</style>
+</head>
+<body class="geo-pattern min-h-screen">
+
+<div class="max-w-6xl mx-auto px-6 py-10">
+
+  <nav class="flex justify-between items-center mb-6">
+    <a href="index.html" class="text-emerald-900 hover:text-amber-700 text-sm font-semibold">← Curriculum</a>
+    <div class="text-xs uppercase tracking-[0.25em] text-amber-700 font-semibold hidden sm:block">Tier 3 · Module 3-3</div>
+    <div class="text-sm text-stone-500"><span id="step-num">1</span> / <span id="step-total">9</span></div>
+  </nav>
+
+  <header class="text-center mb-8">
+    <div class="gold-line mb-4 max-w-[180px] mx-auto"></div>
+    <div class="arabic text-3xl text-emerald-900 mb-2">الحَرَكَات وَالسُّكُون</div>
+    <h1 class="display text-4xl md:text-5xl text-emerald-950 font-semibold">Short Vowels &amp; Sukun</h1>
+    <div class="gold-line mt-4 max-w-[180px] mx-auto"></div>
+  </header>
+
+  <div class="grid md:grid-cols-[220px_1fr] gap-6">
+    <aside class="md:sticky md:top-6 md:self-start">
+      <div class="article-card p-3 shadow-sm">
+        <div class="text-xs uppercase tracking-wider text-amber-700 font-semibold mb-2 px-2">Steps</div>
+        <nav id="step-nav" class="space-y-1"></nav>
+      </div>
+    </aside>
+    <main id="step-container"></main>
+  </div>
+
+  <div class="flex justify-between mt-8 gap-4">
+    <button id="prev-step" class="btn-secondary flex-1 md:flex-none px-6 py-3 rounded-lg font-semibold disabled:opacity-30 disabled:cursor-not-allowed">← Previous</button>
+    <button id="next-step" class="btn-primary flex-1 md:flex-none px-6 py-3 rounded-lg font-semibold">Next →</button>
+  </div>
+
+</div>
+
+<script>
+const steps = [
+  {
+    title: "Why short vowels matter",
+    icon: "🔠",
+    body: `
+      <p class="text-gray-700 mb-4 text-lg">Arabic letters are mostly <strong>consonants</strong>. The short vowels — <em>a</em>, <em>i</em>, <em>u</em> — are written as <strong>small marks above or below</strong> the letters, called <em>ḥarakāt</em> (literally "movements").</p>
+      <p class="text-gray-700 mb-4">In everyday Arabic — newspapers, signs, books — these marks are usually <em>omitted</em>. Native speakers fill them in from context. But in three places, the vowels are <strong>always written explicitly</strong>:</p>
+      <ul class="list-disc list-inside text-gray-700 mb-4 space-y-1">
+        <li>The Quran (always fully voweled)</li>
+        <li>Children's books and language-learning materials</li>
+        <li>Where ambiguity would be a problem (poetry, religious texts, formal speech)</li>
+      </ul>
+      <div class="bg-emerald-50/80 border-l-4 border-emerald-700 p-5 rounded-r-lg my-5">
+        <p class="text-emerald-900 mb-2"><strong>Example:</strong> the word <strong class="arabic text-2xl">كتب</strong> — without vowels — could be:</p>
+        <ul class="text-emerald-900 text-sm space-y-1">
+          <li><strong class="arabic">كَتَبَ</strong> (kataba) — "he wrote"</li>
+          <li><strong class="arabic">كُتِبَ</strong> (kutiba) — "it was written"</li>
+          <li><strong class="arabic">كُتُب</strong> (kutub) — "books"</li>
+        </ul>
+        <p class="text-emerald-900 text-sm mt-2">Same three letters, three different words — distinguished only by the vowel marks.</p>
+      </div>
+      <p class="text-gray-700">For now we focus on reading <em>fully-voweled</em> Arabic — Quran style.</p>
+    `
+  },
+  {
+    title: "The three short vowels",
+    icon: "✦",
+    body: `
+      <p class="text-gray-700 mb-4">Arabic has only <strong>three vowel sounds</strong>, each marked with a different stroke. Once you know them, you can pronounce any voweled word.</p>
+      <div class="grid md:grid-cols-3 gap-4 mb-4">
+        <div class="vowel-card">
+          <div class="vowel-display">بَ</div>
+          <div class="display text-2xl font-semibold text-emerald-950 mt-2">Fatḥa</div>
+          <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold">Stroke ABOVE</div>
+          <div class="text-sm text-gray-700 mt-2">Short "a" sound — like "<em>a</em>" in <em>cat</em>.</div>
+          <div class="text-xs text-stone-500 mt-1">"Ba" • "Ka" • "Sa"</div>
+        </div>
+        <div class="vowel-card">
+          <div class="vowel-display">بِ</div>
+          <div class="display text-2xl font-semibold text-emerald-950 mt-2">Kasra</div>
+          <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold">Stroke BELOW</div>
+          <div class="text-sm text-gray-700 mt-2">Short "i" sound — like "<em>i</em>" in <em>sit</em>.</div>
+          <div class="text-xs text-stone-500 mt-1">"Bi" • "Ki" • "Si"</div>
+        </div>
+        <div class="vowel-card">
+          <div class="vowel-display">بُ</div>
+          <div class="display text-2xl font-semibold text-emerald-950 mt-2">Ḍamma</div>
+          <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold">Loop ABOVE</div>
+          <div class="text-sm text-gray-700 mt-2">Short "u" sound — like "<em>u</em>" in <em>put</em>.</div>
+          <div class="text-xs text-stone-500 mt-1">"Bu" • "Ku" • "Su"</div>
+        </div>
+      </div>
+      <div class="bg-amber-50/60 border border-amber-200 rounded-lg p-4 text-sm text-stone-700">
+        <strong class="text-amber-800">Mnemonic:</strong> Fatḥa is on top with a flat stroke (like an "a"), Kasra is below (in the basement, like "i"), and Ḍamma is on top with a curl (like a tiny "u" or "9").
+      </div>
+    `
+  },
+  {
+    title: "Sukūn — \"no vowel\"",
+    icon: "○",
+    body: `
+      <p class="text-gray-700 mb-4">If a consonant has <strong>no vowel</strong> after it — for example the "k" in "<em>milk</em>" — Arabic marks this with a <em>sukūn</em>: a small circle above the letter.</p>
+      <div class="vowel-card mb-4 max-w-sm mx-auto">
+        <div class="vowel-display">بْ</div>
+        <div class="display text-2xl font-semibold text-emerald-950 mt-2">Sukūn</div>
+        <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold">Small circle ABOVE</div>
+        <div class="text-sm text-gray-700 mt-2">Means: "this consonant has no vowel — read it on its own."</div>
+      </div>
+      <p class="text-gray-700 mb-3"><strong>Example:</strong></p>
+      <div class="bg-white border border-amber-200 rounded-xl p-5 text-center mb-4">
+        <div class="word-arabic mb-2">قُلْ</div>
+        <div class="italic text-emerald-700 mb-1">qul</div>
+        <div class="text-sm text-gray-700">"Say." Three letters: ق (with ḍamma → "qu") + ل (with sukūn → "l"). Result: <em>qul</em>.</div>
+      </div>
+      <p class="text-gray-700 text-sm italic">Sukūn never appears on the very first letter of a word — a word always starts with a vowel.</p>
+    `
+  },
+  {
+    title: "Shadda — the doubler",
+    icon: "ّ",
+    body: `
+      <p class="text-gray-700 mb-4">A <em>shadda</em> is a small mark shaped like a tiny "w" above a letter. It tells you the consonant is <strong>doubled</strong> — pronounced twice, or held longer.</p>
+      <div class="vowel-card mb-4 max-w-sm mx-auto">
+        <div class="vowel-display">بّ</div>
+        <div class="display text-2xl font-semibold text-emerald-950 mt-2">Shadda</div>
+        <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold">"w" shape ABOVE</div>
+        <div class="text-sm text-gray-700 mt-2">Doubles the consonant. Often combined with one of the three vowels.</div>
+      </div>
+      <p class="text-gray-700 mb-3"><strong>Examples:</strong></p>
+      <div class="space-y-2 mb-4">
+        <div class="word-row">
+          <div class="word-arabic text-center">رَبّ</div>
+          <div class="italic text-emerald-700 text-center">rabb</div>
+          <div class="text-sm text-gray-700 text-right">"Lord." The <em>b</em> is doubled.</div>
+        </div>
+        <div class="word-row">
+          <div class="word-arabic text-center">مُحَمَّد</div>
+          <div class="italic text-emerald-700 text-center">Muḥammad</div>
+          <div class="text-sm text-gray-700 text-right">The <em>m</em> in the middle is doubled — held an extra beat.</div>
+        </div>
+        <div class="word-row">
+          <div class="word-arabic text-center">إِنَّ</div>
+          <div class="italic text-emerald-700 text-center">inna</div>
+          <div class="text-sm text-gray-700 text-right">"Indeed." The <em>n</em> is doubled.</div>
+        </div>
+      </div>
+      <div class="bg-amber-50/60 border border-amber-200 rounded-lg p-4 text-sm text-stone-700">
+        <strong class="text-amber-800">Why this matters:</strong> doubling changes the <strong>meaning</strong>. <em>kataba</em> ("he wrote") is different from <em>kattaba</em> ("he made [someone] write") — the second-letter shadda creates a new verb form.
+      </div>
+    `
+  },
+  {
+    title: "Tanwīn — the indefinite ending",
+    icon: "ٌ",
+    body: `
+      <p class="text-gray-700 mb-4"><em>Tanwīn</em> is a special form of the three short vowels that appears <strong>only at the end of nouns</strong> — and adds an "<strong>n</strong>" sound. It's how Arabic marks an indefinite noun (like English "a" or "an").</p>
+      <div class="grid md:grid-cols-3 gap-4 mb-4">
+        <div class="vowel-card">
+          <div class="vowel-display">بًا</div>
+          <div class="display text-xl font-semibold text-emerald-950 mt-2">Fatḥatān</div>
+          <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold">Double fatḥa + alif</div>
+          <div class="text-sm text-gray-700 mt-2">Sounds: <strong>"-an"</strong></div>
+          <div class="text-xs text-stone-500 mt-1">"<em>kitāban</em>" (a book — accusative)</div>
+        </div>
+        <div class="vowel-card">
+          <div class="vowel-display">بٍ</div>
+          <div class="display text-xl font-semibold text-emerald-950 mt-2">Kasratān</div>
+          <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold">Double kasra</div>
+          <div class="text-sm text-gray-700 mt-2">Sounds: <strong>"-in"</strong></div>
+          <div class="text-xs text-stone-500 mt-1">"<em>kitābin</em>" (of a book)</div>
+        </div>
+        <div class="vowel-card">
+          <div class="vowel-display">بٌ</div>
+          <div class="display text-xl font-semibold text-emerald-950 mt-2">Ḍammatān</div>
+          <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold">Double ḍamma</div>
+          <div class="text-sm text-gray-700 mt-2">Sounds: <strong>"-un"</strong></div>
+          <div class="text-xs text-stone-500 mt-1">"<em>kitābun</em>" (a book — nominative)</div>
+        </div>
+      </div>
+      <p class="text-gray-700 mb-3">For now don't worry about which one to use — that's grammar (Tier 16). Just recognize that <strong>any double vowel mark = vowel + n</strong>.</p>
+    `
+  },
+  {
+    title: "Long vs short vowels",
+    icon: "📏",
+    body: `
+      <p class="text-gray-700 mb-4">The three short vowels each have a <strong>long counterpart</strong>, made by adding one of three letters: <strong>ا</strong>, <strong>و</strong>, or <strong>ي</strong>. These letters function as "vowel extenders" — each holds the sound for an extra beat.</p>
+      <div class="bg-white border border-amber-200 rounded-xl overflow-hidden mb-4">
+        <table class="w-full text-sm">
+          <thead class="bg-emerald-50/80 text-emerald-900">
+            <tr>
+              <th class="text-left py-2 px-3">Short</th>
+              <th class="text-left py-2 px-3">Sound</th>
+              <th class="text-left py-2 px-3">Long form</th>
+              <th class="text-left py-2 px-3">Long sound</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-t border-amber-100">
+              <td class="word-arabic py-2 px-3" style="font-size: 1.4rem;">بَ</td>
+              <td class="py-2 px-3">"ba"</td>
+              <td class="word-arabic py-2 px-3" style="font-size: 1.4rem;">بَا</td>
+              <td class="py-2 px-3">"bā" — held longer, like "<em>baa</em>"</td>
+            </tr>
+            <tr class="border-t border-amber-100">
+              <td class="word-arabic py-2 px-3" style="font-size: 1.4rem;">بِ</td>
+              <td class="py-2 px-3">"bi"</td>
+              <td class="word-arabic py-2 px-3" style="font-size: 1.4rem;">بِي</td>
+              <td class="py-2 px-3">"bī" — like "<em>bee</em>"</td>
+            </tr>
+            <tr class="border-t border-amber-100">
+              <td class="word-arabic py-2 px-3" style="font-size: 1.4rem;">بُ</td>
+              <td class="py-2 px-3">"bu"</td>
+              <td class="word-arabic py-2 px-3" style="font-size: 1.4rem;">بُو</td>
+              <td class="py-2 px-3">"bū" — like "<em>boo</em>"</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="bg-emerald-50/80 border-l-4 border-emerald-700 p-5 rounded-r-lg">
+        <p class="text-emerald-900 text-sm mb-2"><strong>The rule:</strong></p>
+        <ul class="text-emerald-900 text-sm space-y-1">
+          <li>· <em>Fatḥa</em> + <strong>ا</strong> = long "ā"</li>
+          <li>· <em>Kasra</em> + <strong>ي</strong> = long "ī"</li>
+          <li>· <em>Ḍamma</em> + <strong>و</strong> = long "ū"</li>
+        </ul>
+      </div>
+      <p class="text-gray-700 text-sm italic mt-4">In modern transliteration, the macron (ā, ī, ū) marks long vowels. Without it, you can usually tell from context — long vowels are about twice as long as short ones in pronunciation.</p>
+    `
+  },
+  {
+    title: "Reading practice",
+    icon: "📖",
+    body: `
+      <p class="text-gray-700 mb-4">Try reading these voweled words. Each combines what you've learned.</p>
+      <div class="space-y-2 mb-5">
+        <div class="word-row">
+          <div class="word-arabic text-center">كَتَبَ</div>
+          <div class="italic text-emerald-700 text-center">kataba</div>
+          <div class="text-sm text-gray-700 text-right">"He wrote." Three fatḥas in a row.</div>
+        </div>
+        <div class="word-row">
+          <div class="word-arabic text-center">قُلْ</div>
+          <div class="italic text-emerald-700 text-center">qul</div>
+          <div class="text-sm text-gray-700 text-right">Ḍamma + sukūn.</div>
+        </div>
+        <div class="word-row">
+          <div class="word-arabic text-center">رَبِّ</div>
+          <div class="italic text-emerald-700 text-center">rabbi</div>
+          <div class="text-sm text-gray-700 text-right">"My Lord." Shadda doubles the b, kasra after.</div>
+        </div>
+        <div class="word-row">
+          <div class="word-arabic text-center">كِتَابٌ</div>
+          <div class="italic text-emerald-700 text-center">kitābun</div>
+          <div class="text-sm text-gray-700 text-right">"A book." Long ā + tanwīn (-un).</div>
+        </div>
+        <div class="word-row">
+          <div class="word-arabic text-center">مُسْلِمَة</div>
+          <div class="italic text-emerald-700 text-center">muslima</div>
+          <div class="text-sm text-gray-700 text-right">"Muslim woman." Ḍamma, sukūn, kasra, fatḥa.</div>
+        </div>
+        <div class="word-row">
+          <div class="word-arabic text-center">السَّلَام</div>
+          <div class="italic text-emerald-700 text-center">as-salām</div>
+          <div class="text-sm text-gray-700 text-right">"Peace." Notice the shadda over <em>س</em> — sun letter rule from Module 3-1.</div>
+        </div>
+      </div>
+      <p class="text-gray-700 text-sm italic">Read each one out loud. Recognizing each mark is the goal — speed comes later.</p>
+    `
+  },
+  {
+    title: "Quick check",
+    icon: "✍️",
+    body: `
+      <p class="text-gray-700 mb-6">Six questions on the marks.</p>
+      <div id="quiz"></div>
+      <div id="quiz-result" class="hidden mt-6 p-6 rounded-xl text-center"></div>
+    `,
+    isQuiz: true
+  },
+  {
+    title: "Wrap-up",
+    icon: "✨",
+    body: `
+      <p class="text-gray-700 mb-4">You can now read every mark that appears on a Quranic letter. Combined with letter recognition (3-1) and shape variations (3-2), you have everything needed to <strong>read</strong> Arabic.</p>
+      <div class="bg-white border border-amber-200 rounded-xl p-5 mb-4">
+        <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold mb-2">Recap of marks</div>
+        <ul class="space-y-1 text-sm text-gray-700">
+          <li><strong>َ</strong> Fatḥa — short "a"</li>
+          <li><strong>ِ</strong> Kasra — short "i"</li>
+          <li><strong>ُ</strong> Ḍamma — short "u"</li>
+          <li><strong>ْ</strong> Sukūn — no vowel</li>
+          <li><strong>ّ</strong> Shadda — doubled consonant</li>
+          <li><strong>ً ٍ ٌ</strong> Tanwīn — adds "n" sound at word ending</li>
+          <li><strong>ا و ي</strong> as long-vowel extenders — held twice as long</li>
+        </ul>
+      </div>
+      <div class="bg-gradient-to-r from-emerald-50 to-amber-50 border border-amber-300 rounded-xl p-6 text-center my-6">
+        <div class="arabic text-2xl text-emerald-900 mb-1">رَتِّلِ ٱلْقُرْآنَ تَرْتِيلًا</div>
+        <div class="text-sm italic text-stone-600 mb-4">"And recite the Quran with measured recitation." — Quran 73:4</div>
+        <div class="text-sm text-gray-700">Hit <strong>Finish</strong> to mark this module complete.</div>
+        <div class="text-sm text-gray-700 mt-2">Next: <strong>Module 3-4: Reading Drills</strong> — putting it all together with real Quranic phrases.</div>
+      </div>
+      <div class="text-center text-sm">
+        <a href="index.html" class="text-emerald-800 underline font-semibold">Back to curriculum →</a>
+      </div>
+    `
+  }
+];
+
+const quizQuestions = [
+  { q: "How many short vowels does Arabic have?", choices: ["Two", "Three", "Five", "Six"], answer: 1 },
+  { q: "Which mark indicates a short 'a' sound?", choices: ["Kasra (below)", "Fatḥa (above stroke)", "Ḍamma (above loop)", "Sukūn (circle)"], answer: 1 },
+  { q: "A small circle above a letter means…", choices: ["Doubled", "Long vowel", "No vowel — sukūn", "Indefinite"], answer: 2 },
+  { q: "Shadda does what?", choices: ["Adds an 'n' sound", "Doubles the consonant", "Cancels the vowel", "Makes the letter silent"], answer: 1 },
+  { q: "Tanwīn at the end of a word adds…", choices: ["A long vowel", "An 'n' sound", "A doubled consonant", "Silence"], answer: 1 },
+  { q: "Long 'ū' is written as…", choices: ["Ḍamma + ا", "Ḍamma + ي", "Ḍamma + و", "Ḍamma alone"], answer: 2 }
+];
+
+let currentStep = 0; let quizScore = 0; let quizAnswered = new Set();
+const nav = document.getElementById("step-nav");
+const container = document.getElementById("step-container");
+const stepNum = document.getElementById("step-num");
+const stepTotal = document.getElementById("step-total");
+const prevBtn = document.getElementById("prev-step");
+const nextBtn = document.getElementById("next-step");
+stepTotal.textContent = steps.length;
+
+function renderQuiz() {
+  const quizEl = document.getElementById("quiz"); if (!quizEl) return;
+  quizScore = 0; quizAnswered = new Set();
+  quizEl.innerHTML = quizQuestions.map((q, qi) => `
+    <div class="mb-5 p-5 bg-white border border-amber-200 rounded-xl">
+      <div class="font-semibold text-gray-800 mb-3">${qi + 1}. ${q.q}</div>
+      <div class="grid gap-2" data-qindex="${qi}">${q.choices.map((c, ci) => `<button class="choice" data-choice="${ci}">${c}</button>`).join("")}</div>
+    </div>`).join("");
+  quizEl.querySelectorAll(".choice").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const group = btn.closest("[data-qindex]"); const qi = parseInt(group.dataset.qindex);
+      if (quizAnswered.has(qi)) return;
+      const choice = parseInt(btn.dataset.choice); const correct = quizQuestions[qi].answer;
+      quizAnswered.add(qi);
+      group.querySelectorAll(".choice").forEach((b, i) => { b.disabled = true; if (i === correct) b.classList.add("correct"); else if (i === choice) b.classList.add("wrong"); });
+      if (choice === correct) quizScore++;
+      if (quizAnswered.size === quizQuestions.length) showResult();
+    });
+  });
+}
+function showResult() {
+  const r = document.getElementById("quiz-result"); r.classList.remove("hidden");
+  const pct = quizScore / quizQuestions.length;
+  let msg, color;
+  if (pct === 1) { msg = "Perfect."; color = "bg-emerald-100 text-emerald-900"; }
+  else if (pct >= 0.6) { msg = "Solid."; color = "bg-emerald-100 text-emerald-900"; }
+  else { msg = "Worth another pass."; color = "bg-amber-100 text-amber-900"; }
+  r.className = "mt-6 p-6 rounded-xl text-center " + color;
+  r.innerHTML = `<div class="text-4xl font-bold mb-2">${quizScore} / ${quizQuestions.length}</div><div>${msg}</div>`;
+}
+
+function render() {
+  nav.innerHTML = steps.map((s, i) => `<button class="step-btn w-full text-left px-3 py-2 rounded-lg border border-transparent text-sm hover:bg-amber-50 ${i === currentStep ? 'active' : ''}" data-i="${i}"><span class="mr-2">${s.icon}</span>${s.title}</button>`).join("");
+  container.innerHTML = `<article class="article-card shadow-sm p-8"><div class="flex items-center gap-4 mb-6 pb-4 border-b border-amber-100"><div class="text-5xl">${steps[currentStep].icon}</div><div><div class="text-xs text-amber-700 font-semibold uppercase tracking-widest">Step ${currentStep + 1}</div><h2 class="display text-3xl text-emerald-950 font-semibold">${steps[currentStep].title}</h2></div></div><div>${steps[currentStep].body}</div></article>`;
+  stepNum.textContent = currentStep + 1; prevBtn.disabled = currentStep === 0;
+  nextBtn.textContent = currentStep === steps.length - 1 ? "Finish" : "Next →";
+  if (steps[currentStep].isQuiz) renderQuiz();
+  nav.querySelectorAll(".step-btn").forEach(b => { b.addEventListener("click", () => { currentStep = parseInt(b.dataset.i); render(); }); });
+}
+
+const MODULE_ID = "3-3"; const STORAGE_KEY = "islamapp-progress-v1";
+function loadProgress() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; } }
+function markInProgress() { const p = loadProgress(); if (p[MODULE_ID] !== "done") { p[MODULE_ID] = "inprogress"; localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); } }
+function markComplete() { const p = loadProgress(); p[MODULE_ID] = "done"; localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); }
+
+prevBtn.addEventListener("click", () => { if (currentStep > 0) { currentStep--; render(); } });
+nextBtn.addEventListener("click", () => { if (currentStep < steps.length - 1) { currentStep++; render(); } else { markComplete(); window.location.href = "index.html"; } });
+
+document.addEventListener("keydown", (e) => {
+  if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.isContentEditable) return;
+  if (e.key === "ArrowLeft" && !prevBtn.disabled) prevBtn.click();
+  else if (e.key === "ArrowRight") nextBtn.click();
+});
+
+markInProgress(); render();
+</script>
+
+</body>
+</html>

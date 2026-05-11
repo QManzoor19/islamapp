@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Keywords & Glossary — IslamApp</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>(function(){try{if(localStorage.getItem('islamapp-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
+<link rel="stylesheet" href="theme.css">
+<script src="theme.js" defer></script>
+<style>
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #faf6ed;
+    color: #1c2d20;
+    background-image:
+      radial-gradient(circle at 10% 10%, rgba(201,169,97,0.08) 0%, transparent 40%),
+      radial-gradient(circle at 90% 90%, rgba(6,78,59,0.06) 0%, transparent 40%);
+    background-attachment: fixed;
+  }
+  .arabic { font-family: 'Amiri', serif; direction: rtl; }
+  .display { font-family: 'Cormorant Garamond', serif; }
+  .geo-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23064e3b' fill-opacity='0.05'%3E%3Cpath d='M30 0l7.5 22.5H60L41.25 37.5l7.5 22.5L30 45l-18.75 15 7.5-22.5L0 22.5h22.5z'/%3E%3C/g%3E%3C/svg%3E");
+  }
+  .gold-line { height: 1px; background: linear-gradient(to right, transparent, #c9a961, transparent); }
+  .term-card {
+    background: #fff;
+    border: 1px solid rgba(201,169,97,0.3);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    transition: all 0.2s ease;
+  }
+  .term-card:hover { border-color: #c9a961; transform: translateX(3px); }
+  .category-chip {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 999px;
+  }
+  .cat-theology { background: #d1fae5; color: #065f46; }
+  .cat-worship { background: #fef3c7; color: #92400e; }
+  .cat-law { background: #dbeafe; color: #1e40af; }
+  .cat-phrase { background: #fce7f3; color: #9d174d; }
+  .cat-people { background: #ede9fe; color: #5b21b6; }
+  .cat-places { background: #e0f2fe; color: #075985; }
+  .cat-concept { background: #f3f4f6; color: #374151; }
+  .search-input:focus { outline: 2px solid #c9a961; outline-offset: 2px; }
+</style>
+</head>
+<body class="geo-pattern min-h-screen">
+
+<div class="max-w-4xl mx-auto px-5 py-12">
+
+  <nav class="mb-8">
+    <a href="index.html" class="text-emerald-900 hover:text-amber-700 text-sm font-semibold">← Curriculum</a>
+  </nav>
+
+  <header class="text-center mb-8">
+    <div class="gold-line mb-5 max-w-[180px] mx-auto"></div>
+    <div class="arabic text-4xl text-emerald-900 mb-3">المُصْطَلَحَات</div>
+    <h1 class="display text-5xl md:text-6xl text-emerald-950 font-semibold mb-3">Keywords & Glossary</h1>
+    <p class="text-stone-600 max-w-xl mx-auto">The Arabic vocabulary you will keep meeting — worship, creed, law, and the everyday phrases.</p>
+    <div class="gold-line mt-5 max-w-[180px] mx-auto"></div>
+  </header>
+
+  <div class="mb-6 flex flex-col sm:flex-row gap-3">
+    <input id="search" type="search" placeholder="Search by term or meaning…" class="search-input flex-1 px-4 py-3 rounded-lg border border-amber-200 bg-white text-sm" />
+    <select id="filter" class="px-4 py-3 rounded-lg border border-amber-200 bg-white text-sm">
+      <option value="">All categories</option>
+      <option value="theology">Theology</option>
+      <option value="worship">Worship</option>
+      <option value="law">Law</option>
+      <option value="phrase">Everyday Phrase</option>
+      <option value="people">People</option>
+      <option value="places">Places</option>
+      <option value="concept">Concept</option>
+    </select>
+  </div>
+
+  <div id="count" class="text-xs text-stone-500 mb-4"></div>
+
+  <div id="terms" class="grid md:grid-cols-2 gap-3"></div>
+
+  <footer class="mt-16 text-center">
+    <div class="gold-line mb-6 max-w-xs mx-auto"></div>
+    <p class="text-xs italic text-stone-500 max-w-lg mx-auto">This glossary will grow as the curriculum fills in. Each term will eventually link to the module where it is unpacked.</p>
+  </footer>
+
+</div>
+
+<script>
+const terms = [
+  { term: "Allah", arabic: "اللَّه", cat: "theology", def: "The proper name of God in Arabic. Used by Arab Christians and Jews as well." },
+  { term: "Islam", arabic: "الإِسْلَام", cat: "theology", def: "Submission to the will of God; the religion itself." },
+  { term: "Iman", arabic: "الإِيمَان", cat: "theology", def: "Faith, specifically belief in God, angels, scriptures, prophets, the last day, and divine decree." },
+  { term: "Ihsan", arabic: "الإِحْسَان", cat: "theology", def: "Spiritual excellence — to worship God as though you see Him." },
+  { term: "Tawhid", arabic: "التَّوْحِيد", cat: "theology", def: "The oneness of God; Islam's central doctrine." },
+  { term: "Shirk", arabic: "الشِّرْك", cat: "theology", def: "Associating partners with God; the gravest sin." },
+  { term: "Kufr", arabic: "الكُفْر", cat: "theology", def: "Disbelief, literally \"covering over\" the truth." },
+  { term: "Nifaq", arabic: "النِّفَاق", cat: "theology", def: "Hypocrisy — outward belief, inward disbelief." },
+
+  { term: "Salah", arabic: "الصَّلَاة", cat: "worship", def: "The five daily formal prayers." },
+  { term: "Zakat", arabic: "الزَّكَاة", cat: "worship", def: "The obligatory annual alms (2.5% of saved wealth)." },
+  { term: "Sawm", arabic: "الصَّوْم", cat: "worship", def: "Fasting, especially during Ramadan." },
+  { term: "Hajj", arabic: "الحَجّ", cat: "worship", def: "The pilgrimage to Mecca." },
+  { term: "Shahada", arabic: "الشَّهَادَة", cat: "worship", def: "The declaration of faith — the first pillar." },
+  { term: "Wudu", arabic: "الوُضُوء", cat: "worship", def: "The minor ritual washing before prayer." },
+  { term: "Ghusl", arabic: "الغُسْل", cat: "worship", def: "The full ritual bath required after certain states." },
+  { term: "Dhikr", arabic: "الذِّكْر", cat: "worship", def: "Remembrance of God through short repeated phrases." },
+  { term: "Dua", arabic: "الدُّعَاء", cat: "worship", def: "Personal supplication — speaking to God in your own words." },
+  { term: "Qibla", arabic: "القِبْلَة", cat: "worship", def: "The direction of prayer — toward the Kaʿba in Mecca." },
+  { term: "Taqwa", arabic: "التَّقْوَى", cat: "worship", def: "God-consciousness; a protective awareness of Him." },
+
+  { term: "Sunnah", arabic: "السُّنَّة", cat: "law", def: "The Prophet's example — the second source of Islamic law." },
+  { term: "Hadith", arabic: "الحَدِيث", cat: "law", def: "A report of the Prophet's words, actions, or tacit approvals." },
+  { term: "Fiqh", arabic: "الفِقْه", cat: "law", def: "Islamic jurisprudence — derived rulings from the sources." },
+  { term: "Shari'ah", arabic: "الشَّرِيعَة", cat: "law", def: "The revealed divine law, taken as a whole." },
+  { term: "Halal", arabic: "الحَلَال", cat: "law", def: "Permissible." },
+  { term: "Haram", arabic: "الحَرَام", cat: "law", def: "Forbidden." },
+  { term: "Makruh", arabic: "المَكْرُوه", cat: "law", def: "Disliked but not forbidden." },
+  { term: "Mustahabb", arabic: "المُسْتَحَبّ", cat: "law", def: "Recommended." },
+  { term: "Fard", arabic: "الفَرْض", cat: "law", def: "Obligatory — omitting it is sinful." },
+  { term: "Madhhab", arabic: "المَذْهَب", cat: "law", def: "A school of jurisprudence (Hanafi, Maliki, Shafi'i, Hanbali, Ja'fari...)." },
+  { term: "Ijma", arabic: "الإِجْمَاع", cat: "law", def: "Scholarly consensus — the third source of law." },
+  { term: "Qiyas", arabic: "القِيَاس", cat: "law", def: "Analogical reasoning — the fourth source." },
+  { term: "Ijtihad", arabic: "الاجْتِهَاد", cat: "law", def: "Independent scholarly reasoning on a new question." },
+  { term: "Taqlid", arabic: "التَّقْلِيد", cat: "law", def: "Following a school without deriving rulings oneself." },
+
+  { term: "Bismillah", arabic: "بِسْمِ اللَّه", cat: "phrase", def: "\"In the name of God.\" Said before eating, entering, beginning." },
+  { term: "Alhamdulillah", arabic: "الحَمْدُ لِلَّه", cat: "phrase", def: "\"All praise is for God.\" Said when thankful, after sneezing, after finishing." },
+  { term: "Subhanallah", arabic: "سُبْحَانَ اللَّه", cat: "phrase", def: "\"Glory be to God.\" Said in wonder or to praise Him." },
+  { term: "Allahu akbar", arabic: "اللَّهُ أَكْبَر", cat: "phrase", def: "\"God is the greatest.\" The opening of prayer; also an exclamation of awe." },
+  { term: "InshaAllah", arabic: "إِنْ شَاءَ اللَّه", cat: "phrase", def: "\"God willing.\" Said about anything in the future." },
+  { term: "MashaAllah", arabic: "مَا شَاءَ اللَّه", cat: "phrase", def: "\"What God has willed.\" Said on seeing something good or beautiful." },
+  { term: "Astaghfirullah", arabic: "أَسْتَغْفِرُ اللَّه", cat: "phrase", def: "\"I seek God's forgiveness.\"" },
+  { term: "As-salamu ʿalaykum", arabic: "السَّلَامُ عَلَيْكُمْ", cat: "phrase", def: "\"Peace be upon you.\" The standard greeting." },
+  { term: "Jazak Allahu khayran", arabic: "جَزَاكَ اللَّهُ خَيْرًا", cat: "phrase", def: "\"May God reward you with good.\" Said as thanks." },
+
+  { term: "Nabi", arabic: "النَّبِي", cat: "people", def: "A prophet." },
+  { term: "Rasul", arabic: "الرَّسُول", cat: "people", def: "A messenger — a prophet sent with a new scripture or law." },
+  { term: "Sahabi", arabic: "الصَّحَابِي", cat: "people", def: "A companion of the Prophet ﷺ who met him as a believer." },
+  { term: "Tabi'i", arabic: "التَّابِعِي", cat: "people", def: "A member of the generation after the companions." },
+  { term: "Imam", arabic: "الإِمَام", cat: "people", def: "A leader — in prayer, in a school of thought, or politically." },
+  { term: "Umma", arabic: "الأُمَّة", cat: "people", def: "The global Muslim community." },
+  { term: "Muslim", arabic: "المُسْلِم", cat: "people", def: "One who submits to God." },
+  { term: "Mu'min", arabic: "المُؤْمِن", cat: "people", def: "A believer — emphasizes inward faith." },
+  { term: "Kafir", arabic: "الكَافِر", cat: "people", def: "A disbeliever — one who rejects the message after receiving it." },
+  { term: "Munafiq", arabic: "المُنَافِق", cat: "people", def: "A hypocrite." },
+
+  { term: "Kaʿba", arabic: "الكَعْبَة", cat: "places", def: "The cube-shaped structure in Mecca; the direction of prayer." },
+  { term: "Masjid", arabic: "المَسْجِد", cat: "places", def: "A mosque — literally \"place of prostration.\"" },
+  { term: "Madina", arabic: "المَدِينَة", cat: "places", def: "Medina — the Prophet's city after the migration." },
+  { term: "Makka", arabic: "مَكَّة", cat: "places", def: "Mecca — the city of the Prophet's birth and the Kaʿba." },
+  { term: "Al-Aqsa", arabic: "الأَقْصَى", cat: "places", def: "The mosque in Jerusalem; Islam's third holiest site." },
+  { term: "Jannah", arabic: "الجَنَّة", cat: "places", def: "Paradise; literally \"the garden.\"" },
+  { term: "Jahannam", arabic: "جَهَنَّم", cat: "places", def: "Hell." },
+
+  { term: "Akhira", arabic: "الآخِرَة", cat: "concept", def: "The Hereafter." },
+  { term: "Dunya", arabic: "الدُّنْيَا", cat: "concept", def: "This world — the lower, temporary life." },
+  { term: "Qadar", arabic: "القَدَر", cat: "concept", def: "Divine decree — God's foreknowledge and will over all events." },
+  { term: "Qiyama", arabic: "القِيَامَة", cat: "concept", def: "The resurrection and Day of Judgment." },
+  { term: "Barzakh", arabic: "البَرْزَخ", cat: "concept", def: "The intermediate state between death and resurrection." },
+  { term: "Ruh", arabic: "الرُّوح", cat: "concept", def: "The soul or spirit." },
+  { term: "Nafs", arabic: "النَّفْس", cat: "concept", def: "The self — the lower, appetitive soul that must be disciplined." },
+  { term: "Rahma", arabic: "الرَّحْمَة", cat: "concept", def: "Mercy — the attribute most emphasized for God." },
+  { term: "Barakah", arabic: "البَرَكَة", cat: "concept", def: "Blessing — divine goodness infused into something." },
+  { term: "Fitra", arabic: "الفِطْرَة", cat: "concept", def: "The innate disposition toward God that every human is born with." }
+];
+
+const searchEl = document.getElementById("search");
+const filterEl = document.getElementById("filter");
+const termsEl = document.getElementById("terms");
+const countEl = document.getElementById("count");
+
+function render() {
+  const q = searchEl.value.trim().toLowerCase();
+  const cat = filterEl.value;
+  const filtered = terms.filter(t => {
+    if (cat && t.cat !== cat) return false;
+    if (!q) return true;
+    return t.term.toLowerCase().includes(q)
+      || t.def.toLowerCase().includes(q)
+      || t.arabic.includes(q);
+  });
+
+  countEl.textContent = `${filtered.length} ${filtered.length === 1 ? 'term' : 'terms'}`;
+
+  termsEl.innerHTML = filtered.map(t => `
+    <div class="term-card">
+      <div class="flex items-baseline justify-between mb-1">
+        <div class="display text-xl font-semibold text-emerald-950">${t.term}</div>
+        <div class="arabic text-xl text-emerald-900">${t.arabic}</div>
+      </div>
+      <div class="mb-2"><span class="category-chip cat-${t.cat}">${t.cat}</span></div>
+      <p class="text-sm text-stone-700 leading-snug">${t.def}</p>
+    </div>
+  `).join("");
+
+  if (filtered.length === 0) {
+    termsEl.innerHTML = `<div class="md:col-span-2 text-center text-stone-500 italic py-12">No terms match that search.</div>`;
+  }
+}
+
+searchEl.addEventListener("input", render);
+filterEl.addEventListener("change", render);
+render();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Wudu — Ablution — IslamApp</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>(function(){try{if(localStorage.getItem('islamapp-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
+<link rel="stylesheet" href="theme.css">
+<script src="theme.js" defer></script>
+<style>
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #faf6ed;
+    color: #1c2d20;
+    background-image:
+      radial-gradient(circle at 10% 10%, rgba(201,169,97,0.08) 0%, transparent 40%),
+      radial-gradient(circle at 90% 90%, rgba(6,78,59,0.06) 0%, transparent 40%);
+    background-attachment: fixed;
+  }
+  .arabic { font-family: 'Amiri', serif; direction: rtl; line-height: 1.7; }
+  .display { font-family: 'Cormorant Garamond', serif; }
+  .geo-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23064e3b' fill-opacity='0.05'%3E%3Cpath d='M30 0l7.5 22.5H60L41.25 37.5l7.5 22.5L30 45l-18.75 15 7.5-22.5L0 22.5h22.5z'/%3E%3C/g%3E%3C/svg%3E");
+  }
+  .step-btn.active { background: #064e3b; color: #faf6ed; border-color: #c9a961; }
+  .gold-line { height: 1px; background: linear-gradient(to right, transparent, #c9a961, transparent); }
+  .btn-primary {
+    background: linear-gradient(135deg, #064e3b 0%, #022c22 100%);
+    color: #faf6ed;
+    border: 1px solid #c9a961;
+  }
+  .btn-primary:hover { background: linear-gradient(135deg, #0f766e 0%, #064e3b 100%); }
+  .btn-secondary {
+    background: #fff;
+    border: 1px solid #c9a961;
+    color: #064e3b;
+  }
+  .btn-secondary:hover { background: #faf6ed; }
+  .article-card {
+    background: #fff;
+    border: 1px solid rgba(201,169,97,0.4);
+    border-radius: 14px 14px 6px 6px;
+  }
+  .article-card::before {
+    content: '';
+    display: block;
+    height: 12px;
+    margin: -1px -1px 0 -1px;
+    background: linear-gradient(180deg, rgba(201,169,97,0.25), transparent);
+    border-radius: 14px 14px 0 0;
+    border-bottom: 1px solid rgba(201,169,97,0.25);
+  }
+  .wudu-step {
+    background: #fff;
+    border: 1px solid rgba(201,169,97,0.3);
+    border-left: 4px solid #0f766e;
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  .wudu-step-num {
+    flex-shrink: 0;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #064e3b, #0f766e);
+    color: #faf6ed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-family: 'Cormorant Garamond', serif;
+  }
+  .wudu-step-icon { font-size: 2rem; flex-shrink: 0; }
+  .obligatory-row {
+    display: flex; gap: 0.85rem; align-items: center;
+    padding: 0.75rem 1rem;
+    background: #fff;
+    border: 1px solid rgba(201,169,97,0.3);
+    border-radius: 8px;
+  }
+  .breaker {
+    background: #fff;
+    border: 1px solid rgba(220,38,38,0.25);
+    border-left: 3px solid #dc2626;
+    border-radius: 8px;
+    padding: 0.85rem 1rem;
+    display: flex;
+    gap: 0.85rem;
+    align-items: center;
+  }
+  .breaker-icon {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: rgba(220,38,38,0.1);
+    color: #b91c1c;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .faq-q {
+    background: #fff;
+    border: 1px solid rgba(201,169,97,0.3);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+  .faq-q summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: #064e3b;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+  }
+  .faq-q[open] summary { margin-bottom: 0.6rem; }
+  .choice {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border: 2px solid #e7e5e4;
+    border-radius: 8px;
+    background: #fff;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    font: inherit;
+    width: 100%;
+  }
+  .choice:hover { background: #ecfdf5; border-color: #059669; }
+  .choice.correct { background: #d1fae5; border-color: #059669; color: #064e3b; }
+  .choice.wrong { background: #fee2e2; border-color: #dc2626; color: #7f1d1d; }
+  .choice:disabled { cursor: default; }
+</style>
+</head>
+<body class="geo-pattern min-h-screen">
+
+<div class="max-w-6xl mx-auto px-6 py-10">
+
+  <nav class="flex justify-between items-center mb-6">
+    <a href="index.html" class="text-emerald-900 hover:text-amber-700 text-sm font-semibold">← Curriculum</a>
+    <div class="text-xs uppercase tracking-[0.25em] text-amber-700 font-semibold hidden sm:block">Tier 2 · Module 2-1</div>
+    <div class="text-sm text-stone-500"><span id="step-num">1</span> / <span id="step-total">9</span></div>
+  </nav>
+
+  <header class="text-center mb-8">
+    <div class="gold-line mb-4 max-w-[180px] mx-auto"></div>
+    <div class="arabic text-3xl text-emerald-900 mb-2">الوُضُوء</div>
+    <h1 class="display text-4xl md:text-5xl text-emerald-950 font-semibold">Wudu — the Ablution</h1>
+    <div class="gold-line mt-4 max-w-[180px] mx-auto"></div>
+  </header>
+
+  <div class="grid md:grid-cols-[220px_1fr] gap-6">
+
+    <aside class="md:sticky md:top-6 md:self-start">
+      <div class="article-card p-3 shadow-sm">
+        <div class="text-xs uppercase tracking-wider text-amber-700 font-semibold mb-2 px-2">Steps</div>
+        <nav id="step-nav" class="space-y-1"></nav>
+      </div>
+    </aside>
+
+    <main id="step-container"></main>
+
+  </div>
+
+  <div class="flex justify-between mt-8 gap-4">
+    <button id="prev-step" class="btn-secondary flex-1 md:flex-none px-6 py-3 rounded-lg font-semibold disabled:opacity-30 disabled:cursor-not-allowed">← Previous</button>
+    <button id="next-step" class="btn-primary flex-1 md:flex-none px-6 py-3 rounded-lg font-semibold">Next →</button>
+  </div>
+
+</div>
+
+<script>
+const wuduSteps = [
+  { n: 1, icon: "🤲", title: "Intention &amp; Bismillah", body: "Form the silent intention in your heart that you are about to perform wudu for the sake of Allah. Then say: <em>Bismillāh</em> — \"In the name of Allah.\"" },
+  { n: 2, icon: "👐", title: "Wash hands to the wrists ×3", body: "Right hand first, then left. Wash thoroughly, getting between the fingers." },
+  { n: 3, icon: "💧", title: "Rinse the mouth ×3", body: "Take water into the mouth (<em>maḍmaḍah</em>), swirl, and spit out. Three times." },
+  { n: 4, icon: "👃", title: "Rinse the nose ×3", body: "Inhale water gently into the nostrils (<em>istinshāq</em>), then expel it (<em>istinthār</em>). Three times." },
+  { n: 5, icon: "😶", title: "Wash the face ×3", body: "From the hairline to under the chin, and from one earlobe to the other. Pass water through the beard if any." },
+  { n: 6, icon: "💪", title: "Wash arms to the elbows ×3", body: "Right arm first, including the elbow. Then the left. Make sure the water reaches everywhere — under a watch, between fingers." },
+  { n: 7, icon: "🧠", title: "Wipe the head ×1", body: "With wet hands, wipe over the head from the forehead to the back of the neck and back again. Once is enough." },
+  { n: 8, icon: "👂", title: "Wipe the ears ×1", body: "Use the wet index fingers for the inside of the ears and the thumbs for the outside. Once." },
+  { n: 9, icon: "🦶", title: "Wash feet to the ankles ×3", body: "Right foot first, including the ankle. Then the left. Pass fingers between the toes." },
+  { n: 10, icon: "🤲", title: "Closing dua", body: "Recite the after-wudu supplication (next step)." }
+];
+
+const obligatory = [
+  { icon: "💚", title: "Intention (niyyah)", note: "In the heart. No words required." },
+  { icon: "😶", title: "Wash the face", note: "From hairline to chin, ear to ear." },
+  { icon: "💪", title: "Wash arms to the elbows", note: "Including the elbows." },
+  { icon: "🧠", title: "Wipe the head", note: "At least part of the head, with wet hands." },
+  { icon: "🦶", title: "Wash feet to the ankles", note: "Including the ankles." },
+  { icon: "🔢", title: "In sequence", note: "The above order, without long pauses." }
+];
+
+const breakers = [
+  { icon: "🚽", title: "Using the bathroom", note: "Urination, defecation, passing gas." },
+  { icon: "😴", title: "Deep sleep", note: "Especially if lying down. Light dozing while sitting upright is debated." },
+  { icon: "🤕", title: "Loss of consciousness", note: "Fainting, sedation, severe intoxication." },
+  { icon: "🩸", title: "Significant bleeding (some schools)", note: "Hanafi: yes. Shafiʿi: no, unless from the front/back passage." },
+  { icon: "🤮", title: "Vomiting a mouthful (Hanafi)", note: "Other schools generally do not consider this a breaker." },
+  { icon: "🤝", title: "Direct skin-to-skin contact with someone you could marry (Shafi'i)", note: "Other schools differ. The Quran's wording is interpreted variously." }
+];
+
+const faqs = [
+  { q: "Do I need to repeat wudu before every prayer?", a: "Only if your wudu has been broken. Once made, wudu remains valid until something breaks it — you can pray multiple prayers on one wudu." },
+  { q: "What if I have a wound or a cast?", a: "Wash around it if you can. If water on the wound would cause harm, you may wipe over a bandage or cast (called <em>masḥ ʿalā al-jabīrah</em>) instead." },
+  { q: "Can I wipe over my socks?", a: "Yes — Sunni tradition allows wiping over leather or thick socks (<em>khuffayn</em>) for 24 hours from the time wudu is broken (or 72 hours when traveling), provided you put them on while in wudu." },
+  { q: "What if I'm not sure I broke my wudu?", a: "The legal principle: certainty is not removed by doubt. If you are unsure, your wudu is still valid. Don't act on suspicion alone." },
+  { q: "What about touching the Quran?", a: "Most Sunni scholars require wudu to touch the Arabic text directly. Reading from a screen or memory does not require wudu." },
+  { q: "Can children perform wudu?", a: "Yes, and they should be taught from a young age. There is no minimum age — only the capacity to do it correctly." }
+];
+
+const steps = [
+  {
+    title: "What is Wudu — and why?",
+    icon: "💧",
+    body: `
+      <p class="text-gray-700 mb-4 text-lg"><strong>Wudu</strong> is the minor ritual washing required before formal prayer (<em>salah</em>), before touching the Arabic text of the Quran, and before certain other acts of worship.</p>
+      <p class="text-gray-700 mb-4">It is more than hygiene. The body is washed, but the intention is to step out of the ordinary and into a state of <strong>ritual purity</strong> — to approach God clean inside and out.</p>
+      <div class="bg-emerald-50/80 border-l-4 border-emerald-700 p-5 rounded-r-lg my-5">
+        <div class="arabic text-xl text-emerald-900 mb-2 leading-relaxed">يَا أَيُّهَا الَّذِينَ آمَنُوا إِذَا قُمْتُمْ إِلَى الصَّلَاةِ فَاغْسِلُوا وُجُوهَكُمْ وَأَيْدِيَكُمْ إِلَى الْمَرَافِقِ وَامْسَحُوا بِرُءُوسِكُمْ وَأَرْجُلَكُمْ إِلَى الْكَعْبَيْنِ</div>
+        <p class="text-emerald-900 italic text-sm mb-1">"O you who believe, when you rise for prayer, wash your faces and your arms to the elbows, wipe your heads, and wash your feet to the ankles." — Quran 5:6</p>
+      </div>
+      <p class="text-gray-700 mb-4">This single verse establishes the obligatory parts. The Prophet ﷺ then demonstrated the full Sunnah method, which adds rinsing, repetition, and a few additional moves.</p>
+      <p class="text-gray-700 text-sm italic">A famous hadith: <em>"When a Muslim performs wudu and washes his face, every sin he committed with his eyes is washed away with the last drop of water…"</em> — Muslim 244.</p>
+    `
+  },
+  {
+    title: "The obligatory parts",
+    icon: "✓",
+    body: `
+      <p class="text-gray-700 mb-4">The minimum required for wudu to be valid. Skip any of these and the wudu is not legally complete.</p>
+      <div class="space-y-2 mb-5">
+        ${obligatory.map((o, i) => `
+          <div class="obligatory-row">
+            <div class="text-2xl">${o.icon}</div>
+            <div class="flex-1">
+              <div class="display font-semibold text-emerald-950">${i+1}. ${o.title}</div>
+              <div class="text-sm text-stone-600">${o.note}</div>
+            </div>
+          </div>
+        `).join("")}
+      </div>
+      <p class="text-gray-700 text-sm italic">Schools disagree slightly on details (e.g., whether the intention must be verbalized, whether the order is strictly required). The list above is the broad Sunni consensus.</p>
+    `
+  },
+  {
+    title: "The full Sunnah method",
+    icon: "🌊",
+    body: `
+      <p class="text-gray-700 mb-5">The Prophet ﷺ taught a fuller method that includes the obligatory parts but adds rinsing, repetition (each washed action three times), and the wiping of the ears. This is what most Muslims do.</p>
+      <div class="space-y-2 mb-4">
+        ${wuduSteps.map(s => `
+          <div class="wudu-step">
+            <div class="wudu-step-num">${s.n}</div>
+            <div class="wudu-step-icon">${s.icon}</div>
+            <div class="flex-1">
+              <div class="display font-semibold text-emerald-950 mb-1">${s.title}</div>
+              <div class="text-sm text-gray-700">${s.body}</div>
+            </div>
+          </div>
+        `).join("")}
+      </div>
+      <div class="bg-amber-50/60 border border-amber-200 rounded-lg p-4 text-sm text-stone-700">
+        <strong class="text-amber-800">Order of sides:</strong> right side before left for limbs. <strong class="text-amber-800">Frequency:</strong> three times for washed parts; once for wiped parts. <strong class="text-amber-800">Continuity:</strong> don't let one limb fully dry before starting the next.
+      </div>
+    `
+  },
+  {
+    title: "After-wudu dua",
+    icon: "🤲",
+    body: `
+      <p class="text-gray-700 mb-4">After completing wudu, look up and recite this. It is not obligatory, but the Prophet ﷺ said the eight gates of Paradise are opened for whoever says it.</p>
+      <div class="bg-white border-l-4 border-amber-600 p-5 rounded-r-lg my-4 shadow-sm">
+        <div class="arabic text-2xl text-emerald-900 mb-3 leading-relaxed">أَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا ٱللَّٰهُ وَحْدَهُ لَا شَرِيكَ لَهُ، وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ</div>
+        <div class="italic text-emerald-800 text-sm mb-2">Ashhadu an lā ilāha illā Allāh, waḥdahu lā sharīka lah, wa ashhadu anna Muḥammadan ʿabduhu wa rasūluh.</div>
+        <div class="text-gray-800 text-sm">"I bear witness that there is no god but Allah alone, with no partner, and I bear witness that Muhammad is His servant and His messenger."</div>
+      </div>
+      <div class="bg-emerald-50/80 border-l-4 border-emerald-700 p-5 rounded-r-lg my-4">
+        <p class="text-emerald-900 text-sm">Many add a second line: <em>"O Allah, make me of those who repent, and make me of those who purify themselves."</em> (Allāhumma jʿalnī mina t-tawwābīna wa jʿalnī mina l-mutaṭahhirīn.)</p>
+      </div>
+      <p class="text-gray-700 text-sm italic">Source: Muslim 234, narrated by ʿUmar ibn al-Khaṭṭāb.</p>
+    `
+  },
+  {
+    title: "What breaks wudu?",
+    icon: "🚱",
+    body: `
+      <p class="text-gray-700 mb-4">Once you have wudu, it lasts until one of the following happens. Then you must repeat it before praying again.</p>
+      <div class="space-y-2 mb-5">
+        ${breakers.map(b => `
+          <div class="breaker">
+            <div class="breaker-icon">${b.icon}</div>
+            <div class="flex-1">
+              <div class="display font-semibold text-emerald-950 text-base">${b.title}</div>
+              <div class="text-xs text-stone-600">${b.note}</div>
+            </div>
+          </div>
+        `).join("")}
+      </div>
+      <div class="bg-amber-50/60 border border-amber-200 rounded-lg p-4 text-sm text-stone-700">
+        <strong class="text-amber-800">Rule of thumb:</strong> sleeping, using the bathroom, and losing consciousness break wudu in every school. Most other items are debated. When in doubt, follow the school you usually do.
+      </div>
+    `
+  },
+  {
+    title: "Tayammum — when there is no water",
+    icon: "🏜️",
+    body: `
+      <p class="text-gray-700 mb-4">If water is unavailable, harmful (e.g., severe illness), or out of reach, Islam provides a substitute called <strong>tayammum</strong> — the dry ablution. The Quran (5:6) explicitly allows it.</p>
+      <div class="bg-white border border-amber-200 rounded-xl p-5 mb-4">
+        <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold mb-3">How to perform tayammum</div>
+        <ol class="space-y-2 text-sm text-gray-700">
+          <li><strong>1.</strong> Form the intention.</li>
+          <li><strong>2.</strong> Strike both hands lightly on clean earth, dust, sand, or stone.</li>
+          <li><strong>3.</strong> Wipe both hands over the face once.</li>
+          <li><strong>4.</strong> Strike again, then wipe each arm to the wrists (right then left).</li>
+        </ol>
+      </div>
+      <p class="text-gray-700 mb-3">That is it. Tayammum lasts until water is available or wudu is broken — whichever comes first.</p>
+      <p class="text-gray-700 text-sm italic">When water becomes available again, you should repeat wudu before the next prayer if your tayammum was for a continuous condition.</p>
+    `
+  },
+  {
+    title: "Common questions",
+    icon: "❓",
+    body: `
+      <p class="text-gray-700 mb-4">Things that come up the first dozen times you do this.</p>
+      <div>
+        ${faqs.map(f => `
+          <details class="faq-q">
+            <summary>${f.q}</summary>
+            <div class="text-sm text-gray-700">${f.a}</div>
+          </details>
+        `).join("")}
+      </div>
+      <p class="text-gray-700 text-sm italic mt-4">For specific scenarios — chronic conditions, medical exemptions, complex wounds — ask a qualified scholar in your tradition rather than relying on general guidance.</p>
+    `
+  },
+  {
+    title: "Quick check",
+    icon: "✍️",
+    body: `
+      <p class="text-gray-700 mb-6">Six questions on what you just learned.</p>
+      <div id="quiz"></div>
+      <div id="quiz-result" class="hidden mt-6 p-6 rounded-xl text-center"></div>
+    `,
+    isQuiz: true
+  },
+  {
+    title: "Wrap-up",
+    icon: "✨",
+    body: `
+      <p class="text-gray-700 mb-4">You now know how to make wudu — the gateway to every prayer. Recap of the core sequence:</p>
+      <div class="bg-white border border-amber-200 rounded-xl p-5 mb-4">
+        <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 text-center text-xs">
+          <div class="p-2 rounded bg-emerald-50/80">👐 Hands</div>
+          <div class="p-2 rounded bg-emerald-50/80">💧 Mouth</div>
+          <div class="p-2 rounded bg-emerald-50/80">👃 Nose</div>
+          <div class="p-2 rounded bg-emerald-50/80">😶 Face</div>
+          <div class="p-2 rounded bg-emerald-50/80">💪 Arms</div>
+          <div class="p-2 rounded bg-emerald-50/80">🧠 Head</div>
+          <div class="p-2 rounded bg-emerald-50/80">👂 Ears</div>
+          <div class="p-2 rounded bg-emerald-50/80">🦶 Feet</div>
+          <div class="p-2 rounded bg-amber-50/60 col-span-2">🤲 Closing dua</div>
+        </div>
+      </div>
+      <div class="bg-gradient-to-r from-emerald-50 to-amber-50 border border-amber-300 rounded-xl p-6 text-center my-6">
+        <div class="arabic text-2xl text-emerald-900 mb-1">اللَّهُمَّ طَهِّرْنِي</div>
+        <div class="text-sm italic text-stone-600 mb-4">Allāhumma ṭahhirnī — "O Allah, purify me."</div>
+        <div class="text-sm text-gray-700">Hit <strong>Finish</strong> below to mark this module complete.</div>
+        <div class="text-sm text-gray-700 mt-2">Next: <strong>Module 2-2: Ghusl (Full Purification)</strong> for the major ritual bath, or jump to <strong>Module 2-3: The Salah Walkthrough</strong> to use what you just learned.</div>
+      </div>
+      <div class="text-center text-sm">
+        <a href="index.html" class="text-emerald-800 underline font-semibold">Back to curriculum →</a>
+      </div>
+    `
+  }
+];
+
+const quizQuestions = [
+  { q: "How many obligatory body-part actions does the Quran (5:6) list for wudu?", choices: ["Two", "Three", "Four", "Six"], answer: 2 },
+  { q: "In the Sunnah method, the washed parts (face, arms, feet) are washed how many times?", choices: ["Once", "Twice", "Three times", "Seven times"], answer: 2 },
+  { q: "Wiping the head is performed…", choices: ["Three times", "Once", "Five times", "Only on Fridays"], answer: 1 },
+  { q: "Which of these breaks wudu in all major schools?", choices: ["Eating beef", "Saying a curse word", "Sleeping deeply", "Reading the Quran"], answer: 2 },
+  { q: "Tayammum is performed with…", choices: ["Saltwater", "Clean earth or dust", "Olive oil", "Rosewater"], answer: 1 },
+  { q: "Once made, valid wudu lasts until…", choices: ["The next prayer", "It is broken", "Sunset", "Exactly one hour"], answer: 1 }
+];
+
+let currentStep = 0;
+let quizScore = 0;
+let quizAnswered = new Set();
+
+const nav = document.getElementById("step-nav");
+const container = document.getElementById("step-container");
+const stepNum = document.getElementById("step-num");
+const stepTotal = document.getElementById("step-total");
+const prevBtn = document.getElementById("prev-step");
+const nextBtn = document.getElementById("next-step");
+
+stepTotal.textContent = steps.length;
+
+function renderQuiz() {
+  const quizEl = document.getElementById("quiz");
+  if (!quizEl) return;
+  quizScore = 0;
+  quizAnswered = new Set();
+  quizEl.innerHTML = quizQuestions.map((q, qi) => `
+    <div class="mb-5 p-5 bg-white border border-amber-200 rounded-xl">
+      <div class="font-semibold text-gray-800 mb-3">${qi + 1}. ${q.q}</div>
+      <div class="grid gap-2" data-qindex="${qi}">
+        ${q.choices.map((c, ci) => `
+          <button class="choice" data-choice="${ci}">${c}</button>
+        `).join("")}
+      </div>
+    </div>
+  `).join("");
+
+  quizEl.querySelectorAll(".choice").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const group = btn.closest("[data-qindex]");
+      const qi = parseInt(group.dataset.qindex);
+      if (quizAnswered.has(qi)) return;
+      const choice = parseInt(btn.dataset.choice);
+      const correct = quizQuestions[qi].answer;
+      quizAnswered.add(qi);
+      group.querySelectorAll(".choice").forEach((b, i) => {
+        b.disabled = true;
+        if (i === correct) b.classList.add("correct");
+        else if (i === choice) b.classList.add("wrong");
+      });
+      if (choice === correct) quizScore++;
+      if (quizAnswered.size === quizQuestions.length) showResult();
+    });
+  });
+}
+
+function showResult() {
+  const r = document.getElementById("quiz-result");
+  r.classList.remove("hidden");
+  const pct = quizScore / quizQuestions.length;
+  let msg, color;
+  if (pct === 1) { msg = "Six for six. Ready to pray."; color = "bg-emerald-100 text-emerald-900"; }
+  else if (pct >= 0.6) { msg = "Solid grasp. Glance back at what you missed."; color = "bg-emerald-100 text-emerald-900"; }
+  else { msg = "Worth another pass — wudu happens five times a day."; color = "bg-amber-100 text-amber-900"; }
+  r.className = "mt-6 p-6 rounded-xl text-center " + color;
+  r.innerHTML = `<div class="text-4xl font-bold mb-2">${quizScore} / ${quizQuestions.length}</div><div>${msg}</div>`;
+}
+
+function render() {
+  nav.innerHTML = steps.map((s, i) => `
+    <button class="step-btn w-full text-left px-3 py-2 rounded-lg border border-transparent text-sm hover:bg-amber-50 ${i === currentStep ? 'active' : ''}" data-i="${i}">
+      <span class="mr-2">${s.icon}</span>${s.title}
+    </button>
+  `).join("");
+
+  container.innerHTML = `
+    <article class="article-card shadow-sm p-8">
+      <div class="flex items-center gap-4 mb-6 pb-4 border-b border-amber-100">
+        <div class="text-5xl">${steps[currentStep].icon}</div>
+        <div>
+          <div class="text-xs text-amber-700 font-semibold uppercase tracking-widest">Step ${currentStep + 1}</div>
+          <h2 class="display text-3xl text-emerald-950 font-semibold">${steps[currentStep].title}</h2>
+        </div>
+      </div>
+      <div>${steps[currentStep].body}</div>
+    </article>
+  `;
+
+  stepNum.textContent = currentStep + 1;
+  prevBtn.disabled = currentStep === 0;
+  nextBtn.textContent = currentStep === steps.length - 1 ? "Finish" : "Next →";
+
+  if (steps[currentStep].isQuiz) renderQuiz();
+
+  nav.querySelectorAll(".step-btn").forEach(b => {
+    b.addEventListener("click", () => {
+      currentStep = parseInt(b.dataset.i);
+      render();
+         });
+  });
+}
+
+const MODULE_ID = "2-1";
+const STORAGE_KEY = "islamapp-progress-v1";
+function loadProgress() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
+  catch { return {}; }
+}
+function markInProgress() {
+  const p = loadProgress();
+  if (p[MODULE_ID] !== "done") { p[MODULE_ID] = "inprogress"; localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); }
+}
+function markComplete() {
+  const p = loadProgress();
+  p[MODULE_ID] = "done";
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(p));
+}
+
+prevBtn.addEventListener("click", () => {
+  if (currentStep > 0) { currentStep--; render(); window.scrollTo({ top: 0, behavior: "smooth" }); }
+});
+nextBtn.addEventListener("click", () => {
+  if (currentStep < steps.length - 1) { currentStep++; render(); window.scrollTo({ top: 0, behavior: "smooth" }); }
+  else { markComplete(); window.location.href = "index.html"; }
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.isContentEditable) return;
+  if (e.key === "ArrowLeft" && !prevBtn.disabled) prevBtn.click();
+  else if (e.key === "ArrowRight") nextBtn.click();
+});
+
+markInProgress();
+render();
+</script>
+
+</body>
+</html>

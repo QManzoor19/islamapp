@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Full Salah Walkthrough — IslamApp</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>(function(){try{if(localStorage.getItem('islamapp-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
+<link rel="stylesheet" href="theme.css">
+<script src="theme.js" defer></script>
+<style>
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #faf6ed;
+    color: #1c2d20;
+    background-image:
+      radial-gradient(circle at 10% 10%, rgba(201,169,97,0.08) 0%, transparent 40%),
+      radial-gradient(circle at 90% 90%, rgba(6,78,59,0.06) 0%, transparent 40%);
+    background-attachment: fixed;
+  }
+  .arabic { font-family: 'Amiri', serif; direction: rtl; line-height: 1.9; }
+  .display { font-family: 'Cormorant Garamond', serif; }
+  .geo-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23064e3b' fill-opacity='0.05'%3E%3Cpath d='M30 0l7.5 22.5H60L41.25 37.5l7.5 22.5L30 45l-18.75 15 7.5-22.5L0 22.5h22.5z'/%3E%3C/g%3E%3C/svg%3E");
+  }
+  .step-btn.active { background: #064e3b; color: #faf6ed; border-color: #c9a961; }
+  .step-content { display: none; }
+  .step-content.active { display: block; animation: slideIn 0.4s ease; }
+  @keyframes slideIn { from { opacity: 0; transform: translateX(10px); } to { opacity: 1; transform: translateX(0); } }
+  .position-figure {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border: 2px solid #c9a961;
+  }
+  .gold-line { height: 1px; background: linear-gradient(to right, transparent, #c9a961, transparent); }
+  .btn-primary {
+    background: linear-gradient(135deg, #064e3b 0%, #022c22 100%);
+    color: #faf6ed;
+    border: 1px solid #c9a961;
+  }
+  .btn-primary:hover { background: linear-gradient(135deg, #0f766e 0%, #064e3b 100%); }
+  .btn-secondary {
+    background: #fff;
+    border: 1px solid #c9a961;
+    color: #064e3b;
+  }
+  .btn-secondary:hover { background: #faf6ed; }
+  .article-card {
+    background: #fff;
+    border: 1px solid rgba(201,169,97,0.4);
+    border-radius: 14px 14px 6px 6px;
+  }
+  .article-card::before {
+    content: '';
+    display: block;
+    height: 12px;
+    margin: -1px -1px 0 -1px;
+    background: linear-gradient(180deg, rgba(201,169,97,0.25), transparent);
+    border-radius: 14px 14px 0 0;
+    border-bottom: 1px solid rgba(201,169,97,0.25);
+  }
+</style>
+</head>
+<body class="geo-pattern min-h-screen">
+
+<div class="max-w-6xl mx-auto px-6 py-10">
+
+  <nav class="flex justify-between items-center mb-6">
+    <a href="index.html" class="text-emerald-900 hover:text-amber-700 text-sm font-semibold">← Curriculum</a>
+    <div class="text-xs uppercase tracking-[0.25em] text-amber-700 font-semibold hidden sm:block">Tier 2 · Module 2-3</div>
+    <div class="text-sm text-stone-500"><span id="step-num">1</span> / <span id="step-total">12</span></div>
+  </nav>
+
+  <header class="text-center mb-8">
+    <div class="gold-line mb-4 max-w-[180px] mx-auto"></div>
+    <div class="arabic text-3xl text-emerald-900 mb-2">الصَّلَاة</div>
+    <h1 class="display text-4xl md:text-5xl text-emerald-950 font-semibold">The Full Salah Walkthrough</h1>
+    <div class="gold-line mt-4 max-w-[180px] mx-auto"></div>
+  </header>
+
+  <div class="grid md:grid-cols-[220px_1fr] gap-6">
+
+    <aside class="md:sticky md:top-6 md:self-start">
+      <div class="article-card p-3 shadow-sm">
+        <div class="text-xs uppercase tracking-wider text-amber-700 font-semibold mb-2 px-2">Steps</div>
+        <nav id="step-nav" class="space-y-1"></nav>
+      </div>
+    </aside>
+
+    <main id="step-container"></main>
+
+  </div>
+
+  <div class="flex justify-between mt-8 gap-4">
+    <button id="prev-step" class="btn-secondary flex-1 md:flex-none px-6 py-3 rounded-lg font-semibold disabled:opacity-30 disabled:cursor-not-allowed">← Previous</button>
+    <button id="next-step" class="btn-primary flex-1 md:flex-none px-6 py-3 rounded-lg font-semibold">Next →</button>
+  </div>
+
+</div>
+
+<script>
+const steps = [
+  {
+    title: "What is Salah?",
+    icon: "🕌",
+    position: null,
+    body: `
+      <p class="text-gray-700 mb-4 text-lg">Salah is the formal prayer Muslims perform five times a day. It is the second pillar of Islam and the practice a Muslim is held most accountable for.</p>
+      <div class="bg-white border border-amber-200 rounded-xl p-5 mb-4">
+        <h3 class="font-bold text-amber-900 mb-3">The five daily prayers</h3>
+        <table class="w-full text-sm">
+          <thead class="text-left text-amber-800">
+            <tr><th class="py-2">Name</th><th>When</th><th>Rakʿāt</th></tr>
+          </thead>
+          <tbody class="text-gray-700">
+            <tr class="border-t border-amber-100"><td class="py-2 font-semibold">Fajr</td><td>dawn, before sunrise</td><td>2</td></tr>
+            <tr class="border-t border-amber-100"><td class="py-2 font-semibold">Dhuhr</td><td>after midday</td><td>4</td></tr>
+            <tr class="border-t border-amber-100"><td class="py-2 font-semibold">ʿAsr</td><td>mid-afternoon</td><td>4</td></tr>
+            <tr class="border-t border-amber-100"><td class="py-2 font-semibold">Maghrib</td><td>just after sunset</td><td>3</td></tr>
+            <tr class="border-t border-amber-100"><td class="py-2 font-semibold">ʿIshā</td><td>night</td><td>4</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="text-gray-700 mb-2">A <strong>rakʿah</strong> is one full unit — standing, bowing, prostrating, and sitting. We will walk through one complete rakʿah, then show how two rakʿāt connect.</p>
+      <p class="text-gray-700 text-sm italic">Note: there are small variations between Islamic schools (madhāhib). This walkthrough shows the mainstream Sunni form.</p>
+    `
+  },
+  {
+    title: "Wuḍūʾ — washing first",
+    icon: "💧",
+    position: "💧",
+    body: `
+      <p class="text-gray-700 mb-4">Before prayer you perform <strong>wuḍūʾ</strong>, a simple ritual washing. It must be done with clean water, and stays valid until you break it (sleep, use the bathroom, pass gas, etc.).</p>
+      <ol class="space-y-2 mb-4">
+        <li class="flex gap-3 p-3 bg-white rounded-lg border border-amber-100"><span class="font-bold text-amber-700">1.</span><span>Say <em>Bismillāh</em> and make the intention.</span></li>
+        <li class="flex gap-3 p-3 bg-white rounded-lg border border-amber-100"><span class="font-bold text-amber-700">2.</span><span>Wash hands up to the wrists — three times.</span></li>
+        <li class="flex gap-3 p-3 bg-white rounded-lg border border-amber-100"><span class="font-bold text-amber-700">3.</span><span>Rinse mouth and nose — three times.</span></li>
+        <li class="flex gap-3 p-3 bg-white rounded-lg border border-amber-100"><span class="font-bold text-amber-700">4.</span><span>Wash face — three times.</span></li>
+        <li class="flex gap-3 p-3 bg-white rounded-lg border border-amber-100"><span class="font-bold text-amber-700">5.</span><span>Wash arms to the elbows, right then left — three times.</span></li>
+        <li class="flex gap-3 p-3 bg-white rounded-lg border border-amber-100"><span class="font-bold text-amber-700">6.</span><span>Wipe wet hands over the head once, then the ears.</span></li>
+        <li class="flex gap-3 p-3 bg-white rounded-lg border border-amber-100"><span class="font-bold text-amber-700">7.</span><span>Wash feet to the ankles, right then left — three times.</span></li>
+      </ol>
+      <p class="text-gray-600 text-sm">Three times is the sunnah (Prophetic example); once is enough to be valid.</p>
+    `
+  },
+  {
+    title: "Niyyah — intention, and facing Qibla",
+    icon: "🧭",
+    position: "🧍",
+    body: `
+      <p class="text-gray-700 mb-4">You stand facing the <strong>Qibla</strong> — the direction of the Kaʿbah in Mecca. From most of the world, apps and mosque mihrabs tell you which way.</p>
+      <p class="text-gray-700 mb-4">Then you make the <strong>niyyah</strong> (intention) silently in your heart — which prayer you are about to perform. No words required; just the conscious resolve.</p>
+      <div class="position-figure rounded-xl p-6 text-center mb-4">
+        <div class="text-6xl mb-2">🧭</div>
+        <div class="font-semibold text-amber-900">Face Mecca. Decide in your heart: "I am praying Dhuhr."</div>
+      </div>
+    `
+  },
+  {
+    title: "Takbīr al-Iḥrām — the opening",
+    icon: "🙌",
+    position: "🙌",
+    body: `
+      <p class="text-gray-700 mb-4">Raise your hands to your shoulders or ears and say:</p>
+      <div class="bg-white border-l-4 border-amber-600 p-5 rounded-r-lg mb-4">
+        <div class="arabic text-3xl text-amber-900 mb-2">ٱللَّٰهُ أَكْبَرُ</div>
+        <div class="italic text-amber-800">Allāhu akbar</div>
+        <div class="text-gray-700 text-sm">"Allah is the greatest."</div>
+      </div>
+      <p class="text-gray-700 mb-4">Then place your right hand over your left on your chest or navel. From this moment you are in the prayer — no talking, no turning around, no phone.</p>
+      <p class="text-gray-600 text-sm italic">You will say <em>Allāhu akbar</em> every time you change position. Think of it as the punctuation of the prayer.</p>
+    `
+  },
+  {
+    title: "Qiyām — standing, and Al-Fatiha",
+    icon: "📖",
+    position: "🧍",
+    body: `
+      <p class="text-gray-700 mb-4">While standing, you recite <strong>Surah Al-Fatiha</strong>. It is the opening chapter of the Quran — 7 short verses — and it is recited in <em>every single rakʿah</em> of every prayer. Learning it is step one.</p>
+      <div class="bg-white border border-amber-200 rounded-xl p-6 space-y-4 mb-4">
+        <div>
+          <div class="arabic text-2xl text-amber-900 mb-1">بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
+          <div class="italic text-sm text-amber-700">Bismillāh ir-Raḥmān ir-Raḥīm</div>
+          <div class="text-gray-700 text-sm">In the name of Allah, the Most Merciful, the Most Compassionate.</div>
+        </div>
+        <div>
+          <div class="arabic text-2xl text-amber-900 mb-1">ٱلْحَمْدُ لِلَّٰهِ رَبِّ ٱلْعَالَمِينَ</div>
+          <div class="italic text-sm text-amber-700">Alḥamdu lillāhi rabbi l-ʿālamīn</div>
+          <div class="text-gray-700 text-sm">All praise is for Allah, Lord of all the worlds.</div>
+        </div>
+        <div>
+          <div class="arabic text-2xl text-amber-900 mb-1">ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
+          <div class="italic text-sm text-amber-700">Ar-Raḥmān ir-Raḥīm</div>
+          <div class="text-gray-700 text-sm">The Most Merciful, the Most Compassionate.</div>
+        </div>
+        <div>
+          <div class="arabic text-2xl text-amber-900 mb-1">مَالِكِ يَوْمِ ٱلدِّينِ</div>
+          <div class="italic text-sm text-amber-700">Māliki yawmi d-dīn</div>
+          <div class="text-gray-700 text-sm">Master of the Day of Judgment.</div>
+        </div>
+        <div>
+          <div class="arabic text-2xl text-amber-900 mb-1">إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ</div>
+          <div class="italic text-sm text-amber-700">Iyyāka naʿbudu wa-iyyāka nastaʿīn</div>
+          <div class="text-gray-700 text-sm">You alone we worship, and You alone we ask for help.</div>
+        </div>
+        <div>
+          <div class="arabic text-2xl text-amber-900 mb-1">ٱهْدِنَا ٱلصِّرَاطَ ٱلْمُسْتَقِيمَ</div>
+          <div class="italic text-sm text-amber-700">Ihdinā ṣ-ṣirāṭa l-mustaqīm</div>
+          <div class="text-gray-700 text-sm">Guide us to the straight path —</div>
+        </div>
+        <div>
+          <div class="arabic text-2xl text-amber-900 mb-1">صِرَاطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّالِّينَ</div>
+          <div class="italic text-sm text-amber-700">Ṣirāṭa lladhīna anʿamta ʿalayhim, ghayri l-maghḍūbi ʿalayhim wa-lā ḍ-ḍāllīn</div>
+          <div class="text-gray-700 text-sm">the path of those You have blessed, not of those who incurred wrath, nor of those who went astray.</div>
+        </div>
+        <div class="pt-2 border-t border-amber-100">
+          <div class="arabic text-xl text-amber-900">آمِين</div>
+          <div class="italic text-sm text-amber-700">Āmīn</div>
+        </div>
+      </div>
+    `
+  },
+  {
+    title: "Plus a short surah (in the first two rakʿāt)",
+    icon: "📜",
+    position: "🧍",
+    body: `
+      <p class="text-gray-700 mb-4">After Al-Fatiha, in the <strong>first two rakʿāt</strong> only, you recite any other passage from the Quran. Most people memorize a handful of short ones at the end of the book. The most common is:</p>
+      <div class="bg-white border border-amber-200 rounded-xl p-6 mb-4">
+        <div class="text-sm font-semibold text-amber-700 mb-3">Surah Al-Ikhlas (112) — "The Sincerity"</div>
+        <div class="space-y-3">
+          <div>
+            <div class="arabic text-2xl text-amber-900 mb-1">قُلْ هُوَ ٱللَّٰهُ أَحَدٌ</div>
+            <div class="italic text-sm text-amber-700">Qul huwa Allāhu aḥad</div>
+            <div class="text-gray-700 text-sm">Say: He is Allah, the One.</div>
+          </div>
+          <div>
+            <div class="arabic text-2xl text-amber-900 mb-1">ٱللَّٰهُ ٱلصَّمَدُ</div>
+            <div class="italic text-sm text-amber-700">Allāhu ṣ-ṣamad</div>
+            <div class="text-gray-700 text-sm">Allah, the Eternal, the Absolute.</div>
+          </div>
+          <div>
+            <div class="arabic text-2xl text-amber-900 mb-1">لَمْ يَلِدْ وَلَمْ يُولَدْ</div>
+            <div class="italic text-sm text-amber-700">Lam yalid wa-lam yūlad</div>
+            <div class="text-gray-700 text-sm">He does not beget, nor was He begotten.</div>
+          </div>
+          <div>
+            <div class="arabic text-2xl text-amber-900 mb-1">وَلَمْ يَكُن لَّهُۥ كُفُوًا أَحَدٌ</div>
+            <div class="italic text-sm text-amber-700">Wa-lam yakun lahu kufuwan aḥad</div>
+            <div class="text-gray-700 text-sm">And there is none equal to Him.</div>
+          </div>
+        </div>
+      </div>
+      <p class="text-gray-600 text-sm">Reciting this three times is said to equal a third of the Quran in reward.</p>
+    `
+  },
+  {
+    title: "Rukūʿ — the bow",
+    icon: "🙇",
+    position: "🙇",
+    body: `
+      <p class="text-gray-700 mb-4">Say <em>Allāhu akbar</em>, then bow at the waist with a straight back and place your hands on your knees. Eyes on the ground where you will prostrate.</p>
+      <p class="text-gray-700 mb-4">In this position, say (at least three times):</p>
+      <div class="bg-white border-l-4 border-amber-600 p-5 rounded-r-lg mb-4">
+        <div class="arabic text-2xl text-amber-900 mb-2">سُبْحَانَ رَبِّيَ ٱلْعَظِيمِ</div>
+        <div class="italic text-amber-800">Subḥāna rabbiyal ʿaẓīm</div>
+        <div class="text-gray-700 text-sm">"Glory be to my Lord, the Magnificent."</div>
+      </div>
+    `
+  },
+  {
+    title: "Qawmah — rising back up",
+    icon: "🧍",
+    position: "🧍",
+    body: `
+      <p class="text-gray-700 mb-4">Come back to standing, hands at your sides, and say:</p>
+      <div class="bg-white border-l-4 border-amber-600 p-5 rounded-r-lg mb-2">
+        <div class="arabic text-2xl text-amber-900 mb-2">سَمِعَ ٱللَّٰهُ لِمَنْ حَمِدَهُ</div>
+        <div class="italic text-amber-800">Samiʿ Allāhu liman ḥamidah</div>
+        <div class="text-gray-700 text-sm">"Allah hears whoever praises Him."</div>
+      </div>
+      <div class="bg-white border-l-4 border-amber-400 p-5 rounded-r-lg mb-4">
+        <div class="arabic text-2xl text-amber-900 mb-2">رَبَّنَا وَلَكَ ٱلْحَمْدُ</div>
+        <div class="italic text-amber-800">Rabbanā wa-laka l-ḥamd</div>
+        <div class="text-gray-700 text-sm">"Our Lord, and to You is all praise."</div>
+      </div>
+      <p class="text-gray-600 text-sm italic">Stand for a brief moment — do not rush into the next movement.</p>
+    `
+  },
+  {
+    title: "Sujūd — the prostration",
+    icon: "🧎",
+    position: "🧎",
+    body: `
+      <p class="text-gray-700 mb-4">Say <em>Allāhu akbar</em> and go down into prostration. Seven parts should touch the ground: <strong>forehead, nose, both palms, both knees, toes of both feet</strong>.</p>
+      <p class="text-gray-700 mb-4">This is the closest position a person can be to Allah. Say (at least three times):</p>
+      <div class="bg-white border-l-4 border-amber-600 p-5 rounded-r-lg mb-4">
+        <div class="arabic text-2xl text-amber-900 mb-2">سُبْحَانَ رَبِّيَ ٱلْأَعْلَىٰ</div>
+        <div class="italic text-amber-800">Subḥāna rabbiyal aʿlā</div>
+        <div class="text-gray-700 text-sm">"Glory be to my Lord, the Most High."</div>
+      </div>
+      <p class="text-gray-600 text-sm">Make this slow. Many Muslims add personal duas here — it is an encouraged time for supplication.</p>
+    `
+  },
+  {
+    title: "Sitting, second prostration, and up",
+    icon: "🪑",
+    position: "🪑",
+    body: `
+      <p class="text-gray-700 mb-4">Rise from sujūd to a brief sitting position (Allāhu akbar), then go back down for a <strong>second prostration</strong> and repeat <em>Subḥāna rabbiyal aʿlā</em> three times.</p>
+      <p class="text-gray-700 mb-4">Then stand back up saying <em>Allāhu akbar</em>. That completes <strong>one rakʿah</strong>.</p>
+      <div class="bg-amber-50 border border-amber-300 rounded-xl p-5">
+        <div class="font-semibold text-amber-900 mb-2">Recap of one rakʿah:</div>
+        <ol class="text-sm text-gray-700 list-decimal list-inside space-y-1">
+          <li>Stand — Al-Fatiha + short surah</li>
+          <li>Bow (rukūʿ) — Subḥāna rabbiyal ʿaẓīm ×3</li>
+          <li>Stand back up — Samiʿ Allāhu liman ḥamidah / Rabbanā wa-laka l-ḥamd</li>
+          <li>Prostrate (sujūd) — Subḥāna rabbiyal aʿlā ×3</li>
+          <li>Sit briefly</li>
+          <li>Prostrate again — Subḥāna rabbiyal aʿlā ×3</li>
+          <li>Stand up → next rakʿah</li>
+        </ol>
+      </div>
+    `
+  },
+  {
+    title: "Tashahhud — sitting after two rakʿāt",
+    icon: "🤲",
+    position: "🪑",
+    body: `
+      <p class="text-gray-700 mb-4">After every <strong>two rakʿāt</strong>, you sit and recite the <em>tashahhud</em>. For a 2-rakʿah prayer (Fajr), this comes at the end. For longer prayers, it comes in the middle and again at the end.</p>
+      <div class="bg-white border border-amber-200 rounded-xl p-5 mb-4 space-y-4">
+        <div>
+          <div class="arabic text-xl text-amber-900 mb-1">ٱلتَّحِيَّاتُ لِلَّٰهِ وَٱلصَّلَوَاتُ وَٱلطَّيِّبَاتُ</div>
+          <div class="italic text-sm text-amber-700">At-taḥiyyātu lillāhi wa-ṣ-ṣalawātu wa-ṭ-ṭayyibāt</div>
+          <div class="text-gray-700 text-sm">All greetings, prayers, and good things belong to Allah.</div>
+        </div>
+        <div>
+          <div class="arabic text-xl text-amber-900 mb-1">ٱلسَّلَامُ عَلَيْكَ أَيُّهَا ٱلنَّبِيُّ وَرَحْمَةُ ٱللَّٰهِ وَبَرَكَاتُهُ</div>
+          <div class="italic text-sm text-amber-700">As-salāmu ʿalayka ayyuhā n-nabiyyu wa-raḥmatullāhi wa-barakātuh</div>
+          <div class="text-gray-700 text-sm">Peace be upon you, O Prophet, and the mercy of Allah and His blessings.</div>
+        </div>
+        <div>
+          <div class="arabic text-xl text-amber-900 mb-1">ٱلسَّلَامُ عَلَيْنَا وَعَلَىٰ عِبَادِ ٱللَّٰهِ ٱلصَّالِحِينَ</div>
+          <div class="italic text-sm text-amber-700">As-salāmu ʿalaynā wa-ʿalā ʿibādi llāhi ṣ-ṣāliḥīn</div>
+          <div class="text-gray-700 text-sm">Peace be upon us and upon the righteous servants of Allah.</div>
+        </div>
+        <div>
+          <div class="arabic text-xl text-amber-900 mb-1">أَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا ٱللَّٰهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ</div>
+          <div class="italic text-sm text-amber-700">Ashhadu an lā ilāha illā Allāh, wa-ashhadu anna Muḥammadan ʿabduhu wa-rasūluh</div>
+          <div class="text-gray-700 text-sm">I bear witness that there is no god but Allah, and I bear witness that Muhammad is His servant and messenger.</div>
+        </div>
+      </div>
+      <p class="text-gray-600 text-sm">While saying "lā ilāha illā Allāh," raise your right index finger — pointing to the oneness of God.</p>
+    `
+  },
+  {
+    title: "Taslīm — the ending",
+    icon: "🕊️",
+    position: "🪑",
+    body: `
+      <p class="text-gray-700 mb-4">At the end of the final tashahhud, turn your head to the right and say:</p>
+      <div class="bg-white border-l-4 border-amber-600 p-5 rounded-r-lg mb-3">
+        <div class="arabic text-2xl text-amber-900 mb-2">ٱلسَّلَامُ عَلَيْكُمْ وَرَحْمَةُ ٱللَّٰهِ</div>
+        <div class="italic text-amber-800">As-salāmu ʿalaykum wa-raḥmatullāh</div>
+        <div class="text-gray-700 text-sm">"Peace be upon you, and the mercy of Allah."</div>
+      </div>
+      <p class="text-gray-700 mb-4">Then turn to the left and say the same. The prayer is complete.</p>
+      <div class="bg-gradient-to-r from-amber-100 to-yellow-100 border border-amber-300 rounded-xl p-6 text-center">
+        <div class="text-5xl mb-3">🕊️</div>
+        <div class="arabic text-2xl text-amber-900 mb-2">ٱلْحَمْدُ لِلَّٰهِ</div>
+        <div class="italic text-amber-800 mb-4">Alḥamdulillāh</div>
+        <div class="text-gray-700">That is one full prayer.</div>
+        <div class="mt-4 text-sm text-gray-600">
+          To add rakʿāt 3 and 4 (for Dhuhr, ʿAsr, ʿIshā, and the third of Maghrib): stand back up after the first tashahhud, and recite only Al-Fatiha — no extra surah — then bow, prostrate, etc., exactly like before. Finish with a final tashahhud and taslīm.
+        </div>
+        <div class="mt-6">
+          <a href="index.html" class="text-emerald-800 underline font-semibold text-sm">← Back to curriculum</a>
+        </div>
+      </div>
+    `
+  }
+];
+
+let currentStep = 0;
+
+const nav = document.getElementById("step-nav");
+const container = document.getElementById("step-container");
+const stepNum = document.getElementById("step-num");
+const stepTotal = document.getElementById("step-total");
+const prevBtn = document.getElementById("prev-step");
+const nextBtn = document.getElementById("next-step");
+
+stepTotal.textContent = steps.length;
+
+function render() {
+  nav.innerHTML = steps.map((s, i) => `
+    <button class="step-btn w-full text-left px-3 py-2 rounded-lg border border-transparent text-sm hover:bg-amber-50 ${i === currentStep ? 'active' : ''}" data-i="${i}">
+      <span class="mr-2">${s.icon}</span>${s.title}
+    </button>
+  `).join("");
+
+  container.innerHTML = `
+    <article class="article-card shadow-sm p-8">
+      <div class="flex items-center gap-4 mb-6 pb-4 border-b border-amber-100">
+        <div class="text-5xl">${steps[currentStep].icon}</div>
+        <div>
+          <div class="text-xs text-amber-700 font-semibold uppercase tracking-widest">Step ${currentStep + 1}</div>
+          <h2 class="display text-3xl text-emerald-950 font-semibold">${steps[currentStep].title}</h2>
+        </div>
+      </div>
+      <div>${steps[currentStep].body}</div>
+    </article>
+  `;
+
+  stepNum.textContent = currentStep + 1;
+  prevBtn.disabled = currentStep === 0;
+  nextBtn.textContent = currentStep === steps.length - 1 ? "Done" : "Next →";
+
+  nav.querySelectorAll(".step-btn").forEach(b => {
+    b.addEventListener("click", () => {
+      currentStep = parseInt(b.dataset.i);
+      render();
+         });
+  });
+}
+
+const MODULE_ID = "2-3";
+const STORAGE_KEY = "islamapp-progress-v1";
+function loadProgress() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
+  catch { return {}; }
+}
+function markInProgress() {
+  const p = loadProgress();
+  if (p[MODULE_ID] !== "done") { p[MODULE_ID] = "inprogress"; localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); }
+}
+function markComplete() {
+  const p = loadProgress();
+  p[MODULE_ID] = "done";
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(p));
+}
+
+prevBtn.addEventListener("click", () => {
+  if (currentStep > 0) { currentStep--; render(); window.scrollTo({ top: 0, behavior: "smooth" }); }
+});
+nextBtn.addEventListener("click", () => {
+  if (currentStep < steps.length - 1) { currentStep++; render(); window.scrollTo({ top: 0, behavior: "smooth" }); }
+  else { markComplete(); window.location.href = "index.html"; }
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.isContentEditable) return;
+  if (e.key === "ArrowLeft" && !prevBtn.disabled) prevBtn.click();
+  else if (e.key === "ArrowRight") nextBtn.click();
+});
+
+markInProgress();
+render();
+</script>
+
+</body>
+</html>

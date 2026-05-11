@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Islamic Calendar — IslamApp</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>(function(){try{if(localStorage.getItem('islamapp-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
+<link rel="stylesheet" href="theme.css">
+<script src="theme.js" defer></script>
+<style>
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #faf6ed;
+    color: #1c2d20;
+    background-image:
+      radial-gradient(circle at 10% 10%, rgba(201,169,97,0.08) 0%, transparent 40%),
+      radial-gradient(circle at 90% 90%, rgba(6,78,59,0.06) 0%, transparent 40%);
+    background-attachment: fixed;
+  }
+  .arabic { font-family: 'Amiri', serif; direction: rtl; line-height: 1.7; }
+  .display { font-family: 'Cormorant Garamond', serif; }
+  .geo-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23064e3b' fill-opacity='0.05'%3E%3Cpath d='M30 0l7.5 22.5H60L41.25 37.5l7.5 22.5L30 45l-18.75 15 7.5-22.5L0 22.5h22.5z'/%3E%3C/g%3E%3C/svg%3E");
+  }
+  .step-btn.active { background: #064e3b; color: #faf6ed; border-color: #c9a961; }
+  .gold-line { height: 1px; background: linear-gradient(to right, transparent, #c9a961, transparent); }
+  .btn-primary {
+    background: linear-gradient(135deg, #064e3b 0%, #022c22 100%);
+    color: #faf6ed;
+    border: 1px solid #c9a961;
+  }
+  .btn-primary:hover { background: linear-gradient(135deg, #0f766e 0%, #064e3b 100%); }
+  .btn-secondary {
+    background: #fff;
+    border: 1px solid #c9a961;
+    color: #064e3b;
+  }
+  .btn-secondary:hover { background: #faf6ed; }
+  .article-card {
+    background: #fff;
+    border: 1px solid rgba(201,169,97,0.4);
+    border-radius: 14px 14px 6px 6px;
+  }
+  .article-card::before {
+    content: '';
+    display: block;
+    height: 12px;
+    margin: -1px -1px 0 -1px;
+    background: linear-gradient(180deg, rgba(201,169,97,0.25), transparent);
+    border-radius: 14px 14px 0 0;
+    border-bottom: 1px solid rgba(201,169,97,0.25);
+  }
+  .month-tile {
+    background: #fff;
+    border: 1px solid rgba(201,169,97,0.3);
+    border-radius: 10px;
+    padding: 0.85rem;
+    text-align: center;
+    transition: all 0.2s ease;
+    position: relative;
+  }
+  .month-tile.sacred {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border-color: #c9a961;
+  }
+  .month-tile.sacred::after {
+    content: '✦';
+    position: absolute;
+    top: 4px; right: 8px;
+    color: #a8863f;
+    font-size: 0.7rem;
+  }
+  .month-num {
+    display: inline-block;
+    width: 20px;
+    color: #a8863f;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+  .holiday-card {
+    background: #fff;
+    border: 1px solid rgba(201,169,97,0.3);
+    border-left: 4px solid #c9a961;
+    border-radius: 8px;
+    padding: 1rem;
+  }
+  .today-banner {
+    background: linear-gradient(135deg, #064e3b 0%, #0f766e 100%);
+    color: #faf6ed;
+    padding: 1.25rem 1.5rem;
+    border-radius: 14px;
+    border: 1px solid #c9a961;
+    text-align: center;
+  }
+  .choice {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border: 2px solid #e7e5e4;
+    border-radius: 8px;
+    background: #fff;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    font: inherit;
+    width: 100%;
+  }
+  .choice:hover { background: #ecfdf5; border-color: #059669; }
+  .choice.correct { background: #d1fae5; border-color: #059669; color: #064e3b; }
+  .choice.wrong { background: #fee2e2; border-color: #dc2626; color: #7f1d1d; }
+  .choice:disabled { cursor: default; }
+</style>
+</head>
+<body class="geo-pattern min-h-screen">
+
+<div class="max-w-6xl mx-auto px-6 py-10">
+
+  <nav class="flex justify-between items-center mb-6">
+    <a href="index.html" class="text-emerald-900 hover:text-amber-700 text-sm font-semibold">← Curriculum</a>
+    <div class="text-xs uppercase tracking-[0.25em] text-amber-700 font-semibold hidden sm:block">Tier 1 · Module 1-4</div>
+    <div class="text-sm text-stone-500"><span id="step-num">1</span> / <span id="step-total">8</span></div>
+  </nav>
+
+  <header class="text-center mb-8">
+    <div class="gold-line mb-4 max-w-[180px] mx-auto"></div>
+    <div class="arabic text-3xl text-emerald-900 mb-2">التَّقْوِيم الهِجْرِي</div>
+    <h1 class="display text-4xl md:text-5xl text-emerald-950 font-semibold">The Islamic Calendar</h1>
+    <div class="gold-line mt-4 max-w-[180px] mx-auto"></div>
+  </header>
+
+  <div class="grid md:grid-cols-[220px_1fr] gap-6">
+
+    <aside class="md:sticky md:top-6 md:self-start">
+      <div class="article-card p-3 shadow-sm">
+        <div class="text-xs uppercase tracking-wider text-amber-700 font-semibold mb-2 px-2">Steps</div>
+        <nav id="step-nav" class="space-y-1"></nav>
+      </div>
+    </aside>
+
+    <main id="step-container"></main>
+
+  </div>
+
+  <div class="flex justify-between mt-8 gap-4">
+    <button id="prev-step" class="btn-secondary flex-1 md:flex-none px-6 py-3 rounded-lg font-semibold disabled:opacity-30 disabled:cursor-not-allowed">← Previous</button>
+    <button id="next-step" class="btn-primary flex-1 md:flex-none px-6 py-3 rounded-lg font-semibold">Next →</button>
+  </div>
+
+</div>
+
+<script>
+const months = [
+  { num: 1, name: "Muḥarram", arabic: "المُحَرَّم", meaning: "The Forbidden", sacred: true, note: "First month of the year. Day 10 (ʿĀshūrāʾ) is a major fasting day." },
+  { num: 2, name: "Ṣafar", arabic: "صَفَر", meaning: "Empty / Yellow", sacred: false, note: "Pre-Islamic name; once associated with travel." },
+  { num: 3, name: "Rabīʿ al-Awwal", arabic: "رَبِيع الأَوَّل", meaning: "First Spring", sacred: false, note: "The Prophet ﷺ was born and died in this month." },
+  { num: 4, name: "Rabīʿ al-Thānī", arabic: "رَبِيع الثَّانِي", meaning: "Second Spring", sacred: false, note: "Also called Rabīʿ al-Ākhir." },
+  { num: 5, name: "Jumādā al-Ūlā", arabic: "جُمَادَى الأُولَى", meaning: "First Dry Month", sacred: false, note: "Named for the dry, parched land of pre-Islamic Arabia." },
+  { num: 6, name: "Jumādā al-Ākhira", arabic: "جُمَادَى الآخِرَة", meaning: "Second Dry Month", sacred: false, note: "" },
+  { num: 7, name: "Rajab", arabic: "رَجَب", meaning: "To Honor", sacred: true, note: "A sacred month. The Night Journey is traditionally placed here." },
+  { num: 8, name: "Shaʿbān", arabic: "شَعْبَان", meaning: "To Disperse", sacred: false, note: "The month before Ramadan. Many fast extra in it." },
+  { num: 9, name: "Ramaḍān", arabic: "رَمَضَان", meaning: "Scorching Heat", sacred: false, note: "The month of fasting. The Quran was first revealed in it." },
+  { num: 10, name: "Shawwāl", arabic: "شَوَّال", meaning: "To Lift / Carry", sacred: false, note: "Day 1 is Eid al-Fitr — the festival ending Ramadan." },
+  { num: 11, name: "Dhū al-Qaʿda", arabic: "ذُو القَعْدَة", meaning: "Of Sitting", sacred: true, note: "A sacred month. Pre-Islamically, a month of truce." },
+  { num: 12, name: "Dhū al-Ḥijja", arabic: "ذُو الحِجَّة", meaning: "Of the Pilgrimage", sacred: true, note: "Hajj is performed in days 8–13. Day 10 is Eid al-Adha." }
+];
+
+const holidays = [
+  { date: "1 Muḥarram", name: "Islamic New Year", note: "The start of a new Hijri year. Muted observance — no festivities, often quiet reflection." },
+  { date: "10 Muḥarram", name: "ʿĀshūrāʾ", note: "A day of fasting — the Prophet ﷺ recommended it. Commemorates Moses crossing the Red Sea. For Shia Muslims, also the martyrdom of Ḥusayn at Karbala (680 CE)." },
+  { date: "12 Rabīʿ al-Awwal", name: "Mawlid", note: "Many Muslims commemorate the Prophet's ﷺ birth on this date. Observance varies — celebrated in much of the Muslim world, not observed by stricter traditions." },
+  { date: "27 Rajab*", name: "Laylat al-Isrāʾ wa-l-Miʿrāj", note: "The Night Journey from Mecca to Jerusalem and the ascension through the heavens — when the five daily prayers were instituted." },
+  { date: "15 Shaʿbān", name: "Laylat al-Barāʾa", note: "The 'Night of Acquittal' — observed in some traditions as a night of forgiveness and reflection, looking ahead to Ramadan." },
+  { date: "Ramaḍān", name: "The Month of Fasting", note: "30 days of dawn-to-sunset fasting. The most spiritually intense month of the year." },
+  { date: "Last 10 nights of Ramaḍān", name: "Laylat al-Qadr", note: "The 'Night of Power' — better than 1,000 months. Sought especially in the odd-numbered nights." },
+  { date: "1 Shawwāl", name: "Eid al-Fitr", note: "The 'Festival of Breaking the Fast' — the celebration ending Ramadan. New clothes, sweets, prayers, gifts to children." },
+  { date: "9 Dhū al-Ḥijja", name: "Day of ʿArafa", note: "The peak day of Hajj. Pilgrims stand on the plain of Arafat from noon to sunset. Non-pilgrims fast — said to wipe out the sins of the previous and following year." },
+  { date: "10 Dhū al-Ḥijja", name: "Eid al-Adha", note: "The 'Festival of Sacrifice' — commemorates Abraham's willingness to sacrifice his son. An animal is slaughtered and the meat distributed to family, friends, and the poor." }
+];
+
+function todayHijri() {
+  try {
+    const fmt = new Intl.DateTimeFormat('en-u-ca-islamic-umalqura', {
+      day: 'numeric', month: 'long', year: 'numeric'
+    });
+    return fmt.format(new Date());
+  } catch (e) {
+    return null;
+  }
+}
+
+const steps = [
+  {
+    title: "Lunar, not solar",
+    icon: "🌙",
+    body: `
+      <p class="text-gray-700 mb-4 text-lg">The Islamic calendar is <strong>strictly lunar</strong>. Each month begins with the sighting of the new crescent moon and lasts 29 or 30 days. Twelve months make a year of <strong>~354 days</strong> — about 11 days shorter than the solar year you are used to.</p>
+      <p class="text-gray-700 mb-4">This has a striking consequence: every Islamic event drifts <strong>~11 days earlier</strong> on the Gregorian calendar each year. Ramadan can fall in summer or winter. Over a 33-year cycle it migrates through every season.</p>
+      <div class="bg-emerald-50/80 border-l-4 border-emerald-700 p-5 rounded-r-lg my-5">
+        <p class="text-emerald-900 font-semibold mb-2">Why lunar?</p>
+        <p class="text-emerald-900 text-sm">The Quran (9:36) states there are 12 months "from the day Allah created the heavens and the earth," and pre-Islamic Arabia already used a lunar count — the Prophet ﷺ banned the practice of inserting extra months to align with the seasons. The result is a calendar tied to the visible sky, identical for every Muslim community on Earth (with small local variation in moon-sighting).</p>
+      </div>
+      ${todayHijri() ? `
+      <div class="today-banner mt-6">
+        <div class="text-xs uppercase tracking-[0.25em] text-amber-200/90 mb-1">Today</div>
+        <div class="display text-2xl font-semibold">${todayHijri()}</div>
+        <div class="text-xs text-amber-100/80 mt-2">Computed via Umm al-Qura calendar</div>
+      </div>
+      ` : ''}
+    `
+  },
+  {
+    title: "The Hijra and \"AH\"",
+    icon: "🐪",
+    body: `
+      <p class="text-gray-700 mb-4">Year 1 of the Islamic calendar is <strong>622 CE</strong> — the year the Prophet Muhammad ﷺ migrated from Mecca to Medina. The migration is called the <strong>Hijra</strong>, and the era is dated from it: <strong>AH</strong> (Latin <em>Anno Hegirae</em>, "year of the Hijra").</p>
+      <div class="bg-white border border-amber-200 rounded-xl p-5 mb-4">
+        <p class="text-gray-700 mb-3">Why date from the Hijra rather than the Prophet's birth, his first revelation, or his death?</p>
+        <p class="text-gray-700 text-sm">The decision was made by the second caliph, ʿUmar ibn al-Khaṭṭāb (~17 AH / 638 CE), about six years after the Prophet's death. The Hijra marks the founding of the first Muslim community as a political and social entity — the moment a religion of individuals became a community of governance. ʿUmar judged this the most consequential event for dating purposes.</p>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-3">
+        <div class="bg-amber-50/60 border border-amber-200 rounded-lg p-4 text-center">
+          <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold mb-1">Today's Gregorian</div>
+          <div class="display text-2xl text-emerald-950 font-semibold" id="g-date"></div>
+        </div>
+        <div class="bg-emerald-50/60 border border-emerald-200 rounded-lg p-4 text-center">
+          <div class="text-xs uppercase tracking-widest text-emerald-700 font-semibold mb-1">Today's Hijri</div>
+          <div class="display text-2xl text-emerald-950 font-semibold" id="h-date"></div>
+        </div>
+      </div>
+      <p class="text-gray-700 text-sm italic mt-4">CE → AH conversion (rough): subtract 622 from the CE year and adjust ~3% for the shorter lunar year. The Tier 6 module on the Hijra goes deeper into the migration itself.</p>
+    `,
+    onShow: () => {
+      const g = document.getElementById("g-date");
+      const h = document.getElementById("h-date");
+      if (g) g.textContent = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+      if (h && todayHijri()) h.textContent = todayHijri();
+    }
+  },
+  {
+    title: "The 12 months",
+    icon: "📅",
+    body: `
+      <p class="text-gray-700 mb-4">Each name has a meaning rooted in pre-Islamic Arabia — heat, drought, harvest, truce. The names predate Islam; the calendar was reformed but the months kept their old labels.</p>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-2 mb-4">
+        ${months.map(m => `
+          <div class="month-tile ${m.sacred ? 'sacred' : ''}">
+            <div class="flex items-center gap-2 justify-center mb-1">
+              <span class="month-num">${m.num}</span>
+              <div class="arabic text-lg text-emerald-900">${m.arabic}</div>
+            </div>
+            <div class="display text-base font-semibold text-emerald-950 leading-tight">${m.name}</div>
+            <div class="text-[10px] uppercase tracking-widest text-amber-700/80 mt-1">${m.meaning}</div>
+          </div>
+        `).join("")}
+      </div>
+      <p class="text-gray-700 text-sm italic">Tiles marked ✦ are the four sacred months — explained next.</p>
+    `
+  },
+  {
+    title: "The four sacred months",
+    icon: "✦",
+    body: `
+      <p class="text-gray-700 mb-4">The Quran singles out <strong>four months</strong> as sacred — three consecutive, one separate:</p>
+      <div class="bg-white border border-amber-200 rounded-xl p-5 mb-4">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-3 text-center">
+          <div class="month-tile sacred"><div class="month-num">1</div><div class="display text-sm font-semibold">Muḥarram</div></div>
+          <div class="month-tile sacred"><div class="month-num">7</div><div class="display text-sm font-semibold">Rajab</div></div>
+          <div class="month-tile sacred"><div class="month-num">11</div><div class="display text-sm font-semibold">Dhū al-Qaʿda</div></div>
+          <div class="month-tile sacred"><div class="month-num">12</div><div class="display text-sm font-semibold">Dhū al-Ḥijja</div></div>
+        </div>
+      </div>
+      <p class="text-gray-700 mb-3">In pre-Islamic Arabia, these were months of <strong>truce</strong> — fighting was forbidden so that pilgrims and traders could move safely. Islam preserved them as months of heightened spiritual gravity.</p>
+      <div class="bg-emerald-50/80 border-l-4 border-emerald-700 p-5 rounded-r-lg my-5">
+        <div class="arabic text-xl text-emerald-900 mb-2 leading-relaxed">إِنَّ عِدَّةَ الشُّهُورِ عِندَ اللَّهِ اثْنَا عَشَرَ شَهْرًا… مِنْهَا أَرْبَعَةٌ حُرُمٌ</div>
+        <p class="italic text-sm text-emerald-800 mb-1">Inna ʿiddata sh-shuhūri ʿinda Allāhi thnā ʿashara shahran… minhā arbaʿatun ḥurum</p>
+        <p class="text-emerald-900 text-sm">"Indeed, the number of months with Allah is twelve… of which four are sacred." — Quran 9:36</p>
+      </div>
+      <p class="text-gray-700 text-sm">Practically: classical scholars taught that <strong>good deeds count more</strong> in these months — and so do <strong>sins</strong>. The sacred months are still observed in the sense that Muslims try to be more careful in them.</p>
+    `
+  },
+  {
+    title: "Major dates",
+    icon: "🌟",
+    body: `
+      <p class="text-gray-700 mb-4">A walk through the year's most-observed days. Some are universal; some vary by tradition (noted where so).</p>
+      <div class="space-y-3">
+        ${holidays.map(h => `
+          <div class="holiday-card">
+            <div class="flex items-baseline justify-between mb-1 flex-wrap gap-2">
+              <div class="display text-lg text-emerald-950 font-semibold">${h.name}</div>
+              <div class="text-xs text-amber-700 font-mono">${h.date}</div>
+            </div>
+            <p class="text-sm text-gray-700">${h.note}</p>
+          </div>
+        `).join("")}
+      </div>
+      <p class="text-gray-700 text-sm italic mt-5">* The 27th of Rajab is the most common date for the Night Journey, though scholars differ on the exact night.</p>
+    `
+  },
+  {
+    title: "The two Eids",
+    icon: "🎉",
+    body: `
+      <p class="text-gray-700 mb-4">Islam has only <strong>two universal festivals</strong>. Both are joyful days; both begin with a special communal prayer at dawn; both involve gifts, food, new clothes, and visiting family.</p>
+      <div class="grid md:grid-cols-2 gap-4 mb-4">
+        <div class="bg-white border border-amber-200 rounded-xl p-5">
+          <div class="text-3xl mb-2">🌙</div>
+          <div class="display text-2xl text-emerald-950 font-semibold mb-1">Eid al-Fitr</div>
+          <div class="arabic text-lg text-emerald-900 mb-2">عِيد الفِطْر</div>
+          <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold mb-3">1 Shawwāl · "Festival of Breaking the Fast"</div>
+          <ul class="text-sm text-gray-700 space-y-1">
+            <li>· Marks the end of Ramadan.</li>
+            <li>· Three-day celebration in many countries.</li>
+            <li>· A small alms (<em>zakāt al-fiṭr</em>) is paid before the Eid prayer so the poor can also celebrate.</li>
+            <li>· Sweets — kheer, baklava, ma'amoul — are the food signature.</li>
+          </ul>
+        </div>
+        <div class="bg-white border border-amber-200 rounded-xl p-5">
+          <div class="text-3xl mb-2">🐑</div>
+          <div class="display text-2xl text-emerald-950 font-semibold mb-1">Eid al-Adha</div>
+          <div class="arabic text-lg text-emerald-900 mb-2">عِيد الأَضْحَى</div>
+          <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold mb-3">10 Dhū al-Ḥijja · "Festival of the Sacrifice"</div>
+          <ul class="text-sm text-gray-700 space-y-1">
+            <li>· Coincides with the climax of Hajj.</li>
+            <li>· Commemorates Abraham's willingness to sacrifice his son at God's command.</li>
+            <li>· An animal is slaughtered (sheep, goat, cow, camel) and meat distributed: a third for family, a third for friends, a third for the poor.</li>
+            <li>· Often called "the bigger Eid" in tradition.</li>
+          </ul>
+        </div>
+      </div>
+      <p class="text-gray-700 text-sm italic">Both Eids begin with a congregational prayer (Ṣalāt al-ʿĪd), held shortly after sunrise, usually in an open field or large mosque.</p>
+    `
+  },
+  {
+    title: "Quick check",
+    icon: "✍️",
+    body: `
+      <p class="text-gray-700 mb-6">Six questions on the calendar.</p>
+      <div id="quiz"></div>
+      <div id="quiz-result" class="hidden mt-6 p-6 rounded-xl text-center"></div>
+    `,
+    isQuiz: true
+  },
+  {
+    title: "Wrap-up — Tier 1 complete",
+    icon: "🏆",
+    body: `
+      <p class="text-gray-700 mb-4">That's the calendar. You have now finished <strong>Tier 1: Foundations</strong>. Here is what you hold:</p>
+      <div class="grid sm:grid-cols-2 gap-3 mb-5">
+        <div class="bg-white border border-amber-200 rounded-lg p-4">
+          <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold mb-1">Module 1-1</div>
+          <div class="display text-base font-semibold text-emerald-950">The Shahada &amp; Five Pillars</div>
+          <div class="text-xs text-stone-600 mt-1">The five practices.</div>
+        </div>
+        <div class="bg-white border border-amber-200 rounded-lg p-4">
+          <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold mb-1">Module 1-2</div>
+          <div class="display text-base font-semibold text-emerald-950">The Six Articles of Faith</div>
+          <div class="text-xs text-stone-600 mt-1">The six beliefs.</div>
+        </div>
+        <div class="bg-white border border-amber-200 rounded-lg p-4">
+          <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold mb-1">Module 1-3</div>
+          <div class="display text-base font-semibold text-emerald-950">Core Vocabulary</div>
+          <div class="text-xs text-stone-600 mt-1">The 26 essential terms.</div>
+        </div>
+        <div class="bg-white border border-amber-200 rounded-lg p-4">
+          <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold mb-1">Module 1-4</div>
+          <div class="display text-base font-semibold text-emerald-950">The Islamic Calendar</div>
+          <div class="text-xs text-stone-600 mt-1">The shape of the year.</div>
+        </div>
+      </div>
+      <div class="bg-gradient-to-r from-emerald-50 to-amber-50 border border-amber-300 rounded-xl p-6 text-center my-6">
+        <div class="arabic text-2xl text-emerald-900 mb-1">الحَمْدُ لِلَّهِ</div>
+        <div class="text-sm italic text-stone-600 mb-4">Alḥamdulillāh — "All praise is for God."</div>
+        <p class="text-sm text-gray-700 mb-3">Hit <strong>Finish</strong> to mark this module — and Tier 1 — complete.</p>
+        <p class="text-sm text-gray-700"><strong>Tier 2: Purification &amp; Prayer</strong> opens next: wudu, ghusl, the full salah walkthrough, prayer times, and Friday prayer.</p>
+      </div>
+      <div class="text-center text-sm">
+        <a href="index.html" class="text-emerald-800 underline font-semibold">Back to curriculum →</a>
+      </div>
+    `
+  }
+];
+
+const quizQuestions = [
+  { q: "How many days are in an Islamic year?", choices: ["365", "~354", "~340", "360 exactly"], answer: 1 },
+  { q: "Year 1 AH corresponds to what event?", choices: ["The Prophet's birth", "The first revelation", "The migration to Medina", "The Prophet's death"], answer: 2 },
+  { q: "How many sacred months are there?", choices: ["One", "Two", "Three", "Four"], answer: 3 },
+  { q: "Eid al-Fitr falls on…", choices: ["1 Muḥarram", "1 Shawwāl", "10 Dhū al-Ḥijja", "27 Ramadan"], answer: 1 },
+  { q: "The 9th month — the month of fasting — is called…", choices: ["Muḥarram", "Rajab", "Ramaḍān", "Shawwāl"], answer: 2 },
+  { q: "Eid al-Adha commemorates…", choices: ["The end of Ramadan", "Moses crossing the Red Sea", "Abraham's willingness to sacrifice his son", "The Prophet's birth"], answer: 2 }
+];
+
+let currentStep = 0;
+let quizScore = 0;
+let quizAnswered = new Set();
+
+const nav = document.getElementById("step-nav");
+const container = document.getElementById("step-container");
+const stepNum = document.getElementById("step-num");
+const stepTotal = document.getElementById("step-total");
+const prevBtn = document.getElementById("prev-step");
+const nextBtn = document.getElementById("next-step");
+
+stepTotal.textContent = steps.length;
+
+function renderQuiz() {
+  const quizEl = document.getElementById("quiz");
+  if (!quizEl) return;
+  quizScore = 0;
+  quizAnswered = new Set();
+  quizEl.innerHTML = quizQuestions.map((q, qi) => `
+    <div class="mb-5 p-5 bg-white border border-amber-200 rounded-xl">
+      <div class="font-semibold text-gray-800 mb-3">${qi + 1}. ${q.q}</div>
+      <div class="grid gap-2" data-qindex="${qi}">
+        ${q.choices.map((c, ci) => `
+          <button class="choice" data-choice="${ci}">${c}</button>
+        `).join("")}
+      </div>
+    </div>
+  `).join("");
+
+  quizEl.querySelectorAll(".choice").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const group = btn.closest("[data-qindex]");
+      const qi = parseInt(group.dataset.qindex);
+      if (quizAnswered.has(qi)) return;
+      const choice = parseInt(btn.dataset.choice);
+      const correct = quizQuestions[qi].answer;
+      quizAnswered.add(qi);
+      group.querySelectorAll(".choice").forEach((b, i) => {
+        b.disabled = true;
+        if (i === correct) b.classList.add("correct");
+        else if (i === choice) b.classList.add("wrong");
+      });
+      if (choice === correct) quizScore++;
+      if (quizAnswered.size === quizQuestions.length) showResult();
+    });
+  });
+}
+
+function showResult() {
+  const r = document.getElementById("quiz-result");
+  r.classList.remove("hidden");
+  const pct = quizScore / quizQuestions.length;
+  let msg, color;
+  if (pct === 1) { msg = "Six for six. You know the year."; color = "bg-emerald-100 text-emerald-900"; }
+  else if (pct >= 0.6) { msg = "Good. Glance back at what you missed."; color = "bg-emerald-100 text-emerald-900"; }
+  else { msg = "Worth another pass — the calendar comes up everywhere."; color = "bg-amber-100 text-amber-900"; }
+  r.className = "mt-6 p-6 rounded-xl text-center " + color;
+  r.innerHTML = `<div class="text-4xl font-bold mb-2">${quizScore} / ${quizQuestions.length}</div><div>${msg}</div>`;
+}
+
+function render() {
+  nav.innerHTML = steps.map((s, i) => `
+    <button class="step-btn w-full text-left px-3 py-2 rounded-lg border border-transparent text-sm hover:bg-amber-50 ${i === currentStep ? 'active' : ''}" data-i="${i}">
+      <span class="mr-2">${s.icon}</span>${s.title}
+    </button>
+  `).join("");
+
+  container.innerHTML = `
+    <article class="article-card shadow-sm p-8">
+      <div class="flex items-center gap-4 mb-6 pb-4 border-b border-amber-100">
+        <div class="text-5xl">${steps[currentStep].icon}</div>
+        <div>
+          <div class="text-xs text-amber-700 font-semibold uppercase tracking-widest">Step ${currentStep + 1}</div>
+          <h2 class="display text-3xl text-emerald-950 font-semibold">${steps[currentStep].title}</h2>
+        </div>
+      </div>
+      <div>${steps[currentStep].body}</div>
+    </article>
+  `;
+
+  stepNum.textContent = currentStep + 1;
+  prevBtn.disabled = currentStep === 0;
+  nextBtn.textContent = currentStep === steps.length - 1 ? "Finish" : "Next →";
+
+  if (steps[currentStep].isQuiz) renderQuiz();
+  if (typeof steps[currentStep].onShow === "function") steps[currentStep].onShow();
+
+  nav.querySelectorAll(".step-btn").forEach(b => {
+    b.addEventListener("click", () => {
+      currentStep = parseInt(b.dataset.i);
+      render();
+         });
+  });
+}
+
+const MODULE_ID = "1-4";
+const STORAGE_KEY = "islamapp-progress-v1";
+function loadProgress() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
+  catch { return {}; }
+}
+function markInProgress() {
+  const p = loadProgress();
+  if (p[MODULE_ID] !== "done") { p[MODULE_ID] = "inprogress"; localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); }
+}
+function markComplete() {
+  const p = loadProgress();
+  p[MODULE_ID] = "done";
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(p));
+}
+
+prevBtn.addEventListener("click", () => {
+  if (currentStep > 0) { currentStep--; render(); window.scrollTo({ top: 0, behavior: "smooth" }); }
+});
+nextBtn.addEventListener("click", () => {
+  if (currentStep < steps.length - 1) { currentStep++; render(); window.scrollTo({ top: 0, behavior: "smooth" }); }
+  else { markComplete(); window.location.href = "index.html"; }
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.isContentEditable) return;
+  if (e.key === "ArrowLeft" && !prevBtn.disabled) prevBtn.click();
+  else if (e.key === "ArrowRight") nextBtn.click();
+});
+
+markInProgress();
+render();
+</script>
+
+</body>
+</html>

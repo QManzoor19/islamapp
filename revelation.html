@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Revelation & Compilation — IslamApp</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>(function(){try{if(localStorage.getItem('islamapp-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
+<link rel="stylesheet" href="theme.css">
+<script src="theme.js" defer></script>
+<style>
+  body { font-family: 'Inter', sans-serif; background: #faf6ed; color: #1c2d20;
+    background-image: radial-gradient(circle at 10% 10%, rgba(201,169,97,0.08) 0%, transparent 40%), radial-gradient(circle at 90% 90%, rgba(6,78,59,0.06) 0%, transparent 40%);
+    background-attachment: fixed; }
+  .arabic { font-family: 'Amiri', serif; direction: rtl; line-height: 1.9; }
+  .display { font-family: 'Cormorant Garamond', serif; }
+  .geo-pattern { background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23064e3b' fill-opacity='0.05'%3E%3Cpath d='M30 0l7.5 22.5H60L41.25 37.5l7.5 22.5L30 45l-18.75 15 7.5-22.5L0 22.5h22.5z'/%3E%3C/g%3E%3C/svg%3E"); }
+  .step-btn.active { background: #064e3b; color: #faf6ed; border-color: #c9a961; }
+  .gold-line { height: 1px; background: linear-gradient(to right, transparent, #c9a961, transparent); }
+  .btn-primary { background: linear-gradient(135deg, #064e3b 0%, #022c22 100%); color: #faf6ed; border: 1px solid #c9a961; }
+  .btn-primary:hover { background: linear-gradient(135deg, #0f766e 0%, #064e3b 100%); }
+  .btn-secondary { background: #fff; border: 1px solid #c9a961; color: #064e3b; }
+  .btn-secondary:hover { background: #faf6ed; }
+  .article-card { background: #fff; border: 1px solid rgba(201,169,97,0.4); border-radius: 14px 14px 6px 6px; }
+  .article-card::before { content: ''; display: block; height: 12px; margin: -1px -1px 0 -1px;
+    background: linear-gradient(180deg, rgba(201,169,97,0.25), transparent); border-radius: 14px 14px 0 0; border-bottom: 1px solid rgba(201,169,97,0.25); }
+  .timeline-card { background: #fff; border: 1px solid rgba(201,169,97,0.3); border-left: 4px solid #c9a961;
+    border-radius: 8px; padding: 1rem 1.25rem; }
+  .person-card { background: #fff; border: 1px solid rgba(201,169,97,0.3); border-radius: 12px;
+    padding: 1.25rem; }
+  .stat-card { background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border: 1px solid #c9a961;
+    border-radius: 12px; padding: 1rem; text-align: center; }
+  .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 700; color: #064e3b; line-height: 1; }
+  .stat-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: #92400e; font-weight: 600; margin-top: 0.5rem; }
+  .choice { text-align: left; padding: 0.75rem 1rem; border: 2px solid #e7e5e4; border-radius: 8px; background: #fff; cursor: pointer;
+    transition: all 0.15s ease; font: inherit; width: 100%; }
+  .choice:hover { background: #ecfdf5; border-color: #059669; }
+  .choice.correct { background: #d1fae5; border-color: #059669; color: #064e3b; }
+  .choice.wrong { background: #fee2e2; border-color: #dc2626; color: #7f1d1d; }
+  .choice:disabled { cursor: default; }
+</style>
+</head>
+<body class="geo-pattern min-h-screen">
+
+<div class="max-w-6xl mx-auto px-6 py-10">
+
+  <nav class="flex justify-between items-center mb-6">
+    <a href="index.html" class="text-emerald-900 hover:text-amber-700 text-sm font-semibold">← Curriculum</a>
+    <div class="text-xs uppercase tracking-[0.25em] text-amber-700 font-semibold hidden sm:block">Tier 5 · Module 5-1</div>
+    <div class="text-sm text-stone-500"><span id="step-num">1</span> / <span id="step-total">9</span></div>
+  </nav>
+
+  <header class="text-center mb-8">
+    <div class="gold-line mb-4 max-w-[180px] mx-auto"></div>
+    <div class="arabic text-3xl text-emerald-900 mb-2">نُزُول الوَحْي وَجَمْع القُرْآن</div>
+    <h1 class="display text-4xl md:text-5xl text-emerald-950 font-semibold">Revelation &amp; Compilation</h1>
+    <div class="text-stone-600 mt-2">How the Quran came to be the book we have today</div>
+    <div class="gold-line mt-4 max-w-[180px] mx-auto"></div>
+  </header>
+
+  <div class="grid md:grid-cols-[220px_1fr] gap-6">
+    <aside class="md:sticky md:top-6 md:self-start">
+      <div class="article-card p-3 shadow-sm">
+        <div class="text-xs uppercase tracking-wider text-amber-700 font-semibold mb-2 px-2">Steps</div>
+        <nav id="step-nav" class="space-y-1"></nav>
+      </div>
+    </aside>
+    <main id="step-container"></main>
+  </div>
+
+  <div class="flex justify-between mt-8 gap-4">
+    <button id="prev-step" class="btn-secondary flex-1 md:flex-none px-6 py-3 rounded-lg font-semibold disabled:opacity-30 disabled:cursor-not-allowed">← Previous</button>
+    <button id="next-step" class="btn-primary flex-1 md:flex-none px-6 py-3 rounded-lg font-semibold">Next →</button>
+  </div>
+
+</div>
+
+<script>
+const steps = [
+  {
+    title: "The first revelation",
+    icon: "🕯️",
+    body: `
+      <p class="text-gray-700 mb-4 text-lg">In the year <strong>610 CE</strong>, a 40-year-old Arab merchant named Muhammad was meditating alone in the cave of Ḥirāʾ, just outside Mecca. It was the month of Ramadan. He had a habit of going there for solitude.</p>
+      <p class="text-gray-700 mb-4">An angel appeared and squeezed him three times, commanding: <strong>"Read."</strong> When the man protested he could not read, the angel held him tighter and recited the first five verses of what became the Quran.</p>
+      <div class="bg-white border-l-4 border-amber-600 p-5 rounded-r-lg my-5 shadow-sm">
+        <div class="arabic text-2xl text-emerald-900 leading-loose mb-3 text-center">
+          ٱقْرَأْ بِٱسْمِ رَبِّكَ ٱلَّذِى خَلَقَ<br>
+          خَلَقَ ٱلْإِنسَٰنَ مِنْ عَلَقٍ<br>
+          ٱقْرَأْ وَرَبُّكَ ٱلْأَكْرَمُ<br>
+          ٱلَّذِى عَلَّمَ بِٱلْقَلَمِ<br>
+          عَلَّمَ ٱلْإِنسَٰنَ مَا لَمْ يَعْلَمْ
+        </div>
+        <p class="italic text-emerald-800 text-sm text-center mb-2">Iqraʾ bi-smi rabbika lladhī khalaq…</p>
+        <p class="text-gray-800 text-sm text-center">"Read! In the name of your Lord who created — created the human from a clinging clot. Read! And your Lord is the Most Generous, who taught by the pen — taught the human what he did not know." — Quran 96:1–5</p>
+      </div>
+      <p class="text-gray-700 mb-3">The Prophet ﷺ rushed home to his wife Khadīja, terrified, and asked her to cover him. She comforted him, took him to her cousin <strong>Waraqa ibn Nawfal</strong> — a Christian scholar — who recognized the experience as the same revelation Moses had received.</p>
+      <p class="text-gray-700 text-sm italic">The angel was <em>Jibrīl</em> (Gabriel). The verses now form Surah 96 (Al-ʿAlaq, "The Clinging Clot"). The mountain cave is still there; pilgrims visit it on Hajj.</p>
+    `
+  },
+  {
+    title: "23 years of revelation",
+    icon: "⏳",
+    body: `
+      <p class="text-gray-700 mb-4">After the first revelation came a <strong>~3-year pause</strong> (the <em>fatra</em>) before the second. From then on, revelation continued steadily until the Prophet's death — about <strong>23 years total</strong> (610–632 CE).</p>
+      <div class="grid sm:grid-cols-3 gap-3 mb-5">
+        <div class="stat-card">
+          <div class="stat-num">23</div>
+          <div class="stat-label">years of revelation</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">114</div>
+          <div class="stat-label">chapters (suwar)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">6,236</div>
+          <div class="stat-label">verses (āyāt)</div>
+        </div>
+      </div>
+      <p class="text-gray-700 mb-3">Revelation came in different forms. Sometimes it was a single verse to address a moment. Sometimes a whole surah at once. The longer Medinan surahs were often built up over months in pieces; the short, lyrical Meccan surahs more often came whole.</p>
+      <div class="bg-white border border-amber-200 rounded-xl p-5 mb-4">
+        <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold mb-2">Two phases</div>
+        <div class="space-y-2 text-sm text-gray-700">
+          <div><strong class="text-emerald-900">Meccan period (610–622 CE, ~13 years):</strong> short, intense, theological. Focuses on monotheism, the afterlife, the stories of past prophets. Audience hostile.</div>
+          <div><strong class="text-emerald-900">Medinan period (622–632 CE, ~10 years):</strong> longer, prose-like, legal. Focuses on community organization, ritual, social rules, responses to specific events. Audience is the new Muslim state.</div>
+        </div>
+      </div>
+      <p class="text-gray-700 text-sm italic">When a revelation came, the Prophet ﷺ would memorize it instantly and then dictate it to his scribes — but not always in the order it would later be arranged in the final book.</p>
+    `
+  },
+  {
+    title: "The scribes",
+    icon: "✒️",
+    body: `
+      <p class="text-gray-700 mb-4">From the earliest days, the Prophet ﷺ had <strong>scribes</strong> who wrote down each revelation as it came. Estimates put the number at <strong>40+ scribes</strong> across his life, including future caliphs and major companions.</p>
+      <p class="text-gray-700 mb-3">Writing materials were whatever was at hand:</p>
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-4">
+        <div class="bg-white border border-amber-200 rounded-lg p-3 text-center">
+          <div class="text-2xl mb-1">🌴</div>
+          <div class="text-xs text-stone-700">Date palm stalks</div>
+        </div>
+        <div class="bg-white border border-amber-200 rounded-lg p-3 text-center">
+          <div class="text-2xl mb-1">🦴</div>
+          <div class="text-xs text-stone-700">Bones &amp; shoulder blades</div>
+        </div>
+        <div class="bg-white border border-amber-200 rounded-lg p-3 text-center">
+          <div class="text-2xl mb-1">🪨</div>
+          <div class="text-xs text-stone-700">Flat stones</div>
+        </div>
+        <div class="bg-white border border-amber-200 rounded-lg p-3 text-center">
+          <div class="text-2xl mb-1">📜</div>
+          <div class="text-xs text-stone-700">Parchment</div>
+        </div>
+        <div class="bg-white border border-amber-200 rounded-lg p-3 text-center">
+          <div class="text-2xl mb-1">🪶</div>
+          <div class="text-xs text-stone-700">Leather strips</div>
+        </div>
+        <div class="bg-white border border-amber-200 rounded-lg p-3 text-center">
+          <div class="text-2xl mb-1">🐢</div>
+          <div class="text-xs text-stone-700">Tortoise shells</div>
+        </div>
+      </div>
+      <p class="text-gray-700 mb-3">The Prophet ﷺ would dictate, telling each scribe <em>which</em> surah a new verse belonged in (often grouping by topic, not chronology). This is why the Quran's order is not the order in which it was revealed.</p>
+      <div class="person-card mb-3">
+        <div class="display text-lg font-semibold text-emerald-900 mb-1">Zayd ibn Thābit</div>
+        <p class="text-sm text-gray-700">The Prophet's chief scribe. A teenager when he became Muslim, he was chosen to record revelation, learn Hebrew and Syriac to handle correspondence, and later led the entire compilation effort under both Abu Bakr and ʿUthmān.</p>
+      </div>
+      <p class="text-gray-700 text-sm italic">By the Prophet's death in 632 CE, the entire Quran existed — but only as scattered written fragments held by individuals, plus the memory of those who had memorized it.</p>
+    `
+  },
+  {
+    title: "The memorizers (ḥuffāẓ)",
+    icon: "🧠",
+    body: `
+      <p class="text-gray-700 mb-4">Even more important than the writing was the <strong>oral preservation</strong>. From the start, the Prophet ﷺ encouraged Muslims to memorize the Quran. Many learned the entire text — these memorizers are called <strong>ḥuffāẓ</strong> (singular: <em>ḥāfiẓ</em>).</p>
+      <p class="text-gray-700 mb-4">Each Ramadan, the angel Gabriel recited the entire Quran with the Prophet ﷺ as an annual review. In the final Ramadan of the Prophet's life, they reviewed it twice — and the Prophet ﷺ took this as a sign his time was near.</p>
+      <div class="bg-white border border-amber-200 rounded-xl p-5 mb-4">
+        <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold mb-3">The major memorizers among the companions</div>
+        <div class="space-y-2 text-sm text-gray-700">
+          <div>· <strong>ʿAbdullāh ibn Masʿūd</strong> — the sixth Muslim. The Prophet ﷺ said: "Take the Quran from four — Ibn Masʿūd, Sālim, Muʿādh ibn Jabal, and Ubayy ibn Kaʿb."</div>
+          <div>· <strong>Ubayy ibn Kaʿb</strong> — called the "master of reciters."</div>
+          <div>· <strong>Muʿādh ibn Jabal</strong> — sent by the Prophet ﷺ as a teacher to Yemen.</div>
+          <div>· <strong>Sālim, the freedman of Abū Ḥudhayfa</strong> — among the first memorizers.</div>
+          <div>· <strong>ʿĀʾisha</strong>, <strong>Ḥafṣa</strong>, and <strong>Umm Salama</strong> — among the women who memorized the entire Quran.</div>
+        </div>
+      </div>
+      <p class="text-gray-700 mb-3">The tradition of memorization continued unbroken. Today there are believed to be <strong>tens of millions of ḥuffāẓ</strong> worldwide — children and adults who can recite the entire Quran from memory. This is one of the strongest preservation mechanisms any text in human history has had.</p>
+      <p class="text-gray-700 text-sm italic">The Quran is the only book in the world with this scale of distributed memorization. If every printed copy disappeared tomorrow, the text could be reconstructed from memory alone.</p>
+    `
+  },
+  {
+    title: "First compilation — Abū Bakr",
+    icon: "📚",
+    body: `
+      <p class="text-gray-700 mb-4">Two years after the Prophet's death, in <strong>633 CE</strong>, came the <strong>Battle of Yamāma</strong> — a fierce battle against the false-prophet Musaylima. It was an early Muslim victory, but at a cost: many of the ḥuffāẓ were killed.</p>
+      <p class="text-gray-700 mb-3">ʿUmar ibn al-Khaṭṭāb went to the first caliph, Abū Bakr, alarmed:</p>
+      <div class="bg-emerald-50/80 border-l-4 border-emerald-700 p-5 rounded-r-lg my-4">
+        <p class="text-emerald-900 italic text-sm">"In the Battle of Yamāma, many ḥuffāẓ have been killed. I fear that if more are killed in future battles, much of the Quran will be lost. I think you should order it to be collected."</p>
+      </div>
+      <p class="text-gray-700 mb-3">Abū Bakr was reluctant — "How can I do something the Prophet ﷺ did not do?" — but eventually agreed. He summoned <strong>Zayd ibn Thābit</strong> and gave him the task.</p>
+      <p class="text-gray-700 mb-3">Zayd's method was rigorous. For each verse, he required:</p>
+      <div class="bg-white border border-amber-200 rounded-xl p-5 mb-4">
+        <ol class="space-y-2 text-sm text-gray-700 list-decimal list-inside">
+          <li>His own memory (he was a ḥāfiẓ).</li>
+          <li>A written record (palm leaves, parchment, etc.) verified by two witnesses who had heard the Prophet ﷺ recite it.</li>
+        </ol>
+      </div>
+      <p class="text-gray-700 mb-3">The result was a single bound copy — called the <strong>Ṣuḥuf</strong> ("the pages") — kept first with Abū Bakr, then with ʿUmar after him, then with ʿUmar's daughter <strong>Ḥafṣa</strong> after his death. This is the most reliable physical copy from the first decade.</p>
+      <p class="text-gray-700 text-sm italic">Note: this was a compilation, not a standardization. There were still local variations in recitation across the expanding Muslim world.</p>
+    `
+  },
+  {
+    title: "Standardization — ʿUthmān",
+    icon: "📖",
+    body: `
+      <p class="text-gray-700 mb-4">By the time of the third caliph, <strong>ʿUthmān ibn ʿAffān</strong> (r. 644–656 CE), Islam had spread from Persia to Egypt. Different regions were reciting in slightly different ways — based on the dialects the Prophet ﷺ had permitted (the so-called <em>seven aḥruf</em>).</p>
+      <p class="text-gray-700 mb-4">In military campaigns, soldiers from different regions began arguing over whose recitation was correct. The general <strong>Ḥudhayfa ibn al-Yamān</strong> rushed back to ʿUthmān, alarmed: "Stop this nation before they differ about the Book like the Jews and Christians did!"</p>
+      <p class="text-gray-700 mb-3">ʿUthmān acted decisively. Around <strong>650 CE</strong>:</p>
+      <div class="space-y-2 mb-4">
+        <div class="timeline-card">
+          <div class="display font-semibold text-emerald-950 mb-1">1. Borrowed the official copy</div>
+          <p class="text-sm text-gray-700">He sent for the Ṣuḥuf still in Ḥafṣa's possession and used it as the master.</p>
+        </div>
+        <div class="timeline-card">
+          <div class="display font-semibold text-emerald-950 mb-1">2. Re-commissioned Zayd</div>
+          <p class="text-sm text-gray-700">Zayd ibn Thābit again led the work, this time joined by three others from Quraysh — to ensure the dialect was the Prophet's own.</p>
+        </div>
+        <div class="timeline-card">
+          <div class="display font-semibold text-emerald-950 mb-1">3. Made multiple master copies</div>
+          <p class="text-sm text-gray-700">Identical copies were sent to Mecca, Medina, Kūfa, Basra, and Damascus — each with a designated reciter to teach the local people.</p>
+        </div>
+        <div class="timeline-card">
+          <div class="display font-semibold text-emerald-950 mb-1">4. Burned the variants</div>
+          <p class="text-sm text-gray-700">All other personal collections were burned — to prevent confusion. This was controversial in its time but came to be seen as an act of preservation.</p>
+        </div>
+      </div>
+      <p class="text-gray-700 mb-3">The result is the <strong>ʿUthmānic codex</strong> — the standard text every Muslim has used since. The text we have today, in any printed Quran anywhere in the world, is letter-for-letter identical to the ʿUthmānic copy from 650 CE.</p>
+      <p class="text-gray-700 text-sm italic">Within the ʿUthmānic spelling there are still seven (or ten) accepted variations in pronunciation — the <em>qirāʾāt</em>. Module 10-4 in Tier 10 covers this in depth.</p>
+    `
+  },
+  {
+    title: "Preservation today",
+    icon: "🛡️",
+    body: `
+      <p class="text-gray-700 mb-4">The Quran's preservation rests on <strong>two pillars</strong> working together — neither alone has been considered sufficient.</p>
+      <div class="grid sm:grid-cols-2 gap-4 mb-4">
+        <div class="bg-white border border-amber-200 rounded-xl p-5">
+          <div class="text-3xl mb-2">📜</div>
+          <div class="display text-lg font-semibold text-emerald-950 mb-2">The written line</div>
+          <p class="text-sm text-gray-700">From the ʿUthmānic codex through every printed Quran today. Master copies exist in Topkapı Palace (Istanbul) and Tashkent — both attributed to ʿUthmān himself.</p>
+        </div>
+        <div class="bg-white border border-amber-200 rounded-xl p-5">
+          <div class="text-3xl mb-2">🧠</div>
+          <div class="display text-lg font-semibold text-emerald-950 mb-2">The memorized line</div>
+          <p class="text-sm text-gray-700">An unbroken oral chain from the Prophet ﷺ to today's ḥuffāẓ — verified teacher-to-student over 50+ generations. Each ḥāfiẓ has an <em>ijāza</em> (license) tracing the chain.</p>
+        </div>
+      </div>
+      <div class="bg-white border border-amber-200 rounded-xl p-5 mb-4">
+        <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold mb-3">Major early manuscripts</div>
+        <div class="space-y-2 text-sm text-gray-700">
+          <div>· <strong>The Birmingham Manuscript</strong> — radiocarbon-dated to 568–645 CE, putting it within the Prophet's lifetime. Held at the University of Birmingham (UK).</div>
+          <div>· <strong>The Sanaʿa Palimpsest</strong> — discovered in Yemen in 1972. Contains both an upper and a lower (older) text. Among the oldest known Quran manuscripts.</div>
+          <div>· <strong>The Topkapı Manuscript</strong> — claimed to be from the time of ʿUthmān himself.</div>
+          <div>· <strong>The Tashkent Manuscript</strong> — also claimed ʿUthmānic origin; now in Uzbekistan.</div>
+        </div>
+      </div>
+      <p class="text-gray-700 mb-3">Comparison of these manuscripts with each other and with the modern printed Quran shows remarkable consistency. The variations that exist are minor (spelling differences, dot placement) and are within the documented qirāʾāt — they don't represent textual loss or corruption.</p>
+      <p class="text-gray-700 text-sm italic">The Quran is one of the best-preserved ancient texts in human history. Whatever your view of its origin, the textual record is uncontested.</p>
+    `
+  },
+  {
+    title: "Quick check",
+    icon: "✍️",
+    body: `
+      <p class="text-gray-700 mb-6">Six questions on what you've learned.</p>
+      <div id="quiz"></div>
+      <div id="quiz-result" class="hidden mt-6 p-6 rounded-xl text-center"></div>
+    `,
+    isQuiz: true
+  },
+  {
+    title: "Wrap-up",
+    icon: "✨",
+    body: `
+      <p class="text-gray-700 mb-4">You now know how the Quran got from a cave outside Mecca to the printed copy in your hand.</p>
+      <div class="bg-white border border-amber-200 rounded-xl p-5 mb-4">
+        <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold mb-2">Timeline at a glance</div>
+        <div class="space-y-2 text-sm text-gray-700">
+          <div><strong class="text-emerald-900">610 CE</strong> — First revelation in the cave of Ḥirāʾ.</div>
+          <div><strong class="text-emerald-900">610–632</strong> — 23 years of revelation; scribes record each piece.</div>
+          <div><strong class="text-emerald-900">632</strong> — Prophet ﷺ dies; Quran complete but scattered across written fragments and memory.</div>
+          <div><strong class="text-emerald-900">633</strong> — After Battle of Yamāma, Abū Bakr commissions the first compilation under Zayd ibn Thābit.</div>
+          <div><strong class="text-emerald-900">~650</strong> — ʿUthmān standardizes the text, sends master copies to major cities.</div>
+          <div><strong class="text-emerald-900">today</strong> — Same text, plus tens of millions of ḥuffāẓ.</div>
+        </div>
+      </div>
+      <div class="bg-gradient-to-r from-emerald-50 to-amber-50 border border-amber-300 rounded-xl p-6 text-center my-6">
+        <div class="arabic text-2xl text-emerald-900 mb-1">إِنَّا نَحْنُ نَزَّلْنَا ٱلذِّكْرَ وَإِنَّا لَهُۥ لَحَٰفِظُونَ</div>
+        <div class="text-sm italic text-stone-600 mb-4">"Indeed, We sent down the Reminder, and indeed, We are its Guardian." — Quran 15:9</div>
+        <div class="text-sm text-gray-700">Hit <strong>Finish</strong> to mark this module complete.</div>
+        <div class="text-sm text-gray-700 mt-2">Next: <strong>Module 5-2: Structure of the Quran</strong> — chapters, verses, the 30 parts, and how to navigate it.</div>
+      </div>
+      <div class="text-center text-sm">
+        <a href="index.html" class="text-emerald-800 underline font-semibold">Back to curriculum →</a>
+      </div>
+    `
+  }
+];
+
+const quizQuestions = [
+  { q: "How old was the Prophet ﷺ when he received the first revelation?", choices: ["25", "33", "40", "63"], answer: 2 },
+  { q: "Which angel brought the revelation?", choices: ["Mīkāʾīl", "Jibrīl (Gabriel)", "Isrāfīl", "ʿIzrāʾīl"], answer: 1 },
+  { q: "Over how many years was the Quran revealed?", choices: ["10", "23", "40", "63"], answer: 1 },
+  { q: "Who led the first compilation effort under Abū Bakr?", choices: ["ʿUmar ibn al-Khaṭṭāb", "ʿAbdullāh ibn Masʿūd", "Zayd ibn Thābit", "ʿĀʾisha"], answer: 2 },
+  { q: "What event triggered the first compilation?", choices: ["The Conquest of Mecca", "The Battle of Yamāma — many memorizers killed", "The Hijra", "The Prophet's farewell sermon"], answer: 1 },
+  { q: "Which caliph standardized the text and distributed master copies?", choices: ["Abū Bakr", "ʿUmar", "ʿUthmān", "ʿAlī"], answer: 2 }
+];
+
+let currentStep = 0; let quizScore = 0; let quizAnswered = new Set();
+const nav = document.getElementById("step-nav");
+const container = document.getElementById("step-container");
+const stepNum = document.getElementById("step-num");
+const stepTotal = document.getElementById("step-total");
+const prevBtn = document.getElementById("prev-step");
+const nextBtn = document.getElementById("next-step");
+stepTotal.textContent = steps.length;
+
+function renderQuiz() {
+  const quizEl = document.getElementById("quiz"); if (!quizEl) return;
+  quizScore = 0; quizAnswered = new Set();
+  quizEl.innerHTML = quizQuestions.map((q, qi) => `
+    <div class="mb-5 p-5 bg-white border border-amber-200 rounded-xl">
+      <div class="font-semibold text-gray-800 mb-3">${qi + 1}. ${q.q}</div>
+      <div class="grid gap-2" data-qindex="${qi}">${q.choices.map((c, ci) => `<button class="choice" data-choice="${ci}">${c}</button>`).join("")}</div>
+    </div>`).join("");
+  quizEl.querySelectorAll(".choice").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const group = btn.closest("[data-qindex]"); const qi = parseInt(group.dataset.qindex);
+      if (quizAnswered.has(qi)) return;
+      const choice = parseInt(btn.dataset.choice); const correct = quizQuestions[qi].answer;
+      quizAnswered.add(qi);
+      group.querySelectorAll(".choice").forEach((b, i) => { b.disabled = true; if (i === correct) b.classList.add("correct"); else if (i === choice) b.classList.add("wrong"); });
+      if (choice === correct) quizScore++;
+      if (quizAnswered.size === quizQuestions.length) showResult();
+    });
+  });
+}
+function showResult() {
+  const r = document.getElementById("quiz-result"); r.classList.remove("hidden");
+  const pct = quizScore / quizQuestions.length;
+  let msg, color;
+  if (pct === 1) { msg = "Perfect."; color = "bg-emerald-100 text-emerald-900"; }
+  else if (pct >= 0.6) { msg = "Solid."; color = "bg-emerald-100 text-emerald-900"; }
+  else { msg = "Worth another pass."; color = "bg-amber-100 text-amber-900"; }
+  r.className = "mt-6 p-6 rounded-xl text-center " + color;
+  r.innerHTML = `<div class="text-4xl font-bold mb-2">${quizScore} / ${quizQuestions.length}</div><div>${msg}</div>`;
+}
+
+function render() {
+  nav.innerHTML = steps.map((s, i) => `<button class="step-btn w-full text-left px-3 py-2 rounded-lg border border-transparent text-sm hover:bg-amber-50 ${i === currentStep ? 'active' : ''}" data-i="${i}"><span class="mr-2">${s.icon}</span>${s.title}</button>`).join("");
+  container.innerHTML = `<article class="article-card shadow-sm p-8"><div class="flex items-center gap-4 mb-6 pb-4 border-b border-amber-100"><div class="text-5xl">${steps[currentStep].icon}</div><div><div class="text-xs text-amber-700 font-semibold uppercase tracking-widest">Step ${currentStep + 1}</div><h2 class="display text-3xl text-emerald-950 font-semibold">${steps[currentStep].title}</h2></div></div><div>${steps[currentStep].body}</div></article>`;
+  stepNum.textContent = currentStep + 1; prevBtn.disabled = currentStep === 0;
+  nextBtn.textContent = currentStep === steps.length - 1 ? "Finish" : "Next →";
+  if (steps[currentStep].isQuiz) renderQuiz();
+  nav.querySelectorAll(".step-btn").forEach(b => { b.addEventListener("click", () => { currentStep = parseInt(b.dataset.i); render(); }); });
+}
+
+const MODULE_ID = "5-1"; const STORAGE_KEY = "islamapp-progress-v1";
+function loadProgress() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; } }
+function markInProgress() { const p = loadProgress(); if (p[MODULE_ID] !== "done") { p[MODULE_ID] = "inprogress"; localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); } }
+function markComplete() { const p = loadProgress(); p[MODULE_ID] = "done"; localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); }
+
+prevBtn.addEventListener("click", () => { if (currentStep > 0) { currentStep--; render(); } });
+nextBtn.addEventListener("click", () => { if (currentStep < steps.length - 1) { currentStep++; render(); } else { markComplete(); window.location.href = "index.html"; } });
+
+document.addEventListener("keydown", (e) => {
+  if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.isContentEditable) return;
+  if (e.key === "ArrowLeft" && !prevBtn.disabled) prevBtn.click();
+  else if (e.key === "ArrowRight") nextBtn.click();
+});
+
+markInProgress(); render();
+</script>
+
+</body>
+</html>

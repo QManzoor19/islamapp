@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Connecting Letters — IslamApp</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>(function(){try{if(localStorage.getItem('islamapp-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
+<link rel="stylesheet" href="theme.css">
+<script src="theme.js" defer></script>
+<style>
+  body { font-family: 'Inter', sans-serif; background: #faf6ed; color: #1c2d20;
+    background-image: radial-gradient(circle at 10% 10%, rgba(201,169,97,0.08) 0%, transparent 40%), radial-gradient(circle at 90% 90%, rgba(6,78,59,0.06) 0%, transparent 40%);
+    background-attachment: fixed; }
+  .arabic { font-family: 'Amiri', serif; direction: rtl; line-height: 1.7; }
+  .display { font-family: 'Cormorant Garamond', serif; }
+  .geo-pattern { background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23064e3b' fill-opacity='0.05'%3E%3Cpath d='M30 0l7.5 22.5H60L41.25 37.5l7.5 22.5L30 45l-18.75 15 7.5-22.5L0 22.5h22.5z'/%3E%3C/g%3E%3C/svg%3E"); }
+  .step-btn.active { background: #064e3b; color: #faf6ed; border-color: #c9a961; }
+  .gold-line { height: 1px; background: linear-gradient(to right, transparent, #c9a961, transparent); }
+  .btn-primary { background: linear-gradient(135deg, #064e3b 0%, #022c22 100%); color: #faf6ed; border: 1px solid #c9a961; }
+  .btn-primary:hover { background: linear-gradient(135deg, #0f766e 0%, #064e3b 100%); }
+  .btn-secondary { background: #fff; border: 1px solid #c9a961; color: #064e3b; }
+  .btn-secondary:hover { background: #faf6ed; }
+  .article-card { background: #fff; border: 1px solid rgba(201,169,97,0.4); border-radius: 14px 14px 6px 6px; }
+  .article-card::before { content: ''; display: block; height: 12px; margin: -1px -1px 0 -1px;
+    background: linear-gradient(180deg, rgba(201,169,97,0.25), transparent); border-radius: 14px 14px 0 0; border-bottom: 1px solid rgba(201,169,97,0.25); }
+  .form-table { width: 100%; border-collapse: separate; border-spacing: 0; }
+  .form-table th, .form-table td { padding: 0.6rem 0.5rem; text-align: center; border-bottom: 1px solid rgba(201,169,97,0.2); }
+  .form-table th { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: #a8863f; font-weight: 600; }
+  .form-table td.glyph { font-family: 'Amiri', serif; font-size: 1.6rem; color: #064e3b; }
+  .form-table td.name { font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 0.9rem; }
+  .form-table tr:hover td { background: rgba(254, 243, 199, 0.5); }
+  .non-conn td.glyph { color: #be123c; }
+  .word-demo { font-family: 'Amiri', serif; font-size: 3rem; color: #064e3b; line-height: 1.4; }
+  .letter-pill { display: inline-block; padding: 0.25rem 0.6rem; margin: 0.15rem; border-radius: 999px;
+    background: #fef3c7; color: #92400e; font-family: 'Amiri', serif; font-size: 1.4rem; }
+  .choice { text-align: left; padding: 0.75rem 1rem; border: 2px solid #e7e5e4; border-radius: 8px; background: #fff; cursor: pointer;
+    transition: all 0.15s ease; font: inherit; width: 100%; }
+  .choice:hover { background: #ecfdf5; border-color: #059669; }
+  .choice.correct { background: #d1fae5; border-color: #059669; color: #064e3b; }
+  .choice.wrong { background: #fee2e2; border-color: #dc2626; color: #7f1d1d; }
+  .choice:disabled { cursor: default; }
+  .position-card { background: #fff; border: 1px solid rgba(201,169,97,0.3); border-radius: 12px; padding: 1rem; text-align: center; }
+  .position-glyph { font-family: 'Amiri', serif; font-size: 3rem; color: #064e3b; line-height: 1.2; }
+</style>
+</head>
+<body class="geo-pattern min-h-screen">
+
+<div class="max-w-6xl mx-auto px-6 py-10">
+
+  <nav class="flex justify-between items-center mb-6">
+    <a href="index.html" class="text-emerald-900 hover:text-amber-700 text-sm font-semibold">← Curriculum</a>
+    <div class="text-xs uppercase tracking-[0.25em] text-amber-700 font-semibold hidden sm:block">Tier 3 · Module 3-2</div>
+    <div class="text-sm text-stone-500"><span id="step-num">1</span> / <span id="step-total">8</span></div>
+  </nav>
+
+  <header class="text-center mb-8">
+    <div class="gold-line mb-4 max-w-[180px] mx-auto"></div>
+    <div class="arabic text-3xl text-emerald-900 mb-2">اتِّصَال الحُرُوف</div>
+    <h1 class="display text-4xl md:text-5xl text-emerald-950 font-semibold">Connecting Letters</h1>
+    <div class="gold-line mt-4 max-w-[180px] mx-auto"></div>
+  </header>
+
+  <div class="grid md:grid-cols-[220px_1fr] gap-6">
+    <aside class="md:sticky md:top-6 md:self-start">
+      <div class="article-card p-3 shadow-sm">
+        <div class="text-xs uppercase tracking-wider text-amber-700 font-semibold mb-2 px-2">Steps</div>
+        <nav id="step-nav" class="space-y-1"></nav>
+      </div>
+    </aside>
+    <main id="step-container"></main>
+  </div>
+
+  <div class="flex justify-between mt-8 gap-4">
+    <button id="prev-step" class="btn-secondary flex-1 md:flex-none px-6 py-3 rounded-lg font-semibold disabled:opacity-30 disabled:cursor-not-allowed">← Previous</button>
+    <button id="next-step" class="btn-primary flex-1 md:flex-none px-6 py-3 rounded-lg font-semibold">Next →</button>
+  </div>
+
+</div>
+
+<script>
+const forms = [
+  { name: "Alif", iso: "ا", ini: "—", med: "—", fin: "ـا", connects: false },
+  { name: "Bāʾ", iso: "ب", ini: "بـ", med: "ـبـ", fin: "ـب", connects: true },
+  { name: "Tāʾ", iso: "ت", ini: "تـ", med: "ـتـ", fin: "ـت", connects: true },
+  { name: "Thāʾ", iso: "ث", ini: "ثـ", med: "ـثـ", fin: "ـث", connects: true },
+  { name: "Jīm", iso: "ج", ini: "جـ", med: "ـجـ", fin: "ـج", connects: true },
+  { name: "Ḥāʾ", iso: "ح", ini: "حـ", med: "ـحـ", fin: "ـح", connects: true },
+  { name: "Khāʾ", iso: "خ", ini: "خـ", med: "ـخـ", fin: "ـخ", connects: true },
+  { name: "Dāl", iso: "د", ini: "—", med: "—", fin: "ـد", connects: false },
+  { name: "Dhāl", iso: "ذ", ini: "—", med: "—", fin: "ـذ", connects: false },
+  { name: "Rāʾ", iso: "ر", ini: "—", med: "—", fin: "ـر", connects: false },
+  { name: "Zāy", iso: "ز", ini: "—", med: "—", fin: "ـز", connects: false },
+  { name: "Sīn", iso: "س", ini: "سـ", med: "ـسـ", fin: "ـس", connects: true },
+  { name: "Shīn", iso: "ش", ini: "شـ", med: "ـشـ", fin: "ـش", connects: true },
+  { name: "Ṣād", iso: "ص", ini: "صـ", med: "ـصـ", fin: "ـص", connects: true },
+  { name: "Ḍād", iso: "ض", ini: "ضـ", med: "ـضـ", fin: "ـض", connects: true },
+  { name: "Ṭāʾ", iso: "ط", ini: "طـ", med: "ـطـ", fin: "ـط", connects: true },
+  { name: "Ẓāʾ", iso: "ظ", ini: "ظـ", med: "ـظـ", fin: "ـظ", connects: true },
+  { name: "ʿAyn", iso: "ع", ini: "عـ", med: "ـعـ", fin: "ـع", connects: true },
+  { name: "Ghayn", iso: "غ", ini: "غـ", med: "ـغـ", fin: "ـغ", connects: true },
+  { name: "Fāʾ", iso: "ف", ini: "فـ", med: "ـفـ", fin: "ـف", connects: true },
+  { name: "Qāf", iso: "ق", ini: "قـ", med: "ـقـ", fin: "ـق", connects: true },
+  { name: "Kāf", iso: "ك", ini: "كـ", med: "ـكـ", fin: "ـك", connects: true },
+  { name: "Lām", iso: "ل", ini: "لـ", med: "ـلـ", fin: "ـل", connects: true },
+  { name: "Mīm", iso: "م", ini: "مـ", med: "ـمـ", fin: "ـم", connects: true },
+  { name: "Nūn", iso: "ن", ini: "نـ", med: "ـنـ", fin: "ـن", connects: true },
+  { name: "Hāʾ", iso: "ه", ini: "هـ", med: "ـهـ", fin: "ـه", connects: true },
+  { name: "Wāw", iso: "و", ini: "—", med: "—", fin: "ـو", connects: false },
+  { name: "Yāʾ", iso: "ي", ini: "يـ", med: "ـيـ", fin: "ـي", connects: true }
+];
+
+const steps = [
+  {
+    title: "Why letters change",
+    icon: "✍️",
+    body: `
+      <p class="text-gray-700 mb-4 text-lg">Imagine writing English in cursive. The letter <em>n</em> looks different at the start of <em>now</em> than at the end of <em>moon</em>. Arabic does the same — only every letter has up to <strong>four official forms</strong>, and you must know them to read.</p>
+      <p class="text-gray-700 mb-4">It sounds intimidating, but in practice the variations are small. Most letters keep the same core shape and just add or drop a connecting tail.</p>
+      <div class="bg-emerald-50/80 border-l-4 border-emerald-700 p-5 rounded-r-lg my-5">
+        <p class="text-emerald-900 mb-2"><strong>The shortcut:</strong> if you can spot the basic shape, you can read the letter regardless of position. Don't memorize 28 × 4 = 112 things — memorize 28 shapes and the four positional rules.</p>
+      </div>
+      <p class="text-gray-700">In this module we'll see all four forms, walk through the table, and practice reading some real words.</p>
+    `
+  },
+  {
+    title: "The four positions",
+    icon: "📐",
+    body: `
+      <p class="text-gray-700 mb-4">Using the letter <strong>Bāʾ</strong> (ب) as our demo, here are the four forms it takes depending on where it sits in a word.</p>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
+        <div class="position-card">
+          <div class="position-glyph">ب</div>
+          <div class="display font-semibold text-emerald-950 mt-1">Isolated</div>
+          <div class="text-xs text-stone-500">Standing alone</div>
+        </div>
+        <div class="position-card">
+          <div class="position-glyph">بـ</div>
+          <div class="display font-semibold text-emerald-950 mt-1">Initial</div>
+          <div class="text-xs text-stone-500">Start of word — connecting forward</div>
+        </div>
+        <div class="position-card">
+          <div class="position-glyph">ـبـ</div>
+          <div class="display font-semibold text-emerald-950 mt-1">Medial</div>
+          <div class="text-xs text-stone-500">Middle — connected both sides</div>
+        </div>
+        <div class="position-card">
+          <div class="position-glyph">ـب</div>
+          <div class="display font-semibold text-emerald-950 mt-1">Final</div>
+          <div class="text-xs text-stone-500">End of word — connecting backward</div>
+        </div>
+      </div>
+      <div class="bg-amber-50/60 border border-amber-200 rounded-lg p-4 text-sm text-stone-700">
+        <strong class="text-amber-800">The pattern:</strong> all variants of Bāʾ share the same little dot below and the same general shape — the body just stretches differently depending on which side connects.
+      </div>
+    `
+  },
+  {
+    title: "All 28 letters in their forms",
+    icon: "📋",
+    body: `
+      <p class="text-gray-700 mb-4">The full reference table. Read the rows and notice how the underlying shape stays — only the connecting strokes vary.</p>
+      <div class="overflow-x-auto bg-white border border-amber-200 rounded-xl">
+        <table class="form-table">
+          <thead>
+            <tr>
+              <th>Name</th><th>Isolated</th><th>Initial</th><th>Medial</th><th>Final</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${forms.map(f => `
+              <tr class="${f.connects ? '' : 'non-conn'}">
+                <td class="name">${f.name}</td>
+                <td class="glyph">${f.iso}</td>
+                <td class="glyph">${f.ini}</td>
+                <td class="glyph">${f.med}</td>
+                <td class="glyph">${f.fin}</td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+      </div>
+      <p class="text-gray-700 text-sm italic mt-4">Rows in red are the six non-connectors. They have only isolated and final forms — they refuse to start or sit in the middle of a connected sequence.</p>
+    `
+  },
+  {
+    title: "The 6 non-connectors revisited",
+    icon: "🔗",
+    body: `
+      <p class="text-gray-700 mb-4">These six letters break the connection chain. After any of them, the next letter starts as if it's beginning a new word — but the gap is much smaller than between actual words.</p>
+      <div class="grid grid-cols-3 sm:grid-cols-6 gap-3 mb-4">
+        ${forms.filter(f => !f.connects).map(f => `
+          <div class="position-card" style="background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%); border-color: #ec4899;">
+            <div class="position-glyph">${f.iso}</div>
+            <div class="display font-semibold text-emerald-950 mt-1">${f.name}</div>
+          </div>
+        `).join("")}
+      </div>
+      <div class="bg-white border border-amber-200 rounded-xl p-5 mb-4">
+        <p class="text-gray-700 mb-3"><strong>Example with two non-connectors:</strong> the word <strong>وَرْدَة</strong> ("rose") has both <em>wāw</em> and <em>dāl</em>.</p>
+        <div class="word-demo text-center my-3">وَرْدَة</div>
+        <p class="text-sm text-stone-600 mb-2">Reading right to left: <strong>و</strong> (wāw — non-connector) → <strong>ر</strong> (rāʾ — non-connector) → <strong>د</strong> (dāl — non-connector) → <strong>ة</strong> (tāʾ marbūṭa, a special form of tāʾ used at word endings).</p>
+        <p class="text-sm text-stone-600">Notice each letter sits visually separate — there are no smooth connections.</p>
+      </div>
+      <p class="text-gray-700 text-sm italic">When you spot one of the six, treat it as a "checkpoint" — it always finishes a piece, never a starting point for connection.</p>
+    `
+  },
+  {
+    title: "Decomposing a word",
+    icon: "🧩",
+    body: `
+      <p class="text-gray-700 mb-4">Let's read together. Take the word <strong>مُسْلِم</strong> (<em>Muslim</em>) — five letters, four connect.</p>
+      <div class="word-demo text-center my-5">مُسْلِم</div>
+      <p class="text-gray-700 mb-3">Reading right to left:</p>
+      <div class="bg-white border border-amber-200 rounded-xl p-5 mb-4">
+        <ol class="space-y-2 text-sm text-gray-800">
+          <li><strong>1.</strong> <span class="letter-pill">م</span> — <em>Mīm</em>, in <strong>initial</strong> form (مـ). It connects forward.</li>
+          <li><strong>2.</strong> <span class="letter-pill">س</span> — <em>Sīn</em>, in <strong>medial</strong> form (ـسـ). Connected on both sides.</li>
+          <li><strong>3.</strong> <span class="letter-pill">ل</span> — <em>Lām</em>, in <strong>medial</strong> form (ـلـ).</li>
+          <li><strong>4.</strong> <span class="letter-pill">م</span> — <em>Mīm</em> again, this time in <strong>final</strong> form (ـم).</li>
+        </ol>
+      </div>
+      <p class="text-gray-700 mb-3">The little marks above and below (called <em>ḥarakāt</em> — short vowels) tell you the vowels: <strong>mu-s-li-m</strong>. Module 3-3 covers them in detail.</p>
+      <div class="bg-emerald-50/80 border-l-4 border-emerald-700 p-5 rounded-r-lg">
+        <p class="text-emerald-900 text-sm"><strong>Try this:</strong> open Surah Al-Fatiha or any Arabic text. Don't try to read for meaning yet. Just trace each letter and identify whether it's in initial, medial, or final form. Patience here pays off enormously.</p>
+      </div>
+    `
+  },
+  {
+    title: "Practice — name the letter",
+    icon: "🎯",
+    body: `
+      <p class="text-gray-700 mb-4">Six letters shown in a non-isolated form. Identify which letter each one is.</p>
+      <div id="practice"></div>
+      <div id="practice-result" class="hidden mt-6 p-5 rounded-xl text-center"></div>
+      <div class="mt-4 text-center">
+        <button id="restart-practice" class="btn-secondary px-4 py-2 rounded-lg text-sm font-semibold">New round</button>
+      </div>
+    `,
+    isPractice: true
+  },
+  {
+    title: "Quick check",
+    icon: "✍️",
+    body: `
+      <p class="text-gray-700 mb-6">Five questions on letter forms.</p>
+      <div id="quiz"></div>
+      <div id="quiz-result" class="hidden mt-6 p-6 rounded-xl text-center"></div>
+    `,
+    isQuiz: true
+  },
+  {
+    title: "Wrap-up",
+    icon: "✨",
+    body: `
+      <p class="text-gray-700 mb-4">You can now read the same letter in any of its four forms. This is the biggest hurdle — and you just cleared it.</p>
+      <div class="bg-gradient-to-r from-emerald-50 to-amber-50 border border-amber-300 rounded-xl p-6 text-center my-6">
+        <div class="arabic text-2xl text-emerald-900 mb-1">عَلَّمَ بِٱلْقَلَمِ</div>
+        <div class="text-sm italic text-stone-600 mb-4">"He taught by the pen." — Quran 96:4</div>
+        <div class="text-sm text-gray-700">Hit <strong>Finish</strong> to mark this module complete.</div>
+        <div class="text-sm text-gray-700 mt-2">Next: <strong>Module 3-3: Short Vowels &amp; Sukun</strong> — the small marks that tell you how to pronounce a word.</div>
+      </div>
+      <div class="text-center text-sm">
+        <a href="index.html" class="text-emerald-800 underline font-semibold">Back to curriculum →</a>
+      </div>
+    `
+  }
+];
+
+const quizQuestions = [
+  { q: "How many forms can an Arabic letter take?", choices: ["One", "Two", "Up to four", "Up to ten"], answer: 2 },
+  { q: "Which form does a letter take when it stands alone?", choices: ["Isolated", "Initial", "Medial", "Final"], answer: 0 },
+  { q: "How many letters lack initial and medial forms?", choices: ["Three", "Four", "Six", "All of them"], answer: 2 },
+  { q: "ـبـ is the…", choices: ["Isolated form", "Initial form", "Medial form", "Final form"], answer: 2 },
+  { q: "When you see a non-connector mid-word, the letter after it…", choices: ["Connects to it", "Starts fresh in initial form", "Becomes silent", "Switches to a vowel"], answer: 1 }
+];
+
+let currentStep = 0; let quizScore = 0; let quizAnswered = new Set();
+let practiceQuestions = []; let practiceScore = 0; let practiceAnswered = new Set();
+
+const nav = document.getElementById("step-nav");
+const container = document.getElementById("step-container");
+const stepNum = document.getElementById("step-num");
+const stepTotal = document.getElementById("step-total");
+const prevBtn = document.getElementById("prev-step");
+const nextBtn = document.getElementById("next-step");
+stepTotal.textContent = steps.length;
+
+function shuffled(arr) { const a = arr.slice(); for (let i = a.length-1; i>0; i--) { const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+
+function renderPractice() {
+  practiceScore = 0; practiceAnswered = new Set();
+  const positions = ["ini", "med", "fin"];
+  const connectors = forms.filter(f => f.connects);
+  practiceQuestions = shuffled(connectors).slice(0, 6).map(f => {
+    const pos = positions[Math.floor(Math.random() * 3)];
+    const wrongs = shuffled(forms.filter(x => x.name !== f.name)).slice(0, 3).map(x => x.name);
+    const choices = shuffled([f.name, ...wrongs]);
+    return { letter: f, position: pos, glyph: f[pos], choices, answer: choices.indexOf(f.name) };
+  });
+  const el = document.getElementById("practice");
+  if (!el) return;
+  el.innerHTML = practiceQuestions.map((q, i) => `
+    <div class="mb-5 p-5 bg-white border border-amber-200 rounded-xl">
+      <div class="flex items-center gap-4 mb-3">
+        <div class="position-glyph" style="font-size: 3rem;">${q.glyph}</div>
+        <div class="text-stone-600 text-sm">Letter ${i+1} of 6 — shown in <em>${q.position === 'ini' ? 'initial' : q.position === 'med' ? 'medial' : 'final'}</em> position. What is its name?</div>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-2" data-pi="${i}">
+        ${q.choices.map((c, ci) => `<button class="choice" data-c="${ci}">${c}</button>`).join("")}
+      </div>
+    </div>
+  `).join("");
+  document.getElementById("practice-result").classList.add("hidden");
+  el.querySelectorAll(".choice").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const group = btn.closest("[data-pi]"); const pi = parseInt(group.dataset.pi);
+      if (practiceAnswered.has(pi)) return;
+      const choice = parseInt(btn.dataset.c); const correct = practiceQuestions[pi].answer;
+      practiceAnswered.add(pi);
+      group.querySelectorAll(".choice").forEach((b, i) => { b.disabled = true; if (i === correct) b.classList.add("correct"); else if (i === choice) b.classList.add("wrong"); });
+      if (choice === correct) practiceScore++;
+      if (practiceAnswered.size === 6) {
+        const r = document.getElementById("practice-result"); r.classList.remove("hidden");
+        const pct = practiceScore / 6;
+        let msg, color;
+        if (pct === 1) { msg = "Six for six. You see the shapes."; color = "bg-emerald-100 text-emerald-900"; }
+        else if (pct >= 0.5) { msg = `${practiceScore} of 6.`; color = "bg-emerald-100 text-emerald-900"; }
+        else { msg = `${practiceScore} of 6 — review the form table.`; color = "bg-amber-100 text-amber-900"; }
+        r.className = "mt-6 p-5 rounded-xl text-center " + color;
+        r.innerHTML = `<div class="text-3xl font-bold mb-1">${practiceScore} / 6</div><div class="text-sm">${msg}</div>`;
+      }
+    });
+  });
+  document.getElementById("restart-practice").addEventListener("click", renderPractice);
+}
+
+function renderQuiz() {
+  const quizEl = document.getElementById("quiz"); if (!quizEl) return;
+  quizScore = 0; quizAnswered = new Set();
+  quizEl.innerHTML = quizQuestions.map((q, qi) => `
+    <div class="mb-5 p-5 bg-white border border-amber-200 rounded-xl">
+      <div class="font-semibold text-gray-800 mb-3">${qi + 1}. ${q.q}</div>
+      <div class="grid gap-2" data-qindex="${qi}">${q.choices.map((c, ci) => `<button class="choice" data-choice="${ci}">${c}</button>`).join("")}</div>
+    </div>`).join("");
+  quizEl.querySelectorAll(".choice").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const group = btn.closest("[data-qindex]"); const qi = parseInt(group.dataset.qindex);
+      if (quizAnswered.has(qi)) return;
+      const choice = parseInt(btn.dataset.choice); const correct = quizQuestions[qi].answer;
+      quizAnswered.add(qi);
+      group.querySelectorAll(".choice").forEach((b, i) => { b.disabled = true; if (i === correct) b.classList.add("correct"); else if (i === choice) b.classList.add("wrong"); });
+      if (choice === correct) quizScore++;
+      if (quizAnswered.size === quizQuestions.length) showResult();
+    });
+  });
+}
+function showResult() {
+  const r = document.getElementById("quiz-result"); r.classList.remove("hidden");
+  const pct = quizScore / quizQuestions.length;
+  let msg, color;
+  if (pct === 1) { msg = "Perfect."; color = "bg-emerald-100 text-emerald-900"; }
+  else if (pct >= 0.6) { msg = "Solid."; color = "bg-emerald-100 text-emerald-900"; }
+  else { msg = "Review the form table."; color = "bg-amber-100 text-amber-900"; }
+  r.className = "mt-6 p-6 rounded-xl text-center " + color;
+  r.innerHTML = `<div class="text-4xl font-bold mb-2">${quizScore} / ${quizQuestions.length}</div><div>${msg}</div>`;
+}
+
+function render() {
+  nav.innerHTML = steps.map((s, i) => `<button class="step-btn w-full text-left px-3 py-2 rounded-lg border border-transparent text-sm hover:bg-amber-50 ${i === currentStep ? 'active' : ''}" data-i="${i}"><span class="mr-2">${s.icon}</span>${s.title}</button>`).join("");
+  container.innerHTML = `<article class="article-card shadow-sm p-8"><div class="flex items-center gap-4 mb-6 pb-4 border-b border-amber-100"><div class="text-5xl">${steps[currentStep].icon}</div><div><div class="text-xs text-amber-700 font-semibold uppercase tracking-widest">Step ${currentStep + 1}</div><h2 class="display text-3xl text-emerald-950 font-semibold">${steps[currentStep].title}</h2></div></div><div>${steps[currentStep].body}</div></article>`;
+  stepNum.textContent = currentStep + 1; prevBtn.disabled = currentStep === 0;
+  nextBtn.textContent = currentStep === steps.length - 1 ? "Finish" : "Next →";
+  if (steps[currentStep].isPractice) renderPractice();
+  if (steps[currentStep].isQuiz) renderQuiz();
+  nav.querySelectorAll(".step-btn").forEach(b => { b.addEventListener("click", () => { currentStep = parseInt(b.dataset.i); render(); }); });
+}
+
+const MODULE_ID = "3-2"; const STORAGE_KEY = "islamapp-progress-v1";
+function loadProgress() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; } }
+function markInProgress() { const p = loadProgress(); if (p[MODULE_ID] !== "done") { p[MODULE_ID] = "inprogress"; localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); } }
+function markComplete() { const p = loadProgress(); p[MODULE_ID] = "done"; localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); }
+
+prevBtn.addEventListener("click", () => { if (currentStep > 0) { currentStep--; render(); } });
+nextBtn.addEventListener("click", () => { if (currentStep < steps.length - 1) { currentStep++; render(); } else { markComplete(); window.location.href = "index.html"; } });
+
+document.addEventListener("keydown", (e) => {
+  if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.isContentEditable) return;
+  if (e.key === "ArrowLeft" && !prevBtn.disabled) prevBtn.click();
+  else if (e.key === "ArrowRight") nextBtn.click();
+});
+
+markInProgress(); render();
+</script>
+
+</body>
+</html>

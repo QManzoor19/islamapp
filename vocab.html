@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Core Vocabulary — IslamApp</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>(function(){try{if(localStorage.getItem('islamapp-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
+<link rel="stylesheet" href="theme.css">
+<script src="theme.js" defer></script>
+<style>
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #faf6ed;
+    color: #1c2d20;
+    background-image:
+      radial-gradient(circle at 10% 10%, rgba(201,169,97,0.08) 0%, transparent 40%),
+      radial-gradient(circle at 90% 90%, rgba(6,78,59,0.06) 0%, transparent 40%);
+    background-attachment: fixed;
+  }
+  .arabic { font-family: 'Amiri', serif; direction: rtl; line-height: 1.6; }
+  .display { font-family: 'Cormorant Garamond', serif; }
+  .geo-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23064e3b' fill-opacity='0.05'%3E%3Cpath d='M30 0l7.5 22.5H60L41.25 37.5l7.5 22.5L30 45l-18.75 15 7.5-22.5L0 22.5h22.5z'/%3E%3C/g%3E%3C/svg%3E");
+  }
+  .step-btn.active { background: #064e3b; color: #faf6ed; border-color: #c9a961; }
+  .gold-line { height: 1px; background: linear-gradient(to right, transparent, #c9a961, transparent); }
+  .btn-primary {
+    background: linear-gradient(135deg, #064e3b 0%, #022c22 100%);
+    color: #faf6ed;
+    border: 1px solid #c9a961;
+  }
+  .btn-primary:hover { background: linear-gradient(135deg, #0f766e 0%, #064e3b 100%); }
+  .btn-secondary {
+    background: #fff;
+    border: 1px solid #c9a961;
+    color: #064e3b;
+  }
+  .btn-secondary:hover { background: #faf6ed; }
+  .article-card {
+    background: #fff;
+    border: 1px solid rgba(201,169,97,0.4);
+    border-radius: 14px 14px 6px 6px;
+  }
+  .article-card::before {
+    content: '';
+    display: block;
+    height: 12px;
+    margin: -1px -1px 0 -1px;
+    background: linear-gradient(180deg, rgba(201,169,97,0.25), transparent);
+    border-radius: 14px 14px 0 0;
+    border-bottom: 1px solid rgba(201,169,97,0.25);
+  }
+  .vocab-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    background: #fff;
+    border: 1px solid rgba(201,169,97,0.25);
+    align-items: center;
+  }
+  .vocab-row + .vocab-row { margin-top: 0.5rem; }
+
+  /* Flashcards */
+  .flashcard {
+    perspective: 1000px;
+    cursor: pointer;
+    height: 150px;
+  }
+  .flashcard-inner {
+    position: relative;
+    width: 100%; height: 100%;
+    transition: transform 0.5s;
+    transform-style: preserve-3d;
+  }
+  .flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
+  .flashcard-face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+  }
+  .flashcard-front {
+    background: #fff;
+    border: 1px solid rgba(201,169,97,0.4);
+  }
+  .flashcard-back {
+    transform: rotateY(180deg);
+    background: linear-gradient(135deg, #064e3b 0%, #0f766e 100%);
+    color: #faf6ed;
+    border: 1px solid #c9a961;
+  }
+  .flashcard-front::after {
+    content: 'tap to flip';
+    position: absolute;
+    bottom: 8px;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #c9a961;
+  }
+  .flashcard.known .flashcard-front { background: #d1fae5; border-color: #059669; }
+
+  /* Matching game */
+  .match-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
+  @media (min-width: 640px) { .match-grid { grid-template-columns: repeat(4, 1fr); } }
+  .match-card {
+    padding: 0.85rem 0.75rem;
+    border-radius: 10px;
+    background: #fff;
+    border: 2px solid #e7e5e4;
+    cursor: pointer;
+    font-size: 0.85rem;
+    text-align: center;
+    transition: all 0.15s ease;
+    min-height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .match-card:hover { border-color: #c9a961; }
+  .match-card.selected { background: #fef3c7; border-color: #c9a961; }
+  .match-card.matched { opacity: 0.25; pointer-events: none; }
+  .match-card.wrong { background: #fee2e2; border-color: #dc2626; animation: shake 0.3s; }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    75% { transform: translateX(4px); }
+  }
+  .match-arabic { font-family: 'Amiri', serif; font-size: 1.1rem; }
+
+  .choice {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border: 2px solid #e7e5e4;
+    border-radius: 8px;
+    background: #fff;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    font: inherit;
+    width: 100%;
+  }
+  .choice:hover { background: #ecfdf5; border-color: #059669; }
+  .choice.correct { background: #d1fae5; border-color: #059669; color: #064e3b; }
+  .choice.wrong { background: #fee2e2; border-color: #dc2626; color: #7f1d1d; }
+  .choice:disabled { cursor: default; }
+</style>
+</head>
+<body class="geo-pattern min-h-screen">
+
+<div class="max-w-6xl mx-auto px-6 py-10">
+
+  <nav class="flex justify-between items-center mb-6">
+    <a href="index.html" class="text-emerald-900 hover:text-amber-700 text-sm font-semibold">← Curriculum</a>
+    <div class="text-xs uppercase tracking-[0.25em] text-amber-700 font-semibold hidden sm:block">Tier 1 · Module 1-3</div>
+    <div class="text-sm text-stone-500"><span id="step-num">1</span> / <span id="step-total">10</span></div>
+  </nav>
+
+  <header class="text-center mb-8">
+    <div class="gold-line mb-4 max-w-[180px] mx-auto"></div>
+    <div class="arabic text-3xl text-emerald-900 mb-2">المُفْرَدَات الأَسَاسِيَّة</div>
+    <h1 class="display text-4xl md:text-5xl text-emerald-950 font-semibold">Core Vocabulary</h1>
+    <div class="gold-line mt-4 max-w-[180px] mx-auto"></div>
+  </header>
+
+  <div class="grid md:grid-cols-[220px_1fr] gap-6">
+
+    <aside class="md:sticky md:top-6 md:self-start">
+      <div class="article-card p-3 shadow-sm">
+        <div class="text-xs uppercase tracking-wider text-amber-700 font-semibold mb-2 px-2">Steps</div>
+        <nav id="step-nav" class="space-y-1"></nav>
+      </div>
+    </aside>
+
+    <main id="step-container"></main>
+
+  </div>
+
+  <div class="flex justify-between mt-8 gap-4">
+    <button id="prev-step" class="btn-secondary flex-1 md:flex-none px-6 py-3 rounded-lg font-semibold disabled:opacity-30 disabled:cursor-not-allowed">← Previous</button>
+    <button id="next-step" class="btn-primary flex-1 md:flex-none px-6 py-3 rounded-lg font-semibold">Next →</button>
+  </div>
+
+</div>
+
+<script>
+const vocab = [
+  { ar: "اللَّه", roman: "Allah", meaning: "God", cat: "faith", note: "The proper name of God in Arabic — also used by Arab Christians and Jews." },
+  { ar: "الإِسْلَام", roman: "Islām", meaning: "Submission to God", cat: "faith", note: "The religion. Same root as the word for peace." },
+  { ar: "الإِيمَان", roman: "Īmān", meaning: "Faith", cat: "faith", note: "Inward belief — the six articles." },
+  { ar: "التَّوْحِيد", roman: "Tawḥīd", meaning: "Oneness of God", cat: "faith", note: "Islam's central doctrine." },
+  { ar: "الشَّهَادَة", roman: "Shahāda", meaning: "Declaration of faith", cat: "faith", note: "The first pillar — saying it enters one into Islam." },
+
+  { ar: "الصَّلَاة", roman: "Ṣalāh", meaning: "Prayer", cat: "worship", note: "The five daily formal prayers." },
+  { ar: "الزَّكَاة", roman: "Zakāh", meaning: "Almsgiving", cat: "worship", note: "Annual obligatory 2.5% of saved wealth." },
+  { ar: "الصَّوْم", roman: "Ṣawm", meaning: "Fasting", cat: "worship", note: "Especially during Ramadan." },
+  { ar: "الحَجّ", roman: "Ḥajj", meaning: "Pilgrimage", cat: "worship", note: "Once-in-a-lifetime journey to Mecca." },
+  { ar: "الوُضُوء", roman: "Wuḍūʾ", meaning: "Ablution", cat: "worship", note: "Ritual washing before prayer." },
+  { ar: "الدُّعَاء", roman: "Duʿāʾ", meaning: "Supplication", cat: "worship", note: "Personal prayer in your own words." },
+
+  { ar: "القُرْآن", roman: "Qurʾān", meaning: "The Quran", cat: "sources", note: "Literally 'the Recitation' — the holy book." },
+  { ar: "السُّنَّة", roman: "Sunnah", meaning: "Prophetic example", cat: "sources", note: "What the Prophet ﷺ said, did, or approved." },
+  { ar: "الحَدِيث", roman: "Ḥadīth", meaning: "Prophetic report", cat: "sources", note: "A single recorded saying or action of the Prophet." },
+  { ar: "الحَلَال", roman: "Ḥalāl", meaning: "Permissible", cat: "sources", note: "What Islamic law allows." },
+  { ar: "الحَرَام", roman: "Ḥarām", meaning: "Forbidden", cat: "sources", note: "What Islamic law prohibits." },
+
+  { ar: "المُسْلِم", roman: "Muslim", meaning: "One who submits", cat: "people", note: "A follower of Islam." },
+  { ar: "النَّبِي", roman: "Nabī", meaning: "Prophet", cat: "people", note: "Anyone given prophecy from God." },
+  { ar: "الرَّسُول", roman: "Rasūl", meaning: "Messenger", cat: "people", note: "A prophet sent with a new scripture or law." },
+  { ar: "الصَّحَابِي", roman: "Ṣaḥābī", meaning: "Companion", cat: "people", note: "A direct companion of the Prophet ﷺ." },
+  { ar: "الأُمَّة", roman: "Umma", meaning: "Community", cat: "people", note: "The global body of Muslims." },
+
+  { ar: "بِسْمِ اللَّه", roman: "Bismillāh", meaning: "In the name of God", cat: "phrase", note: "Said before any beginning." },
+  { ar: "الحَمْدُ لِلَّه", roman: "Alḥamdulillāh", meaning: "All praise to God", cat: "phrase", note: "Said in gratitude or after finishing." },
+  { ar: "اللَّهُ أَكْبَر", roman: "Allāhu akbar", meaning: "God is the greatest", cat: "phrase", note: "The opening and punctuation of prayer." },
+  { ar: "إِنْ شَاءَ اللَّه", roman: "InshāʾAllāh", meaning: "If God wills", cat: "phrase", note: "Said about anything in the future." },
+  { ar: "السَّلَامُ عَلَيْكُمْ", roman: "As-salāmu ʿalaykum", meaning: "Peace be upon you", cat: "phrase", note: "The standard greeting." }
+];
+
+function vocabRows(category) {
+  return vocab.filter(v => v.cat === category).map(v => `
+    <div class="vocab-row">
+      <div class="arabic text-2xl text-emerald-900">${v.ar}</div>
+      <div>
+        <div class="display text-base font-semibold text-emerald-950">${v.roman}</div>
+        <div class="text-sm text-stone-700">${v.meaning}</div>
+      </div>
+      <div class="text-xs text-stone-600 italic">${v.note}</div>
+    </div>
+  `).join("");
+}
+
+const steps = [
+  {
+    title: "Why vocabulary?",
+    icon: "🔤",
+    body: `
+      <p class="text-gray-700 mb-4 text-lg">Islam comes with a small but specific Arabic lexicon. The same words appear in lectures, books, casual conversation, prayer, and the Quran — and once you know them, the fog lifts.</p>
+      <p class="text-gray-700 mb-4">This module teaches the <strong>26 most essential terms</strong>, grouped into five categories. Each category has its own step. After that, two interactive drills (flashcards and a matching game) move them from "I have seen this before" to "I know what this means without thinking."</p>
+      <div class="bg-emerald-50/80 border-l-4 border-emerald-700 p-5 rounded-r-lg my-5">
+        <p class="text-emerald-900 text-sm">If you want a longer reference list, the <a href="keywords.html" class="underline font-semibold">Keywords page</a> in the Library has 60+ terms with category filters. This module is the curated starter set.</p>
+      </div>
+      <p class="text-gray-700 text-sm italic">Note on transliteration: Arabic letters with diacritical marks (ʿ, ḥ, ṣ) represent specific sounds that English letters do not have. You will start to hear the difference as you go — for now, treat them as the closest English equivalent.</p>
+    `
+  },
+  {
+    title: "Faith & Foundation",
+    icon: "✦",
+    body: `
+      <p class="text-gray-700 mb-4">The five terms naming the religion itself, its central doctrine, and its entry point.</p>
+      <div class="space-y-2">${vocabRows("faith")}</div>
+    `
+  },
+  {
+    title: "Worship & Practice",
+    icon: "🕌",
+    body: `
+      <p class="text-gray-700 mb-4">Six terms for the things a Muslim <em>does</em>.</p>
+      <div class="space-y-2">${vocabRows("worship")}</div>
+    `
+  },
+  {
+    title: "Sources & Law",
+    icon: "📜",
+    body: `
+      <p class="text-gray-700 mb-4">Five terms for the texts and the legal categories they generate.</p>
+      <div class="space-y-2">${vocabRows("sources")}</div>
+    `
+  },
+  {
+    title: "People & Community",
+    icon: "👥",
+    body: `
+      <p class="text-gray-700 mb-4">Five terms for the kinds of people the tradition talks about.</p>
+      <div class="space-y-2">${vocabRows("people")}</div>
+    `
+  },
+  {
+    title: "Daily Phrases",
+    icon: "💬",
+    body: `
+      <p class="text-gray-700 mb-4">Five short phrases you will hear constantly. Memorize these and you can already follow most casual Muslim speech.</p>
+      <div class="space-y-2">${vocabRows("phrase")}</div>
+    `
+  },
+  {
+    title: "Flashcards",
+    icon: "🎴",
+    body: `
+      <p class="text-gray-700 mb-4">Click any card to flip it. Click again to flip it back. Use this to drill until each term is automatic.</p>
+      <div class="flex gap-2 mb-5">
+        <button id="shuffle-btn" class="btn-secondary px-4 py-2 rounded-lg text-sm font-semibold">Shuffle</button>
+        <button id="flip-all-btn" class="btn-secondary px-4 py-2 rounded-lg text-sm font-semibold">Flip All</button>
+        <button id="reset-fc-btn" class="btn-secondary px-4 py-2 rounded-lg text-sm font-semibold">Reset</button>
+      </div>
+      <div id="flashcards" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+    `,
+    isFlashcards: true
+  },
+  {
+    title: "Matching game",
+    icon: "🧩",
+    body: `
+      <p class="text-gray-700 mb-3">Eight pairs. Click any two cards — one Arabic, one English. If they match, both fade. If not, they reset.</p>
+      <div class="flex items-center gap-4 mb-5">
+        <div class="text-sm text-stone-700">Pairs found: <span id="match-count" class="font-bold text-emerald-900">0</span> / 8</div>
+        <button id="restart-match-btn" class="btn-secondary px-4 py-2 rounded-lg text-sm font-semibold ml-auto">Restart</button>
+      </div>
+      <div id="match-grid" class="match-grid"></div>
+      <div id="match-result" class="hidden mt-6 p-5 rounded-xl text-center bg-emerald-100 text-emerald-900">
+        <div class="text-3xl font-bold mb-1">All matched.</div>
+        <div class="text-sm">Tries: <span id="match-tries">0</span></div>
+      </div>
+    `,
+    isMatch: true
+  },
+  {
+    title: "Quick check",
+    icon: "✍️",
+    body: `
+      <p class="text-gray-700 mb-6">Eight questions across all five categories.</p>
+      <div id="quiz"></div>
+      <div id="quiz-result" class="hidden mt-6 p-6 rounded-xl text-center"></div>
+    `,
+    isQuiz: true
+  },
+  {
+    title: "Wrap-up",
+    icon: "✨",
+    body: `
+      <p class="text-gray-700 mb-4">You now hold 26 of the most-used Arabic terms in Islam. Anything you read or hear from this point will be easier to parse.</p>
+      <div class="bg-white border border-amber-200 rounded-xl p-5 mb-4">
+        <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold mb-3">Suggested practice</div>
+        <ul class="space-y-2 text-sm text-gray-700">
+          <li>· Come back to the flashcards once a day for a week. Even five minutes is enough.</li>
+          <li>· When you encounter one of these words in the wild — a podcast, a YouTube khutbah, a friend speaking — pause and translate it in your head.</li>
+          <li>· The <a href="keywords.html" class="underline text-emerald-800 font-semibold">Keywords page</a> has 60+ terms when you are ready for more.</li>
+        </ul>
+      </div>
+      <div class="bg-gradient-to-r from-emerald-50 to-amber-50 border border-amber-300 rounded-xl p-6 text-center my-6">
+        <div class="arabic text-2xl text-emerald-900 mb-1">رَّبِّ زِدْنِي عِلْمًا</div>
+        <div class="text-sm italic text-stone-600 mb-4">Rabbi zidnī ʿilmā — "My Lord, increase me in knowledge."</div>
+        <div class="text-sm text-gray-700">Hit <strong>Finish</strong> below to mark this module complete and continue to <strong>Module 1-4: The Islamic Calendar</strong>.</div>
+      </div>
+      <div class="text-center text-sm">
+        <a href="index.html" class="text-emerald-800 underline font-semibold">Back to curriculum →</a>
+      </div>
+    `
+  }
+];
+
+const quizQuestions = [
+  { q: "What does <em>Tawḥīd</em> mean?", choices: ["Pilgrimage", "Oneness of God", "Permissible", "Community"], answer: 1 },
+  { q: "Which is the obligatory annual almsgiving?", choices: ["Ṣalāh", "Ṣawm", "Zakāh", "Wuḍūʾ"], answer: 2 },
+  { q: "<em>Sunnah</em> refers to…", choices: ["The holy book", "The prophetic example", "The mosque", "Forbidden things"], answer: 1 },
+  { q: "A <em>Rasūl</em> is…", choices: ["Any Muslim", "A companion of the Prophet", "A messenger — a prophet given a new scripture", "A scholar"], answer: 2 },
+  { q: "Which phrase is the standard greeting?", choices: ["Bismillāh", "Alḥamdulillāh", "Allāhu akbar", "As-salāmu ʿalaykum"], answer: 3 },
+  { q: "<em>Ḥarām</em> means…", choices: ["Permissible", "Forbidden", "Recommended", "Obligatory"], answer: 1 },
+  { q: "What is <em>Wuḍūʾ</em>?", choices: ["The pilgrimage", "Ritual ablution before prayer", "Memorization of the Quran", "The five daily prayers"], answer: 1 },
+  { q: "<em>Umma</em> refers to…", choices: ["The global Muslim community", "A class of angels", "The Quran's chapters", "A type of prayer"], answer: 0 }
+];
+
+let currentStep = 0;
+let quizScore = 0;
+let quizAnswered = new Set();
+
+const nav = document.getElementById("step-nav");
+const container = document.getElementById("step-container");
+const stepNum = document.getElementById("step-num");
+const stepTotal = document.getElementById("step-total");
+const prevBtn = document.getElementById("prev-step");
+const nextBtn = document.getElementById("next-step");
+
+stepTotal.textContent = steps.length;
+
+function shuffled(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+// ───────── Flashcards ─────────
+let fcOrder = vocab.slice();
+
+function renderFlashcards() {
+  const el = document.getElementById("flashcards");
+  if (!el) return;
+  el.innerHTML = fcOrder.map((v, i) => `
+    <div class="flashcard" data-i="${i}">
+      <div class="flashcard-inner">
+        <div class="flashcard-face flashcard-front">
+          <div class="arabic text-3xl text-emerald-900 mb-1">${v.ar}</div>
+          <div class="display text-lg text-emerald-950 font-semibold">${v.roman}</div>
+        </div>
+        <div class="flashcard-face flashcard-back">
+          <div class="display text-2xl font-semibold mb-1">${v.meaning}</div>
+          <div class="text-xs italic opacity-90 px-2">${v.note}</div>
+        </div>
+      </div>
+    </div>
+  `).join("");
+  el.querySelectorAll(".flashcard").forEach(card => {
+    card.addEventListener("click", () => card.classList.toggle("flipped"));
+  });
+
+  document.getElementById("shuffle-btn").addEventListener("click", () => { fcOrder = shuffled(fcOrder); renderFlashcards(); });
+  document.getElementById("flip-all-btn").addEventListener("click", () => {
+    const allFlipped = el.querySelectorAll(".flashcard:not(.flipped)").length === 0;
+    el.querySelectorAll(".flashcard").forEach(c => c.classList.toggle("flipped", !allFlipped));
+  });
+  document.getElementById("reset-fc-btn").addEventListener("click", () => { fcOrder = vocab.slice(); renderFlashcards(); });
+}
+
+// ───────── Matching game ─────────
+let matchSelected = null;
+let matchPairs = 0;
+let matchTries = 0;
+
+function renderMatch() {
+  const el = document.getElementById("match-grid");
+  if (!el) return;
+  matchSelected = null;
+  matchPairs = 0;
+  matchTries = 0;
+  document.getElementById("match-count").textContent = "0";
+  document.getElementById("match-result").classList.add("hidden");
+
+  const picks = shuffled(vocab).slice(0, 8);
+  const cards = [];
+  picks.forEach((v, i) => {
+    cards.push({ id: i, type: "ar", text: v.ar, isArabic: true });
+    cards.push({ id: i, type: "en", text: v.meaning, isArabic: false });
+  });
+  const shuffledCards = shuffled(cards);
+
+  el.innerHTML = shuffledCards.map((c, idx) => `
+    <div class="match-card ${c.isArabic ? 'match-arabic text-emerald-900' : ''}" data-id="${c.id}" data-type="${c.type}" data-idx="${idx}">
+      ${c.text}
+    </div>
+  `).join("");
+
+  el.querySelectorAll(".match-card").forEach(card => {
+    card.addEventListener("click", () => handleMatchClick(card));
+  });
+
+  document.getElementById("restart-match-btn").addEventListener("click", renderMatch);
+}
+
+function handleMatchClick(card) {
+  if (card.classList.contains("matched") || card.classList.contains("selected")) return;
+
+  if (!matchSelected) {
+    matchSelected = card;
+    card.classList.add("selected");
+    return;
+  }
+
+  matchTries++;
+  if (matchSelected.dataset.id === card.dataset.id && matchSelected.dataset.type !== card.dataset.type) {
+    matchSelected.classList.remove("selected");
+    matchSelected.classList.add("matched");
+    card.classList.add("matched");
+    matchSelected = null;
+    matchPairs++;
+    document.getElementById("match-count").textContent = matchPairs;
+    if (matchPairs === 8) {
+      const r = document.getElementById("match-result");
+      r.classList.remove("hidden");
+      document.getElementById("match-tries").textContent = matchTries;
+    }
+  } else {
+    const a = matchSelected, b = card;
+    a.classList.remove("selected");
+    a.classList.add("wrong");
+    b.classList.add("wrong");
+    matchSelected = null;
+    setTimeout(() => { a.classList.remove("wrong"); b.classList.remove("wrong"); }, 400);
+  }
+}
+
+// ───────── Quiz ─────────
+function renderQuiz() {
+  const quizEl = document.getElementById("quiz");
+  if (!quizEl) return;
+  quizScore = 0;
+  quizAnswered = new Set();
+  quizEl.innerHTML = quizQuestions.map((q, qi) => `
+    <div class="mb-5 p-5 bg-white border border-amber-200 rounded-xl">
+      <div class="font-semibold text-gray-800 mb-3">${qi + 1}. ${q.q}</div>
+      <div class="grid gap-2" data-qindex="${qi}">
+        ${q.choices.map((c, ci) => `
+          <button class="choice" data-choice="${ci}">${c}</button>
+        `).join("")}
+      </div>
+    </div>
+  `).join("");
+
+  quizEl.querySelectorAll(".choice").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const group = btn.closest("[data-qindex]");
+      const qi = parseInt(group.dataset.qindex);
+      if (quizAnswered.has(qi)) return;
+      const choice = parseInt(btn.dataset.choice);
+      const correct = quizQuestions[qi].answer;
+      quizAnswered.add(qi);
+      group.querySelectorAll(".choice").forEach((b, i) => {
+        b.disabled = true;
+        if (i === correct) b.classList.add("correct");
+        else if (i === choice) b.classList.add("wrong");
+      });
+      if (choice === correct) quizScore++;
+      if (quizAnswered.size === quizQuestions.length) showQuizResult();
+    });
+  });
+}
+
+function showQuizResult() {
+  const r = document.getElementById("quiz-result");
+  r.classList.remove("hidden");
+  const pct = quizScore / quizQuestions.length;
+  let msg, color;
+  if (pct === 1) { msg = "Eight for eight."; color = "bg-emerald-100 text-emerald-900"; }
+  else if (pct >= 0.7) { msg = "Solid recall."; color = "bg-emerald-100 text-emerald-900"; }
+  else { msg = "Run the flashcards once more before moving on."; color = "bg-amber-100 text-amber-900"; }
+  r.className = "mt-6 p-6 rounded-xl text-center " + color;
+  r.innerHTML = `<div class="text-4xl font-bold mb-2">${quizScore} / ${quizQuestions.length}</div><div>${msg}</div>`;
+}
+
+function render() {
+  nav.innerHTML = steps.map((s, i) => `
+    <button class="step-btn w-full text-left px-3 py-2 rounded-lg border border-transparent text-sm hover:bg-amber-50 ${i === currentStep ? 'active' : ''}" data-i="${i}">
+      <span class="mr-2">${s.icon}</span>${s.title}
+    </button>
+  `).join("");
+
+  container.innerHTML = `
+    <article class="article-card shadow-sm p-8">
+      <div class="flex items-center gap-4 mb-6 pb-4 border-b border-amber-100">
+        <div class="text-5xl">${steps[currentStep].icon}</div>
+        <div>
+          <div class="text-xs text-amber-700 font-semibold uppercase tracking-widest">Step ${currentStep + 1}</div>
+          <h2 class="display text-3xl text-emerald-950 font-semibold">${steps[currentStep].title}</h2>
+        </div>
+      </div>
+      <div>${steps[currentStep].body}</div>
+    </article>
+  `;
+
+  stepNum.textContent = currentStep + 1;
+  prevBtn.disabled = currentStep === 0;
+  nextBtn.textContent = currentStep === steps.length - 1 ? "Finish" : "Next →";
+
+  if (steps[currentStep].isFlashcards) renderFlashcards();
+  if (steps[currentStep].isMatch) renderMatch();
+  if (steps[currentStep].isQuiz) renderQuiz();
+
+  nav.querySelectorAll(".step-btn").forEach(b => {
+    b.addEventListener("click", () => {
+      currentStep = parseInt(b.dataset.i);
+      render();
+         });
+  });
+}
+
+const MODULE_ID = "1-3";
+const STORAGE_KEY = "islamapp-progress-v1";
+function loadProgress() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
+  catch { return {}; }
+}
+function markInProgress() {
+  const p = loadProgress();
+  if (p[MODULE_ID] !== "done") { p[MODULE_ID] = "inprogress"; localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); }
+}
+function markComplete() {
+  const p = loadProgress();
+  p[MODULE_ID] = "done";
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(p));
+}
+
+prevBtn.addEventListener("click", () => {
+  if (currentStep > 0) { currentStep--; render(); window.scrollTo({ top: 0, behavior: "smooth" }); }
+});
+nextBtn.addEventListener("click", () => {
+  if (currentStep < steps.length - 1) { currentStep++; render(); window.scrollTo({ top: 0, behavior: "smooth" }); }
+  else { markComplete(); window.location.href = "index.html"; }
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.isContentEditable) return;
+  if (e.key === "ArrowLeft" && !prevBtn.disabled) prevBtn.click();
+  else if (e.key === "ArrowRight") nextBtn.click();
+});
+
+markInProgress();
+render();
+</script>
+
+</body>
+</html>
