@@ -30,7 +30,8 @@
   .verse-card { background: #fff; border: 1px solid rgba(201,169,97,0.3); border-radius: 12px; padding: 1.25rem; transition: all 0.2s ease; }
   .verse-card:hover { border-color: #c9a961; transform: translateY(-2px); box-shadow: 0 10px 20px -8px rgba(6,78,59,0.2); }
   .verse-arabic { font-family: 'Amiri', serif; direction: rtl; font-size: 1.35rem; color: #064e3b; line-height: 1.9; margin-bottom: 0.75rem; text-align: center; }
-  .verse-english { color: #1f2937; font-size: 0.95rem; line-height: 1.6; margin-bottom: 0.75rem; }
+  .verse-english { color: #1f2937; font-size: 0.95rem; line-height: 1.6; margin-bottom: 0.75rem; font-style: italic; }
+  .verse-note { font-size: 0.85rem; color: #4b5563; line-height: 1.6; padding-top: 0.75rem; margin-top: 0.5rem; margin-bottom: 0.75rem; border-top: 1px solid rgba(201,169,97,0.2); }
   .verse-ref { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: #a8863f; font-weight: 700; }
   .topic-pill { display: inline-block; padding: 2px 10px; border-radius: 999px; background: rgba(6,78,59,0.1); color: #064e3b; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; margin-bottom: 0.5rem; }
   .filter-bar { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1.5rem 0 1rem; }
@@ -79,64 +80,84 @@
 <script>
 const verses = [
   // Worship — Prayer
-  { cat: "worship", topic: "Prayer", ar: "وَأَقِيمُوا الصَّلَاةَ وَآتُوا الزَّكَاةَ وَارْكَعُوا مَعَ الرَّاكِعِينَ", en: "Establish the prayer, give the alms, and bow with those who bow.", ref: "Quran 2:43" },
-  { cat: "worship", topic: "Prayer", ar: "حَافِظُوا عَلَى الصَّلَوَاتِ وَالصَّلَاةِ الْوُسْطَىٰ", en: "Guard strictly your prayers, especially the middle prayer.", ref: "Quran 2:238" },
-  { cat: "worship", topic: "Prayer", ar: "إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَّوْقُوتًا", en: "Indeed, prayer is for the believers a decree of specified times.", ref: "Quran 4:103" },
-  { cat: "worship", topic: "Wudu", ar: "يَا أَيُّهَا الَّذِينَ آمَنُوا إِذَا قُمْتُمْ إِلَى الصَّلَاةِ فَاغْسِلُوا وُجُوهَكُمْ وَأَيْدِيَكُمْ إِلَى الْمَرَافِقِ", en: "O you who believe, when you rise for prayer, wash your faces and your arms to the elbows, wipe your heads, and wash your feet to the ankles.", ref: "Quran 5:6" },
+  { cat: "worship", topic: "Prayer", ar: "وَأَقِيمُوا الصَّلَاةَ وَآتُوا الزَّكَاةَ وَارْكَعُوا مَعَ الرَّاكِعِينَ", en: "Establish the prayer, give the alms, and bow with those who bow.", ref: "Quran 2:43",
+    note: "Three obligations in one phrase: prayer (individual worship), zakat (social duty), and 'bowing with those who bow' — pray together, in congregation, not just alone." },
+  { cat: "worship", topic: "Prayer", ar: "حَافِظُوا عَلَى الصَّلَوَاتِ وَالصَّلَاةِ الْوُسْطَىٰ", en: "Guard strictly your prayers, especially the middle prayer.", ref: "Quran 2:238",
+    note: "The 'middle prayer' is most commonly identified as ʿAsr (mid-afternoon) — the easiest one to miss during a working day. Singled out for extra attention." },
+  { cat: "worship", topic: "Prayer", ar: "إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَّوْقُوتًا", en: "Indeed, prayer is for the believers a decree of specified times.", ref: "Quran 4:103",
+    note: "Prayer is not optional or flexible in timing — the five daily prayers must each be performed within their specific window." },
+  { cat: "worship", topic: "Wudu", ar: "يَا أَيُّهَا الَّذِينَ آمَنُوا إِذَا قُمْتُمْ إِلَى الصَّلَاةِ فَاغْسِلُوا وُجُوهَكُمْ وَأَيْدِيَكُمْ إِلَى الْمَرَافِقِ", en: "O you who believe, when you rise for prayer, wash your faces and your arms to the elbows, wipe your heads, and wash your feet to the ankles.", ref: "Quran 5:6",
+    note: "The verse that establishes wudu — ritual washing before prayer. Lists the four obligatory parts; the Prophet ﷺ added the fuller method including rinsing mouth/nose and washing each part three times." },
 
   // Worship — Zakat
-  { cat: "worship", topic: "Zakat", ar: "إِنَّمَا الصَّدَقَاتُ لِلْفُقَرَاءِ وَالْمَسَاكِينِ", en: "Charity is for the poor and the needy, those employed to collect it, those whose hearts are to be reconciled, to free captives, those in debt, in the path of God, and the stranded traveler.", ref: "Quran 9:60 — the eight categories of zakat recipients" },
-  { cat: "worship", topic: "Zakat", ar: "خُذْ مِنْ أَمْوَالِهِمْ صَدَقَةً تُطَهِّرُهُمْ وَتُزَكِّيهِم بِهَا", en: "Take from their wealth a charity by which you purify and bless them.", ref: "Quran 9:103" },
+  { cat: "worship", topic: "Zakat", ar: "إِنَّمَا الصَّدَقَاتُ لِلْفُقَرَاءِ وَالْمَسَاكِينِ", en: "Charity is for the poor and the needy, those employed to collect it, those whose hearts are to be reconciled, to free captives, those in debt, in the path of God, and the stranded traveler.", ref: "Quran 9:60",
+    note: "Defines exactly who can receive zakat — eight categories, no others. Building a mosque, for example, does not count; it must go to one of these eight." },
+  { cat: "worship", topic: "Zakat", ar: "خُذْ مِنْ أَمْوَالِهِمْ صَدَقَةً تُطَهِّرُهُمْ وَتُزَكِّيهِم بِهَا", en: "Take from their wealth a charity by which you purify and bless them.", ref: "Quran 9:103",
+    note: "Zakat purifies both the wealth and the giver. The Arabic root <em>z-k-y</em> means both 'purification' and 'growth' — by giving, both increase." },
 
   // Worship — Fasting
-  { cat: "worship", topic: "Fasting", ar: "يَا أَيُّهَا الَّذِينَ آمَنُوا كُتِبَ عَلَيْكُمُ الصِّيَامُ كَمَا كُتِبَ عَلَى الَّذِينَ مِن قَبْلِكُمْ لَعَلَّكُمْ تَتَّقُونَ", en: "O you who believe, fasting is prescribed for you as it was prescribed for those before you — that you may attain God-consciousness.", ref: "Quran 2:183" },
-  { cat: "worship", topic: "Fasting", ar: "شَهْرُ رَمَضَانَ الَّذِي أُنزِلَ فِيهِ الْقُرْآنُ", en: "The month of Ramadan in which the Quran was sent down — so whoever among you witnesses the month, let him fast it.", ref: "Quran 2:185" },
+  { cat: "worship", topic: "Fasting", ar: "يَا أَيُّهَا الَّذِينَ آمَنُوا كُتِبَ عَلَيْكُمُ الصِّيَامُ كَمَا كُتِبَ عَلَى الَّذِينَ مِن قَبْلِكُمْ لَعَلَّكُمْ تَتَّقُونَ", en: "O you who believe, fasting is prescribed for you as it was prescribed for those before you — that you may attain God-consciousness.", ref: "Quran 2:183",
+    note: "Makes fasting obligatory, ties it to the practice of earlier monotheistic communities (Jews, Christians), and names the purpose: <em>taqwa</em> — protective awareness of God." },
+  { cat: "worship", topic: "Fasting", ar: "شَهْرُ رَمَضَانَ الَّذِي أُنزِلَ فِيهِ الْقُرْآنُ", en: "The month of Ramadan in which the Quran was sent down — so whoever among you witnesses the month, let him fast it.", ref: "Quran 2:185",
+    note: "Specifies which month: Ramadan, the 9th of the Islamic calendar. The verse also grants concessions to the sick and the traveler — they make up the missed days later." },
 
   // Worship — Hajj
-  { cat: "worship", topic: "Hajj", ar: "وَلِلَّهِ عَلَى النَّاسِ حِجُّ الْبَيْتِ مَنِ اسْتَطَاعَ إِلَيْهِ سَبِيلًا", en: "It is a duty owed to God by all who can find the means to make the pilgrimage to the House.", ref: "Quran 3:97" },
+  { cat: "worship", topic: "Hajj", ar: "وَلِلَّهِ عَلَى النَّاسِ حِجُّ الْبَيْتِ مَنِ اسْتَطَاعَ إِلَيْهِ سَبِيلًا", en: "It is a duty owed to God by all who can find the means to make the pilgrimage to the House.", ref: "Quran 3:97",
+    note: "Hajj is required only of those with the means — physically able and financially capable. The poor and the infirm are exempt; no need to take loans or endanger oneself." },
 
-  // Transactions — Trade & contracts
-  { cat: "transactions", topic: "Honest trade", ar: "يَا أَيُّهَا الَّذِينَ آمَنُوا لَا تَأْكُلُوا أَمْوَالَكُم بَيْنَكُم بِالْبَاطِلِ إِلَّا أَن تَكُونَ تِجَارَةً عَن تَرَاضٍ مِّنكُمْ", en: "Do not consume one another's wealth unjustly, but only by trade through mutual consent.", ref: "Quran 4:29" },
-  { cat: "transactions", topic: "Contracts", ar: "يَا أَيُّهَا الَّذِينَ آمَنُوا إِذَا تَدَايَنتُم بِدَيْنٍ إِلَىٰ أَجَلٍ مُّسَمًّى فَاكْتُبُوهُ", en: "When you contract a debt for a specified term, write it down…", ref: "Quran 2:282 — the longest verse in the Quran, on debt documentation" },
-  { cat: "transactions", topic: "Honest measures", ar: "وَيْلٌ لِّلْمُطَفِّفِينَ ۝ الَّذِينَ إِذَا اكْتَالُوا عَلَى النَّاسِ يَسْتَوْفُونَ ۝ وَإِذَا كَالُوهُمْ أَو وَّزَنُوهُمْ يُخْسِرُونَ", en: "Woe to those who cheat in measure — who, when they receive from people, take in full, but when they give by measure or weight, give less.", ref: "Quran 83:1–3" },
-  { cat: "transactions", topic: "Riba (usury)", ar: "وَأَحَلَّ اللَّهُ الْبَيْعَ وَحَرَّمَ الرِّبَا", en: "Allah has permitted trade and forbidden usury.", ref: "Quran 2:275" },
-  { cat: "transactions", topic: "Trust", ar: "إِنَّ اللَّهَ يَأْمُرُكُمْ أَن تُؤَدُّوا الْأَمَانَاتِ إِلَىٰ أَهْلِهَا", en: "Indeed, Allah commands you to render trusts to whom they are due.", ref: "Quran 4:58" },
+  // Transactions
+  { cat: "transactions", topic: "Honest trade", ar: "يَا أَيُّهَا الَّذِينَ آمَنُوا لَا تَأْكُلُوا أَمْوَالَكُم بَيْنَكُم بِالْبَاطِلِ إِلَّا أَن تَكُونَ تِجَارَةً عَن تَرَاضٍ مِّنكُمْ", en: "Do not consume one another's wealth unjustly, but only by trade through mutual consent.", ref: "Quran 4:29",
+    note: "The foundational economic verse: no fraud, theft, or coercion. Trade must be voluntary on both sides — 'mutual consent' is the standard." },
+  { cat: "transactions", topic: "Contracts", ar: "يَا أَيُّهَا الَّذِينَ آمَنُوا إِذَا تَدَايَنتُم بِدَيْنٍ إِلَىٰ أَجَلٍ مُّسَمًّى فَاكْتُبُوهُ", en: "When you contract a debt for a specified term, write it down…", ref: "Quran 2:282 — the longest verse in the Quran",
+    note: "Loans and credit deals must be put in writing with witnesses. Reduces disputes, protects both parties. The full verse is nearly a page of detailed contract-law guidance." },
+  { cat: "transactions", topic: "Honest measures", ar: "وَيْلٌ لِّلْمُطَفِّفِينَ ۝ الَّذِينَ إِذَا اكْتَالُوا عَلَى النَّاسِ يَسْتَوْفُونَ ۝ وَإِذَا كَالُوهُمْ أَو وَّزَنُوهُمْ يُخْسِرُونَ", en: "Woe to those who cheat in measure — who, when they receive from people, take in full, but when they give by measure or weight, give less.", ref: "Quran 83:1–3",
+    note: "The opening verses of Surah Al-Muṭaffifīn ('the cheaters'). A scathing condemnation of merchants who use the right scales when buying but lighter scales when selling." },
+  { cat: "transactions", topic: "Riba (usury)", ar: "وَأَحَلَّ اللَّهُ الْبَيْعَ وَحَرَّمَ الرِّبَا", en: "Allah has permitted trade and forbidden usury.", ref: "Quran 2:275",
+    note: "Categorical separation: trade (real risk, real exchange) is allowed. <em>Ribā</em> (guaranteed interest on lent money) is forbidden. Forms the basis of Islamic banking's alternative structures." },
+  { cat: "transactions", topic: "Trust", ar: "إِنَّ اللَّهَ يَأْمُرُكُمْ أَن تُؤَدُّوا الْأَمَانَاتِ إِلَىٰ أَهْلِهَا", en: "Indeed, Allah commands you to render trusts to whom they are due.", ref: "Quran 4:58",
+    note: "Whatever is entrusted to you — money, secrets, a public office, someone's children — must be returned to or used for its rightful owner. Cited as the foundational verse on public-office accountability." },
 
-  // Family — Marriage
-  { cat: "family", topic: "Marriage", ar: "وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً", en: "Among His signs is that He created for you mates from yourselves, that you may find tranquility in them — and He placed between you affection and mercy.", ref: "Quran 30:21" },
-  { cat: "family", topic: "Treatment of spouse", ar: "وَعَاشِرُوهُنَّ بِالْمَعْرُوفِ", en: "And live with them in kindness.", ref: "Quran 4:19" },
+  // Family
+  { cat: "family", topic: "Marriage", ar: "وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً", en: "Among His signs is that He created for you mates from yourselves, that you may find tranquility in them — and He placed between you affection and mercy.", ref: "Quran 30:21",
+    note: "The Quran's vision of marriage in three words: tranquility, affection, mercy. Often recited at Muslim weddings. Marriage is framed as a divine sign, not just a contract." },
+  { cat: "family", topic: "Spousal treatment", ar: "وَعَاشِرُوهُنَّ بِالْمَعْرُوفِ", en: "And live with them in kindness.", ref: "Quran 4:19",
+    note: "A legal obligation on the husband (the verse's grammatical subject) to treat his wife with kindness and dignity — not just an ethical recommendation." },
+  { cat: "family", topic: "Divorce", ar: "الطَّلَاقُ مَرَّتَانِ ۖ فَإِمْسَاكٌ بِمَعْرُوفٍ أَوْ تَسْرِيحٌ بِإِحْسَانٍ", en: "Divorce may be twice — then either retain with kindness or release with dignity.", ref: "Quran 2:229",
+    note: "A divorce can be revoked twice during the waiting period. After the third irrevocable divorce, the couple cannot remarry unless the woman has been married and divorced from someone else. Designed to discourage impulsive divorce." },
+  { cat: "family", topic: "Inheritance", ar: "يُوصِيكُمُ اللَّهُ فِي أَوْلَادِكُمْ ۖ لِلذَّكَرِ مِثْلُ حَظِّ الْأُنثَيَيْنِ", en: "Allah instructs you concerning your children — to the male a share equal to that of two females…", ref: "Quran 4:11",
+    note: "Specifies precise fractions for heirs. The 2:1 son-to-daughter ratio is paired in classical fiqh with men's full financial responsibility for family — wives, mothers, sisters — while women's inherited wealth is theirs alone." },
+  { cat: "family", topic: "Parents", ar: "وَقَضَىٰ رَبُّكَ أَلَّا تَعْبُدُوا إِلَّا إِيَّاهُ وَبِالْوَالِدَيْنِ إِحْسَانًا", en: "Your Lord has decreed that you worship none but Him, and that you be excellent to your parents.", ref: "Quran 17:23",
+    note: "Kindness to parents is placed immediately after monotheism — the closest secondary obligation. The full verse forbids even saying 'uff' (a sound of irritation) to an aged parent." },
 
-  // Family — Divorce
-  { cat: "family", topic: "Divorce", ar: "الطَّلَاقُ مَرَّتَانِ ۖ فَإِمْسَاكٌ بِمَعْرُوفٍ أَوْ تَسْرِيحٌ بِإِحْسَانٍ", en: "Divorce may be twice — then either retain with kindness or release with dignity.", ref: "Quran 2:229" },
-
-  // Family — Inheritance
-  { cat: "family", topic: "Inheritance", ar: "يُوصِيكُمُ اللَّهُ فِي أَوْلَادِكُمْ ۖ لِلذَّكَرِ مِثْلُ حَظِّ الْأُنثَيَيْنِ", en: "Allah instructs you concerning your children — to the male a share equal to that of two females…", ref: "Quran 4:11 — the foundational verse on inheritance shares" },
-
-  // Family — Parents
-  { cat: "family", topic: "Parents", ar: "وَقَضَىٰ رَبُّكَ أَلَّا تَعْبُدُوا إِلَّا إِيَّاهُ وَبِالْوَالِدَيْنِ إِحْسَانًا", en: "Your Lord has decreed that you worship none but Him, and that you be excellent to your parents.", ref: "Quran 17:23" },
-
-  // Criminal — Murder
-  { cat: "criminal", topic: "Murder", ar: "وَلَكُمْ فِي الْقِصَاصِ حَيَاةٌ يَا أُولِي الْأَلْبَابِ", en: "In retribution there is life for you, O people of understanding.", ref: "Quran 2:179" },
-  { cat: "criminal", topic: "Sanctity of life", ar: "وَلَا تَقْتُلُوا النَّفْسَ الَّتِي حَرَّمَ اللَّهُ إِلَّا بِالْحَقِّ", en: "Do not take a life which Allah has made sacred, except by right.", ref: "Quran 17:33" },
-
-  // Criminal — Theft
-  { cat: "criminal", topic: "Theft", ar: "وَالسَّارِقُ وَالسَّارِقَةُ فَاقْطَعُوا أَيْدِيَهُمَا جَزَاءً بِمَا كَسَبَا نَكَالًا مِّنَ اللَّهِ", en: "The thief, male or female — cut off their hand as a recompense for what they have committed.", ref: "Quran 5:38" },
-
-  // Criminal — Slander
-  { cat: "criminal", topic: "Slander", ar: "وَالَّذِينَ يَرْمُونَ الْمُحْصَنَاتِ ثُمَّ لَمْ يَأْتُوا بِأَرْبَعَةِ شُهَدَاءَ فَاجْلِدُوهُمْ ثَمَانِينَ جَلْدَةً", en: "Those who accuse chaste women and do not produce four witnesses — strike them with eighty lashes.", ref: "Quran 24:4" },
+  // Criminal
+  { cat: "criminal", topic: "Murder", ar: "وَلَكُمْ فِي الْقِصَاصِ حَيَاةٌ يَا أُولِي الْأَلْبَابِ", en: "In retribution there is life for you, O people of understanding.", ref: "Quran 2:179",
+    note: "The wisdom of <em>qiṣāṣ</em>: knowing that justice will be exacted deters murder. The victim's family can choose execution, blood money, or full pardon — the Quran encourages the latter." },
+  { cat: "criminal", topic: "Sanctity of life", ar: "وَلَا تَقْتُلُوا النَّفْسَ الَّتِي حَرَّمَ اللَّهُ إِلَّا بِالْحَقِّ", en: "Do not take a life which Allah has made sacred, except by right.", ref: "Quran 17:33",
+    note: "Murder is among the gravest sins. The only exceptions are lawful execution and justified defensive warfare — never private revenge or honor killing." },
+  { cat: "criminal", topic: "Theft", ar: "وَالسَّارِقُ وَالسَّارِقَةُ فَاقْطَعُوا أَيْدِيَهُمَا جَزَاءً بِمَا كَسَبَا نَكَالًا مِّنَ اللَّهِ", en: "The thief, male or female — cut off their hand as a recompense for what they have committed.", ref: "Quran 5:38",
+    note: "The Quranic penalty for theft. Classical fiqh applies strict conditions before it can be enforced: a minimum value threshold, the item must have been securely guarded, no necessity (a starving person stealing food is not punished), and full confession or witness testimony. Historically applied rarely." },
+  { cat: "criminal", topic: "Slander", ar: "وَالَّذِينَ يَرْمُونَ الْمُحْصَنَاتِ ثُمَّ لَمْ يَأْتُوا بِأَرْبَعَةِ شُهَدَاءَ فَاجْلِدُوهُمْ ثَمَانِينَ جَلْدَةً", en: "Those who accuse chaste women and do not produce four witnesses — strike them with eighty lashes.", ref: "Quran 24:4",
+    note: "Falsely accusing someone of adultery without four eyewitnesses is itself a punishable crime. Designed to make such accusations practically impossible — protects reputation." },
 
   // Food
-  { cat: "food", topic: "Forbidden", ar: "إِنَّمَا حَرَّمَ عَلَيْكُمُ الْمَيْتَةَ وَالدَّمَ وَلَحْمَ الْخِنزِيرِ وَمَا أُهِلَّ بِهِ لِغَيْرِ اللَّهِ", en: "He has forbidden you only carrion, blood, the flesh of swine, and that over which the name of any other than Allah has been invoked.", ref: "Quran 2:173" },
-  { cat: "food", topic: "Permitted", ar: "الْيَوْمَ أُحِلَّ لَكُمُ الطَّيِّبَاتُ", en: "This day the good things are made lawful for you. The food of those who were given the Scripture is lawful for you, and your food is lawful for them.", ref: "Quran 5:5" },
-  { cat: "food", topic: "Alcohol", ar: "يَا أَيُّهَا الَّذِينَ آمَنُوا إِنَّمَا الْخَمْرُ وَالْمَيْسِرُ وَالْأَنصَابُ وَالْأَزْلَامُ رِجْسٌ مِّنْ عَمَلِ الشَّيْطَانِ فَاجْتَنِبُوهُ", en: "Wine, gambling, idols, and divining arrows are an abomination of Satan's handiwork — so avoid them, that you may succeed.", ref: "Quran 5:90" },
+  { cat: "food", topic: "Forbidden", ar: "إِنَّمَا حَرَّمَ عَلَيْكُمُ الْمَيْتَةَ وَالدَّمَ وَلَحْمَ الْخِنزِيرِ وَمَا أُهِلَّ بِهِ لِغَيْرِ اللَّهِ", en: "He has forbidden you only carrion, blood, the flesh of swine, and that over which the name of any other than Allah has been invoked.", ref: "Quran 2:173",
+    note: "Four prohibitions: carrion (animals not slaughtered Islamically), flowing blood, pork in any form, and meat dedicated to any deity other than Allah. A necessity exemption follows: starving people may eat what they need to survive." },
+  { cat: "food", topic: "Permitted", ar: "الْيَوْمَ أُحِلَّ لَكُمُ الطَّيِّبَاتُ", en: "This day the good things are made lawful for you. The food of those who were given the Scripture is lawful for you, and your food is lawful for them.", ref: "Quran 5:5",
+    note: "All wholesome foods are permitted. Notably: food prepared by Jews and Christians (the 'People of the Book') is halal for Muslims — including their meat, slaughtered according to their religious rules." },
+  { cat: "food", topic: "Alcohol", ar: "يَا أَيُّهَا الَّذِينَ آمَنُوا إِنَّمَا الْخَمْرُ وَالْمَيْسِرُ وَالْأَنصَابُ وَالْأَزْلَامُ رِجْسٌ مِّنْ عَمَلِ الشَّيْطَانِ فَاجْتَنِبُوهُ", en: "Wine, gambling, idols, and divining arrows are an abomination of Satan's handiwork — so avoid them, that you may succeed.", ref: "Quran 5:90",
+    note: "The final verse in the gradual prohibition of intoxicants and gambling. Came after earlier softer warnings (2:219, 4:43). On hearing this verse, the Companions famously poured their wine into the streets of Medina." },
 
   // Modesty
-  { cat: "modesty", topic: "Women's modesty", ar: "وَقُل لِّلْمُؤْمِنَاتِ يَغْضُضْنَ مِنْ أَبْصَارِهِنَّ وَيَحْفَظْنَ فُرُوجَهُنَّ وَلَا يُبْدِينَ زِينَتَهُنَّ إِلَّا مَا ظَهَرَ مِنْهَا", en: "Tell the believing women to lower their gaze and guard their chastity, and not to display their adornment except what naturally appears…", ref: "Quran 24:31" },
-  { cat: "modesty", topic: "Men's modesty", ar: "قُل لِّلْمُؤْمِنِينَ يَغُضُّوا مِنْ أَبْصَارِهِمْ وَيَحْفَظُوا فُرُوجَهُمْ", en: "Tell the believing men to lower their gaze and guard their chastity. That is purer for them.", ref: "Quran 24:30 — addressed to men first" },
-  { cat: "modesty", topic: "Outer garment", ar: "يَا أَيُّهَا النَّبِيُّ قُل لِّأَزْوَاجِكَ وَبَنَاتِكَ وَنِسَاءِ الْمُؤْمِنِينَ يُدْنِينَ عَلَيْهِنَّ مِن جَلَابِيبِهِنَّ", en: "O Prophet, tell your wives, your daughters, and the women of the believers to draw their cloaks around them.", ref: "Quran 33:59" },
+  { cat: "modesty", topic: "Women's modesty", ar: "وَقُل لِّلْمُؤْمِنَاتِ يَغْضُضْنَ مِنْ أَبْصَارِهِنَّ وَيَحْفَظْنَ فُرُوجَهُنَّ وَلَا يُبْدِينَ زِينَتَهُنَّ إِلَّا مَا ظَهَرَ مِنْهَا", en: "Tell the believing women to lower their gaze and guard their chastity, and not to display their adornment except what naturally appears…", ref: "Quran 24:31",
+    note: "The hijab verse. Three components: modest gaze, chastity, and covering of adornment except what is necessarily visible (face and hands, in the majority interpretation). The verse continues with a long list of relatives in front of whom these requirements are relaxed." },
+  { cat: "modesty", topic: "Men's modesty", ar: "قُل لِّلْمُؤْمِنِينَ يَغُضُّوا مِنْ أَبْصَارِهِمْ وَيَحْفَظُوا فُرُوجَهُمْ", en: "Tell the believing men to lower their gaze and guard their chastity. That is purer for them.", ref: "Quran 24:30",
+    note: "Notably, this verse — addressed to <strong>men</strong> — comes immediately <strong>before</strong> the verse on women. Modesty is presented first as a male obligation. Men's minimum covering: navel to knees." },
+  { cat: "modesty", topic: "Outer garment", ar: "يَا أَيُّهَا النَّبِيُّ قُل لِّأَزْوَاجِكَ وَبَنَاتِكَ وَنِسَاءِ الْمُؤْمِنِينَ يُدْنِينَ عَلَيْهِنَّ مِن جَلَابِيبِهِنَّ", en: "O Prophet, tell your wives, your daughters, and the women of the believers to draw their cloaks around them.", ref: "Quran 33:59",
+    note: "An additional instruction in Medinan times: a recognizable outer garment when going out. Originally meant so that believing women would not be confused with non-Muslim women — and not harassed in the streets." },
 
   // General principle
-  { cat: "principle", topic: "Justice", ar: "إِنَّ اللَّهَ يَأْمُرُ بِالْعَدْلِ وَالْإِحْسَانِ وَإِيتَاءِ ذِي الْقُرْبَىٰ وَيَنْهَىٰ عَنِ الْفَحْشَاءِ وَالْمُنكَرِ وَالْبَغْيِ", en: "Indeed, Allah commands justice, doing good, and giving to relatives — and forbids immorality, evil, and oppression.", ref: "Quran 16:90 — recited in every Friday khutbah" }
+  { cat: "principle", topic: "Justice", ar: "إِنَّ اللَّهَ يَأْمُرُ بِالْعَدْلِ وَالْإِحْسَانِ وَإِيتَاءِ ذِي الْقُرْبَىٰ وَيَنْهَىٰ عَنِ الْفَحْشَاءِ وَالْمُنكَرِ وَالْبَغْيِ", en: "Indeed, Allah commands justice, doing good, and giving to relatives — and forbids immorality, evil, and oppression.", ref: "Quran 16:90",
+    note: "Recited by the imam in every Friday khutbah for over 14 centuries. A six-fold summary of Islamic ethical law: three commands (justice, excellence, kinship) and three prohibitions (immorality, evil, oppression)." }
 ];
 
 const categories = [
@@ -174,6 +195,7 @@ function render() {
             <div class="topic-pill">${v.topic}</div>
             <div class="verse-arabic">${v.ar}</div>
             <div class="verse-english">${v.en}</div>
+            ${v.note ? `<div class="verse-note">${v.note}</div>` : ''}
             <div class="verse-ref">${v.ref}</div>
           </div>
         `).join("")}
