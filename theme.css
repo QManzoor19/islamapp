@@ -41,6 +41,11 @@
 [data-theme="dark"] .text-emerald-900 { color: #f0ebd9 !important; }
 [data-theme="dark"] .text-emerald-950 { color: #f5f0df !important; }
 [data-theme="dark"] .text-amber-50 { color: #f5f0df !important; }
+[data-theme="dark"] [class*="text-amber-7"],
+[data-theme="dark"] [class*="text-amber-8"],
+[data-theme="dark"] [class*="text-amber-3"] { color: #fcd34d !important; }
+[data-theme="dark"] [class*="text-amber-1"] { color: #fef3c7 !important; }
+[data-theme="dark"] [class*="text-amber-2"] { color: #fde68a !important; }
 
 [data-theme="dark"] .border-amber-100 { border-color: rgba(201,169,97,0.2) !important; }
 [data-theme="dark"] .border-amber-200 { border-color: rgba(201,169,97,0.3) !important; }
