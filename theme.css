@@ -185,10 +185,10 @@
 
 /* ─── English meaning text (was dark grey) ─── */
 [data-theme="dark"] .verse-eng,
-[data-theme="dark"] .verse-english,
 [data-theme="dark"] .verse-en,
 [data-theme="dark"] .verse-quote .en,
 [data-theme="dark"] .dua-eng { color: #e7e2d0 !important; }
+[data-theme="dark"] .verse-english { color: #b8b2a3 !important; }
 
 /* ─── Verse / source references (gold) ─── */
 [data-theme="dark"] .verse-quote .ref,
@@ -254,7 +254,7 @@
 [data-theme="dark"] .verse-card { background: #142420 !important; border-color: rgba(201,169,97,0.4) !important; }
 [data-theme="dark"] .verse-en { color: #e7e2d0 !important; border-bottom-color: rgba(201,169,97,0.2) !important; }
 [data-theme="dark"] .section-body { color: #d6d0c2 !important; }
-[data-theme="dark"] .verse-note { color: #c4beb0 !important; border-top-color: rgba(201,169,97,0.2) !important; }
+[data-theme="dark"] .verse-note { color: #e7e2d0 !important; border-top-color: rgba(201,169,97,0.2) !important; }
 [data-theme="dark"] .section-label { color: #fcd34d !important; }
 [data-theme="dark"] .school-row {
   background: rgba(201,169,97,0.12) !important;
