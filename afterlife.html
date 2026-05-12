@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Afterlife — IslamApp</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#064e3b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="IslamApp">
+<meta name="mobile-web-app-capable" content="yes">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>(function(){try{if(localStorage.getItem('islamapp-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
+<link rel="stylesheet" href="theme.css">
+<script src="theme.js" defer></script>
+<style>
+  body { font-family: 'Inter', sans-serif; background: #faf6ed; color: #1c2d20;
+    background-image: radial-gradient(circle at 10% 10%, rgba(201,169,97,0.08) 0%, transparent 40%), radial-gradient(circle at 90% 90%, rgba(6,78,59,0.06) 0%, transparent 40%);
+    background-attachment: fixed; }
+  .arabic { font-family: 'Amiri', serif; direction: rtl; line-height: 1.9; }
+  .display { font-family: 'Cormorant Garamond', serif; }
+  .geo-pattern { background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23064e3b' fill-opacity='0.05'%3E%3Cpath d='M30 0l7.5 22.5H60L41.25 37.5l7.5 22.5L30 45l-18.75 15 7.5-22.5L0 22.5h22.5z'/%3E%3C/g%3E%3C/svg%3E"); }
+  .gold-line { height: 1px; background: linear-gradient(to right, transparent, #c9a961, transparent); }
+  .section-heading { display: flex; align-items: center; gap: 12px; color: #a8863f; font-size: 0.75rem; letter-spacing: 0.3em; text-transform: uppercase; font-weight: 600; margin: 3rem 0 1.5rem; }
+  .section-heading::before, .section-heading::after { content: ''; flex: 1; height: 1px; background: linear-gradient(to right, transparent, #c9a961, transparent); }
+  .verse-card { background: #fff; border: 1px solid rgba(201,169,97,0.3); border-radius: 12px; padding: 1.25rem; transition: all 0.2s ease; }
+  .verse-card:hover { border-color: #c9a961; transform: translateY(-2px); box-shadow: 0 10px 20px -8px rgba(6,78,59,0.2); }
+  .verse-arabic { font-family: 'Amiri', serif; direction: rtl; font-size: 1.35rem; color: #064e3b; line-height: 1.9; margin-bottom: 0.75rem; text-align: center; }
+  .verse-english { color: #1f2937; font-size: 0.95rem; line-height: 1.6; margin-bottom: 0.75rem; }
+  .verse-ref { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: #a8863f; font-weight: 700; }
+  .topic-pill { display: inline-block; padding: 2px 10px; border-radius: 999px; background: rgba(6,78,59,0.1); color: #064e3b; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; margin-bottom: 0.5rem; }
+  .topic-pill.paradise { background: rgba(16,185,129,0.15); color: #047857; }
+  .topic-pill.hell { background: rgba(220,38,38,0.1); color: #b91c1c; }
+  .stage-card { background: linear-gradient(135deg, #064e3b 0%, #0f766e 100%); color: #faf6ed; padding: 1rem 1.25rem; border-radius: 12px; border: 1px solid #c9a961; }
+  .stage-num { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background: rgba(201,169,97,0.3); color: #faf6ed; font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 0.85rem; margin-right: 0.5rem; }
+</style>
+</head>
+<body class="geo-pattern min-h-screen">
+
+<div class="max-w-5xl mx-auto px-5 py-12">
+
+  <nav class="mb-8">
+    <a href="index.html" class="text-emerald-900 hover:text-amber-700 text-sm font-semibold">← Curriculum</a>
+  </nav>
+
+  <header class="text-center mb-8">
+    <div class="gold-line mb-5 max-w-[180px] mx-auto"></div>
+    <div class="arabic text-4xl text-emerald-900 mb-3">الآخِرَة</div>
+    <h1 class="display text-5xl md:text-6xl text-emerald-950 font-semibold mb-3">The Afterlife</h1>
+    <p class="text-stone-600 max-w-xl mx-auto">Resurrection, judgment, paradise, hell. Dominant in the short surahs at the end of the Quran (Juz ʿAmma).</p>
+    <div class="gold-line mt-5 max-w-[180px] mx-auto"></div>
+  </header>
+
+  <p class="text-sm text-stone-500 italic text-center mb-8">A skeleton selection — more verses to come.</p>
+
+  <section class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-4">
+    <div class="stage-card"><span class="stage-num">1</span><strong>The Hour</strong><div class="text-xs opacity-80 mt-1">Signs of the end of the world.</div></div>
+    <div class="stage-card"><span class="stage-num">2</span><strong>Death &amp; the grave</strong><div class="text-xs opacity-80 mt-1">The barzakh — intermediate state.</div></div>
+    <div class="stage-card"><span class="stage-num">3</span><strong>Resurrection</strong><div class="text-xs opacity-80 mt-1">The trumpet sounds; all are raised.</div></div>
+    <div class="stage-card"><span class="stage-num">4</span><strong>Judgment &amp; the scale</strong><div class="text-xs opacity-80 mt-1">Records and weighed deeds.</div></div>
+    <div class="stage-card"><span class="stage-num">5</span><strong>Paradise (Jannah)</strong><div class="text-xs opacity-80 mt-1">The garden of reward.</div></div>
+    <div class="stage-card"><span class="stage-num">6</span><strong>Hell (Jahannam)</strong><div class="text-xs opacity-80 mt-1">Fire of consequence.</div></div>
+  </section>
+
+  <div class="section-heading">The Hour</div>
+  <div class="grid md:grid-cols-2 gap-4">
+    <div class="verse-card">
+      <div class="topic-pill">The Hour</div>
+      <div class="verse-arabic">يَا أَيُّهَا النَّاسُ اتَّقُوا رَبَّكُمْ ۚ إِنَّ زَلْزَلَةَ السَّاعَةِ شَيْءٌ عَظِيمٌ</div>
+      <div class="verse-english">"O people, fear your Lord — indeed, the convulsion of the Hour is a tremendous thing."</div>
+      <div class="verse-ref">Quran 22:1</div>
+    </div>
+    <div class="verse-card">
+      <div class="topic-pill">Signs</div>
+      <div class="verse-arabic">إِذَا الشَّمْسُ كُوِّرَتْ ۝ وَإِذَا النُّجُومُ انكَدَرَتْ</div>
+      <div class="verse-english">"When the sun is folded up, and when the stars fall scattered…"</div>
+      <div class="verse-ref">Quran 81:1–2</div>
+    </div>
+  </div>
+
+  <div class="section-heading">Death &amp; the grave</div>
+  <div class="grid md:grid-cols-2 gap-4">
+    <div class="verse-card">
+      <div class="topic-pill">The barzakh</div>
+      <div class="verse-arabic">وَمِن وَرَائِهِم بَرْزَخٌ إِلَىٰ يَوْمِ يُبْعَثُونَ</div>
+      <div class="verse-english">"And before them is a barrier [barzakh] until the Day they are resurrected."</div>
+      <div class="verse-ref">Quran 23:100</div>
+    </div>
+    <div class="verse-card">
+      <div class="topic-pill">Every soul</div>
+      <div class="verse-arabic">كُلُّ نَفْسٍ ذَائِقَةُ الْمَوْتِ</div>
+      <div class="verse-english">"Every soul will taste death."</div>
+      <div class="verse-ref">Quran 3:185</div>
+    </div>
+  </div>
+
+  <div class="section-heading">Resurrection</div>
+  <div class="grid md:grid-cols-2 gap-4">
+    <div class="verse-card">
+      <div class="topic-pill">The trumpet</div>
+      <div class="verse-arabic">وَنُفِخَ فِي الصُّورِ فَإِذَا هُم مِّنَ الْأَجْدَاثِ إِلَىٰ رَبِّهِمْ يَنسِلُونَ</div>
+      <div class="verse-english">"The trumpet will be blown, and at once from the graves to their Lord they will run."</div>
+      <div class="verse-ref">Quran 36:51</div>
+    </div>
+    <div class="verse-card">
+      <div class="topic-pill">Bodily</div>
+      <div class="verse-arabic">أَيَحْسَبُ الْإِنسَانُ أَلَّن نَّجْمَعَ عِظَامَهُ ۝ بَلَىٰ قَادِرِينَ عَلَىٰ أَن نُّسَوِّيَ بَنَانَهُ</div>
+      <div class="verse-english">"Does man think We will not assemble his bones? Yes — We are able to put together his very fingertips."</div>
+      <div class="verse-ref">Quran 75:3–4</div>
+    </div>
+  </div>
+
+  <div class="section-heading">Judgment &amp; the scale</div>
+  <div class="grid md:grid-cols-2 gap-4">
+    <div class="verse-card">
+      <div class="topic-pill">The record</div>
+      <div class="verse-arabic">اقْرَأْ كِتَابَكَ كَفَىٰ بِنَفْسِكَ الْيَوْمَ عَلَيْكَ حَسِيبًا</div>
+      <div class="verse-english">"Read your record — sufficient is yourself against you this Day as accountant."</div>
+      <div class="verse-ref">Quran 17:14</div>
+    </div>
+    <div class="verse-card">
+      <div class="topic-pill">The scale</div>
+      <div class="verse-arabic">فَمَن يَعْمَلْ مِثْقَالَ ذَرَّةٍ خَيْرًا يَرَهُ ۝ وَمَن يَعْمَلْ مِثْقَالَ ذَرَّةٍ شَرًّا يَرَهُ</div>
+      <div class="verse-english">"Whoever does an atom's weight of good will see it; and whoever does an atom's weight of evil will see it."</div>
+      <div class="verse-ref">Quran 99:7–8</div>
+    </div>
+  </div>
+
+  <div class="section-heading">Paradise (Jannah)</div>
+  <div class="grid md:grid-cols-2 gap-4">
+    <div class="verse-card">
+      <div class="topic-pill paradise">The reward</div>
+      <div class="verse-arabic">إِنَّ الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ كَانَتْ لَهُمْ جَنَّاتُ الْفِرْدَوْسِ نُزُلًا</div>
+      <div class="verse-english">"Indeed, those who believe and do righteous deeds — the Gardens of Paradise will be their lodging."</div>
+      <div class="verse-ref">Quran 18:107</div>
+    </div>
+    <div class="verse-card">
+      <div class="topic-pill paradise">Rivers</div>
+      <div class="verse-arabic">مَّثَلُ الْجَنَّةِ الَّتِي وُعِدَ الْمُتَّقُونَ ۖ تَجْرِي مِن تَحْتِهَا الْأَنْهَارُ</div>
+      <div class="verse-english">"The likeness of the Garden promised to the God-conscious — rivers flow beneath it."</div>
+      <div class="verse-ref">Quran 13:35</div>
+    </div>
+    <div class="verse-card">
+      <div class="topic-pill paradise">Peace</div>
+      <div class="verse-arabic">لَا يَسْمَعُونَ فِيهَا لَغْوًا وَلَا تَأْثِيمًا ۝ إِلَّا قِيلًا سَلَامًا سَلَامًا</div>
+      <div class="verse-english">"They will hear no idle talk there, nor any sinful speech — only the greeting 'Peace, peace.'"</div>
+      <div class="verse-ref">Quran 56:25–26</div>
+    </div>
+    <div class="verse-card">
+      <div class="topic-pill paradise">Beyond imagining</div>
+      <div class="verse-arabic">فَلَا تَعْلَمُ نَفْسٌ مَّا أُخْفِيَ لَهُم مِّن قُرَّةِ أَعْيُنٍ جَزَاءً بِمَا كَانُوا يَعْمَلُونَ</div>
+      <div class="verse-english">"No soul knows what has been hidden for them of comfort to the eyes — as reward for what they used to do."</div>
+      <div class="verse-ref">Quran 32:17</div>
+    </div>
+  </div>
+
+  <div class="section-heading">Hell (Jahannam)</div>
+  <div class="grid md:grid-cols-2 gap-4">
+    <div class="verse-card">
+      <div class="topic-pill hell">Consequence</div>
+      <div class="verse-arabic">إِنَّ الَّذِينَ كَفَرُوا بِآيَاتِنَا سَوْفَ نُصْلِيهِمْ نَارًا</div>
+      <div class="verse-english">"Indeed, those who disbelieve in Our signs — We will drive them into a Fire…"</div>
+      <div class="verse-ref">Quran 4:56</div>
+    </div>
+    <div class="verse-card">
+      <div class="topic-pill hell">Regret</div>
+      <div class="verse-arabic">يَا لَيْتَنِي قَدَّمْتُ لِحَيَاتِي</div>
+      <div class="verse-english">"They will say: 'If only I had sent ahead something for my life.'"</div>
+      <div class="verse-ref">Quran 89:24</div>
+    </div>
+  </div>
+
+  <footer class="mt-16 text-center">
+    <div class="gold-line mb-6 max-w-xs mx-auto"></div>
+    <div class="arabic text-2xl text-emerald-800 mb-1">رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً</div>
+    <p class="text-xs italic text-stone-500 mt-2">"Our Lord, grant us good in this world and good in the next." — Quran 2:201</p>
+  </footer>
+
+</div>
+</body>
+</html>
