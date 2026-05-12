@@ -105,6 +105,54 @@ const verses = [
   { cat: "worship", topic: "Hajj", ar: "وَلِلَّهِ عَلَى النَّاسِ حِجُّ الْبَيْتِ مَنِ اسْتَطَاعَ إِلَيْهِ سَبِيلًا", en: "It is a duty owed to God by all who can find the means to make the pilgrimage to the House.", ref: "Quran 3:97",
     note: "Hajj is required only of those with the means — physically able and financially capable. The poor and the infirm are exempt; no need to take loans or endanger oneself." },
 
+  // Worship — Friday Prayer
+  { cat: "worship", topic: "Friday prayer", ar: "يَا أَيُّهَا الَّذِينَ آمَنُوا إِذَا نُودِيَ لِلصَّلَاةِ مِن يَوْمِ الْجُمُعَةِ فَاسْعَوْا إِلَىٰ ذِكْرِ اللَّهِ وَذَرُوا الْبَيْعَ", en: "O you who believe, when the call to prayer is made on Friday, hasten to the remembrance of Allah and leave off business.", ref: "Quran 62:9",
+    note: "Friday prayer (Jumuʿah) is obligatory for adult Muslim men. The verse explicitly orders business to cease during it. After the prayer ends, trade resumes (62:10). It replaces Dhuhr on Fridays." },
+
+  // Worship — Night Prayer
+  { cat: "worship", topic: "Night prayer", ar: "وَمِنَ اللَّيْلِ فَتَهَجَّدْ بِهِ نَافِلَةً لَّكَ عَسَىٰ أَن يَبْعَثَكَ رَبُّكَ مَقَامًا مَّحْمُودًا", en: "And from a part of the night, awake for prayer — additional for you. It may be that your Lord will raise you to a praised station.", ref: "Quran 17:79",
+    note: "Tahajjud — the voluntary night prayer. Performed after waking from sleep, before Fajr. Strongly recommended (highly virtuous) but not obligatory. Was specifically required of the Prophet ﷺ." },
+
+  // Worship — Traveler's Prayer
+  { cat: "worship", topic: "Traveler's prayer", ar: "وَإِذَا ضَرَبْتُمْ فِي الْأَرْضِ فَلَيْسَ عَلَيْكُمْ جُنَاحٌ أَن تَقْصُرُوا مِنَ الصَّلَاةِ", en: "When you travel through the land, there is no blame on you to shorten the prayer…", ref: "Quran 4:101",
+    note: "<em>Qaṣr</em> — the traveler's concession. The four-rakʿah prayers (Dhuhr, ʿAṣr, ʿIshāʾ) are shortened to two rakʿāt while traveling beyond a set distance (~80 km in most schools). Fajr (2) and Maghrib (3) are not shortened." },
+
+  // Worship — Tayammum
+  { cat: "worship", topic: "Tayammum", ar: "فَلَمْ تَجِدُوا مَاءً فَتَيَمَّمُوا صَعِيدًا طَيِّبًا فَامْسَحُوا بِوُجُوهِكُمْ وَأَيْدِيكُم مِّنْهُ", en: "If you find no water, then make use of clean earth — wipe your faces and your hands with it.", ref: "Quran 5:6",
+    note: "<em>Tayammum</em> — dry ablution. When water is unavailable, harmful (illness), or out of reach, clean earth/dust/stone substitutes. Same legal effect as wudu; lasts until water becomes available again or until wudu would be broken." },
+
+  // Worship — Ghusl
+  { cat: "worship", topic: "Ghusl", ar: "وَإِن كُنتُمْ جُنُبًا فَاطَّهَّرُوا", en: "And if you are in a state of major impurity, purify yourselves.", ref: "Quran 5:6",
+    note: "Ghusl — the major ritual washing (full-body bath). Required after sexual relations, end of menstruation, end of post-natal bleeding (<em>nifās</em>), and on conversion to Islam. Until done, the person cannot pray, touch the Arabic Quran, or enter a mosque." },
+
+  // Worship — Zakat in Righteousness
+  { cat: "worship", topic: "Zakat as virtue", ar: "وَآتَى الْمَالَ عَلَىٰ حُبِّهِ ذَوِي الْقُرْبَىٰ وَالْيَتَامَىٰ وَالْمَسَاكِينَ وَابْنَ السَّبِيلِ وَالسَّائِلِينَ وَفِي الرِّقَابِ وَأَقَامَ الصَّلَاةَ وَآتَى الزَّكَاةَ", en: "…and gives wealth, in spite of love for it, to relatives, orphans, the needy, the traveler, those who ask, and to free slaves — and establishes prayer and gives zakat…", ref: "Quran 2:177",
+    note: "From the 'righteousness verse' — the Quran's compact definition of what makes a person righteous. Notice giving wealth voluntarily is listed <em>before</em> zakat. Zakat is the floor of giving; sadaqa above it is the virtue." },
+
+  // Worship — Warning Against Hoarding
+  { cat: "worship", topic: "Hoarding", ar: "وَالَّذِينَ يَكْنِزُونَ الذَّهَبَ وَالْفِضَّةَ وَلَا يُنفِقُونَهَا فِي سَبِيلِ اللَّهِ فَبَشِّرْهُم بِعَذَابٍ أَلِيمٍ", en: "Those who hoard gold and silver and do not spend it in the way of Allah — give them tidings of a painful punishment.", ref: "Quran 9:34",
+    note: "Hoarding wealth without paying zakat or spending it in good causes is severely condemned. Classical position: 'hoarding' (kanz) is specifically wealth on which zakat has not been paid. Pay zakat and it is no longer kanz." },
+
+  // Worship — Fasting Timing
+  { cat: "worship", topic: "Fasting hours", ar: "وَكُلُوا وَاشْرَبُوا حَتَّىٰ يَتَبَيَّنَ لَكُمُ الْخَيْطُ الْأَبْيَضُ مِنَ الْخَيْطِ الْأَسْوَدِ مِنَ الْفَجْرِ ۖ ثُمَّ أَتِمُّوا الصِّيَامَ إِلَى اللَّيْلِ", en: "Eat and drink until the white thread of dawn becomes distinct to you from the black thread — then complete the fast until night.", ref: "Quran 2:187",
+    note: "Defines the precise window: from true dawn (when the first light is visible on the horizon) to sunset. The 'two threads' is a poetic image of the lightening eastern sky. Modern prayer-time apps calculate this exactly for each location." },
+
+  // Worship — Fasting Expiation (Fidya)
+  { cat: "worship", topic: "Fasting exemption", ar: "وَعَلَى الَّذِينَ يُطِيقُونَهُ فِدْيَةٌ طَعَامُ مِسْكِينٍ", en: "Those who can fast only with great hardship may compensate by feeding a poor person…", ref: "Quran 2:184",
+    note: "For those unable to fast permanently — chronic illness, very old age — they pay <em>fidya</em>: feed one poor person for each day missed. The temporarily ill or traveling make up the days later instead (qaḍāʾ). Pregnant/nursing: scholars differ between qaḍāʾ and fidya." },
+
+  // Worship — Safa & Marwa
+  { cat: "worship", topic: "Hajj — Saʿy", ar: "إِنَّ الصَّفَا وَالْمَرْوَةَ مِن شَعَائِرِ اللَّهِ ۖ فَمَنْ حَجَّ الْبَيْتَ أَوِ اعْتَمَرَ فَلَا جُنَاحَ عَلَيْهِ أَن يَطَّوَّفَ بِهِمَا", en: "Indeed, Safa and Marwa are among the symbols of Allah. So whoever makes Hajj or Umrah — there is no blame on him for going between them.", ref: "Quran 2:158",
+    note: "Establishes the <em>saʿy</em> — walking seven times between the hills of Safa and Marwa, retracing Hagar's frantic search for water for her infant Ishmael. One of the mandatory rites of both Hajj and ʿUmrah." },
+
+  // Worship — Day of Arafat
+  { cat: "worship", topic: "Hajj — Arafat", ar: "فَإِذَا أَفَضْتُم مِّنْ عَرَفَاتٍ فَاذْكُرُوا اللَّهَ عِندَ الْمَشْعَرِ الْحَرَامِ", en: "Then when you depart from Arafat, remember Allah at the sacred monument…", ref: "Quran 2:198",
+    note: "The standing on the plain of Arafat from noon to sunset on 9 Dhū al-Ḥijja is the peak of Hajj. The Prophet ﷺ said: <em>'Hajj is Arafat.'</em> Whoever misses it has missed Hajj. After sunset, pilgrims move to Muzdalifa." },
+
+  // Worship — Eid Sacrifice
+  { cat: "worship", topic: "Hajj — Sacrifice", ar: "وَالْبُدْنَ جَعَلْنَاهَا لَكُم مِّن شَعَائِرِ اللَّهِ لَكُمْ فِيهَا خَيْرٌ ۖ فَاذْكُرُوا اسْمَ اللَّهِ عَلَيْهَا", en: "We have made the sacrificial animals among the symbols of Allah; in them is good for you. So mention the name of Allah over them…", ref: "Quran 22:36",
+    note: "The animal sacrifice on Eid al-Adha (10 Dhū al-Ḥijja). Camels, cattle, sheep, or goats are slaughtered with Allah's name pronounced. Meat is divided three ways: family, friends, and the poor. Commemorates Abraham's near-sacrifice of his son." },
+
   // Transactions
   { cat: "transactions", topic: "Honest trade", ar: "يَا أَيُّهَا الَّذِينَ آمَنُوا لَا تَأْكُلُوا أَمْوَالَكُم بَيْنَكُم بِالْبَاطِلِ إِلَّا أَن تَكُونَ تِجَارَةً عَن تَرَاضٍ مِّنكُمْ", en: "Do not consume one another's wealth unjustly, but only by trade through mutual consent.", ref: "Quran 4:29",
     note: "The foundational economic verse: no fraud, theft, or coercion. Trade must be voluntary on both sides — 'mutual consent' is the standard." },
