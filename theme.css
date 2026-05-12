@@ -185,6 +185,8 @@
 
 /* ─── English meaning text (was dark grey) ─── */
 [data-theme="dark"] .verse-eng,
+[data-theme="dark"] .verse-english,
+[data-theme="dark"] .verse-en,
 [data-theme="dark"] .verse-quote .en,
 [data-theme="dark"] .dua-eng { color: #e7e2d0 !important; }
 
