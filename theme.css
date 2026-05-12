@@ -220,6 +220,59 @@
 /* ─── Faq summary heading (interactive disclosure) ─── */
 [data-theme="dark"] .faq-q summary { color: #6ee7b7 !important; }
 
+/* ─── Topic pills (used in laws/ethics/afterlife/ahkam) ─── */
+[data-theme="dark"] .topic-pill { background: rgba(16,185,129,0.15) !important; color: #6ee7b7 !important; }
+[data-theme="dark"] .topic-pill.warning { background: rgba(239,68,68,0.15) !important; color: #fca5a5 !important; }
+[data-theme="dark"] .topic-pill.paradise { background: rgba(16,185,129,0.2) !important; color: #6ee7b7 !important; }
+[data-theme="dark"] .topic-pill.hell { background: rgba(239,68,68,0.18) !important; color: #fca5a5 !important; }
+
+/* ─── Filter chips/buttons (laws.html, ahkam.html) ─── */
+[data-theme="dark"] .filter-btn,
+[data-theme="dark"] .surah-chip {
+  background: #142420 !important;
+  color: #e7e2d0 !important;
+  border-color: rgba(201,169,97,0.3) !important;
+}
+[data-theme="dark"] .filter-btn:hover,
+[data-theme="dark"] .surah-chip:hover { background: #1e2e25 !important; }
+[data-theme="dark"] .filter-btn.active,
+[data-theme="dark"] .surah-chip.active {
+  background: #064e3b !important;
+  color: #faf6ed !important;
+  border-color: #c9a961 !important;
+}
+[data-theme="dark"] .surah-chip .count { background: rgba(201,169,97,0.25) !important; color: #f0ebd9 !important; }
+
+/* ─── ahkam.html — verse cards, sections, school rows, caveat ─── */
+[data-theme="dark"] .verse-card { background: #142420 !important; border-color: rgba(201,169,97,0.4) !important; }
+[data-theme="dark"] .verse-en { color: #e7e2d0 !important; border-bottom-color: rgba(201,169,97,0.2) !important; }
+[data-theme="dark"] .section-body { color: #d6d0c2 !important; }
+[data-theme="dark"] .section-label { color: #fcd34d !important; }
+[data-theme="dark"] .school-row {
+  background: rgba(201,169,97,0.12) !important;
+  color: #d6d0c2 !important;
+  border-left-color: #c9a961 !important;
+}
+[data-theme="dark"] .school-name { color: #f0ebd9 !important; }
+[data-theme="dark"] .caveat-box {
+  background: linear-gradient(135deg, rgba(168,134,63,0.25), rgba(168,134,63,0.12)) !important;
+  border-color: #c9a961 !important;
+  color: #e7e2d0 !important;
+}
+[data-theme="dark"] .caveat-box ul,
+[data-theme="dark"] .caveat-box li { color: #e7e2d0 !important; }
+[data-theme="dark"] .caveat-box strong { color: #fcd34d !important; }
+
+/* ─── afterlife.html stage cards ─── */
+[data-theme="dark"] .stage-card {
+  background: linear-gradient(135deg, #0a1510, #142420) !important;
+  border-color: #c9a961 !important;
+}
+[data-theme="dark"] .stage-num { background: rgba(201,169,97,0.35) !important; }
+
+/* ─── Verse references / source citations ─── */
+[data-theme="dark"] .verse-ref { color: #fcd34d !important; }
+
 .theme-toggle {
   position: fixed;
   top: 20px; right: 20px;
