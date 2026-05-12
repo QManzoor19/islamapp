@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Āyāt al-Aḥkām — Quranic Legal Verses — IslamApp</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#064e3b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="IslamApp">
+<meta name="mobile-web-app-capable" content="yes">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>(function(){try{if(localStorage.getItem('islamapp-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
+<link rel="stylesheet" href="theme.css">
+<script src="theme.js" defer></script>
+<style>
+  body { font-family: 'Inter', sans-serif; background: #faf6ed; color: #1c2d20;
+    background-image: radial-gradient(circle at 10% 10%, rgba(201,169,97,0.08) 0%, transparent 40%), radial-gradient(circle at 90% 90%, rgba(6,78,59,0.06) 0%, transparent 40%);
+    background-attachment: fixed; }
+  .arabic { font-family: 'Amiri', serif; direction: rtl; line-height: 1.9; }
+  .display { font-family: 'Cormorant Garamond', serif; }
+  .geo-pattern { background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23064e3b' fill-opacity='0.05'%3E%3Cpath d='M30 0l7.5 22.5H60L41.25 37.5l7.5 22.5L30 45l-18.75 15 7.5-22.5L0 22.5h22.5z'/%3E%3C/g%3E%3C/svg%3E"); }
+  .gold-line { height: 1px; background: linear-gradient(to right, transparent, #c9a961, transparent); }
+  .verse-card { background: #fff; border: 1px solid rgba(201,169,97,0.4); border-radius: 14px 14px 8px 8px; padding: 1.5rem; margin-bottom: 1.5rem; position: relative; overflow: hidden; }
+  .verse-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(to right, #c9a961, #064e3b, #c9a961); }
+  .verse-ref-tag { display: inline-block; padding: 4px 14px; background: #064e3b; color: #faf6ed; border-radius: 999px; font-size: 0.7rem; letter-spacing: 0.15em; font-weight: 700; }
+  .topic-pill { display: inline-block; padding: 2px 10px; border-radius: 999px; background: rgba(6,78,59,0.1); color: #064e3b; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; margin-right: 0.3rem; margin-bottom: 0.5rem; }
+  .verse-arabic { font-family: 'Amiri', serif; direction: rtl; font-size: 1.45rem; color: #064e3b; line-height: 2; margin: 1rem 0; text-align: center; }
+  .verse-en { color: #1f2937; font-size: 0.95rem; line-height: 1.7; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(201,169,97,0.2); font-style: italic; text-align: center; }
+  .section-label { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: #a8863f; font-weight: 700; margin-top: 1rem; margin-bottom: 0.4rem; }
+  .section-body { font-size: 0.9rem; color: #1f2937; line-height: 1.65; }
+  .schools-grid { display: grid; gap: 0.5rem; margin-top: 0.5rem; }
+  .school-row { padding: 0.5rem 0.85rem; background: rgba(201,169,97,0.08); border-left: 3px solid #c9a961; border-radius: 0 6px 6px 0; font-size: 0.85rem; }
+  .school-name { font-weight: 700; color: #064e3b; margin-right: 0.4rem; }
+  .surah-chip { padding: 0.4rem 0.85rem; border: 1px solid rgba(201,169,97,0.4); background: #fff; border-radius: 999px; font-size: 0.75rem; font-weight: 600; color: #064e3b; cursor: pointer; transition: all 0.15s ease; display: inline-flex; align-items: center; gap: 6px; }
+  .surah-chip:hover { background: #faf6ed; }
+  .surah-chip.active { background: #064e3b; color: #faf6ed; border-color: #c9a961; }
+  .surah-chip .count { background: rgba(201,169,97,0.3); padding: 1px 6px; border-radius: 999px; font-size: 0.65rem; }
+  .surah-chip.active .count { background: rgba(201,169,97,0.5); color: #faf6ed; }
+  .caveat-box { background: linear-gradient(135deg, #fef3c7, #fde68a); border: 1px solid #c9a961; border-radius: 12px; padding: 1.25rem; margin-bottom: 2rem; }
+</style>
+</head>
+<body class="geo-pattern min-h-screen">
+
+<div class="max-w-4xl mx-auto px-5 py-12">
+
+  <nav class="mb-8 flex gap-4 flex-wrap text-sm font-semibold">
+    <a href="index.html" class="text-emerald-900 hover:text-amber-700">← Curriculum</a>
+    <a href="laws.html" class="text-emerald-900 hover:text-amber-700">Topical view of laws →</a>
+  </nav>
+
+  <header class="text-center mb-8">
+    <div class="gold-line mb-5 max-w-[180px] mx-auto"></div>
+    <div class="arabic text-4xl text-emerald-900 mb-3">آيَات الأَحْكَام</div>
+    <h1 class="display text-4xl md:text-5xl text-emerald-950 font-semibold mb-3">The Legal Verses of the Quran</h1>
+    <p class="text-stone-600 max-w-2xl mx-auto text-sm">Every Quranic verse with a legal ruling, in order, with the majority Sunni interpretation and notes where the four schools differ. Roughly 500 verses total — this is the ongoing catalog.</p>
+    <div class="gold-line mt-5 max-w-[180px] mx-auto"></div>
+  </header>
+
+  <div class="caveat-box">
+    <div class="text-xs uppercase tracking-widest text-amber-800 font-bold mb-2">Caveats — read first</div>
+    <ul class="text-sm text-stone-800 space-y-1 list-disc list-inside">
+      <li>This is a <strong>learning resource</strong>, not a fatwa. For binding rulings, consult a qualified scholar.</li>
+      <li>"Majority view" means the position held by all four Sunni schools, or three of them, where they agree. Shia (Jaʿfarī) positions are noted only where they differ significantly.</li>
+      <li>The Quran's legal verses are the <em>foundation</em> of Islamic law, not all of it. Most fiqh comes from interpreting these verses through the lens of Sunnah and scholarly reasoning.</li>
+      <li>This page is being built incrementally. Surah Al-Baqara is the pilot.</li>
+    </ul>
+  </div>
+
+  <div class="mb-6">
+    <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold mb-3">Filter by surah</div>
+    <div class="flex flex-wrap gap-2">
+      <span class="surah-chip active">All <span class="count" id="total-count">5</span></span>
+      <span class="surah-chip active">2 · Al-Baqara <span class="count">5</span></span>
+      <span class="surah-chip" style="opacity: 0.5; cursor: not-allowed;">3 · Āl ʿImrān <span class="count">—</span></span>
+      <span class="surah-chip" style="opacity: 0.5; cursor: not-allowed;">4 · An-Nisāʾ <span class="count">—</span></span>
+      <span class="surah-chip" style="opacity: 0.5; cursor: not-allowed;">5 · Al-Māʾida <span class="count">—</span></span>
+      <span class="surah-chip" style="opacity: 0.5; cursor: not-allowed;">... and beyond</span>
+    </div>
+  </div>
+
+  <main>
+
+    <article class="verse-card">
+      <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
+        <span class="verse-ref-tag">Quran 2:173</span>
+        <div>
+          <span class="topic-pill">Food &amp; drink</span>
+          <span class="topic-pill">Necessity</span>
+        </div>
+      </div>
+      <div class="verse-arabic">إِنَّمَا حَرَّمَ عَلَيْكُمُ ٱلْمَيْتَةَ وَٱلدَّمَ وَلَحْمَ ٱلْخِنزِيرِ وَمَآ أُهِلَّ بِهِۦ لِغَيْرِ ٱللَّهِ ۖ فَمَنِ ٱضْطُرَّ غَيْرَ بَاغٍ وَلَا عَادٍ فَلَآ إِثْمَ عَلَيْهِ ۚ إِنَّ ٱللَّهَ غَفُورٌ رَّحِيمٌ</div>
+      <div class="verse-en">"He has only forbidden you carrion, blood, the flesh of swine, and that over which any other than Allah has been invoked. But whoever is forced by necessity — neither desiring nor transgressing — there is no sin upon him. Indeed, Allah is Forgiving, Merciful."</div>
+
+      <div class="section-label">Plain meaning</div>
+      <div class="section-body">Four categories are forbidden: (1) carrion — animals that died without proper Islamic slaughter, (2) flowing blood, (3) pork in any form, (4) anything slaughtered in the name of any deity other than Allah. The verse closes with a necessity exemption.</div>
+
+      <div class="section-label">Majority view</div>
+      <div class="section-body">All four Sunni schools agree on these four prohibitions. The "necessity" exemption (<em>ḍarūra</em>) is applied narrowly: it permits only what is needed to preserve life, not to enjoy. The principle is encoded in the maxim <em>"necessity makes the forbidden lawful"</em> — but limited by <em>"necessity is measured by its scope."</em></div>
+
+      <div class="section-label">Where the schools differ</div>
+      <div class="schools-grid">
+        <div class="school-row"><span class="school-name">All four schools</span>agree on the core prohibitions; differences are at the edges.</div>
+        <div class="school-row"><span class="school-name">Aquatic life</span>Mālikī, Shāfiʿī, Ḥanbalī permit nearly all sea creatures. Ḥanafī restricts to fish proper.</div>
+        <div class="school-row"><span class="school-name">Fish blood</span>Considered exempt from the blood prohibition by all schools (it's blood that hasn't "flowed").</div>
+      </div>
+
+      <div class="section-label">Related verses</div>
+      <div class="section-body">Q 5:3 expands the list (strangled, beaten, fallen, gored, partially eaten by wild beasts — unless slaughtered before death). Q 6:145 restates these four. Q 16:115 again.</div>
+    </article>
+
+    <article class="verse-card">
+      <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
+        <span class="verse-ref-tag">Quran 2:178–179</span>
+        <div>
+          <span class="topic-pill">Criminal — Murder</span>
+          <span class="topic-pill">Qiṣāṣ</span>
+        </div>
+      </div>
+      <div class="verse-arabic">يَا أَيُّهَا الَّذِينَ آمَنُوا كُتِبَ عَلَيْكُمُ الْقِصَاصُ فِي الْقَتْلَى ۖ الْحُرُّ بِالْحُرِّ وَالْعَبْدُ بِالْعَبْدِ وَالْأُنْثَىٰ بِالْأُنْثَىٰ ۚ فَمَنْ عُفِيَ لَهُ مِنْ أَخِيهِ شَيْءٌ فَاتِّبَاعٌ بِالْمَعْرُوفِ وَأَدَاءٌ إِلَيْهِ بِإِحْسَانٍ ۗ … وَلَكُمْ فِي الْقِصَاصِ حَيَاةٌ يَا أُولِي الْأَلْبَابِ</div>
+      <div class="verse-en">"O you who believe, retribution is prescribed for you in the case of murder… But if anyone is pardoned by his brother [the victim's family], let there be a fair demand and a payment with kindness. … In retribution there is life for you, O people of understanding."</div>
+
+      <div class="section-label">Plain meaning</div>
+      <div class="section-body">For deliberate murder, retribution (<em>qiṣāṣ</em>) is the default — but the victim's family may forgive in exchange for blood money (<em>diya</em>), or forgive outright. The closing verse explains the wisdom: the threat of being held to account saves lives.</div>
+
+      <div class="section-label">Majority view</div>
+      <div class="section-body">Three options after deliberate, unlawful killing: (1) execution by the state, only at the family's request; (2) acceptance of diya; (3) full pardon. The choice belongs to the victim's family, not the state. Forgiveness is consistently encouraged.</div>
+
+      <div class="section-label">Where the schools differ</div>
+      <div class="schools-grid">
+        <div class="school-row"><span class="school-name">Ḥanafī</span>A Muslim <strong>can</strong> be executed for killing a non-Muslim under Muslim rule (citing the principle of equal protection).</div>
+        <div class="school-row"><span class="school-name">Mālikī, Shāfiʿī, Ḥanbalī</span>A Muslim is <strong>not</strong> executed for killing a non-Muslim, but pays diya and is punished otherwise.</div>
+        <div class="school-row"><span class="school-name">All four</span>agree that diya for a man is twice the diya for a woman in classical rulings; some modern fatwas have revised this.</div>
+      </div>
+
+      <div class="section-label">Notes</div>
+      <div class="section-body">The phrase "free for free, slave for slave, female for female" was descriptive of pre-Islamic vendetta logic, which would escalate by demanding higher-status victims. The verse equalizes by capping retribution at one-for-one.</div>
+    </article>
+
+    <article class="verse-card">
+      <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
+        <span class="verse-ref-tag">Quran 2:183</span>
+        <div>
+          <span class="topic-pill">Worship — Fasting</span>
+        </div>
+      </div>
+      <div class="verse-arabic">يَا أَيُّهَا الَّذِينَ آمَنُوا كُتِبَ عَلَيْكُمُ الصِّيَامُ كَمَا كُتِبَ عَلَى الَّذِينَ مِن قَبْلِكُمْ لَعَلَّكُمْ تَتَّقُونَ</div>
+      <div class="verse-en">"O you who believe, fasting is prescribed for you as it was prescribed for those before you — that you may attain God-consciousness."</div>
+
+      <div class="section-label">Plain meaning</div>
+      <div class="section-body">Fasting is made obligatory upon the believers. The verse roots the practice in earlier traditions ("as it was prescribed for those before you") and states its purpose: <em>taqwā</em> — protective awareness of God.</div>
+
+      <div class="section-label">Majority view</div>
+      <div class="section-body">The fast referenced here is Ramadan, specified in the next verses (2:184–185). All four schools agree fasting Ramadan is obligatory on every adult, sane, healthy Muslim. The fast runs from dawn (<em>fajr</em>) to sunset (<em>maghrib</em>): no food, drink, smoking, or marital relations during daylight.</div>
+
+      <div class="section-label">Where the schools differ</div>
+      <div class="schools-grid">
+        <div class="school-row"><span class="school-name">Exemptions</span>All four schools agree on exemptions for travel, illness, menstruation/postpartum bleeding, pregnancy, breastfeeding, and severe old age. Differences are in the make-up rules (qaḍāʾ vs. fidya).</div>
+        <div class="school-row"><span class="school-name">Pregnant/nursing women</span>Ḥanafī/Shāfiʿī: make up later. Mālikī/Ḥanbalī (in some cases): feed the poor instead. Modern fatwas vary.</div>
+      </div>
+
+      <div class="section-label">Related verses</div>
+      <div class="section-body">Q 2:184 (concessions for the sick/traveler), 2:185 (Ramadan named, the Quran revealed in it), 2:187 (eating until the white thread is distinguishable from the black at dawn; the night allowance with spouses).</div>
+    </article>
+
+    <article class="verse-card">
+      <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
+        <span class="verse-ref-tag">Quran 2:219</span>
+        <div>
+          <span class="topic-pill">Intoxicants</span>
+          <span class="topic-pill">Gambling</span>
+        </div>
+      </div>
+      <div class="verse-arabic">يَسْأَلُونَكَ عَنِ الْخَمْرِ وَالْمَيْسِرِ ۖ قُلْ فِيهِمَا إِثْمٌ كَبِيرٌ وَمَنَافِعُ لِلنَّاسِ وَإِثْمُهُمَا أَكْبَرُ مِن نَّفْعِهِمَا</div>
+      <div class="verse-en">"They ask you about wine and gambling. Say: in them is great sin, and some benefit for people — but their sin is greater than their benefit."</div>
+
+      <div class="section-label">Plain meaning</div>
+      <div class="section-body">An early-stage ruling: the verse acknowledges that wine and gambling do bring some benefit (social, economic) but the harm outweighs it. This is not yet a full prohibition — it's a discouragement that softened the ground for the later total ban.</div>
+
+      <div class="section-label">Majority view</div>
+      <div class="section-body">All four schools agree this verse was part of a <strong>gradual prohibition</strong>. The final, total ban came in Q 5:90–91 ("avoid it — perhaps you will be successful"). The Companions famously poured wine into the streets of Medina the moment Q 5:90 was revealed.</div>
+
+      <div class="section-label">Where the schools differ</div>
+      <div class="schools-grid">
+        <div class="school-row"><span class="school-name">Definition of khamr</span>Ḥanafī (classical): only fermented grape juice is khamr proper; other intoxicants are forbidden by analogy (qiyās). The other three schools: any intoxicating substance is khamr.</div>
+        <div class="school-row"><span class="school-name">Practical outcome</span>All four schools forbid all intoxicants. The disagreement is only over <em>why</em> they are forbidden — directly or by analogy.</div>
+        <div class="school-row"><span class="school-name">Gambling</span>All four agree this includes lottery, casino games, betting on uncertain outcomes — anything where wealth changes hands by chance. Modern: extends to most insurance with speculative elements (debated for actual insurance).</div>
+      </div>
+
+      <div class="section-label">Notes</div>
+      <div class="section-body">A classic example of the Quran's <strong>gradual reform</strong> — three verses across the Meccan and Medinan periods stepped up the warning until total prohibition was set. Used by jurists to argue that legal reform is best done in stages.</div>
+    </article>
+
+    <article class="verse-card">
+      <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
+        <span class="verse-ref-tag">Quran 2:275</span>
+        <div>
+          <span class="topic-pill">Transactions</span>
+          <span class="topic-pill">Ribā</span>
+        </div>
+      </div>
+      <div class="verse-arabic">الَّذِينَ يَأْكُلُونَ الرِّبَا لَا يَقُومُونَ إِلَّا كَمَا يَقُومُ الَّذِي يَتَخَبَّطُهُ الشَّيْطَانُ مِنَ الْمَسِّ ۚ ذَٰلِكَ بِأَنَّهُمْ قَالُوا إِنَّمَا الْبَيْعُ مِثْلُ الرِّبَا ۗ وَأَحَلَّ اللَّهُ الْبَيْعَ وَحَرَّمَ الرِّبَا</div>
+      <div class="verse-en">"Those who consume usury will not stand on the Day of Resurrection except as one stands who has been struck by Satan's touch. That is because they said, 'Trade is just like usury' — but Allah has permitted trade and forbidden usury."</div>
+
+      <div class="section-label">Plain meaning</div>
+      <div class="section-body">Ribā (literally "increase") — taking interest on loans — is categorically forbidden. The verse rejects the pre-Islamic Arab argument that interest is "just like" profit from trade. They are not the same: trade involves real risk and real exchange; interest is guaranteed return on lent money.</div>
+
+      <div class="section-label">Majority view</div>
+      <div class="section-body">All four Sunni schools agree ribā is among the gravest sins. Two main types: (1) <em>ribā al-nasīʾa</em> — interest on loans, time-based, the main modern concern; (2) <em>ribā al-faḍl</em> — unequal exchange of the same commodity (e.g., bartering different grades of dates by weight unequally). Both forbidden.</div>
+
+      <div class="section-label">Where the schools differ</div>
+      <div class="schools-grid">
+        <div class="school-row"><span class="school-name">Which commodities ribā al-faḍl applies to</span>Ḥanafī: things sold by weight or measure. Shāfiʿī: foodstuffs + currency. Mālikī: foodstuffs that can be stored + currency. Ḥanbalī: similar to Shāfiʿī.</div>
+        <div class="school-row"><span class="school-name">Modern banking</span>Mainstream contemporary view (across schools): conventional bank interest is ribā. Alternative Islamic finance instruments (murābaḥa, ijāra, sukuk) are designed to replace it.</div>
+        <div class="school-row"><span class="school-name">Necessity exceptions</span>Some modern scholars permit conventional banking for Muslims in non-Muslim countries where Islamic alternatives are unavailable, under necessity (ḍarūra). Others reject this.</div>
+      </div>
+
+      <div class="section-label">Related verses</div>
+      <div class="section-body">Q 2:276 (Allah destroys ribā and increases charity), 2:278–279 (give up what remains of ribā after this revelation; otherwise it is war from Allah and His Messenger), 3:130 (do not consume ribā doubled and multiplied), 4:161 (taking ribā was forbidden to Jews too).</div>
+    </article>
+
+  </main>
+
+  <footer class="mt-12 text-center">
+    <div class="gold-line mb-6 max-w-xs mx-auto"></div>
+    <p class="text-xs italic text-stone-500 max-w-xl mx-auto">5 of ~500 verses covered so far. This is a pilot — once the format settles, the rest of Surah Al-Baqara comes next (~75 more legal verses), then onward through the Quran.</p>
+    <div class="mt-4 text-sm">
+      <a href="laws.html" class="text-emerald-800 underline font-semibold">← Topical view of laws</a>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
