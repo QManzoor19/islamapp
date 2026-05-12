@@ -221,6 +221,58 @@ const verses = [
   { cat: "family", topic: "Parents", ar: "وَقَضَىٰ رَبُّكَ أَلَّا تَعْبُدُوا إِلَّا إِيَّاهُ وَبِالْوَالِدَيْنِ إِحْسَانًا", en: "Your Lord has decreed that you worship none but Him, and that you be excellent to your parents.", ref: "Quran 17:23",
     note: "Kindness to parents is placed immediately after monotheism — the closest secondary obligation. The full verse forbids even saying 'uff' (a sound of irritation) to an aged parent." },
 
+  // Family — Prohibited relations for marriage
+  { cat: "family", topic: "Prohibited relations", ar: "حُرِّمَتْ عَلَيْكُمْ أُمَّهَاتُكُمْ وَبَنَاتُكُمْ وَأَخَوَاتُكُمْ وَعَمَّاتُكُمْ وَخَالَاتُكُمْ وَبَنَاتُ الْأَخِ وَبَنَاتُ الْأُخْتِ وَأُمَّهَاتُكُمُ اللَّاتِي أَرْضَعْنَكُمْ", en: "Forbidden to you for marriage are: your mothers, daughters, sisters, paternal aunts, maternal aunts, daughters of brothers, daughters of sisters, your foster mothers who nursed you…", ref: "Quran 4:23",
+    note: "The complete <em>mahram</em> list. Includes blood relatives, milk-relatives (created by breastfeeding from the same woman), and in-laws. Q 4:24 adds: married women, and prohibits marrying two sisters at the same time." },
+
+  // Family — Mahr (dowry)
+  { cat: "family", topic: "Mahr", ar: "وَآتُوا النِّسَاءَ صَدُقَاتِهِنَّ نِحْلَةً ۚ فَإِن طِبْنَ لَكُمْ عَن شَيْءٍ مِّنْهُ نَفْسًا فَكُلُوهُ هَنِيئًا مَّرِيئًا", en: "Give the women their dowries as a free gift. But if they willingly give up some of it, then consume it with satisfaction.", ref: "Quran 4:4",
+    note: "<em>Mahr</em> — the bride's mandatory gift from the husband. Hers alone, not her father's. The amount can be money, jewelry, books, even teaching the Quran. She may voluntarily forgive part of it, but cannot be pressured to. A core right of the wife." },
+
+  // Family — Polygyny
+  { cat: "family", topic: "Polygyny", ar: "فَانكِحُوا مَا طَابَ لَكُم مِّنَ النِّسَاءِ مَثْنَىٰ وَثُلَاثَ وَرُبَاعَ ۖ فَإِنْ خِفْتُمْ أَلَّا تَعْدِلُوا فَوَاحِدَةً", en: "Marry such women as seem good to you — two, three, or four. But if you fear you cannot deal justly, then only one.", ref: "Quran 4:3",
+    note: "Permission for up to four wives — strictly <em>conditional</em> on doing absolute justice (equal time, equal support, equal treatment). Q 4:129 follows: \"You will never be able to be perfectly just between wives, however much you try.\" Most jurists treat monogamy as the prudent default; polygyny as a permitted exception with high responsibility." },
+
+  // Family — Interfaith marriage
+  { cat: "family", topic: "Interfaith marriage", ar: "وَالْمُحْصَنَاتُ مِنَ الْمُؤْمِنَاتِ وَالْمُحْصَنَاتُ مِنَ الَّذِينَ أُوتُوا الْكِتَابَ مِن قَبْلِكُمْ", en: "Lawful for you in marriage are chaste believing women, and chaste women from the People of the Book given the Scripture before you.", ref: "Quran 5:5",
+    note: "A Muslim man may marry a chaste Jewish or Christian woman. The reverse — Muslim woman with a non-Muslim man — is forbidden by classical consensus, based on Q 2:221. Polytheist marriage (with neither Muslim nor a People-of-the-Book partner) is forbidden in both directions." },
+
+  // Family — Wives' rights
+  { cat: "family", topic: "Wives' rights", ar: "وَلَهُنَّ مِثْلُ الَّذِي عَلَيْهِنَّ بِالْمَعْرُوفِ ۚ وَلِلرِّجَالِ عَلَيْهِنَّ دَرَجَةٌ", en: "And women have rights equal to their obligations, according to what is reasonable — though men have a degree above them.", ref: "Quran 2:228",
+    note: "A foundational equity verse: wives have rights mirroring their duties. The \"degree\" (<em>daraja</em>) men have is most commonly interpreted as the responsibility of providing for and protecting the family — a burden, not a privilege. Modern scholarship varies in nuance." },
+
+  // Family — Caretaking responsibility
+  { cat: "family", topic: "Maintenance", ar: "الرِّجَالُ قَوَّامُونَ عَلَى النِّسَاءِ بِمَا فَضَّلَ اللَّهُ بَعْضَهُمْ عَلَىٰ بَعْضٍ وَبِمَا أَنفَقُوا مِنْ أَمْوَالِهِمْ", en: "Men are caretakers of women, because of what Allah has favored some over others and because they spend from their wealth.", ref: "Quran 4:34",
+    note: "The most-debated verse on marital roles. <em>Qawwāmūn</em> — caretakers/maintainers — frames the husband's role as financial and protective responsibility. The wife's wealth remains entirely her own; the husband is obliged to maintain. Continues with much-discussed conflict-resolution steps." },
+
+  // Family — Ila (oath of abstention)
+  { cat: "family", topic: "Ila", ar: "لِّلَّذِينَ يُؤْلُونَ مِن نِّسَائِهِمْ تَرَبُّصُ أَرْبَعَةِ أَشْهُرٍ ۖ فَإِن فَاءُوا فَإِنَّ اللَّهَ غَفُورٌ رَّحِيمٌ ۝ وَإِنْ عَزَمُوا الطَّلَاقَ فَإِنَّ اللَّهَ سَمِيعٌ عَلِيمٌ", en: "For those who swear to abstain from their wives, there is a waiting period of four months. If they reconcile, Allah is Forgiving, Merciful. If they resolve on divorce, Allah hears all.", ref: "Quran 2:226–227",
+    note: "Addresses <em>ila</em> — the pre-Islamic practice of a husband swearing off his wife indefinitely, leaving her in legal limbo. The Quran imposes a four-month deadline: reconcile or formally divorce. No woman left as \"neither married nor free.\"" },
+
+  // Family — Idda after divorce
+  { cat: "family", topic: "Idda (waiting period)", ar: "وَالْمُطَلَّقَاتُ يَتَرَبَّصْنَ بِأَنفُسِهِنَّ ثَلَاثَةَ قُرُوءٍ", en: "Divorced women shall wait three menstrual periods before remarrying.", ref: "Quran 2:228",
+    note: "The <em>ʿidda</em> — waiting period after divorce. Three menstrual cycles for women who menstruate; three months for those who don't (Q 65:4). Purposes: confirm no pregnancy, give a window for reconciliation, ensure paternity is clear." },
+
+  // Family — Widow's idda
+  { cat: "family", topic: "Widow's idda", ar: "وَالَّذِينَ يُتَوَفَّوْنَ مِنكُمْ وَيَذَرُونَ أَزْوَاجًا يَتَرَبَّصْنَ بِأَنفُسِهِنَّ أَرْبَعَةَ أَشْهُرٍ وَعَشْرًا", en: "Those of you who die leaving widows — the widows wait four months and ten days.", ref: "Quran 2:234",
+    note: "A widow's ʿidda is longer than a divorcee's — four months and ten days. The longer pause honors the marriage, allows for mourning, and (if there's a pregnancy) ensures paternity clarity. A pregnant widow's ʿidda ends when she gives birth (Q 65:4)." },
+
+  // Family — Reconciliation arbitrators
+  { cat: "family", topic: "Marital arbitration", ar: "وَإِنْ خِفْتُمْ شِقَاقَ بَيْنِهِمَا فَابْعَثُوا حَكَمًا مِّنْ أَهْلِهِ وَحَكَمًا مِّنْ أَهْلِهَا ۚ إِن يُرِيدَا إِصْلَاحًا يُوَفِّقِ اللَّهُ بَيْنَهُمَا", en: "If you fear a breach between them, appoint an arbitrator from his family and an arbitrator from hers. If both desire reconciliation, Allah will cause it between them.", ref: "Quran 4:35",
+    note: "Marital breakdown requires <em>mediation before divorce</em> — one trustworthy representative from each side. The foundation of Islamic family arbitration. Modern equivalent: marriage counseling, family mediation. Divorce is the last resort, not the first." },
+
+  // Family — Breastfeeding
+  { cat: "family", topic: "Breastfeeding", ar: "وَالْوَالِدَاتُ يُرْضِعْنَ أَوْلَادَهُنَّ حَوْلَيْنِ كَامِلَيْنِ ۖ لِمَنْ أَرَادَ أَن يُتِمَّ الرَّضَاعَةَ", en: "Mothers shall breastfeed their children for two complete years — for those who wish to complete the nursing.", ref: "Quran 2:233",
+    note: "Two years of breastfeeding is the recommended ideal, not obligatory. The verse continues: the father is responsible for the mother's maintenance during nursing; weaning can happen earlier by mutual consent; a wet-nurse may be hired. Creates the legal category of \"milk-relatives\" — children nursed by the same woman become mahram to each other." },
+
+  // Family — Adoption (kafala vs nasab)
+  { cat: "family", topic: "Adoption", ar: "وَمَا جَعَلَ أَدْعِيَاءَكُمْ أَبْنَاءَكُمْ ۚ ذَٰلِكُمْ قَوْلُكُم بِأَفْوَاهِكُمْ ۝ ادْعُوهُمْ لِآبَائِهِمْ هُوَ أَقْسَطُ عِندَ اللَّهِ", en: "He has not made your adopted sons your true sons. That is only your saying with your mouths. Call them by the names of their fathers — that is more just before Allah.", ref: "Quran 33:4–5",
+    note: "Islam does not have Western-style adoption (full name change, full lineage transfer, equal inheritance rights). Children should retain their biological father's name and lineage. <em>Kafala</em> — caretaking, support, raising as one's own — is highly encouraged. The legal fiction of changed parentage is what's rejected." },
+
+  // Family — Parents through hardship
+  { cat: "family", topic: "Parents", ar: "وَوَصَّيْنَا الْإِنسَانَ بِوَالِدَيْهِ حَمَلَتْهُ أُمُّهُ وَهْنًا عَلَىٰ وَهْنٍ وَفِصَالُهُ فِي عَامَيْنِ أَنِ اشْكُرْ لِي وَلِوَالِدَيْكَ", en: "We have enjoined upon every person to be excellent to his parents — his mother carried him through hardship upon hardship, and his weaning is in two years. Be thankful to Me and to your parents.", ref: "Quran 31:14",
+    note: "Mothers receive specific honor — \"hardship upon hardship\" of pregnancy plus two years of nursing. Q 31:15 immediately adds the most striking ruling: even if parents press you toward disbelief, do not obey them in that — <em>but still accompany them in this world with kindness</em>. Religious disagreement does not cancel filial duty." },
+
   // Criminal
   { cat: "criminal", topic: "Murder", ar: "وَلَكُمْ فِي الْقِصَاصِ حَيَاةٌ يَا أُولِي الْأَلْبَابِ", en: "In retribution there is life for you, O people of understanding.", ref: "Quran 2:179",
     note: "The wisdom of <em>qiṣāṣ</em>: knowing that justice will be exacted deters murder. The victim's family can choose execution, blood money, or full pardon — the Quran encourages the latter." },
