@@ -283,6 +283,38 @@ const verses = [
   { cat: "criminal", topic: "Slander", ar: "وَالَّذِينَ يَرْمُونَ الْمُحْصَنَاتِ ثُمَّ لَمْ يَأْتُوا بِأَرْبَعَةِ شُهَدَاءَ فَاجْلِدُوهُمْ ثَمَانِينَ جَلْدَةً", en: "Those who accuse chaste women and do not produce four witnesses — strike them with eighty lashes.", ref: "Quran 24:4",
     note: "Falsely accusing someone of adultery without four eyewitnesses is itself a punishable crime. Designed to make such accusations practically impossible — protects reputation." },
 
+  // Criminal — Qisas (retribution)
+  { cat: "criminal", topic: "Qiṣāṣ", ar: "يَا أَيُّهَا الَّذِينَ آمَنُوا كُتِبَ عَلَيْكُمُ الْقِصَاصُ فِي الْقَتْلَى ۖ … فَمَنْ عُفِيَ لَهُ مِنْ أَخِيهِ شَيْءٌ فَاتِّبَاعٌ بِالْمَعْرُوفِ وَأَدَاءٌ إِلَيْهِ بِإِحْسَانٍ", en: "Retribution is prescribed for you in cases of murder… But if anyone is pardoned by his brother [the victim's family], let there be a fair demand and a payment with kindness.", ref: "Quran 2:178",
+    note: "The foundational verse on murder. The victim's family has three options: execution (qiṣāṣ), blood money (<em>diya</em>), or complete forgiveness. The choice belongs to the family, not the state. Forgiveness is consistently encouraged by the Quran." },
+
+  // Criminal — Manslaughter
+  { cat: "criminal", topic: "Manslaughter", ar: "وَمَن قَتَلَ مُؤْمِنًا خَطَأً فَتَحْرِيرُ رَقَبَةٍ مُّؤْمِنَةٍ وَدِيَةٌ مُّسَلَّمَةٌ إِلَىٰ أَهْلِهِ إِلَّا أَن يَصَّدَّقُوا", en: "Whoever kills a believer by mistake — let him free a believing slave and pay blood money to the victim's family, unless they forgive it as charity.", ref: "Quran 4:92",
+    note: "Accidental killing carries a dual expiation: freeing a slave (modernly: two consecutive months of fasting, since slavery is gone) <em>and</em> paying full diya to the family. The family may waive the diya as sadaqa. Cleanly distinguishes manslaughter from deliberate murder." },
+
+  // Criminal — Sanctity of all life
+  { cat: "criminal", topic: "Sanctity of life", ar: "مَن قَتَلَ نَفْسًا بِغَيْرِ نَفْسٍ أَوْ فَسَادٍ فِي الْأَرْضِ فَكَأَنَّمَا قَتَلَ النَّاسَ جَمِيعًا وَمَنْ أَحْيَاهَا فَكَأَنَّمَا أَحْيَا النَّاسَ جَمِيعًا", en: "Whoever kills a soul — unless for a soul or corruption in the land — it is as if he had killed all of humanity. And whoever saves one, it is as if he had saved all of humanity.", ref: "Quran 5:32",
+    note: "Comes in the context of the Cain & Abel story. One of the most-quoted verses in any scripture. Establishes the principle that each human life carries the weight of all human life — the basis of Islamic positions on capital punishment, war ethics, and bioethics." },
+
+  // Criminal — Theft repentance
+  { cat: "criminal", topic: "Theft — repentance", ar: "فَمَن تَابَ مِن بَعْدِ ظُلْمِهِ وَأَصْلَحَ فَإِنَّ اللَّهَ يَتُوبُ عَلَيْهِ ۗ إِنَّ اللَّهَ غَفُورٌ رَّحِيمٌ", en: "But whoever repents after his wrongdoing and reforms — indeed, Allah will turn to him in forgiveness. Allah is Forgiving, Merciful.", ref: "Quran 5:39",
+    note: "Immediately after the theft penalty (5:38). Repentance + returning the stolen property + behavioral reform opens the door to divine forgiveness even after the worldly punishment has been carried out. Classical fiqh further restricts the penalty with strict conditions: minimum value threshold, secured property, no theft from necessity, full evidence." },
+
+  // Criminal — Fornication / Zina
+  { cat: "criminal", topic: "Zina", ar: "الزَّانِيَةُ وَالزَّانِي فَاجْلِدُوا كُلَّ وَاحِدٍ مِّنْهُمَا مِائَةَ جَلْدَةٍ ۖ وَلَا تَأْخُذْكُم بِهِمَا رَأْفَةٌ فِي دِينِ اللَّهِ", en: "The fornicator and fornicatress — flog each of them a hundred lashes. Let no pity for them move you in carrying out Allah's law.", ref: "Quran 24:2",
+    note: "The Quranic penalty for fornication: 100 lashes. The hadith adds stoning (<em>rajm</em>) for those who were married at the time — accepted by all four Sunni schools, disputed by some modern scholars. Standard of proof in any case: <strong>four direct eyewitnesses</strong> — practically unobtainable. The penalty exists; its enforcement is deliberately near-impossible." },
+
+  // Criminal — Don't approach zina
+  { cat: "criminal", topic: "Preventive", ar: "وَلَا تَقْرَبُوا الزِّنَا ۖ إِنَّهُ كَانَ فَاحِشَةً وَسَاءَ سَبِيلًا", en: "And do not even approach fornication. It is a shameful act and an evil way.", ref: "Quran 17:32",
+    note: "The wording is preventive: \"do not approach\" — go further than abstaining from the act itself. Includes anything that leads toward it: free unsupervised mixing, suggestive media, opportunity-creating situations. Modern application extends to pornography, dating culture, environments that normalize the steps before zina." },
+
+  // Criminal — Lian (spousal accusation)
+  { cat: "criminal", topic: "Liʿān", ar: "وَالَّذِينَ يَرْمُونَ أَزْوَاجَهُمْ وَلَمْ يَكُن لَّهُمْ شُهَدَاءُ إِلَّا أَنفُسُهُمْ فَشَهَادَةُ أَحَدِهِمْ أَرْبَعُ شَهَادَاتٍ بِاللَّهِ إِنَّهُ لَمِنَ الصَّادِقِينَ", en: "Those who accuse their wives of adultery and have no witnesses but themselves — the testimony of each is four oaths by Allah that he is among the truthful…", ref: "Quran 24:6–9",
+    note: "<em>Liʿān</em> — the procedure when a husband accuses his wife without four witnesses. Each swears four oaths plus a fifth invoking Allah's curse if lying. The marriage dissolves; any child is legally separated from the husband's lineage. No worldly punishment on either party — the truth is left to Allah." },
+
+  // Criminal — Hiraba (highway robbery / terrorism)
+  { cat: "criminal", topic: "Ḥirāba", ar: "إِنَّمَا جَزَاءُ الَّذِينَ يُحَارِبُونَ اللَّهَ وَرَسُولَهُ وَيَسْعَوْنَ فِي الْأَرْضِ فَسَادًا أَن يُقَتَّلُوا أَوْ يُصَلَّبُوا أَوْ تُقَطَّعَ أَيْدِيهِمْ وَأَرْجُلُهُم مِّنْ خِلَافٍ أَوْ يُنفَوْا مِنَ الْأَرْضِ", en: "The punishment of those who wage war against Allah and His Messenger and spread corruption on the earth is execution, crucifixion, cutting of hands and feet from opposite sides, or exile from the land.", ref: "Quran 5:33",
+    note: "<em>Ḥirāba</em> — armed robbery, brigandage, or terrorism. The judge selects the penalty proportional to the harm done (whether life was taken, whether wealth was taken, etc.). Q 5:34 immediately follows: <em>repentance before capture cancels the worldly penalty</em> — the door is left open until the moment of arrest." },
+
   // Food
   { cat: "food", topic: "Forbidden", ar: "إِنَّمَا حَرَّمَ عَلَيْكُمُ الْمَيْتَةَ وَالدَّمَ وَلَحْمَ الْخِنزِيرِ وَمَا أُهِلَّ بِهِ لِغَيْرِ اللَّهِ", en: "He has forbidden you only carrion, blood, the flesh of swine, and that over which the name of any other than Allah has been invoked.", ref: "Quran 2:173",
     note: "Four prohibitions: carrion (animals not slaughtered Islamically), flowing blood, pork in any form, and meat dedicated to any deity other than Allah. A necessity exemption follows: starving people may eat what they need to survive." },
