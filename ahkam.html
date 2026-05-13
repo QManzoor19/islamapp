@@ -43,6 +43,23 @@
   .surah-chip .count { background: rgba(201,169,97,0.3); padding: 1px 6px; border-radius: 999px; font-size: 0.65rem; }
   .surah-chip.active .count { background: rgba(201,169,97,0.5); color: #faf6ed; }
   .caveat-box { background: linear-gradient(135deg, #fef3c7, #fde68a); border: 1px solid #c9a961; border-radius: 12px; padding: 1.25rem; margin-bottom: 2rem; }
+
+  /* Dark mode overrides */
+  [data-theme="dark"] .verse-card { background: #142420; border-color: rgba(201,169,97,0.3); }
+  [data-theme="dark"] .verse-arabic { color: #f3e8c2; }
+  [data-theme="dark"] .verse-en { color: #e7e2d0; border-bottom-color: rgba(201,169,97,0.18); }
+  [data-theme="dark"] .section-body { color: #e7e2d0; }
+  [data-theme="dark"] .section-body em { color: #f3e8c2; }
+  [data-theme="dark"] .section-label { color: #d4a957; }
+  [data-theme="dark"] .school-row { background: rgba(201,169,97,0.10); color: #e7e2d0; }
+  [data-theme="dark"] .school-name { color: #f3e8c2; }
+  [data-theme="dark"] .surah-chip { background: #142420; color: #f3e8c2; border-color: rgba(201,169,97,0.4); }
+  [data-theme="dark"] .surah-chip:hover { background: #1e2e25; }
+  [data-theme="dark"] .surah-chip.active { background: #064e3b; color: #faf6ed; }
+  [data-theme="dark"] .surah-chip .count { background: rgba(201,169,97,0.3); color: #f3e8c2; }
+  [data-theme="dark"] .topic-pill { background: rgba(201,169,97,0.15); color: #f3e8c2; }
+  [data-theme="dark"] .context-pill { background: rgba(120,113,108,0.25); color: #c4beb0; }
+  [data-theme="dark"] .caveat-box { background: linear-gradient(135deg, rgba(168,134,63,0.2), rgba(168,134,63,0.12)); color: #e7e2d0; border-color: rgba(201,169,97,0.4); }
 </style>
 </head>
 <body class="geo-pattern min-h-screen">
