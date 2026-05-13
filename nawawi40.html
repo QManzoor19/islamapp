@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The 40 Hadith of Nawawi — IslamApp</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#064e3b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="IslamApp">
+<meta name="mobile-web-app-capable" content="yes">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>(function(){try{if(localStorage.getItem('islamapp-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
+<link rel="stylesheet" href="theme.css">
+<script src="theme.js" defer></script>
+<style>
+  body { font-family: 'Inter', sans-serif; background: #faf6ed; color: #1c2d20;
+    background-image:
+      radial-gradient(circle at 10% 10%, rgba(201,169,97,0.08) 0%, transparent 40%),
+      radial-gradient(circle at 90% 90%, rgba(6,78,59,0.06) 0%, transparent 40%);
+    background-attachment: fixed;
+  }
+  .display { font-family: 'Cormorant Garamond', serif; }
+  .gold-line { height: 1px; background: linear-gradient(to right, transparent, #c9a961, transparent); }
+  .geo-pattern { background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23064e3b' fill-opacity='0.05'%3E%3Cpath d='M30 0l7.5 22.5H60L41.25 37.5l7.5 22.5L30 45l-18.75 15 7.5-22.5L0 22.5h22.5z'/%3E%3C/g%3E%3C/svg%3E"); }
+  .hadith-card { background: #fff; border: 1px solid rgba(201,169,97,0.4); border-radius: 14px 14px 8px 8px; padding: 1.5rem; margin-bottom: 1.5rem; position: relative; overflow: hidden; }
+  .hadith-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(to right, #c9a961, #064e3b, #c9a961); }
+  .hadith-num { display: inline-block; padding: 4px 14px; background: #064e3b; color: #faf6ed; border-radius: 999px; font-size: 0.7rem; letter-spacing: 0.15em; font-weight: 700; }
+  .topic-pill { display: inline-block; padding: 2px 10px; border-radius: 999px; background: rgba(6,78,59,0.1); color: #064e3b; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; margin-right: 0.3rem; margin-bottom: 0.5rem; }
+  .grade-pill { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; margin-right: 0.3rem; }
+  .grade-sahih { background: #d1fae5; color: #065f46; }
+  .grade-hasan { background: #fef3c7; color: #92400e; }
+  .hadith-arabic { font-family: 'Amiri', serif; direction: rtl; font-size: 1.4rem; color: #064e3b; line-height: 2; margin: 1rem 0; text-align: center; }
+  .hadith-en { color: #1f2937; font-size: 0.98rem; line-height: 1.75; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(201,169,97,0.2); font-style: italic; text-align: center; }
+  .source-line { font-size: 0.78rem; color: #78716c; margin-bottom: 1rem; font-family: 'Inter', monospace; text-align: center; letter-spacing: 0.05em; }
+  .section-label { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: #a8863f; font-weight: 700; margin-top: 1rem; margin-bottom: 0.4rem; }
+  .section-body { font-size: 0.9rem; color: #1f2937; line-height: 1.65; }
+  .schools-grid { display: grid; gap: 0.5rem; margin-top: 0.5rem; }
+  .school-row { padding: 0.5rem 0.85rem; background: rgba(201,169,97,0.08); border-left: 3px solid #c9a961; border-radius: 0 6px 6px 0; font-size: 0.85rem; display: flex; gap: 0.75rem; align-items: flex-start; }
+  .school-name { font-weight: 700; color: #064e3b; min-width: 90px; }
+  .topic-chip { padding: 0.4rem 0.85rem; border: 1px solid rgba(201,169,97,0.4); background: #fff; border-radius: 999px; font-size: 0.75rem; font-weight: 600; color: #064e3b; display: inline-flex; align-items: center; gap: 6px; }
+  .topic-chip .count { background: rgba(201,169,97,0.3); padding: 1px 6px; border-radius: 999px; font-size: 0.65rem; }
+</style>
+</head>
+<body class="geo-pattern min-h-screen">
+
+<div class="max-w-4xl mx-auto px-5 py-12">
+
+  <nav class="mb-8">
+    <a href="hadiths.html" class="text-emerald-900 hover:text-amber-700 text-sm font-semibold">← Hadith</a>
+  </nav>
+
+  <header class="text-center mb-10">
+    <div class="gold-line mb-5 max-w-[180px] mx-auto"></div>
+    <div style="font-family: 'Amiri', serif; direction: rtl;" class="text-4xl text-emerald-900 mb-3">الأَرْبَعُون النَّوَوِيَّة</div>
+    <h1 class="display text-5xl md:text-6xl text-emerald-950 font-semibold mb-3">The 40 Hadith of Nawawi</h1>
+    <p class="text-stone-600 max-w-2xl mx-auto">Imam an-Nawawī's (d. 1277 / 676 AH) curated set of <strong>42 short hadiths</strong> — each one summarizing a pillar of the religion. The classic starter collection for serious students of Islam.</p>
+    <div class="gold-line mt-5 max-w-[180px] mx-auto"></div>
+  </header>
+
+  <section class="bg-white/60 border border-amber-200/60 rounded-xl p-6 mb-8">
+    <h2 class="display text-2xl text-emerald-950 font-semibold mb-3">Why these 42?</h2>
+    <p class="text-stone-700 text-sm mb-3 leading-relaxed">Nawawī's stated criterion: each hadith had to be one that <em>by itself</em> a knowledgeable scholar would call an <em>"axis of the religion"</em> — a hadith on which an entire chapter of fiqh, ethics, or theology could be built. They are short enough to memorize, foundational enough that classical and modern scholars wrote whole commentaries on each (Ibn Rajab al-Ḥanbalī's <em>Jāmiʿ al-ʿUlūm wa-l-Ḥikam</em> is the most famous).</p>
+    <p class="text-stone-700 text-sm leading-relaxed">The original set was 40; Nawawī's student Ibn Rajab added two more. Together they cover: intention, faith, the five pillars, halal/haram, prophecy, divine decree, ethics of speech, calling to right, brotherhood, and patience in trial.</p>
+  </section>
+
+  <div class="mb-6">
+    <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold mb-3">Filter by topic</div>
+    <div class="flex flex-wrap gap-2">
+      <span class="topic-chip">All <span class="count" id="total-count">6</span></span>
+      <span class="topic-chip">Faith &amp; Pillars <span class="count">3</span></span>
+      <span class="topic-chip">Intention <span class="count">1</span></span>
+      <span class="topic-chip">Halal &amp; Ḥarām <span class="count">1</span></span>
+      <span class="topic-chip">Divine Decree <span class="count">1</span></span>
+      <span class="topic-chip" style="opacity: 0.5;">... 36 more coming</span>
+    </div>
+  </div>
+
+  <main>
+
+    <article class="hadith-card">
+      <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
+        <span class="hadith-num">Hadith 1 · Nawawī</span>
+        <div>
+          <span class="grade-pill grade-sahih">Ṣaḥīḥ</span>
+          <span class="topic-pill">Intention</span>
+          <span class="topic-pill">Niyya</span>
+        </div>
+      </div>
+      <div class="hadith-arabic">عَنْ أَمِيرِ الْمُؤْمِنِينَ عُمَرَ بْنِ الْخَطَّابِ رَضِيَ اللَّهُ عَنْهُ قَالَ: سَمِعْتُ رَسُولَ اللَّهِ ﷺ يَقُولُ: «إِنَّمَا الْأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى. فَمَنْ كَانَتْ هِجْرَتُهُ إِلَى اللَّهِ وَرَسُولِهِ فَهِجْرَتُهُ إِلَى اللَّهِ وَرَسُولِهِ، وَمَنْ كَانَتْ هِجْرَتُهُ لِدُنْيَا يُصِيبُهَا أَوِ امْرَأَةٍ يَنْكِحُهَا، فَهِجْرَتُهُ إِلَى مَا هَاجَرَ إِلَيْهِ»</div>
+      <div class="hadith-en">"Actions are only by their intentions, and every person gets only what he intended. So whoever's emigration was to Allah and His Messenger — his emigration is to Allah and His Messenger. And whoever's emigration was for some worldly gain or a woman to marry — his emigration is to what he emigrated for."</div>
+      <div class="source-line">Bukhārī 1 · Muslim 1907 · narrated by ʿUmar ibn al-Khaṭṭāb</div>
+
+      <div class="section-label">Plain meaning</div>
+      <div class="section-body">The hadith establishes a single principle: the <em>spiritual value</em> of an act depends on the <em>intention</em> behind it. Two people can do the same outward act — pray, give charity, emigrate, study — and one earns reward, the other earns nothing or worse. The example chosen is <em>hijra</em> — the most dramatic public act of the early Muslims (leaving home for faith). Even there, the inner state determines the verdict.</div>
+
+      <div class="section-label">Why it matters</div>
+      <div class="section-body">Classical scholars (al-Shāfiʿī, Aḥmad, al-Bukhārī himself) said this hadith is <em>one-third of Islam</em>, sometimes <em>one-fourth</em> — because all religious value is filtered through intention. Bukhārī famously placed it at the opening of his <em>Ṣaḥīḥ</em>. The hadith creates the Islamic legal doctrine of <em>niyya</em>: every act of worship (wuḍūʾ, prayer, fasting, hajj, zakāt) requires conscious intention; intention also distinguishes a permitted act done <em>for Allah</em> (which earns reward) from the same act done <em>for the world</em> (which doesn't).</div>
+
+      <div class="section-label">How the schools apply it</div>
+      <div class="schools-grid">
+        <div class="school-row"><span class="school-name">Ḥanafī</span><span>Intention's <em>place</em> is the heart, not the tongue — verbalizing it is recommended but not required for validity.</span></div>
+        <div class="school-row"><span class="school-name">Mālikī</span><span>Same on locus; intention must be present at the start of the act and continue (at least not be actively negated) through it.</span></div>
+        <div class="school-row"><span class="school-name">Shāfiʿī</span><span>Most detailed: intention must include the type of act (fard/sunna), the specific obligation (Ẓuhr vs. ʿAṣr), and "for Allah" — usually internalized in a single moment at takbīr.</span></div>
+        <div class="school-row"><span class="school-name">Ḥanbalī</span><span>Aligns with Ḥanafī generally; emphasizes the corrective implication — habitual acts (work, eating, sleep) become worship when intended <em>for Allah</em>.</span></div>
+      </div>
+
+      <div class="section-label">Related</div>
+      <div class="section-body">Quran 2:225 (Allah will not hold you accountable for laghw — unintended — in your oaths); 33:5 (Allah holds accountable for what hearts intend); 17:84 (each acts according to his manner). Hadith: "Whoever intends a good deed and does not do it — Allah writes one good deed for him" (Bukhārī).</div>
+    </article>
+
+    <article class="hadith-card">
+      <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
+        <span class="hadith-num">Hadith 2 · Nawawī</span>
+        <div>
+          <span class="grade-pill grade-sahih">Ṣaḥīḥ</span>
+          <span class="topic-pill">Faith</span>
+          <span class="topic-pill">Three levels of religion</span>
+        </div>
+      </div>
+      <div class="hadith-arabic">عَنْ عُمَرَ رَضِيَ اللَّهُ عَنْهُ قَالَ: بَيْنَمَا نَحْنُ جُلُوسٌ عِنْدَ رَسُولِ اللَّهِ ﷺ ذَاتَ يَوْمٍ، إِذْ طَلَعَ عَلَيْنَا رَجُلٌ شَدِيدُ بَيَاضِ الثِّيَابِ، شَدِيدُ سَوَادِ الشَّعَرِ ... فَقَالَ: يَا مُحَمَّدُ، أَخْبِرْنِي عَنِ الْإِسْلَامِ. فَقَالَ: «الْإِسْلَامُ أَنْ تَشْهَدَ أَنْ لَا إِلَهَ إِلَّا اللَّهُ وَأَنَّ مُحَمَّدًا رَسُولُ اللَّهِ، وَتُقِيمَ الصَّلَاةَ، وَتُؤْتِيَ الزَّكَاةَ، وَتَصُومَ رَمَضَانَ، وَتَحُجَّ الْبَيْتَ إِنِ اسْتَطَعْتَ إِلَيْهِ سَبِيلًا» ... قَالَ: فَأَخْبِرْنِي عَنِ الْإِيمَانِ. قَالَ: «أَنْ تُؤْمِنَ بِاللَّهِ وَمَلَائِكَتِهِ وَكُتُبِهِ وَرُسُلِهِ وَالْيَوْمِ الْآخِرِ، وَتُؤْمِنَ بِالْقَدَرِ خَيْرِهِ وَشَرِّهِ» ... قَالَ: فَأَخْبِرْنِي عَنِ الْإِحْسَانِ. قَالَ: «أَنْ تَعْبُدَ اللَّهَ كَأَنَّكَ تَرَاهُ، فَإِنْ لَمْ تَكُنْ تَرَاهُ فَإِنَّهُ يَرَاكَ»</div>
+      <div class="hadith-en">"While we were sitting with the Messenger of Allah ﷺ one day, a man appeared whose clothes were exceedingly white and whose hair was exceedingly black ... He said: 'Muḥammad, tell me about Islām.' He said: 'Islām is that you testify there is no god but Allah and that Muḥammad is His Messenger, establish prayer, give zakāt, fast Ramaḍān, and perform hajj to the House if you are able.' ... He said: 'Tell me about īmān.' He said: 'That you believe in Allah, His angels, His books, His messengers, the Last Day, and the divine decree — its good and its bad.' ... He said: 'Tell me about iḥsān.' He said: 'That you worship Allah as if you see Him — for if you do not see Him, He sees you.'"</div>
+      <div class="source-line">Muslim 8 · narrated by ʿUmar ibn al-Khaṭṭāb · "The Ḥadīth of Jibrīl"</div>
+
+      <div class="section-label">Plain meaning</div>
+      <div class="section-body">The angel Jibrīl came in the form of a stranger and questioned the Prophet ﷺ in public — so that the Companions would learn the religion's three layers. (1) <em>Islām</em> — the outward, five-pillar framework. (2) <em>Īmān</em> — the inward, six articles of belief. (3) <em>Iḥsān</em> — the spiritual summit: worshipping Allah with the awareness that you are <em>seen</em>, even when you cannot see. The hadith continues with signs of the Hour, but the three-tier definition is the heart of it.</div>
+
+      <div class="section-label">Why it matters</div>
+      <div class="section-body">This hadith is called <em>Umm al-Sunna</em> — "Mother of the Sunna" — because the entire religion fits in it. Every later classification of Islamic sciences maps to this triad: fiqh studies <em>islām</em>, ʿaqīda studies <em>īmān</em>, taṣawwuf/tazkiya studies <em>iḥsān</em>. The hadith also corrects a common modern reduction: Islam is <em>not</em> only the five pillars. The pillars are the bare external; faith and excellence are required to complete the picture.</div>
+
+      <div class="section-label">How the schools apply it</div>
+      <div class="schools-grid">
+        <div class="school-row"><span class="school-name">Ḥanafī</span><span>Strongest reading on the distinction: <em>islām</em> is the legal floor (compliance), <em>īmān</em> is the inward state — both required, but Abū Ḥanīfa held they are equivalent in essence.</span></div>
+        <div class="school-row"><span class="school-name">Mālikī</span><span>Same triad; iḥsān is the standard ethical aim of Mālikī fiqh — actions performed at the level of "as if you see Him".</span></div>
+        <div class="school-row"><span class="school-name">Shāfiʿī</span><span>Detailed jurisprudence on the layered structure; the science of <em>uṣūl al-dīn</em> maps onto the īmān layer specifically.</span></div>
+        <div class="school-row"><span class="school-name">Ḥanbalī</span><span>Strongest reading on iḥsān as the integrative goal of religious life — Ibn Taymiyya, Ibn al-Qayyim built much of their spiritual writing on this hadith.</span></div>
+      </div>
+
+      <div class="section-label">Related</div>
+      <div class="section-body">Quran 49:14 (the Bedouins said "we believe" — say "rather, you have submitted: faith has not yet entered your hearts"); 2:285 (the believers — each believes in Allah, His angels, His books, His messengers); 5:54 (a people Allah loves and they love Him). Hadith: "Whoever performs the five pillars and avoids the major sins — enters Paradise" (Bukhārī, Muslim).</div>
+    </article>
+
+    <article class="hadith-card">
+      <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
+        <span class="hadith-num">Hadith 3 · Nawawī</span>
+        <div>
+          <span class="grade-pill grade-sahih">Ṣaḥīḥ</span>
+          <span class="topic-pill">Five Pillars</span>
+          <span class="topic-pill">Structure of Islam</span>
+        </div>
+      </div>
+      <div class="hadith-arabic">عَنِ ابْنِ عُمَرَ رَضِيَ اللَّهُ عَنْهُمَا قَالَ: قَالَ رَسُولُ اللَّهِ ﷺ: «بُنِيَ الْإِسْلَامُ عَلَى خَمْسٍ: شَهَادَةِ أَنْ لَا إِلَهَ إِلَّا اللَّهُ وَأَنَّ مُحَمَّدًا رَسُولُ اللَّهِ، وَإِقَامِ الصَّلَاةِ، وَإِيتَاءِ الزَّكَاةِ، وَحَجِّ الْبَيْتِ، وَصَوْمِ رَمَضَانَ»</div>
+      <div class="hadith-en">"Islam is built on five: bearing witness that there is no god but Allah and that Muḥammad is His Messenger, establishing prayer, giving zakāt, pilgrimage to the House, and fasting Ramaḍān."</div>
+      <div class="source-line">Bukhārī 8 · Muslim 16 · narrated by ʿAbd Allāh ibn ʿUmar</div>
+
+      <div class="section-label">Plain meaning</div>
+      <div class="section-body">A foundational architectural image: Islam is a <em>building</em>, supported on five <em>pillars</em>. If a pillar is missing, the structure is incomplete. Each pillar is a distinct category of obligation: (1) <em>shahāda</em> — verbal commitment to monotheism + prophethood; (2) <em>ṣalāh</em> — five daily prayers; (3) <em>zakāt</em> — annual purification of wealth; (4) <em>ḥajj</em> — pilgrimage once in a lifetime if able; (5) <em>ṣawm</em> — fasting in Ramaḍān.</div>
+
+      <div class="section-label">Why it matters</div>
+      <div class="section-body">The hadith establishes the <em>basic threshold</em> of practicing Islam — and is the source of the "five pillars" framework used in every modern teaching of the religion. Scholars note: the shahāda is the foundation (the building itself); the other four are the actual pillars supporting the structure. Note: <em>jihād</em> is famously not listed — meaning, it is not a "pillar" in the same categorical sense. Note also: ḥajj precedes ṣawm in narration order even though ṣawm comes first in practice — scholars discuss the slight variant.</div>
+
+      <div class="section-label">How the schools apply it</div>
+      <div class="schools-grid">
+        <div class="school-row"><span class="school-name">Ḥanafī</span><span>Abandoning prayer is <em>major sin</em> but does not exit Islam unless denying its obligation. The five are the structure; their abandonment damages the building without necessarily collapsing it.</span></div>
+        <div class="school-row"><span class="school-name">Mālikī</span><span>Same general framework; some Mālikīs hold that abandoning prayer with denial of obligation = apostasy.</span></div>
+        <div class="school-row"><span class="school-name">Shāfiʿī</span><span>Strict: abandoning prayer out of laziness may be punished as a major offense; some classical Shāfiʿīs (especially Aḥmad-influenced) treat abandoning prayer entirely as apostasy.</span></div>
+        <div class="school-row"><span class="school-name">Ḥanbalī</span><span>Strongest classical view: abandoning prayer altogether <em>exits Islam</em> (per several hadiths). Modern Ḥanbalīs split; most accept abandonment as major sin but not apostasy.</span></div>
+      </div>
+
+      <div class="section-label">Related</div>
+      <div class="section-body">Quran 2:43 (establish prayer and give zakāt); 2:183 (fasting prescribed); 3:97 (hajj is a duty owed to Allah by those who are able). Hadith of Jibrīl (Hadith 2 above) — same five pillars in parallel. Hadith: "The covenant that separates us from them is prayer — whoever abandons it has disbelieved" (Aḥmad, Tirmidhī — used by Ḥanbalī school).</div>
+    </article>
+
+    <article class="hadith-card">
+      <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
+        <span class="hadith-num">Hadith 4 · Nawawī</span>
+        <div>
+          <span class="grade-pill grade-sahih">Ṣaḥīḥ</span>
+          <span class="topic-pill">Divine Decree</span>
+          <span class="topic-pill">Creation in the womb</span>
+        </div>
+      </div>
+      <div class="hadith-arabic">عَنْ أَبِي عَبْدِ الرَّحْمَنِ عَبْدِ اللَّهِ بْنِ مَسْعُودٍ رَضِيَ اللَّهُ عَنْهُ قَالَ: حَدَّثَنَا رَسُولُ اللَّهِ ﷺ وَهُوَ الصَّادِقُ الْمَصْدُوقُ: «إِنَّ أَحَدَكُمْ يُجْمَعُ خَلْقُهُ فِي بَطْنِ أُمِّهِ أَرْبَعِينَ يَوْمًا نُطْفَةً، ثُمَّ يَكُونُ عَلَقَةً مِثْلَ ذَلِكَ، ثُمَّ يَكُونُ مُضْغَةً مِثْلَ ذَلِكَ، ثُمَّ يُرْسَلُ إِلَيْهِ الْمَلَكُ فَيَنْفُخُ فِيهِ الرُّوحَ، وَيُؤْمَرُ بِأَرْبَعِ كَلِمَاتٍ: بِكَتْبِ رِزْقِهِ وَأَجَلِهِ وَعَمَلِهِ وَشَقِيٌّ أَوْ سَعِيدٌ»</div>
+      <div class="hadith-en">"Each of you is gathered in the womb of his mother for forty days as a drop, then as a clot for the same period, then as a chewed lump for the same period. Then an angel is sent to him who breathes the spirit into him and is commanded with four matters: to write his provision (<em>rizq</em>), his lifespan, his deeds, and whether he is wretched or felicitous."</div>
+      <div class="source-line">Bukhārī 3208 · Muslim 2643 · narrated by ʿAbd Allāh ibn Masʿūd</div>
+
+      <div class="section-label">Plain meaning</div>
+      <div class="section-body">A summary of the <em>doctrine of qadar</em> — divine decree — set within the formation of every human life. Three stages of forty days each (drop → clot → chewed lump), then the soul is breathed in, and four destiny markers are written: provision, lifespan, deeds, eternal outcome. The "wretched or felicitous" line is the source of the question most asked of this hadith: if it's already written, why act? — answered below.</div>
+
+      <div class="section-label">Why it matters</div>
+      <div class="section-body">This hadith is the central text on <em>qadar</em> — and the source of multiple major doctrines: (1) <em>provision is fixed</em> — work and effort are required, but the amount is decreed; (2) <em>lifespan is fixed</em> — health and caution don't extend it past its appointed time; (3) <em>deeds are known to Allah</em> in advance, but this does not eliminate human free will (per the consistent Sunni teaching: foreknowledge ≠ compulsion). The Companions asked the Prophet ﷺ — "if it's all written, why act?" His answer (Bukhārī, Muslim): <em>"Act — each is enabled to do what he was created for."</em> The doctrine: decree is real; effort is also real; we are responsible for the effort, not the foreknowledge.</div>
+
+      <div class="section-label">How the schools apply it</div>
+      <div class="schools-grid">
+        <div class="school-row"><span class="school-name">Sunni mainstream</span><span>Decree + free will both true; humans accountable for choices though Allah knows them in advance.</span></div>
+        <div class="school-row"><span class="school-name">Muʿtazila (historical)</span><span>Emphasized free will to a degree that diminished decree; rejected by mainstream as too rationalistic.</span></div>
+        <div class="school-row"><span class="school-name">Jabriyya (historical)</span><span>Emphasized decree to a degree that diminished free will; rejected as fatalistic.</span></div>
+        <div class="school-row"><span class="school-name">Modern bio-legal</span><span>The hadith's developmental stages (40+40+40 days = 120 days) is the basis for the Islamic legal rule on ensoulment and abortion timing in Ḥanafī, Shāfiʿī, Ḥanbalī schools.</span></div>
+      </div>
+
+      <div class="section-label">Related</div>
+      <div class="section-body">Quran 22:5 (creation stages from dust → drop → clot → flesh); 23:13–14 (parallel embryology). Quran 57:22 (no calamity occurs but is written before We bring it about). Hadith: "Act — each will be eased toward what they were created for" (Bukhārī, Muslim — the response to the "why act?" question).</div>
+    </article>
+
+    <article class="hadith-card">
+      <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
+        <span class="hadith-num">Hadith 5 · Nawawī</span>
+        <div>
+          <span class="grade-pill grade-sahih">Ṣaḥīḥ</span>
+          <span class="topic-pill">Bidʿa rejected</span>
+          <span class="topic-pill">Boundaries of religion</span>
+        </div>
+      </div>
+      <div class="hadith-arabic">عَنْ أُمِّ الْمُؤْمِنِينَ عَائِشَةَ رَضِيَ اللَّهُ عَنْهَا قَالَتْ: قَالَ رَسُولُ اللَّهِ ﷺ: «مَنْ أَحْدَثَ فِي أَمْرِنَا هَذَا مَا لَيْسَ مِنْهُ فَهُوَ رَدٌّ»</div>
+      <div class="hadith-en">"Whoever introduces (innovates — <em>aḥdatha</em>) into this matter of ours something that is not from it — it is rejected (<em>radd</em>)."</div>
+      <div class="source-line">Bukhārī 2697 · Muslim 1718 · narrated by ʿĀʾisha · Muslim's variant: "Whoever does an act not in accordance with our matter — it is rejected"</div>
+
+      <div class="section-label">Plain meaning</div>
+      <div class="section-body">A short, surgical principle. Religious practices — beliefs, rituals, methods of worship — must come from <em>revelation</em> (Quran + Sunnah). Innovations into the religion, even with sincere intent, are <em>radd</em> — meaning, rejected: they do not earn reward, and the practice itself is invalid. The hadith is the textual basis for the entire doctrine of <em>bidʿa</em> (innovation in religion).</div>
+
+      <div class="section-label">Why it matters</div>
+      <div class="section-body">This is one of the most-cited hadiths in Sunni jurisprudence. It establishes a critical principle: <em>in religious matters, the default is restriction</em> — you do only what is established. (In <em>worldly</em> matters, the principle is reversed: the default is permission unless prohibited.) The hadith protects the religion from arbitrary expansion — well-intentioned additions can pile up over generations and gradually replace what was actually revealed. Imam Mālik's famous statement built on this: <em>"What was not religion then is not religion now."</em></div>
+
+      <div class="section-label">How the schools apply it</div>
+      <div class="schools-grid">
+        <div class="school-row"><span class="school-name">Ḥanafī</span><span>Distinguishes <em>bidʿa ḥasana</em> (good innovation — e.g., compiling Quran into one book, building madrasas) from <em>bidʿa sayyiʾa</em> (bad innovation — adding rituals to worship). The hadith targets the latter.</span></div>
+        <div class="school-row"><span class="school-name">Mālikī</span><span>Strongest classical reading of the hadith: any worship-act not established in the Prophet's ﷺ time is bidʿa. Imam Mālik refused even minor liturgical additions in his own era.</span></div>
+        <div class="school-row"><span class="school-name">Shāfiʿī</span><span>Imam al-Shāfiʿī's distinction: bidʿa is of two types — that which contradicts the Quran/Sunnah (forbidden) and that which doesn't (sometimes permissible). The hadith targets the contradicting type.</span></div>
+        <div class="school-row"><span class="school-name">Ḥanbalī</span><span>Closest to Mālikī; Ibn Taymiyya wrote extensively that the hadith targets all worship-innovations regardless of intention.</span></div>
+      </div>
+
+      <div class="section-label">Related</div>
+      <div class="section-body">Quran 5:3 (today I have perfected for you your religion). Quran 42:21 (do they have partners who have legislated for them religion that Allah did not permit?). Hadith: "Beware of newly-introduced matters — every innovation is misguidance" (Abū Dāwūd, Tirmidhī). Hadith: "The best speech is Allah's Book, the best guidance is Muḥammad's ﷺ guidance, the worst matters are newly-introduced ones" (Muslim).</div>
+    </article>
+
+    <article class="hadith-card">
+      <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
+        <span class="hadith-num">Hadith 6 · Nawawī</span>
+        <div>
+          <span class="grade-pill grade-sahih">Ṣaḥīḥ</span>
+          <span class="topic-pill">Halāl &amp; ḥarām</span>
+          <span class="topic-pill">Scrupulousness</span>
+        </div>
+      </div>
+      <div class="hadith-arabic">عَنْ أَبِي عَبْدِ اللَّهِ النُّعْمَانِ بْنِ بَشِيرٍ رَضِيَ اللَّهُ عَنْهُمَا قَالَ: سَمِعْتُ رَسُولَ اللَّهِ ﷺ يَقُولُ: «إِنَّ الْحَلَالَ بَيِّنٌ، وَإِنَّ الْحَرَامَ بَيِّنٌ، وَبَيْنَهُمَا أُمُورٌ مُشْتَبِهَاتٌ لَا يَعْلَمُهُنَّ كَثِيرٌ مِنَ النَّاسِ. فَمَنِ اتَّقَى الشُّبُهَاتِ فَقَدِ اسْتَبْرَأَ لِدِينِهِ وَعِرْضِهِ، وَمَنْ وَقَعَ فِي الشُّبُهَاتِ وَقَعَ فِي الْحَرَامِ، كَالرَّاعِي يَرْعَى حَوْلَ الْحِمَى يُوشِكُ أَنْ يَرْتَعَ فِيهِ. أَلَا وَإِنَّ لِكُلِّ مَلِكٍ حِمًى، أَلَا وَإِنَّ حِمَى اللَّهِ مَحَارِمُهُ. أَلَا وَإِنَّ فِي الْجَسَدِ مُضْغَةً إِذَا صَلَحَتْ صَلَحَ الْجَسَدُ كُلُّهُ، وَإِذَا فَسَدَتْ فَسَدَ الْجَسَدُ كُلُّهُ. أَلَا وَهِيَ الْقَلْبُ»</div>
+      <div class="hadith-en">"The lawful is clear and the unlawful is clear, and between them are matters that are <em>doubtful</em> (<em>mushtabihāt</em>), which many people do not know. Whoever guards against the doubtful matters has cleared his religion and his honor; whoever falls into the doubtful matters falls into the unlawful — like a shepherd grazing around a sanctuary, almost going into it. Indeed, every king has a sanctuary; the sanctuary of Allah is what He has forbidden. Indeed in the body there is a piece of flesh — if it is sound, the whole body is sound; if it is corrupt, the whole body is corrupt. It is the <em>heart</em>."</div>
+      <div class="source-line">Bukhārī 52 · Muslim 1599 · narrated by an-Nuʿmān ibn Bashīr</div>
+
+      <div class="section-label">Plain meaning</div>
+      <div class="section-body">A three-part teaching. (1) <em>Most rulings are clear</em> — halal is recognizable, ḥarām is recognizable; the gray zone (<em>mushtabihāt</em>) is the small middle. (2) <em>The wise response</em> is precaution — staying out of the gray zone protects you from sin and protects your reputation. (3) <em>The root cause</em> is the heart — if it is sound (knowing the principles, willing the good), conduct follows; if it is corrupt, even outward correctness becomes hollow.</div>
+
+      <div class="section-label">Why it matters</div>
+      <div class="section-body">This hadith is the textual basis for two major Islamic concepts. (1) <em>Waraʿ</em> (scrupulousness): avoiding even what <em>might</em> be unlawful is a higher religious virtue, beyond minimum compliance. (2) <em>The heart as the seat of religion</em>: outward correctness without inner alignment is incomplete. Ibn Rajab al-Ḥanbalī said this hadith is <em>one of the four hadiths on which the entire religion turns</em> (along with #1, #2, and the "religion is sincere counsel" hadith).</div>
+
+      <div class="section-label">How the schools apply it</div>
+      <div class="schools-grid">
+        <div class="school-row"><span class="school-name">Ḥanafī</span><span>Doubtful matters are governed by the <em>aṣl al-ibāḥa</em> (default permissibility) in worldly affairs — but in worship the default is restriction. Waraʿ is recommended but not legally obligatory.</span></div>
+        <div class="school-row"><span class="school-name">Mālikī</span><span>Strongest school on <em>waraʿ</em> as a juristic principle — Imam Mālik refused doubtful income sources and counseled doubt-avoidance as a way of life.</span></div>
+        <div class="school-row"><span class="school-name">Shāfiʿī</span><span>Detailed taxonomy of doubt: doubt about substance vs. doubt about acquisition vs. doubt about ownership — each handled differently.</span></div>
+        <div class="school-row"><span class="school-name">Ḥanbalī</span><span>Closest to Mālikī on waraʿ; Ibn al-Qayyim wrote that the heart-clause of this hadith is the foundation of all Islamic spirituality.</span></div>
+      </div>
+
+      <div class="section-label">Related</div>
+      <div class="section-body">Quran 6:119 (Allah has explained what He has forbidden in detail to you); 5:101 (do not ask about things that may distress you when they are clarified). Hadith: "Leave what makes you doubt for what does not make you doubt — truthfulness is reassurance, lying is doubt" (Tirmidhī, Nasāʾī). Hadith: "Sin is what wavers in the soul and you dislike that people see" (Muslim).</div>
+    </article>
+
+  </main>
+
+  <footer class="mt-12 text-center">
+    <div class="gold-line mb-6 max-w-xs mx-auto"></div>
+    <p class="text-xs italic text-stone-500 max-w-xl mx-auto">6 of 42 hadiths covered — 14%. Each hadith with full Arabic, translation, source chain, plain meaning, scholarly application, and related texts.</p>
+    <div class="mt-4 text-sm">
+      <a href="hadiths.html" class="text-emerald-800 underline font-semibold">← Hadith library</a>
+    </div>
+  </footer>
+
+</div>
+
+</body>
+</html>

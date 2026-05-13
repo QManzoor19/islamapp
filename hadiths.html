@@ -145,7 +145,7 @@ const otherBooks = [
   { name: "Musnad Ahmad", arabic: "مُسْنَد أَحْمَد", note: "Ahmad b. Hanbal's enormous compilation (~27,000 reports), arranged by companion." },
   { name: "Mustadrak al-Hakim", arabic: "المُسْتَدْرَك", note: "Hadiths al-Hakim considered authentic that Bukhari/Muslim had not included." },
   { name: "Sunan al-Darimi", arabic: "سُنَن الدَّارِمِي", note: "Often cited alongside the six books." },
-  { name: "40 Hadith of Nawawi", arabic: "الأَرْبَعُون النَّوَوِيَّة", note: "A curated set of 42 concise hadiths summarizing the religion — the classic starter collection." },
+  { name: "40 Hadith of Nawawi", arabic: "الأَرْبَعُون النَّوَوِيَّة", note: "A curated set of 42 concise hadiths summarizing the religion — the classic starter collection.", href: "nawawi40.html" },
   { name: "Riyad al-Salihin", arabic: "رِيَاض الصَّالِحِين", note: "\"Gardens of the Righteous\" — al-Nawawi's thematic anthology of ~1,900 hadiths for spiritual life." }
 ];
 
@@ -193,15 +193,19 @@ const sampleHadiths = [
 ];
 
 function renderBooks(el, books, isSix) {
-  el.innerHTML = books.map(b => `
-    <a href="placeholder.html?id=BOOK-${encodeURIComponent(b.name)}&title=${encodeURIComponent(b.name)}&tier=Library&tierName=${encodeURIComponent('Hadith Collections')}" class="book-card block p-6 pl-8">
+  el.innerHTML = books.map(b => {
+    const href = b.href ? b.href : `placeholder.html?id=BOOK-${encodeURIComponent(b.name)}&title=${encodeURIComponent(b.name)}&tier=Library&tierName=${encodeURIComponent('Hadith Collections')}`;
+    return `
+    <a href="${href}" class="book-card block p-6 pl-8">
       <div class="arabic text-2xl text-emerald-900 mb-2">${b.arabic}</div>
       <div class="display text-xl text-emerald-950 font-semibold mb-2">${b.name}</div>
       ${b.compiler ? `<div class="text-xs text-stone-500 mb-1">${b.compiler}</div>` : ''}
       ${b.count ? `<div class="text-xs text-amber-700/90 font-mono mb-3">${b.count}</div>` : ''}
       <p class="text-sm text-stone-600 leading-snug">${b.note}</p>
+      ${b.href ? '<div class="text-xs text-amber-700 mt-3 font-semibold">Open full collection →</div>' : ''}
     </a>
-  `).join("");
+  `;
+  }).join("");
 }
 
 function renderHadiths(el, hadiths) {
