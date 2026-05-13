@@ -29,6 +29,7 @@
   .verse-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(to right, #c9a961, #064e3b, #c9a961); }
   .verse-ref-tag { display: inline-block; padding: 4px 14px; background: #064e3b; color: #faf6ed; border-radius: 999px; font-size: 0.7rem; letter-spacing: 0.15em; font-weight: 700; }
   .topic-pill { display: inline-block; padding: 2px 10px; border-radius: 999px; background: rgba(6,78,59,0.1); color: #064e3b; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; margin-right: 0.3rem; margin-bottom: 0.5rem; }
+  .context-pill { display: inline-block; padding: 2px 10px; border-radius: 999px; background: rgba(120,113,108,0.15); color: #57534e; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; margin-right: 0.3rem; margin-bottom: 0.5rem; font-style: italic; }
   .verse-arabic { font-family: 'Amiri', serif; direction: rtl; font-size: 1.45rem; color: #064e3b; line-height: 2; margin: 1rem 0; text-align: center; }
   .verse-en { color: #1f2937; font-size: 0.95rem; line-height: 1.7; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(201,169,97,0.2); font-style: italic; text-align: center; }
   .section-label { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: #a8863f; font-weight: 700; margin-top: 1rem; margin-bottom: 0.4rem; }
@@ -157,6 +158,11 @@
       <span class="surah-chip active">113–114 · Al-Muʿawwidhatān <span class="count">1</span></span>
       <span class="surah-chip" style="opacity: 0.5; cursor: not-allowed;">... and beyond</span>
     </div>
+    <div class="mt-4 p-3 rounded-lg" style="background: rgba(120,113,108,0.08); border-left: 3px solid #a8a29e;">
+      <div class="text-xs text-stone-600 leading-relaxed">
+        <strong>About the labels:</strong> Verses marked with a <span class="context-pill" style="margin: 0;">Context / non-ruling</span> pill are theological, narrative, eschatological, or devotional — included because they frame the legal verses around them. The <strong>~360 strict ahkām</strong> (commands, prohibitions, conditional rulings, contracts, family/worship/penal law) carry only the green topic pills.
+      </div>
+    </div>
   </div>
 
   <main>
@@ -165,6 +171,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 1:1–7</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Al-Fātiḥa</span>
           <span class="topic-pill">Opening</span>
         </div>
@@ -186,6 +193,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 2:21–22</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Worship your Lord</span>
           <span class="topic-pill">Creation as sign</span>
         </div>
@@ -207,6 +215,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 2:30–31</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Khalīfa</span>
           <span class="topic-pill">Adam taught the names</span>
         </div>
@@ -463,6 +472,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 2:117</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Originator of heavens</span>
           <span class="topic-pill">Be — and it is</span>
         </div>
@@ -595,6 +605,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 2:152</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Remember Me</span>
           <span class="topic-pill">Reciprocal dhikr</span>
         </div>
@@ -714,6 +725,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 2:163</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">One God</span>
           <span class="topic-pill">Tawḥīd</span>
         </div>
@@ -735,6 +747,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 2:165</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Love of Allah</span>
           <span class="topic-pill">Strongest love</span>
         </div>
@@ -1264,6 +1277,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 2:201</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Best balanced duʿāʾ</span>
           <span class="topic-pill">World and Hereafter</span>
         </div>
@@ -1948,6 +1962,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 2:255</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Āyat al-Kursī</span>
           <span class="topic-pill">Sovereignty</span>
         </div>
@@ -2403,6 +2418,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 2:284</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">All belongs to Allah</span>
           <span class="topic-pill">Knower of hearts</span>
         </div>
@@ -2424,6 +2440,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 2:285</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Articles of faith</span>
           <span class="topic-pill">We hear and obey</span>
         </div>
@@ -2466,6 +2483,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 3:7</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Muḥkam vs mutashābih</span>
           <span class="topic-pill">Interpretive caution</span>
         </div>
@@ -2493,6 +2511,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 3:8</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Keep our hearts firm</span>
           <span class="topic-pill">Foundational duʿāʾ</span>
         </div>
@@ -2514,6 +2533,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 3:18</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Allah bears witness</span>
           <span class="topic-pill">Tawḥīd</span>
         </div>
@@ -2535,6 +2555,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 3:26</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Allah gives sovereignty</span>
           <span class="topic-pill">All good in His hand</span>
         </div>
@@ -2577,6 +2598,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 3:54</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Allah is best planner</span>
           <span class="topic-pill">Trust in providence</span>
         </div>
@@ -2817,6 +2839,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 3:144</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Muḥammad ﷺ as Messenger</span>
           <span class="topic-pill">Faith in Allah, not the man</span>
         </div>
@@ -2920,6 +2943,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 3:185</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Death certain</span>
           <span class="topic-pill">Worldly life</span>
         </div>
@@ -2947,6 +2971,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 3:186</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Trials</span>
           <span class="topic-pill">Patience</span>
         </div>
@@ -2968,6 +2993,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 3:191</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Continuous remembrance</span>
           <span class="topic-pill">Reflection</span>
         </div>
@@ -3883,6 +3909,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 4:78–79</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Good and harm</span>
           <span class="topic-pill">Self-attribution</span>
         </div>
@@ -4067,6 +4094,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 4:113</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Divine teaching</span>
           <span class="topic-pill">Great favor</span>
         </div>
@@ -4136,6 +4164,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 4:122</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Believers' eternal home</span>
           <span class="topic-pill">Allah's promise</span>
         </div>
@@ -4318,6 +4347,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 4:142</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Hypocrites in prayer</span>
           <span class="topic-pill">Lazy and showing off</span>
         </div>
@@ -4360,6 +4390,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 4:147</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Allah doesn't need to punish</span>
           <span class="topic-pill">Gratitude and faith</span>
         </div>
@@ -4402,6 +4433,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 4:163</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Revelation continuum</span>
           <span class="topic-pill">Prophets named</span>
         </div>
@@ -4423,6 +4455,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 4:170</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Messenger has come with truth</span>
           <span class="topic-pill">Better for you</span>
         </div>
@@ -4465,6 +4498,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 4:174</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Proof and light</span>
           <span class="topic-pill">Universal address</span>
         </div>
@@ -4698,6 +4732,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 5:23</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Two who feared Allah</span>
           <span class="topic-pill">Trust in difficulty</span>
         </div>
@@ -4719,6 +4754,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 5:24</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Refusal to act</span>
           <span class="topic-pill">Generational lesson</span>
         </div>
@@ -4868,6 +4904,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 5:46</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Jesus and the Gospel</span>
           <span class="topic-pill">Confirming the Torah</span>
         </div>
@@ -5002,6 +5039,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 5:60</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Cursed by Allah</span>
           <span class="topic-pill">Worse, not better</span>
         </div>
@@ -5044,6 +5082,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 5:69</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Believers across traditions</span>
           <span class="topic-pill">Faith + good action</span>
         </div>
@@ -5191,6 +5230,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 5:100</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Quality over quantity</span>
           <span class="topic-pill">Bad vs good not equal</span>
         </div>
@@ -5282,6 +5322,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 6:32</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Worldly life as play</span>
           <span class="topic-pill">Hereafter is better</span>
         </div>
@@ -5303,6 +5344,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 6:38</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Animal communities</span>
           <span class="topic-pill">Creature dignity</span>
         </div>
@@ -5367,6 +5409,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 6:59</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Keys of the unseen</span>
           <span class="topic-pill">Total knowledge</span>
         </div>
@@ -5409,6 +5452,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 6:73</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">All in truth</span>
           <span class="topic-pill">Word and command</span>
         </div>
@@ -5430,6 +5474,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 6:74</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Ibrāhīm and his father</span>
           <span class="topic-pill">Idol critique</span>
         </div>
@@ -5451,6 +5496,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 6:79</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Ibrāhīm's tawḥīd</span>
           <span class="topic-pill">Pure direction</span>
         </div>
@@ -5499,6 +5545,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 6:91</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Allah's true measure</span>
           <span class="topic-pill">Denial of revelation</span>
         </div>
@@ -5520,6 +5567,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 6:99</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Signs in produce</span>
           <span class="topic-pill">Reflect</span>
         </div>
@@ -5541,6 +5589,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 6:103</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Vision cannot encompass</span>
           <span class="topic-pill">Transcendence</span>
         </div>
@@ -5822,6 +5871,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 6:165</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Stewardship</span>
           <span class="topic-pill">Hierarchy as test</span>
         </div>
@@ -5843,6 +5893,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 7:23</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Adam's prayer</span>
           <span class="topic-pill">Foundational repentance</span>
         </div>
@@ -5948,6 +5999,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 7:172</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Primordial covenant</span>
           <span class="topic-pill">Am I not your Lord?</span>
         </div>
@@ -5969,6 +6021,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 7:157</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Prophet described</span>
           <span class="topic-pill">Tayyibāt and khabāʾith</span>
           <span class="topic-pill">Removing burden</span>
@@ -6055,6 +6108,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 8:2–4</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">True believers</span>
           <span class="topic-pill">Marks of īmān</span>
         </div>
@@ -6507,6 +6561,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 9:32</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Cannot extinguish Allah's light</span>
           <span class="topic-pill">Truth prevails</span>
         </div>
@@ -6607,6 +6662,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 9:40</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Allah is with us</span>
           <span class="topic-pill">Cave of Hijra</span>
         </div>
@@ -6628,6 +6684,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 9:67</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Hypocrites</span>
           <span class="topic-pill">Inverted ethics</span>
         </div>
@@ -6649,6 +6706,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 9:51</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Divine decree</span>
           <span class="topic-pill">Tawakkul</span>
         </div>
@@ -6818,6 +6876,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 9:111</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Lives and wealth for Paradise</span>
           <span class="topic-pill">Divine purchase</span>
         </div>
@@ -6881,6 +6940,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 9:128</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Messenger's compassion</span>
           <span class="topic-pill">From yourselves</span>
         </div>
@@ -6902,6 +6962,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 10:107</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">No one removes harm but Allah</span>
           <span class="topic-pill">No one withholds bounty but He</span>
         </div>
@@ -6923,6 +6984,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 11:6</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Allah provides for all</span>
           <span class="topic-pill">No creature missed</span>
         </div>
@@ -7049,6 +7111,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 11:118</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Religious diversity</span>
           <span class="topic-pill">By divine design</span>
         </div>
@@ -7070,6 +7133,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 12:53</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Soul inclined to evil</span>
           <span class="topic-pill">Mercy as exception</span>
         </div>
@@ -7112,6 +7176,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 13:11</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Self-change</span>
           <span class="topic-pill">Divine intervention</span>
         </div>
@@ -7160,6 +7225,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 13:28</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Hearts find rest</span>
           <span class="topic-pill">Dhikr</span>
         </div>
@@ -7181,6 +7247,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 14:7</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Gratitude</span>
           <span class="topic-pill">Divine increase</span>
         </div>
@@ -7202,6 +7269,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 14:24</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Good word as good tree</span>
           <span class="topic-pill">Lasting influence</span>
         </div>
@@ -7223,6 +7291,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 14:42</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Allah is not unaware</span>
           <span class="topic-pill">Delay is not forgetting</span>
         </div>
@@ -7244,6 +7313,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 16:18</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Innumerable blessings</span>
           <span class="topic-pill">Allah's forgiveness</span>
         </div>
@@ -7294,6 +7364,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 16:67</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Intoxicant vs sustenance</span>
           <span class="topic-pill">Early alcohol stage</span>
         </div>
@@ -7315,6 +7386,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 16:78</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Brought out knowing nothing</span>
           <span class="topic-pill">Faculties given</span>
         </div>
@@ -7386,6 +7458,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 16:97</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Good life</span>
           <span class="topic-pill">Equal for men and women</span>
         </div>
@@ -7457,6 +7530,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 17:1</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Isrāʾ</span>
           <span class="topic-pill">Night Journey</span>
         </div>
@@ -7478,6 +7552,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 17:9</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Most upright way</span>
           <span class="topic-pill">Quran guides</span>
         </div>
@@ -7499,6 +7574,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 17:11</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Man's haste</span>
           <span class="topic-pill">Prays for evil thinking it good</span>
         </div>
@@ -7787,6 +7863,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 17:70</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Honored children of Adam</span>
           <span class="topic-pill">Human dignity</span>
         </div>
@@ -7829,6 +7906,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 17:80–81</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Truthful entry/exit</span>
           <span class="topic-pill">Truth vs falsehood</span>
         </div>
@@ -7850,6 +7928,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 17:84</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Each by his nature</span>
           <span class="topic-pill">Allah knows the guided</span>
         </div>
@@ -7871,6 +7950,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 17:85</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">The spirit (rūḥ)</span>
           <span class="topic-pill">Little knowledge given</span>
         </div>
@@ -7892,6 +7972,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 18:7</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">World as adornment</span>
           <span class="topic-pill">Test in deeds</span>
         </div>
@@ -7955,6 +8036,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 18:46</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Lasting good deeds</span>
           <span class="topic-pill">Wealth and children</span>
         </div>
@@ -7976,6 +8058,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 18:60–82</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Mūsā and Khiḍr</span>
           <span class="topic-pill">Hidden wisdom</span>
         </div>
@@ -7997,6 +8080,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 18:103–104</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Worst losers</span>
           <span class="topic-pill">Misguided effort</span>
         </div>
@@ -8018,6 +8102,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 18:110</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Human Prophet</span>
           <span class="topic-pill">No partners in worship</span>
         </div>
@@ -8068,6 +8153,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 19:96</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Allah will make love</span>
           <span class="topic-pill">For believers who do good</span>
         </div>
@@ -8188,6 +8274,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 20:124</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Turning from dhikr</span>
           <span class="topic-pill">Constricted life</span>
         </div>
@@ -8265,6 +8352,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 21:107</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Mercy to the worlds</span>
           <span class="topic-pill">Mission of Prophet</span>
         </div>
@@ -8386,6 +8474,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 22:46</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Hearts go blind</span>
           <span class="topic-pill">Inner sight</span>
         </div>
@@ -8457,6 +8546,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 23:1–11</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Successful believer</span>
           <span class="topic-pill">Seven qualities</span>
         </div>
@@ -8777,6 +8867,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 24:35</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Light verse</span>
           <span class="topic-pill">Allah is light</span>
         </div>
@@ -8848,6 +8939,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 24:55</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Promise of succession</span>
           <span class="topic-pill">Empowerment of believers</span>
         </div>
@@ -9075,6 +9167,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 26:78–83</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Ibrāhīm's praise of Allah</span>
           <span class="topic-pill">Personal duʿāʾ</span>
         </div>
@@ -9123,6 +9216,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 26:88–89</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Sound heart</span>
           <span class="topic-pill">Final saving qualification</span>
         </div>
@@ -9144,6 +9238,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 28:56</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">You cannot guide whom you love</span>
           <span class="topic-pill">Hidāya from Allah</span>
         </div>
@@ -9244,6 +9339,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 29:69</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Strive in Us</span>
           <span class="topic-pill">Guidance follows effort</span>
         </div>
@@ -9265,6 +9361,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 30:21</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Marriage purpose</span>
           <span class="topic-pill">Love and mercy</span>
         </div>
@@ -9286,6 +9383,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 30:30</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Fiṭra</span>
           <span class="topic-pill">Natural disposition</span>
         </div>
@@ -9365,6 +9463,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 30:54</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Weakness → strength → weakness</span>
           <span class="topic-pill">Life cycle</span>
         </div>
@@ -9500,6 +9599,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 32:9</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Hearing, sight, hearts</span>
           <span class="topic-pill">Little gratitude</span>
         </div>
@@ -9592,6 +9692,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 33:33</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Wives of the Prophet</span>
           <span class="topic-pill">Home as base</span>
           <span class="topic-pill">Tabarruj forbidden</span>
@@ -9690,6 +9791,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 33:43</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Allah's blessing</span>
           <span class="topic-pill">Darkness to light</span>
         </div>
@@ -9867,6 +9969,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 33:72</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">The trust (amāna)</span>
           <span class="topic-pill">Human acceptance</span>
         </div>
@@ -9888,6 +9991,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 35:15</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Allah is free of need</span>
           <span class="topic-pill">Humanity's dependence</span>
         </div>
@@ -9938,6 +10042,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 35:32</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Three categories of believers</span>
           <span class="topic-pill">Wronger, balanced, foremost</span>
         </div>
@@ -9993,6 +10098,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 36:65</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Body parts as witnesses</span>
           <span class="topic-pill">Day of accountability</span>
         </div>
@@ -10014,6 +10120,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 36:82</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Kun fa-yakūn</span>
           <span class="topic-pill">Divine command</span>
         </div>
@@ -10093,6 +10200,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 39:23</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Best statement</span>
           <span class="topic-pill">Skin shivers</span>
         </div>
@@ -10114,6 +10222,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 39:9</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Those who know</span>
           <span class="topic-pill">Not equal</span>
         </div>
@@ -10294,6 +10403,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 41:30</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Steadfastness</span>
           <span class="topic-pill">Angels reassure</span>
         </div>
@@ -10364,6 +10474,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 41:35</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Patient endurance</span>
           <span class="topic-pill">Great fortune</span>
         </div>
@@ -10393,6 +10504,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 41:54</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Encompassing all things</span>
           <span class="topic-pill">Doubt addressed</span>
         </div>
@@ -10471,6 +10583,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 42:25</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Repentance accepted</span>
           <span class="topic-pill">Pardons evil deeds</span>
         </div>
@@ -10647,6 +10760,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 47:7</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Help Allah, He helps you</span>
           <span class="topic-pill">Reciprocal aid</span>
         </div>
@@ -10718,6 +10832,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 47:31</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Allah tests you</span>
           <span class="topic-pill">Know strivers + patient</span>
         </div>
@@ -10766,6 +10881,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 47:36</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">World as play</span>
           <span class="topic-pill">Hereafter saves</span>
         </div>
@@ -10787,6 +10903,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 48:29</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Community character</span>
           <span class="topic-pill">Firm + merciful</span>
         </div>
@@ -10886,6 +11003,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 49:7</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Faith made beloved</span>
           <span class="topic-pill">Disobedience hateful</span>
         </div>
@@ -10963,6 +11081,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 49:13</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Human equality</span>
           <span class="topic-pill">Honor by taqwā</span>
           <span class="topic-pill">Anti-racism</span>
@@ -10985,6 +11104,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 49:14</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Islām vs Īmān</span>
           <span class="topic-pill">Outer vs inner</span>
         </div>
@@ -11006,6 +11126,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 50:16</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Allah is near</span>
           <span class="topic-pill">Inner observation</span>
         </div>
@@ -11055,6 +11176,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 50:37</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Reminder for the heart</span>
           <span class="topic-pill">Present attention</span>
         </div>
@@ -11105,6 +11227,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 51:56</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Purpose of creation</span>
           <span class="topic-pill">Worship as telos</span>
         </div>
@@ -11233,6 +11356,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 57:20</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Worldly life as play</span>
           <span class="topic-pill">Forgiveness in Hereafter</span>
         </div>
@@ -11438,6 +11562,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 64:11</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Calamity by His permission</span>
           <span class="topic-pill">He guides hearts</span>
         </div>
@@ -11488,6 +11613,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 65:3</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Allah suffices</span>
           <span class="topic-pill">Provision from unexpected</span>
         </div>
@@ -11654,6 +11780,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 67:1–2</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Death and life</span>
           <span class="topic-pill">Test in deeds</span>
         </div>
@@ -11675,6 +11802,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 67:13</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Secrets of breasts</span>
           <span class="topic-pill">Speech is monitored</span>
         </div>
@@ -11696,6 +11824,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 70:19–21</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Impatient human</span>
           <span class="topic-pill">Anxious / stingy</span>
         </div>
@@ -11759,6 +11888,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 75:36</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Not left without purpose</span>
           <span class="topic-pill">Meaning of life</span>
         </div>
@@ -11801,6 +11931,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 76:23</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Quran sent in stages</span>
           <span class="topic-pill">Patient transmission</span>
         </div>
@@ -11822,6 +11953,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 76:30</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Allah's will</span>
           <span class="topic-pill">Free will balance</span>
         </div>
@@ -11843,6 +11975,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 78:6–16</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Cosmic blessings</span>
           <span class="topic-pill">Signs in design</span>
         </div>
@@ -11864,6 +11997,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 80:1–10</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Divine correction</span>
           <span class="topic-pill">Poor seeker over rich</span>
         </div>
@@ -11885,6 +12019,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 81:27–28</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Reminder to the worlds</span>
           <span class="topic-pill">Whoever wills</span>
         </div>
@@ -11957,6 +12092,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 89:27–30</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Reassured soul</span>
           <span class="topic-pill">Return to Lord</span>
         </div>
@@ -12000,6 +12136,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 91:7–10</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Soul proportioned</span>
           <span class="topic-pill">Purification or corruption</span>
         </div>
@@ -12021,6 +12158,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 92:18–20</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Purification of wealth</span>
           <span class="topic-pill">Seeking Allah's face</span>
         </div>
@@ -12042,6 +12180,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 95:4</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Best stature</span>
           <span class="topic-pill">Human nature</span>
         </div>
@@ -12063,6 +12202,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 96:1–5</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">First revelation</span>
           <span class="topic-pill">Read / Pen / Knowledge</span>
         </div>
@@ -12084,6 +12224,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 99:7–8</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Atom-weight accountability</span>
           <span class="topic-pill">Final reckoning</span>
         </div>
@@ -12105,6 +12246,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 100:6–8</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Ungrateful man</span>
           <span class="topic-pill">Love of wealth</span>
         </div>
@@ -12126,6 +12268,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 102:8</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Questioning about blessings</span>
           <span class="topic-pill">Gratitude</span>
         </div>
@@ -12147,6 +12290,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 103:1–3</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Humanity in loss</span>
           <span class="topic-pill">Four conditions</span>
         </div>
@@ -12168,6 +12312,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 107:1–7</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">True religion</span>
           <span class="topic-pill">Orphan</span>
           <span class="topic-pill">Small kindnesses</span>
@@ -12211,6 +12356,7 @@
       <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
         <span class="verse-ref-tag">Quran 113–114</span>
         <div>
+          <span class="context-pill">Context / non-ruling</span>
           <span class="topic-pill">Refuge from evil</span>
           <span class="topic-pill">Al-Muʿawwidhatān</span>
         </div>
