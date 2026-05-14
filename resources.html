@@ -175,6 +175,7 @@
           <option value="seerah">Seerah</option>
           <option value="classical">Classical &amp; Historical Works</option>
           <option value="modern">Modern Authors</option>
+          <option value="videos">Videos &amp; Series</option>
           <option value="websites">Websites</option>
           <option value="apps">Apps</option>
           <option value="courses">Courses &amp; Seminaries</option>
@@ -208,6 +209,9 @@
 
   <div class="section-heading">Modern Authors Worth Reading</div>
   <div id="modern" class="grid md:grid-cols-2 gap-4"></div>
+
+  <div class="section-heading">Videos &amp; Series</div>
+  <div id="videos" class="grid md:grid-cols-2 gap-4"></div>
 
   <div class="section-heading">Websites</div>
   <div id="websites" class="grid md:grid-cols-2 gap-4"></div>
@@ -264,6 +268,19 @@ const modern = [
   { title: "Fazlur Rahman", meta: "University of Chicago", note: "20th-century reformist; rigorous historical approach to the Quran.", href: "https://en.wikipedia.org/wiki/Fazlur_Rahman_Malik" }
 ];
 
+const videos = [
+  { title: "Seerah of the Prophet ﷺ", meta: "Sh. Yasir Qadhi · ~106 episodes", note: "The most comprehensive biography of the Prophet ﷺ on YouTube. Begins from before Islam through the Farewell Sermon. The standard long-form English seerah course.", href: "https://www.youtube.com/playlist?list=PLAEA99D24CE2B6920" },
+  { title: "Lives of the Sahabah", meta: "Sh. Yasir Qadhi · 50+ episodes", note: "Companion to the seerah series — deep biographies of Abū Bakr, ʿUmar, ʿUthmān, ʿAlī, and others. Excellent character study.", href: "https://www.youtube.com/playlist?list=PLAEA99D24CE2B6920" },
+  { title: "Stories of the Prophets", meta: "Mufti Menk · ~32 episodes", note: "Engaging short lectures (~20–40 min each) on every named prophet from Adam ﷺ to Muḥammad ﷺ. A natural complement to the Stories module.", href: "https://www.youtube.com/playlist?list=PLBuBjk7BdEWXxhwYCY3Wn5GePxmKhc8aL" },
+  { title: "Tafsir of Sūrat al-Baqara", meta: "Nouman Ali Khan · Bayyinah", note: "Verse-by-verse explanation of the longest surah of the Quran. Strong on linguistic nuance and the surah's overall coherence.", href: "https://bayyinahtv.com/" },
+  { title: "Quran Weekly", meta: "Nouman Ali Khan · YouTube", note: "Short (5–10 min) reflections on individual verses. Easy to dip into; great for a daily habit.", href: "https://www.youtube.com/@quranweekly" },
+  { title: "The Firsts", meta: "Sh. Omar Suleiman · Yaqeen", note: "Series on the early Companions — the first to convert, the first martyrs, the first muezzin. Polished production by Yaqeen Institute.", href: "https://yaqeeninstitute.org/series/the-firsts" },
+  { title: "Mindful Hearts of Ramadan", meta: "Yaqeen Institute · annual", note: "Daily 5-minute reflections released during Ramadan. Pairs theological grounding with practical action for the month.", href: "https://yaqeeninstitute.org/series/mindful-hearts" },
+  { title: "Bayyinah TV", meta: "Subscription · Nouman Ali Khan", note: "Full library of Quranic tafsīr, Arabic grammar, and thematic courses. The most structured paid platform for Quran study.", href: "https://bayyinahtv.com/" },
+  { title: "Deen Academy", meta: "OnePath Network · YouTube", note: "Slickly produced short videos and series on Islamic history, theology, and contemporary issues. Aimed at younger audiences.", href: "https://www.youtube.com/@OnePathNetwork" },
+  { title: "Sandala Lectures", meta: "Sh. Hamza Yusuf · Zaytuna", note: "Long-form talks on Islamic spirituality, ethics, and the meeting of Islam with modernity. Slower paced, more reflective.", href: "https://sandala.org/category/audio-and-video/" }
+];
+
 const websites = [
   { title: "quran.com", meta: "quran.com", note: "Multiple translations, audio recitations by many qaris, tafsir, word-by-word analysis. The de facto standard.", href: "https://quran.com" },
   { title: "sunnah.com", meta: "sunnah.com", note: "The six canonical hadith books in Arabic and English, fully searchable with grading.", href: "https://sunnah.com" },
@@ -291,7 +308,7 @@ const courses = [
 ];
 
 const USER_KEY = "islamapp-user-resources";
-const CATS = { translations, tafsir, seerah, classical, modern, websites, apps, courses };
+const CATS = { translations, tafsir, seerah, classical, modern, videos, websites, apps, courses };
 
 function loadUser() {
   try { return JSON.parse(localStorage.getItem(USER_KEY) || "[]"); } catch (e) { return []; }
