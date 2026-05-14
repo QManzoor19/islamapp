@@ -484,7 +484,17 @@ document.addEventListener("keydown", (e) => {
 
 markInProgress();
 render();
+
+// ─── Expose for lesson-modes.js (multi-mode reader) ───
+window.LessonRunner = {
+  steps,
+  quizQuestions,
+  moduleId: MODULE_ID,
+  render,
+  renderQuiz,
+};
 </script>
+<script src="lesson-modes.js" defer></script>
 
 </body>
 </html>
