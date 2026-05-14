@@ -486,6 +486,7 @@ function renderQuiz() {
       quizAnswered.add(qi);
       group.querySelectorAll(".choice").forEach((b, i) => {
         b.disabled = true;
+        if (i === choice) b.classList.add("selected");
         if (i === correct) b.classList.add("correct");
         else if (i === choice) b.classList.add("wrong");
       });

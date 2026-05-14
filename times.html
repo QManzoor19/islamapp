@@ -307,7 +307,7 @@ function renderQuiz() {
       if (quizAnswered.has(qi)) return;
       const choice = parseInt(btn.dataset.choice); const correct = quizQuestions[qi].answer;
       quizAnswered.add(qi);
-      group.querySelectorAll(".choice").forEach((b, i) => { b.disabled = true; if (i === correct) b.classList.add("correct"); else if (i === choice) b.classList.add("wrong"); });
+      group.querySelectorAll(".choice").forEach((b, i) => { b.disabled = true; if (i === choice) b.classList.add("selected"); if (i === correct) b.classList.add("correct"); else if (i === choice) b.classList.add("wrong"); });
       if (choice === correct) quizScore++;
       if (quizAnswered.size === quizQuestions.length) showResult();
     });

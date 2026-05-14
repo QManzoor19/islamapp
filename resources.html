@@ -62,6 +62,74 @@
     color: #a8863f;
     font-weight: 600;
   }
+  .resource-card.user-added { border-color: #c9a961; box-shadow: inset 3px 0 0 #c9a961; }
+  .resource-card .delete-btn {
+    position: absolute; top: 8px; right: 10px;
+    background: transparent; border: none; cursor: pointer;
+    color: #a8a29e; font-size: 1rem; line-height: 1;
+    opacity: 0; transition: opacity 0.15s ease;
+  }
+  .resource-card { position: relative; }
+  .resource-card:hover .delete-btn { opacity: 1; }
+  .resource-card .delete-btn:hover { color: #991b1b; }
+  .user-pill {
+    display: inline-block; margin-left: 6px;
+    padding: 1px 8px; border-radius: 999px;
+    background: rgba(201,169,97,0.2); color: #a8863f;
+    font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700;
+  }
+  .add-resource-btn {
+    background: linear-gradient(135deg, #064e3b, #0a6647);
+    color: #faf6ed;
+    padding: 0.6rem 1.25rem;
+    border-radius: 999px;
+    border: 1px solid #c9a961;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    box-shadow: 0 6px 14px -6px rgba(6,78,59,0.5);
+    transition: transform 0.15s ease;
+  }
+  .add-resource-btn:hover { transform: translateY(-1px); }
+  .add-modal {
+    position: fixed; inset: 0;
+    background: rgba(28,45,32,0.6);
+    backdrop-filter: blur(4px);
+    display: none; align-items: center; justify-content: center;
+    z-index: 100; padding: 1rem;
+  }
+  .add-modal.open { display: flex; }
+  .add-panel {
+    background: #faf6ed;
+    border: 1px solid #c9a961;
+    border-radius: 16px;
+    width: 100%; max-width: 480px;
+    padding: 1.5rem;
+    box-shadow: 0 40px 80px -20px rgba(0,0,0,0.4);
+  }
+  [data-theme="dark"] .add-panel { background: #1a2820; color: #e7e2d0; }
+  .add-panel h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: #064e3b; margin-bottom: 1rem; }
+  [data-theme="dark"] .add-panel h2 { color: #f3e8c2; }
+  .add-panel label { display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: #a8863f; font-weight: 700; margin-top: 0.85rem; margin-bottom: 0.3rem; }
+  .add-panel input, .add-panel select, .add-panel textarea {
+    width: 100%; padding: 0.55rem 0.75rem;
+    border: 1px solid rgba(201,169,97,0.4);
+    border-radius: 8px;
+    background: #fff; font: inherit; font-size: 0.9rem;
+    color: #1c2d20;
+  }
+  [data-theme="dark"] .add-panel input, [data-theme="dark"] .add-panel select, [data-theme="dark"] .add-panel textarea {
+    background: #0e1a14; color: #e7e2d0; border-color: rgba(201,169,97,0.4);
+  }
+  .add-panel textarea { min-height: 80px; resize: vertical; }
+  .add-actions { display: flex; gap: 0.5rem; margin-top: 1.25rem; justify-content: flex-end; }
+  .add-actions button { padding: 0.55rem 1.1rem; border-radius: 999px; cursor: pointer; font-weight: 600; font-size: 0.85rem; border: 1px solid; }
+  .btn-cancel { background: transparent; color: #78716c; border-color: rgba(120,113,108,0.3); }
+  .btn-save { background: #064e3b; color: #faf6ed; border-color: #c9a961; }
+  .btn-save:hover { background: #0a6647; }
+  [data-theme="dark"] .resource-card { background: #142420; color: #e7e2d0; }
+  [data-theme="dark"] .resource-card .display { color: #f3e8c2; }
+  [data-theme="dark"] .resource-card .text-stone-600 { color: #c4beb0 !important; }
 </style>
 </head>
 <body class="geo-pattern min-h-screen">
@@ -78,7 +146,46 @@
     <h1 class="display text-5xl md:text-6xl text-emerald-950 font-semibold mb-3">Resources</h1>
     <p class="text-stone-600 max-w-xl mx-auto">Translations, commentaries, websites, apps, and courses to go deeper on your own.</p>
     <div class="gold-line mt-5 max-w-[180px] mx-auto"></div>
+    <div class="mt-6">
+      <button id="open-add-resource" class="add-resource-btn">+ Add a resource</button>
+    </div>
   </header>
+
+  <div class="add-modal" id="add-modal" role="dialog" aria-modal="true">
+    <div class="add-panel">
+      <h2>Add a resource</h2>
+      <form id="add-form">
+        <label>Title</label>
+        <input type="text" id="r-title" required placeholder="e.g. The Sealed Nectar" />
+
+        <label>Author / source</label>
+        <input type="text" id="r-meta" placeholder="e.g. Safi-ur-Rahman al-Mubarakpuri" />
+
+        <label>Category</label>
+        <select id="r-cat">
+          <option value="translations">Translations of the Quran</option>
+          <option value="tafsir">Tafsir (Commentary)</option>
+          <option value="seerah">Seerah</option>
+          <option value="classical">Classical &amp; Historical Works</option>
+          <option value="modern">Modern Authors</option>
+          <option value="websites">Websites</option>
+          <option value="apps">Apps</option>
+          <option value="courses">Courses &amp; Seminaries</option>
+        </select>
+
+        <label>Note (optional)</label>
+        <textarea id="r-note" placeholder="What's notable about it…"></textarea>
+
+        <label>Link (optional)</label>
+        <input type="url" id="r-href" placeholder="https://…" />
+
+        <div class="add-actions">
+          <button type="button" class="btn-cancel" id="cancel-add">Cancel</button>
+          <button type="submit" class="btn-save">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <div class="section-heading">Translations of the Quran</div>
   <div id="translations" class="grid md:grid-cols-2 gap-4"></div>
@@ -176,24 +283,90 @@ const courses = [
   { title: "Qalam Institute", meta: "Dallas + online", note: "Seerah, tafsir, and Arabic programs." }
 ];
 
-function renderGroup(el, items) {
-  el.innerHTML = items.map(r => `
-    <div class="resource-card">
-      <div class="resource-meta mb-1">${r.meta}</div>
-      <div class="display text-lg text-emerald-950 font-semibold mb-2 leading-snug">${r.title}</div>
-      <p class="text-sm text-stone-600 leading-snug">${r.note}</p>
-    </div>
-  `).join("");
+const USER_KEY = "islamapp-user-resources";
+const CATS = { translations, tafsir, seerah, classical, modern, websites, apps, courses };
+
+function loadUser() {
+  try { return JSON.parse(localStorage.getItem(USER_KEY) || "[]"); } catch (e) { return []; }
+}
+function saveUser(list) {
+  try { localStorage.setItem(USER_KEY, JSON.stringify(list)); } catch (e) {}
 }
 
-renderGroup(document.getElementById("translations"), translations);
-renderGroup(document.getElementById("tafsir"), tafsir);
-renderGroup(document.getElementById("seerah"), seerah);
-renderGroup(document.getElementById("classical"), classical);
-renderGroup(document.getElementById("modern"), modern);
-renderGroup(document.getElementById("websites"), websites);
-renderGroup(document.getElementById("apps"), apps);
-renderGroup(document.getElementById("courses"), courses);
+function esc(s) {
+  return String(s == null ? "" : s).replace(/[<>&"]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]));
+}
+
+function cardHtml(r, isUser, idx) {
+  const titleInner = r.href
+    ? `<a href="${esc(r.href)}" target="_blank" rel="noopener" class="hover:text-amber-700">${esc(r.title)}</a>`
+    : esc(r.title);
+  const userPill = isUser ? `<span class="user-pill">Yours</span>` : "";
+  const deleteBtn = isUser ? `<button class="delete-btn" data-del="${idx}" title="Remove">✕</button>` : "";
+  return `
+    <div class="resource-card${isUser ? ' user-added' : ''}">
+      ${deleteBtn}
+      <div class="resource-meta mb-1">${esc(r.meta)}</div>
+      <div class="display text-lg text-emerald-950 font-semibold mb-2 leading-snug">${titleInner}${userPill}</div>
+      <p class="text-sm text-stone-600 leading-snug">${esc(r.note)}</p>
+    </div>
+  `;
+}
+
+function renderAll() {
+  const user = loadUser();
+  Object.keys(CATS).forEach(cat => {
+    const el = document.getElementById(cat);
+    if (!el) return;
+    const built = CATS[cat].map(r => cardHtml(r, false, -1));
+    const userItems = user
+      .map((r, i) => ({ r, i }))
+      .filter(x => x.r.cat === cat)
+      .map(x => cardHtml(x.r, true, x.i));
+    el.innerHTML = built.concat(userItems).join("");
+  });
+  // Wire up delete buttons
+  document.querySelectorAll("[data-del]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const i = Number(btn.getAttribute("data-del"));
+      const list = loadUser();
+      list.splice(i, 1);
+      saveUser(list);
+      renderAll();
+    });
+  });
+}
+
+// Add modal handlers
+const addModal = document.getElementById("add-modal");
+const addForm = document.getElementById("add-form");
+document.getElementById("open-add-resource").addEventListener("click", () => {
+  addModal.classList.add("open");
+  setTimeout(() => document.getElementById("r-title").focus(), 50);
+});
+document.getElementById("cancel-add").addEventListener("click", () => addModal.classList.remove("open"));
+addModal.addEventListener("click", e => { if (e.target === addModal) addModal.classList.remove("open"); });
+document.addEventListener("keydown", e => { if (e.key === "Escape" && addModal.classList.contains("open")) addModal.classList.remove("open"); });
+
+addForm.addEventListener("submit", e => {
+  e.preventDefault();
+  const entry = {
+    title: document.getElementById("r-title").value.trim(),
+    meta:  document.getElementById("r-meta").value.trim() || "Your addition",
+    cat:   document.getElementById("r-cat").value,
+    note:  document.getElementById("r-note").value.trim(),
+    href:  document.getElementById("r-href").value.trim(),
+  };
+  if (!entry.title) return;
+  const list = loadUser();
+  list.push(entry);
+  saveUser(list);
+  addForm.reset();
+  addModal.classList.remove("open");
+  renderAll();
+});
+
+renderAll();
 </script>
 
 </body>

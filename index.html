@@ -373,30 +373,7 @@
 
 </div>
 
-<button class="ai-fab" id="ai-fab" title="Ask the AI">✨</button>
-
-<div class="ai-modal" id="ai-modal" role="dialog" aria-modal="true">
-  <div class="ai-panel">
-    <div class="ai-header">
-      <div>
-        <div class="arabic text-sm text-amber-200/80">المُسَاعِد</div>
-        <div class="display text-lg font-semibold">Ask the AI</div>
-      </div>
-      <button class="ai-close" id="ai-close" aria-label="Close">✕</button>
-    </div>
-    <div class="ai-messages" id="ai-messages">
-      <div class="ai-msg bot">
-        <div class="bot-label">Assistant</div>
-        Assalāmu ʿalaykum. Ask me anything about what you are studying — a verse, a hadith, a ruling, a historical event, or any term you have come across.
-        <div class="text-xs text-stone-500 italic mt-3">Note: this is a UI stub. Wire it to an LLM API to get real answers.</div>
-      </div>
-    </div>
-    <form class="ai-input-row" id="ai-form">
-      <input class="ai-input" id="ai-input" type="text" placeholder="Type your question…" autocomplete="off" />
-      <button class="ai-send" type="submit">Send</button>
-    </form>
-  </div>
-</div>
+<!-- AI button + modal injected globally by theme.js -->
 
 <script>
 const levels = [
@@ -804,43 +781,12 @@ document.getElementById("reset-btn").addEventListener("click", () => {
   }
 });
 
-const aiModal = document.getElementById("ai-modal");
-const aiMessages = document.getElementById("ai-messages");
-const aiForm = document.getElementById("ai-form");
-const aiInput = document.getElementById("ai-input");
-
-function openAI() { aiModal.classList.add("open"); setTimeout(() => aiInput.focus(), 50); }
-function closeAI() { aiModal.classList.remove("open"); }
-
-document.getElementById("ai-fab").addEventListener("click", openAI);
-document.getElementById("open-ai").addEventListener("click", openAI);
-document.getElementById("ai-close").addEventListener("click", closeAI);
-aiModal.addEventListener("click", e => { if (e.target === aiModal) closeAI(); });
-document.addEventListener("keydown", e => { if (e.key === "Escape" && aiModal.classList.contains("open")) closeAI(); });
-
-aiForm.addEventListener("submit", e => {
-  e.preventDefault();
-  const text = aiInput.value.trim();
-  if (!text) return;
-
-  const userMsg = document.createElement("div");
-  userMsg.className = "ai-msg user";
-  userMsg.textContent = text;
-  aiMessages.appendChild(userMsg);
-
-  aiInput.value = "";
-  aiMessages.scrollTop = aiMessages.scrollHeight;
-
-  setTimeout(() => {
-    const botMsg = document.createElement("div");
-    botMsg.className = "ai-msg bot";
-    botMsg.innerHTML = `
-      <div class="bot-label">Assistant</div>
-      I have not been connected to a live model yet. When you wire this up to an LLM endpoint, your question — <em>"${text.replace(/</g, '&lt;')}"</em> — will get a real answer here.
-    `;
-    aiMessages.appendChild(botMsg);
-    aiMessages.scrollTop = aiMessages.scrollHeight;
-  }, 400);
+// AI handlers come from theme.js; bind the in-page "Ask the AI" CTA to it
+const openAiBtn = document.getElementById("open-ai");
+if (openAiBtn) openAiBtn.addEventListener("click", () => {
+  const m = document.getElementById("ai-modal");
+  if (m) m.classList.add("open");
+  setTimeout(() => { const i = document.getElementById("ai-input"); if (i) i.focus(); }, 50);
 });
 
 render();
