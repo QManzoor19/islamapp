@@ -303,3 +303,60 @@
   color: #fcd34d;
   box-shadow: 0 4px 12px -4px rgba(0,0,0,0.6);
 }
+
+/* ─── Text-size scaling (rem-based, applies globally) ─── */
+html[data-text-size="small"]  { font-size: 14px; }
+html[data-text-size="large"]  { font-size: 18px; }
+html[data-text-size="xlarge"] { font-size: 20px; }
+
+/* ─── Text-size widget (alongside theme toggle) ─── */
+.text-size-control {
+  position: fixed;
+  top: 20px; right: 72px;
+  display: flex; align-items: center; gap: 4px;
+  background: #fff;
+  border: 1px solid rgba(201,169,97,0.4);
+  border-radius: 999px;
+  padding: 4px 6px;
+  z-index: 60;
+  box-shadow: 0 4px 12px -4px rgba(0,0,0,0.15);
+  height: 42px;
+}
+.text-size-control .ts-btn {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #1c2d20;
+  font-size: 0.78rem;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s ease;
+  padding: 0;
+}
+.text-size-control .ts-btn:hover { background: rgba(201,169,97,0.18); }
+.text-size-control .ts-btn:active { background: rgba(201,169,97,0.3); }
+.text-size-control .ts-label {
+  min-width: 28px; text-align: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #a8863f;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.05em;
+}
+[data-theme="dark"] .text-size-control {
+  background: #142420;
+  border-color: rgba(201,169,97,0.4);
+  box-shadow: 0 4px 12px -4px rgba(0,0,0,0.6);
+}
+[data-theme="dark"] .text-size-control .ts-btn { color: #fcd34d; }
+[data-theme="dark"] .text-size-control .ts-btn:hover { background: rgba(201,169,97,0.2); }
+[data-theme="dark"] .text-size-control .ts-label { color: #fcd34d; }
+
+/* On very small screens, stack widget below the theme toggle */
+@media (max-width: 480px) {
+  .text-size-control {
+    top: 72px; right: 20px;
+  }
+}
