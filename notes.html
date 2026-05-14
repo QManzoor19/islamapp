@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Notes — IslamApp</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#064e3b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="IslamApp">
+<meta name="mobile-web-app-capable" content="yes">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<script>(function(){try{if(localStorage.getItem('islamapp-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
+<link rel="stylesheet" href="theme.css">
+<script src="theme.js" defer></script>
+<style>
+  body { font-family: 'Inter', sans-serif; background: #faf6ed; color: #1c2d20;
+    background-image: radial-gradient(circle at 10% 8%, rgba(201,169,97,0.10) 0%, transparent 38%), radial-gradient(circle at 92% 80%, rgba(6,78,59,0.07) 0%, transparent 38%);
+    background-attachment: fixed; }
+  .display { font-family: 'Cormorant Garamond', serif; }
+  .arabic { font-family: 'Amiri', serif; direction: rtl; }
+  .gold-line { height: 1px; background: linear-gradient(to right, transparent, #c9a961, transparent); }
+
+  .note-card {
+    background: #fff;
+    border: 1px solid rgba(201,169,97,0.35);
+    border-left: 4px solid #c9a961;
+    border-radius: 0 12px 12px 0;
+    padding: 1.1rem 1.3rem;
+    margin-bottom: 1rem;
+    transition: all 0.18s ease;
+    position: relative;
+  }
+  .note-card:hover { box-shadow: 0 8px 16px -8px rgba(6,78,59,0.18); }
+  .note-meta { display: flex; justify-content: space-between; align-items: baseline; gap: 0.75rem; margin-bottom: 0.5rem; flex-wrap: wrap; }
+  .note-page {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    color: #064e3b;
+    text-decoration: none;
+    font-size: 1.05rem;
+  }
+  .note-page:hover { color: #a8863f; }
+  .note-page::after { content: ' →'; opacity: 0.5; }
+  .note-date { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: #a8863f; font-weight: 700; font-family: 'Inter', monospace; }
+  .note-body {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.02rem;
+    line-height: 1.6;
+    color: #2a3530;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+  .note-actions { display: flex; gap: 0.4rem; margin-top: 0.6rem; opacity: 0; transition: opacity 0.15s ease; }
+  .note-card:hover .note-actions { opacity: 1; }
+  .note-actions button { padding: 3px 10px; border: 1px solid rgba(201,169,97,0.4); background: transparent; color: #78716c; border-radius: 999px; font-size: 0.72rem; font-weight: 600; cursor: pointer; }
+  .note-actions button:hover { color: #064e3b; border-color: #c9a961; }
+  .note-actions button.danger:hover { color: #991b1b; border-color: #991b1b; }
+
+  .empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+    background: rgba(255,255,255,0.5);
+    border: 1px dashed rgba(201,169,97,0.4);
+    border-radius: 14px;
+    color: #78716c;
+  }
+  .empty-state h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: #064e3b; margin-bottom: 0.5rem; }
+
+  .filter-row { display: flex; gap: 0.5rem; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .filter-input {
+    flex: 1; min-width: 200px;
+    padding: 0.55rem 1rem;
+    border: 1px solid rgba(201,169,97,0.4);
+    border-radius: 999px;
+    background: #fff;
+    color: #1c2d20;
+    font: inherit; font-size: 0.9rem;
+  }
+  .filter-input:focus { outline: 2px solid #c9a961; outline-offset: 2px; }
+  .filter-count { font-size: 0.75rem; color: #78716c; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; }
+  .clear-all-btn {
+    padding: 0.55rem 1.1rem;
+    background: transparent;
+    color: #991b1b;
+    border: 1px solid rgba(153,27,27,0.3);
+    border-radius: 999px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.8rem;
+  }
+  .clear-all-btn:hover { background: rgba(153,27,27,0.08); border-color: #991b1b; }
+
+  .edit-area {
+    width: 100%;
+    margin-top: 0.6rem;
+    padding: 0.7rem 0.9rem;
+    border: 1px solid rgba(201,169,97,0.4);
+    border-radius: 8px;
+    background: #faf6ed;
+    font-family: 'EB Garamond', serif;
+    font-size: 1rem;
+    line-height: 1.5;
+    resize: vertical;
+    min-height: 80px;
+    color: #1c2d20;
+  }
+
+  [data-theme="dark"] .note-card { background: #142420; color: #e7e2d0; border-color: rgba(201,169,97,0.3); border-left-color: #c9a961; }
+  [data-theme="dark"] .note-page { color: #f3e8c2; }
+  [data-theme="dark"] .note-date { color: #d4a957; }
+  [data-theme="dark"] .note-body { color: #e7e2d0; }
+  [data-theme="dark"] .note-actions button { color: #b8b2a3; border-color: rgba(201,169,97,0.3); }
+  [data-theme="dark"] .note-actions button:hover { color: #f3e8c2; }
+  [data-theme="dark"] .empty-state { background: rgba(20,36,32,0.5); border-color: rgba(201,169,97,0.3); color: #b8b2a3; }
+  [data-theme="dark"] .empty-state h3 { color: #f3e8c2; }
+  [data-theme="dark"] .filter-input { background: #142420; color: #e7e2d0; border-color: rgba(201,169,97,0.4); }
+  [data-theme="dark"] .filter-count { color: #b8b2a3; }
+  [data-theme="dark"] .edit-area { background: #0e1a14; color: #e7e2d0; border-color: rgba(201,169,97,0.4); }
+</style>
+</head>
+<body class="min-h-screen">
+
+<div class="max-w-3xl mx-auto px-5 py-12">
+
+  <nav class="mb-6">
+    <a href="index.html" class="text-emerald-900 hover:text-amber-700 text-sm font-semibold">← Curriculum</a>
+  </nav>
+
+  <header class="text-center mb-8">
+    <div class="gold-line mb-5 max-w-[180px] mx-auto"></div>
+    <div class="arabic text-4xl text-emerald-900 mb-3">المُلَاحَظَات</div>
+    <h1 class="display text-5xl md:text-6xl text-emerald-950 font-semibold mb-3">My Notes</h1>
+    <p class="text-stone-600 max-w-xl mx-auto">Everything you've written down as you've moved through the curriculum, in one place. Notes are organised by the page you wrote them on.</p>
+    <div class="gold-line mt-5 max-w-[180px] mx-auto"></div>
+  </header>
+
+  <div class="filter-row">
+    <input id="filter" class="filter-input" type="search" placeholder="Search your notes…" autocomplete="off" />
+    <span class="filter-count" id="count"></span>
+    <button class="clear-all-btn" id="clear-all" title="Delete all notes">Clear all</button>
+  </div>
+
+  <main id="notes-list"></main>
+
+  <footer class="mt-12 text-center">
+    <div class="gold-line mb-6 max-w-xs mx-auto"></div>
+    <p class="text-xs italic text-stone-500 max-w-lg mx-auto">Notes live in your browser's local storage. They are not synced across devices and will be lost if you clear browser data.</p>
+  </footer>
+
+</div>
+
+<script>
+const STORAGE = "islamapp-notes-v1";
+
+function loadAll() {
+  try { return JSON.parse(localStorage.getItem(STORAGE) || "{}"); } catch { return {}; }
+}
+function saveAll(d) { try { localStorage.setItem(STORAGE, JSON.stringify(d)); } catch {} }
+
+function esc(s) {
+  return String(s == null ? "" : s).replace(/[<>&"]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]));
+}
+
+function formatDate(ts) {
+  if (!ts) return "";
+  const d = new Date(ts);
+  const opts = { month: 'short', day: 'numeric' };
+  if (d.getFullYear() !== new Date().getFullYear()) opts.year = 'numeric';
+  return d.toLocaleDateString(undefined, opts).toUpperCase();
+}
+
+// Flatten notes from { pageKey: [ {id, text, ts}, ... ] } into a sortable list
+function flatten(all) {
+  const list = [];
+  Object.entries(all).forEach(([pageKey, entry]) => {
+    if (!entry || !Array.isArray(entry.notes)) return;
+    entry.notes.forEach(n => list.push({
+      pageKey,
+      title: entry.title || pageKey,
+      href: entry.href || pageKey,
+      id: n.id,
+      text: n.text,
+      ts: n.ts,
+    }));
+  });
+  return list.sort((a, b) => (b.ts || 0) - (a.ts || 0));
+}
+
+let editingId = null;
+
+function render() {
+  const all = loadAll();
+  const flat = flatten(all);
+  const q = document.getElementById("filter").value.trim().toLowerCase();
+  const filtered = !q ? flat : flat.filter(n =>
+    (n.text || "").toLowerCase().includes(q) ||
+    (n.title || "").toLowerCase().includes(q)
+  );
+  const countEl = document.getElementById("count");
+  countEl.textContent = filtered.length === flat.length
+    ? `${flat.length} note${flat.length === 1 ? '' : 's'}`
+    : `${filtered.length} / ${flat.length}`;
+
+  const host = document.getElementById("notes-list");
+  if (flat.length === 0) {
+    host.innerHTML = `
+      <div class="empty-state">
+        <h3>No notes yet</h3>
+        <p>Open any lesson and tap the 📝 button in the corner to start a note. Everything you save will appear here.</p>
+      </div>`;
+    return;
+  }
+  if (filtered.length === 0) {
+    host.innerHTML = `<div class="empty-state"><h3>No matches</h3><p>Nothing matches "${esc(q)}".</p></div>`;
+    return;
+  }
+
+  host.innerHTML = filtered.map(n => {
+    const editing = editingId === n.id;
+    return `
+      <div class="note-card" data-id="${esc(n.id)}" data-page="${esc(n.pageKey)}">
+        <div class="note-meta">
+          <a href="${esc(n.href)}" class="note-page">${esc(n.title)}</a>
+          <span class="note-date">${formatDate(n.ts)}</span>
+        </div>
+        ${editing
+          ? `<textarea class="edit-area" data-edit="${esc(n.id)}">${esc(n.text)}</textarea>`
+          : `<div class="note-body">${esc(n.text)}</div>`
+        }
+        <div class="note-actions">
+          ${editing
+            ? `<button data-act="save" data-id="${esc(n.id)}" data-page="${esc(n.pageKey)}">Save</button>
+               <button data-act="cancel">Cancel</button>`
+            : `<button data-act="edit" data-id="${esc(n.id)}">Edit</button>
+               <button class="danger" data-act="delete" data-id="${esc(n.id)}" data-page="${esc(n.pageKey)}">Delete</button>`
+          }
+        </div>
+      </div>
+    `;
+  }).join("");
+
+  // Wire actions
+  host.querySelectorAll("[data-act]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const act = btn.dataset.act;
+      const id = btn.dataset.id;
+      const pageKey = btn.dataset.page;
+      if (act === "edit") { editingId = id; render(); setTimeout(() => { const ta = document.querySelector(`[data-edit="${id}"]`); if (ta) { ta.focus(); ta.setSelectionRange(ta.value.length, ta.value.length); } }, 0); }
+      if (act === "cancel") { editingId = null; render(); }
+      if (act === "save") {
+        const ta = document.querySelector(`[data-edit="${id}"]`);
+        const newText = ta ? ta.value.trim() : "";
+        const all = loadAll();
+        const entry = all[pageKey];
+        if (entry && entry.notes) {
+          const n = entry.notes.find(x => x.id === id);
+          if (n) { n.text = newText; n.ts = Date.now(); saveAll(all); }
+        }
+        editingId = null;
+        render();
+      }
+      if (act === "delete") {
+        if (!confirm("Delete this note?")) return;
+        const all = loadAll();
+        const entry = all[pageKey];
+        if (entry && entry.notes) {
+          entry.notes = entry.notes.filter(x => x.id !== id);
+          if (entry.notes.length === 0) delete all[pageKey];
+          saveAll(all);
+        }
+        render();
+      }
+    });
+  });
+}
+
+document.getElementById("filter").addEventListener("input", render);
+document.getElementById("clear-all").addEventListener("click", () => {
+  const all = loadAll();
+  const total = Object.values(all).reduce((acc, e) => acc + (e.notes ? e.notes.length : 0), 0);
+  if (total === 0) { alert("You have no notes to clear."); return; }
+  if (confirm(`Delete all ${total} notes? This cannot be undone.`)) {
+    saveAll({});
+    render();
+  }
+});
+
+render();
+</script>
+
+</body>
+</html>

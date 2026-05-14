@@ -1,6 +1,7 @@
 (function() {
   const THEME_STORAGE = "islamapp-theme";
   const SIZE_STORAGE = "islamapp-text-size";
+  const NOTES_STORAGE = "islamapp-notes-v1";
   const SIZES = ["small", "normal", "large", "xlarge"];
   const SIZE_LABELS = { small: "A−", normal: "A", large: "A+", xlarge: "A++" };
 
@@ -41,7 +42,11 @@
     { href: "ahkam.html",             title: "Aḥkām — Quranic Rulings",   tags: "ahkam quranic rulings laws verses fiqh" },
     { href: "afterlife.html",         title: "The Afterlife",             tags: "afterlife paradise hell qiyamah" },
     { href: "resources.html",         title: "Resources",                 tags: "resources books websites apps courses" },
+    { href: "notes.html",             title: "My Notes",                  tags: "notes my notes bookmarks reflections" },
   ];
+
+  // Pages where notes button should not auto-inject (avoid recursion)
+  const NO_NOTES_PAGES = new Set(["notes.html"]);
 
   function updateIcon() {
     const btn = document.getElementById("theme-toggle");
@@ -114,9 +119,7 @@
   function renderSearchResults(query) {
     const list = document.getElementById("search-results");
     const q = query.trim().toLowerCase();
-    const items = !q
-      ? PAGES.slice()
-      : PAGES.filter(p => (p.title + " " + p.tags).toLowerCase().includes(q));
+    const items = !q ? PAGES.slice() : PAGES.filter(p => (p.title + " " + p.tags).toLowerCase().includes(q));
     if (items.length === 0) {
       list.innerHTML = `<div class="search-empty">No matches for "${query.replace(/[<>&]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]))}"</div>`;
       return;
@@ -130,9 +133,97 @@
     }).join("");
   }
 
+  // ─── Notes (per-page quick capture, central viewer at notes.html) ───
+  const pageKey = () => {
+    let path = window.location.pathname.split("/").pop() || "index.html";
+    if (!path.endsWith(".html") && !path.includes(".")) path = path + ".html";
+    return path;
+  };
+  function loadNotes() { try { return JSON.parse(localStorage.getItem(NOTES_STORAGE) || "{}"); } catch { return {}; } }
+  function saveNotes(d) { try { localStorage.setItem(NOTES_STORAGE, JSON.stringify(d)); } catch {} }
+
+  function pageEntry() {
+    const all = loadNotes();
+    const key = pageKey();
+    if (!all[key]) all[key] = { title: document.title.replace(/ — IslamApp.*$/, "").trim() || key, href: key, notes: [] };
+    else {
+      // Refresh title each visit (in case page renamed)
+      const t = document.title.replace(/ — IslamApp.*$/, "").trim();
+      if (t) all[key].title = t;
+      all[key].href = key;
+    }
+    return { all, entry: all[key], key };
+  }
+
+  function openNotes() {
+    const modal = document.getElementById("notes-modal");
+    if (!modal) return;
+    modal.classList.add("open");
+    renderNotesList();
+    setTimeout(() => { const i = document.getElementById("notes-input"); if (i) i.focus(); }, 50);
+  }
+  function closeNotes() { document.getElementById("notes-modal").classList.remove("open"); }
+
+  function renderNotesList() {
+    const { entry } = pageEntry();
+    const list = document.getElementById("notes-list");
+    if (!list) return;
+    if (!entry.notes || entry.notes.length === 0) {
+      list.innerHTML = `<div class="notes-empty">No notes on this page yet. Start one below.</div>`;
+      return;
+    }
+    list.innerHTML = entry.notes.slice().reverse().map(n => {
+      const d = new Date(n.ts || Date.now());
+      const dateStr = d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) + " · " + d.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' });
+      const safeText = n.text.replace(/[<>&]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]));
+      return `<div class="notes-item" data-id="${n.id}">
+        <div class="notes-item-meta">${dateStr}</div>
+        <div class="notes-item-text">${safeText}</div>
+        <button class="notes-item-del" data-del="${n.id}" title="Delete">✕</button>
+      </div>`;
+    }).join("");
+    list.querySelectorAll("[data-del]").forEach(b => {
+      b.addEventListener("click", () => {
+        const id = b.getAttribute("data-del");
+        const { all, entry, key } = pageEntry();
+        entry.notes = entry.notes.filter(n => n.id !== id);
+        if (entry.notes.length === 0) delete all[key];
+        saveNotes(all);
+        renderNotesList();
+        updateNotesBadge();
+      });
+    });
+  }
+
+  function handleNoteSubmit(e) {
+    e.preventDefault();
+    const input = document.getElementById("notes-input");
+    const text = input.value.trim();
+    if (!text) return;
+    const { all, entry } = pageEntry();
+    entry.notes.push({
+      id: "n_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 6),
+      text,
+      ts: Date.now(),
+    });
+    saveNotes(all);
+    input.value = "";
+    renderNotesList();
+    updateNotesBadge();
+  }
+
+  function updateNotesBadge() {
+    const { entry } = pageEntry();
+    const badge = document.getElementById("notes-badge");
+    if (!badge) return;
+    const n = (entry.notes || []).length;
+    if (n === 0) { badge.style.display = "none"; badge.textContent = ""; }
+    else { badge.style.display = "flex"; badge.textContent = String(n); }
+  }
+
   // ─── Inject everything ───
   function inject() {
-    // Theme toggle
+    // Theme toggle (top-right corner)
     if (!document.getElementById("theme-toggle")) {
       const btn = document.createElement("button");
       btn.id = "theme-toggle";
@@ -145,7 +236,19 @@
       updateThemeColor();
     }
 
-    // Text-size control
+    // Search button (top, to the left of theme toggle)
+    if (!document.getElementById("search-toggle")) {
+      const btn = document.createElement("button");
+      btn.id = "search-toggle";
+      btn.className = "search-toggle";
+      btn.title = "Search pages  ·  press /";
+      btn.setAttribute("aria-label", "Search pages");
+      btn.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>`;
+      btn.addEventListener("click", openSearch);
+      document.body.appendChild(btn);
+    }
+
+    // Text-size control (top, further left)
     if (!document.getElementById("text-size-control")) {
       const wrap = document.createElement("div");
       wrap.id = "text-size-control";
@@ -163,7 +266,7 @@
       applySize(saved);
     }
 
-    // AI FAB — only inject if page hasn't already defined one (legacy support)
+    // AI FAB
     if (!document.getElementById("ai-fab")) {
       const fab = document.createElement("button");
       fab.id = "ai-fab";
@@ -177,7 +280,7 @@
       document.getElementById("ai-fab").addEventListener("click", openAI);
     }
 
-    // AI modal — inject if not already present
+    // AI modal
     if (!document.getElementById("ai-modal")) {
       const modal = document.createElement("div");
       modal.id = "ai-modal";
@@ -188,7 +291,7 @@
         <div class="ai-panel">
           <div class="ai-header">
             <div>
-              <div style="font-family:'Amiri',serif;direction:rtl;" class="text-sm" >المُسَاعِد</div>
+              <div style="font-family:'Amiri',serif;direction:rtl;" class="text-sm">المُسَاعِد</div>
               <div style="font-family:'Cormorant Garamond',serif;" class="text-lg font-semibold">Ask the AI</div>
             </div>
             <button class="ai-close" id="ai-close" aria-label="Close">✕</button>
@@ -210,18 +313,6 @@
       document.getElementById("ai-close").addEventListener("click", closeAI);
       document.getElementById("ai-form").addEventListener("submit", handleAiSubmit);
       modal.addEventListener("click", e => { if (e.target === modal) closeAI(); });
-    }
-
-    // Search FAB (above AI FAB)
-    if (!document.getElementById("search-fab")) {
-      const fab = document.createElement("button");
-      fab.id = "search-fab";
-      fab.className = "search-fab";
-      fab.title = "Search pages";
-      fab.setAttribute("aria-label", "Search pages");
-      fab.innerHTML = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>`;
-      fab.addEventListener("click", openSearch);
-      document.body.appendChild(fab);
     }
 
     // Search modal
@@ -254,17 +345,77 @@
       renderSearchResults("");
     }
 
-    // Global Escape: close whichever modal is open
+    // Notes FAB + modal — skip on the notes.html page itself
+    const onNotesPage = NO_NOTES_PAGES.has(pageKey());
+    if (!onNotesPage) {
+      if (!document.getElementById("notes-fab")) {
+        const fab = document.createElement("button");
+        fab.id = "notes-fab";
+        fab.className = "notes-fab";
+        fab.title = "Notes for this page";
+        fab.setAttribute("aria-label", "Open notes for this page");
+        fab.innerHTML = `📝<span class="notes-badge" id="notes-badge"></span>`;
+        fab.addEventListener("click", openNotes);
+        document.body.appendChild(fab);
+      }
+
+      if (!document.getElementById("notes-modal")) {
+        const { entry } = pageEntry();
+        const modal = document.createElement("div");
+        modal.id = "notes-modal";
+        modal.className = "notes-modal";
+        modal.setAttribute("role", "dialog");
+        modal.setAttribute("aria-modal", "true");
+        modal.innerHTML = `
+          <div class="notes-panel">
+            <div class="notes-header">
+              <div>
+                <div style="font-family:'Amiri',serif;direction:rtl;" class="text-sm">المُلَاحَظَات</div>
+                <div style="font-family:'Cormorant Garamond',serif;" class="text-lg font-semibold">Notes · ${entry.title.replace(/[<>&]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]))}</div>
+              </div>
+              <button class="notes-close" id="notes-close" aria-label="Close">✕</button>
+            </div>
+            <div class="notes-list-wrap">
+              <div class="notes-list" id="notes-list"></div>
+            </div>
+            <form class="notes-input-row" id="notes-form">
+              <textarea class="notes-input" id="notes-input" placeholder="Type a note for this page…" rows="2"></textarea>
+              <div class="notes-input-footer">
+                <a class="notes-all-link" href="notes.html">View all notes →</a>
+                <button class="notes-save" type="submit">Save note</button>
+              </div>
+            </form>
+          </div>
+        `;
+        document.body.appendChild(modal);
+        document.getElementById("notes-close").addEventListener("click", closeNotes);
+        document.getElementById("notes-form").addEventListener("submit", handleNoteSubmit);
+        modal.addEventListener("click", e => { if (e.target === modal) closeNotes(); });
+        const ta = document.getElementById("notes-input");
+        ta.addEventListener("keydown", e => {
+          if ((e.metaKey || e.ctrlKey) && e.key === "Enter") {
+            document.getElementById("notes-form").dispatchEvent(new Event("submit", { cancelable: true }));
+          }
+        });
+        updateNotesBadge();
+      } else {
+        updateNotesBadge();
+      }
+    }
+
+    // Global Escape closes whichever modal is open
     document.addEventListener("keydown", e => {
       if (e.key === "Escape") {
         const aim = document.getElementById("ai-modal");
         const sm = document.getElementById("search-modal");
+        const nm = document.getElementById("notes-modal");
         if (aim && aim.classList.contains("open")) closeAI();
         if (sm && sm.classList.contains("open")) closeSearch();
+        if (nm && nm.classList.contains("open")) closeNotes();
       }
     });
 
-    // Keyboard shortcut: "/" to open search
+    // "/" opens search globally
     document.addEventListener("keydown", e => {
       if (e.key === "/" && !["INPUT", "TEXTAREA"].includes(document.activeElement.tagName) && !document.activeElement.isContentEditable) {
         e.preventDefault();
@@ -273,7 +424,7 @@
     });
   }
 
-  // Apply saved text size as early as possible to prevent flash
+  // Apply saved text size early
   try {
     const savedSize = localStorage.getItem(SIZE_STORAGE);
     if (savedSize && SIZES.includes(savedSize) && savedSize !== "normal") {

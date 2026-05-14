@@ -53,8 +53,15 @@
     border-radius: 12px;
     padding: 1.25rem;
     transition: all 0.2s ease;
+    display: block;
+    color: inherit;
+    text-decoration: none;
   }
   .resource-card:hover { border-color: #c9a961; transform: translateY(-2px); box-shadow: 0 10px 20px -8px rgba(6,78,59,0.2); }
+  a.resource-card:hover .res-title { color: #a8863f; }
+  .res-title { transition: color 0.15s ease; }
+  .res-link-arrow { display: inline-block; margin-left: 0.4rem; color: #a8863f; transition: transform 0.15s ease; opacity: 0.7; font-weight: 700; }
+  a.resource-card:hover .res-link-arrow { transform: translateX(3px); opacity: 1; }
   .resource-meta {
     font-size: 11px;
     letter-spacing: 0.1em;
@@ -220,67 +227,67 @@
 
 <script>
 const translations = [
-  { title: "The Clear Quran", meta: "Dr. Mustafa Khattab", note: "Modern, readable English. The most accessible first translation for most people." },
-  { title: "Saheeh International", meta: "Translation by a team of scholars", note: "Conservative and widely respected; often the default on Islamic websites." },
-  { title: "The Quran — A New Translation", meta: "M.A.S. Abdel Haleem", note: "Oxford professor; prose-oriented, published by Oxford World's Classics." },
-  { title: "The Meaning of the Glorious Quran", meta: "Marmaduke Pickthall (1930)", note: "Archaic English but historically the first major English translation by a Muslim." },
-  { title: "The Study Quran", meta: "Ed. Seyyed Hossein Nasr", note: "A one-volume edition with tafsir woven in from Sunni and Shia commentaries." }
+  { title: "The Clear Quran", meta: "Dr. Mustafa Khattab", note: "Modern, readable English. The most accessible first translation for most people.", href: "https://theclearquran.com/" },
+  { title: "Saheeh International", meta: "Translation by a team of scholars", note: "Conservative and widely respected; often the default on Islamic websites.", href: "https://quran.com/?translations=20" },
+  { title: "The Quran — A New Translation", meta: "M.A.S. Abdel Haleem", note: "Oxford professor; prose-oriented, published by Oxford World's Classics.", href: "https://global.oup.com/academic/product/the-qurʾan-9780199535958" },
+  { title: "The Meaning of the Glorious Quran", meta: "Marmaduke Pickthall (1930)", note: "Archaic English but historically the first major English translation by a Muslim.", href: "https://en.wikipedia.org/wiki/The_Meaning_of_the_Glorious_Koran" },
+  { title: "The Study Quran", meta: "Ed. Seyyed Hossein Nasr", note: "A one-volume edition with tafsir woven in from Sunni and Shia commentaries.", href: "https://www.harperone.com/9780061125867/the-study-quran/" }
 ];
 
 const tafsir = [
-  { title: "Tafsir Ibn Kathir", meta: "14th century — abridged English ed. available", note: "The most widely-read classical commentary; narration-heavy." },
-  { title: "Maʿariful Quran", meta: "Mufti Muhammad Shafi", note: "8-volume Hanafi commentary translated into English; clear and contemporary." },
-  { title: "Tafhim al-Quran", meta: "Abul Aʿla Maududi", note: "20th-century thematic commentary emphasizing the social message." },
-  { title: "In the Shade of the Quran", meta: "Sayyid Qutb", note: "Literary and reformist; influential and controversial." }
+  { title: "Tafsir Ibn Kathir", meta: "14th century — abridged English ed. available", note: "The most widely-read classical commentary; narration-heavy.", href: "https://quranx.com/Tafsirs/1.1" },
+  { title: "Maʿariful Quran", meta: "Mufti Muhammad Shafi", note: "8-volume Hanafi commentary translated into English; clear and contemporary.", href: "https://www.maarifulquran.net/" },
+  { title: "Tafhim al-Quran", meta: "Abul Aʿla Maududi", note: "20th-century thematic commentary emphasizing the social message.", href: "https://www.englishtafsir.com/" },
+  { title: "In the Shade of the Quran", meta: "Sayyid Qutb", note: "Literary and reformist; influential and controversial.", href: "https://www.kalamullah.com/shade-of-the-quran.html" }
 ];
 
 const seerah = [
-  { title: "The Sealed Nectar", meta: "Safi-ur-Rahman al-Mubarakpuri", note: "Award-winning concise biography; the modern standard." },
-  { title: "Muhammad: His Life Based on the Earliest Sources", meta: "Martin Lings", note: "Lyrical, drawing directly from Ibn Ishaq and Ibn Saʿd. Highly regarded." },
-  { title: "The Life of Muhammad", meta: "Ibn Ishaq / Ibn Hisham, tr. Guillaume", note: "The earliest Arabic biography — the primary source most others draw from." },
-  { title: "In the Footsteps of the Prophet", meta: "Tariq Ramadan", note: "Reflective modern biography aimed at Western readers." }
+  { title: "The Sealed Nectar", meta: "Safi-ur-Rahman al-Mubarakpuri", note: "Award-winning concise biography; the modern standard.", href: "https://archive.org/details/TheSealedNectar" },
+  { title: "Muhammad: His Life Based on the Earliest Sources", meta: "Martin Lings", note: "Lyrical, drawing directly from Ibn Ishaq and Ibn Saʿd. Highly regarded.", href: "https://www.goodreads.com/book/show/130707.Muhammad" },
+  { title: "The Life of Muhammad", meta: "Ibn Ishaq / Ibn Hisham, tr. Guillaume", note: "The earliest Arabic biography — the primary source most others draw from.", href: "https://archive.org/details/TheLifeOfMuhammadGuillaume" },
+  { title: "In the Footsteps of the Prophet", meta: "Tariq Ramadan", note: "Reflective modern biography aimed at Western readers.", href: "https://global.oup.com/academic/product/in-the-footsteps-of-the-prophet-9780195374742" }
 ];
 
 const classical = [
-  { title: "The Revival of the Religious Sciences", meta: "al-Ghazali, 11th century", note: "Known as the Ihya. Forty books on worship, ethics, and the inner life. The most-read Islamic work after the Quran." },
-  { title: "40 Hadith of Nawawi", meta: "Yahya al-Nawawi, 13th century", note: "A curated starter collection. Most Muslim children memorize it." },
-  { title: "Riyad al-Salihin", meta: "al-Nawawi", note: "\"Gardens of the Righteous\" — thematic hadith anthology for daily practice." },
-  { title: "The Muqaddimah", meta: "Ibn Khaldun, 14th century", note: "Pioneering work of historiography and social theory — foundational for modern sociology." }
+  { title: "The Revival of the Religious Sciences (Iḥyāʾ)", meta: "al-Ghazali, 11th century", note: "Known as the Ihya. Forty books on worship, ethics, and the inner life. The most-read Islamic work after the Quran.", href: "https://www.ghazali.org/works/ihya.htm" },
+  { title: "40 Hadith of Nawawi", meta: "Yahya al-Nawawi, 13th century", note: "A curated starter collection. Most Muslim children memorize it. Available in this app:", href: "nawawi40.html" },
+  { title: "Riyad al-Salihin", meta: "al-Nawawi", note: "\"Gardens of the Righteous\" — thematic hadith anthology for daily practice.", href: "https://sunnah.com/riyadussalihin" },
+  { title: "The Muqaddimah", meta: "Ibn Khaldun, 14th century", note: "Pioneering work of historiography and social theory — foundational for modern sociology.", href: "https://www.muqaddimah.com/" }
 ];
 
 const modern = [
-  { title: "Hamza Yusuf", meta: "Co-founder of Zaytuna College", note: "Traditionalist scholar, accessible lectures on YouTube and Sandala." },
-  { title: "Abdal Hakim Murad (Tim Winter)", meta: "Cambridge Muslim College", note: "British theologian; deep essays on Islam and modernity." },
-  { title: "Seyyed Hossein Nasr", meta: "George Washington University", note: "Traditionalist philosopher; influential on Islamic philosophy and the Sophia Perennis." },
-  { title: "Wael Hallaq", meta: "Columbia University", note: "Historian of Islamic law; essential for understanding shariʿa and the modern nation-state." },
-  { title: "Jonathan A.C. Brown", meta: "Georgetown University", note: "Clear writer on hadith sciences and Islamic legal history." },
-  { title: "Fazlur Rahman", meta: "University of Chicago", note: "20th-century reformist; rigorous historical approach to the Quran." }
+  { title: "Hamza Yusuf", meta: "Co-founder of Zaytuna College", note: "Traditionalist scholar, accessible lectures on YouTube and Sandala.", href: "https://sandala.org/" },
+  { title: "Abdal Hakim Murad (Tim Winter)", meta: "Cambridge Muslim College", note: "British theologian; deep essays on Islam and modernity.", href: "https://masud.co.uk/category/abdal-hakim-murad/" },
+  { title: "Seyyed Hossein Nasr", meta: "George Washington University", note: "Traditionalist philosopher; influential on Islamic philosophy and the Sophia Perennis.", href: "https://www.nasrfoundation.org/" },
+  { title: "Wael Hallaq", meta: "Columbia University", note: "Historian of Islamic law; essential for understanding shariʿa and the modern nation-state.", href: "https://mesaas.columbia.edu/faculty/directory/hallaq.html" },
+  { title: "Jonathan A.C. Brown", meta: "Georgetown University", note: "Clear writer on hadith sciences and Islamic legal history.", href: "https://acmcu.georgetown.edu/people/aj137/" },
+  { title: "Fazlur Rahman", meta: "University of Chicago", note: "20th-century reformist; rigorous historical approach to the Quran.", href: "https://en.wikipedia.org/wiki/Fazlur_Rahman_Malik" }
 ];
 
 const websites = [
-  { title: "quran.com", meta: "quran.com", note: "Multiple translations, audio recitations by many qaris, tafsir, word-by-word analysis. The de facto standard." },
-  { title: "sunnah.com", meta: "sunnah.com", note: "The six canonical hadith books in Arabic and English, fully searchable with grading." },
-  { title: "SeekersGuidance", meta: "seekersguidance.org", note: "Free structured online courses across the Islamic sciences. Traditional, Sunni." },
-  { title: "Yaqeen Institute", meta: "yaqeeninstitute.org", note: "Research papers on contemporary questions from a Sunni-traditionalist viewpoint." },
-  { title: "Islam Q&A", meta: "islamqa.info", note: "A large Salafi-leaning fatwa archive; use with awareness of its orientation." },
-  { title: "Lamppost Education", meta: "lamppostedu.org", note: "Audio and articles from classical-leaning scholars." }
+  { title: "quran.com", meta: "quran.com", note: "Multiple translations, audio recitations by many qaris, tafsir, word-by-word analysis. The de facto standard.", href: "https://quran.com" },
+  { title: "sunnah.com", meta: "sunnah.com", note: "The six canonical hadith books in Arabic and English, fully searchable with grading.", href: "https://sunnah.com" },
+  { title: "SeekersGuidance", meta: "seekersguidance.org", note: "Free structured online courses across the Islamic sciences. Traditional, Sunni.", href: "https://seekersguidance.org" },
+  { title: "Yaqeen Institute", meta: "yaqeeninstitute.org", note: "Research papers on contemporary questions from a Sunni-traditionalist viewpoint.", href: "https://yaqeeninstitute.org" },
+  { title: "Islam Q&A", meta: "islamqa.info", note: "A large Salafi-leaning fatwa archive; use with awareness of its orientation.", href: "https://islamqa.info" },
+  { title: "Lamppost Education", meta: "lamppostedu.org", note: "Audio and articles from classical-leaning scholars.", href: "https://lamppostedu.org" }
 ];
 
 const apps = [
-  { title: "Muslim Pro", meta: "iOS / Android", note: "Prayer times, qibla, Quran, athan. The most popular general-purpose app." },
-  { title: "Quran.com app", meta: "iOS / Android", note: "The mobile version of quran.com — audio, translations, bookmarking." },
-  { title: "Athan Pro", meta: "iOS / Android", note: "Reliable prayer times and athan notifications." },
-  { title: "Tarteel", meta: "iOS / Android", note: "AI-powered memorization helper that listens while you recite." },
-  { title: "iQibla / Qibla Compass", meta: "Various", note: "Finds the direction of Mecca from wherever you are." }
+  { title: "Muslim Pro", meta: "iOS / Android", note: "Prayer times, qibla, Quran, athan. The most popular general-purpose app.", href: "https://www.muslimpro.com/" },
+  { title: "Quran.com app", meta: "iOS / Android", note: "The mobile version of quran.com — audio, translations, bookmarking.", href: "https://quran.com/apps" },
+  { title: "Athan Pro", meta: "iOS / Android", note: "Reliable prayer times and athan notifications.", href: "https://www.islamicfinder.org/athan-pro/" },
+  { title: "Tarteel", meta: "iOS / Android", note: "AI-powered memorization helper that listens while you recite.", href: "https://www.tarteel.ai/" },
+  { title: "iQibla / Qibla Compass", meta: "Various", note: "Finds the direction of Mecca from wherever you are.", href: "https://qiblafinder.withgoogle.com/" }
 ];
 
 const courses = [
-  { title: "Zaytuna College", meta: "Berkeley, CA", note: "The first accredited Muslim liberal arts college in the US." },
-  { title: "Cambridge Muslim College", meta: "Cambridge, UK", note: "Postgraduate traditional Islamic scholarship." },
-  { title: "Bayyinah Institute", meta: "Online + Dallas", note: "Nouman Ali Khan's program — Arabic language and Quranic studies." },
-  { title: "AlMaghrib Institute", meta: "Global weekend seminars", note: "Accessible weekend courses across most Islamic sciences." },
-  { title: "Al-Azhar University", meta: "Cairo, Egypt", note: "The oldest continuously operating university in the world; the historical center of Sunni learning." },
-  { title: "Qalam Institute", meta: "Dallas + online", note: "Seerah, tafsir, and Arabic programs." }
+  { title: "Zaytuna College", meta: "Berkeley, CA", note: "The first accredited Muslim liberal arts college in the US.", href: "https://zaytuna.edu/" },
+  { title: "Cambridge Muslim College", meta: "Cambridge, UK", note: "Postgraduate traditional Islamic scholarship.", href: "https://www.cambridgemuslimcollege.ac.uk/" },
+  { title: "Bayyinah Institute", meta: "Online + Dallas", note: "Nouman Ali Khan's program — Arabic language and Quranic studies.", href: "https://bayyinah.com/" },
+  { title: "AlMaghrib Institute", meta: "Global weekend seminars", note: "Accessible weekend courses across most Islamic sciences.", href: "https://almaghrib.org/" },
+  { title: "Al-Azhar University", meta: "Cairo, Egypt", note: "The oldest continuously operating university in the world; the historical center of Sunni learning.", href: "https://www.azhar.eg/en/home" },
+  { title: "Qalam Institute", meta: "Dallas + online", note: "Seerah, tafsir, and Arabic programs.", href: "https://qalaminstitute.org/" }
 ];
 
 const USER_KEY = "islamapp-user-resources";
@@ -298,18 +305,21 @@ function esc(s) {
 }
 
 function cardHtml(r, isUser, idx) {
-  const titleInner = r.href
-    ? `<a href="${esc(r.href)}" target="_blank" rel="noopener" class="hover:text-amber-700">${esc(r.title)}</a>`
-    : esc(r.title);
   const userPill = isUser ? `<span class="user-pill">Yours</span>` : "";
   const deleteBtn = isUser ? `<button class="delete-btn" data-del="${idx}" title="Remove">✕</button>` : "";
+  // Determine if internal (relative) or external link
+  const isExternal = r.href && /^https?:\/\//i.test(r.href);
+  const linkAttrs = r.href ? `href="${esc(r.href)}"${isExternal ? ' target="_blank" rel="noopener"' : ''}` : "";
+  const arrow = r.href ? `<span class="res-link-arrow">${isExternal ? '↗' : '→'}</span>` : "";
+  const tag = r.href ? "a" : "div";
+  const titleHtml = `<div class="display text-lg text-emerald-950 font-semibold mb-2 leading-snug res-title">${esc(r.title)}${arrow}${userPill}</div>`;
   return `
-    <div class="resource-card${isUser ? ' user-added' : ''}">
+    <${tag} ${linkAttrs} class="resource-card${isUser ? ' user-added' : ''}">
       ${deleteBtn}
       <div class="resource-meta mb-1">${esc(r.meta)}</div>
-      <div class="display text-lg text-emerald-950 font-semibold mb-2 leading-snug">${titleInner}${userPill}</div>
+      ${titleHtml}
       <p class="text-sm text-stone-600 leading-snug">${esc(r.note)}</p>
-    </div>
+    </${tag}>
   `;
 }
 
@@ -325,9 +335,11 @@ function renderAll() {
       .map(x => cardHtml(x.r, true, x.i));
     el.innerHTML = built.concat(userItems).join("");
   });
-  // Wire up delete buttons
+  // Wire up delete buttons (must stop event so the card link doesn't fire)
   document.querySelectorAll("[data-del]").forEach(btn => {
-    btn.addEventListener("click", () => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
       const i = Number(btn.getAttribute("data-del"));
       const list = loadUser();
       list.splice(i, 1);
