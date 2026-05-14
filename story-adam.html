@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Adam — The First Man — IslamApp</title>
+<title>Ādam ﷺ — The First Man — IslamApp</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="favicon.png">
@@ -13,308 +13,647 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="IslamApp">
 <meta name="mobile-web-app-capable" content="yes">
-<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
 <script>(function(){try{if(localStorage.getItem('islamapp-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
 <link rel="stylesheet" href="theme.css">
 <script src="theme.js" defer></script>
 <style>
-  body { font-family: 'Inter', sans-serif; background: #faf6ed; color: #1c2d20;
-    background-image: radial-gradient(circle at 10% 10%, rgba(201,169,97,0.08) 0%, transparent 40%), radial-gradient(circle at 90% 90%, rgba(6,78,59,0.06) 0%, transparent 40%);
-    background-attachment: fixed; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #faf6ed;
+    color: #1c2d20;
+    background-image:
+      radial-gradient(circle at 10% 8%, rgba(201,169,97,0.10) 0%, transparent 38%),
+      radial-gradient(circle at 92% 80%, rgba(6,78,59,0.07) 0%, transparent 38%);
+    background-attachment: fixed;
+  }
   .arabic { font-family: 'Amiri', serif; direction: rtl; line-height: 1.9; }
   .display { font-family: 'Cormorant Garamond', serif; }
-  .geo-pattern { background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23064e3b' fill-opacity='0.05'%3E%3Cpath d='M30 0l7.5 22.5H60L41.25 37.5l7.5 22.5L30 45l-18.75 15 7.5-22.5L0 22.5h22.5z'/%3E%3C/g%3E%3C/svg%3E"); }
-  .step-btn.active { background: #064e3b; color: #faf6ed; border-color: #c9a961; }
   .gold-line { height: 1px; background: linear-gradient(to right, transparent, #c9a961, transparent); }
-  .btn-primary { background: linear-gradient(135deg, #064e3b 0%, #022c22 100%); color: #faf6ed; border: 1px solid #c9a961; }
-  .btn-primary:hover { background: linear-gradient(135deg, #0f766e 0%, #064e3b 100%); }
-  .btn-secondary { background: #fff; border: 1px solid #c9a961; color: #064e3b; }
-  .btn-secondary:hover { background: #faf6ed; }
-  .article-card { background: #fff; border: 1px solid rgba(201,169,97,0.4); border-radius: 14px 14px 6px 6px; }
-  .article-card::before { content: ''; display: block; height: 12px; margin: -1px -1px 0 -1px;
-    background: linear-gradient(180deg, rgba(201,169,97,0.25), transparent); border-radius: 14px 14px 0 0; border-bottom: 1px solid rgba(201,169,97,0.25); }
-  .verse-quote { background: #fff; border-left: 4px solid #c9a961; padding: 1rem 1.25rem; border-radius: 0 8px 8px 0; margin: 1rem 0; }
-  .verse-quote .ar { font-family: 'Amiri', serif; font-size: 1.4rem; color: #064e3b; line-height: 1.9; text-align: center; margin-bottom: 0.5rem; }
-  .verse-quote .tr { font-style: italic; color: #047857; font-size: 0.85rem; text-align: center; margin-bottom: 0.4rem; }
-  .verse-quote .en { color: #1f2937; font-size: 0.9rem; text-align: center; }
-  .verse-quote .ref { display: block; text-align: center; margin-top: 0.5rem; font-size: 0.7rem; color: #a8863f; font-weight: 600; letter-spacing: 0.1em; }
-  .depth-pill { display: inline-flex; gap: 4px; padding: 2px; background: rgba(201,169,97,0.15); border-radius: 999px; }
-  .depth-pill a { padding: 4px 12px; border-radius: 999px; font-size: 0.7rem; letter-spacing: 0.05em; font-weight: 600; text-decoration: none; color: #a8863f; }
+
+  /* ─── Reading progress bar ─── */
+  .read-progress {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    z-index: 70;
+    pointer-events: none;
+  }
+  .read-progress .bar {
+    height: 100%;
+    background: linear-gradient(to right, #c9a961, #064e3b);
+    width: 0%;
+    transition: width 0.06s linear;
+  }
+
+  /* ─── Hero ─── */
+  .hero {
+    text-align: center;
+    padding: 3rem 0 2.5rem;
+    position: relative;
+  }
+  .hero-name-ar {
+    font-family: 'Amiri', serif;
+    font-size: clamp(3.5rem, 8vw, 5.5rem);
+    color: #064e3b;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    color: #0a2820;
+    margin-top: 0.5rem;
+    margin-bottom: 0.4rem;
+    letter-spacing: -0.02em;
+  }
+  .hero-subtitle {
+    color: #78716c;
+    font-style: italic;
+    font-size: 1.05rem;
+    letter-spacing: 0.02em;
+  }
+  .hero-meta {
+    margin-top: 1.25rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #a8863f;
+    font-weight: 600;
+    display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;
+  }
+  .hero-meta span { display: inline-flex; align-items: center; gap: 0.4rem; }
+
+  /* ─── Top nav strip ─── */
+  .top-strip {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap; gap: 0.75rem;
+  }
+  .depth-pill { display: inline-flex; gap: 4px; padding: 3px; background: rgba(201,169,97,0.18); border-radius: 999px; }
+  .depth-pill a { padding: 5px 14px; border-radius: 999px; font-size: 0.7rem; letter-spacing: 0.06em; font-weight: 600; text-decoration: none; color: #a8863f; transition: all 0.15s ease; }
+  .depth-pill a:hover { color: #064e3b; }
   .depth-pill a.active { background: #064e3b; color: #faf6ed; }
+
+  /* ─── Layout ─── */
+  .reading-layout {
+    display: grid;
+    grid-template-columns: 1fr min(680px, 90vw) 1fr;
+    gap: 0;
+  }
+  .reading-layout > * { grid-column: 2; }
+  .narrative {
+    font-family: 'EB Garamond', 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.15rem;
+    line-height: 1.78;
+    color: #2a3530;
+  }
+  .narrative > p {
+    margin-bottom: 1.1rem;
+  }
+  .narrative > p:first-of-type::first-letter {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.6em;
+    font-weight: 700;
+    float: left;
+    line-height: 0.82;
+    margin: 0.06em 0.12em 0 0;
+    color: #064e3b;
+    padding-right: 0.05em;
+  }
+  .narrative em { font-style: italic; color: #5a4520; }
+  .narrative strong { color: #064e3b; font-weight: 600; }
+
+  /* ─── Scene structure ─── */
+  .scene {
+    scroll-margin-top: 90px;
+    padding: 1.5rem 0 2rem;
+  }
+  .scene-divider {
+    display: flex; align-items: center; gap: 1rem;
+    margin: 0.5rem 0 1.5rem;
+    color: #a8863f;
+  }
+  .scene-divider::before, .scene-divider::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(to right, transparent, rgba(201,169,97,0.45), transparent);
+  }
+  .scene-mark {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #a8863f;
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .scene-mark .ornament {
+    width: 6px; height: 6px;
+    background: #c9a961;
+    border-radius: 50%;
+    transform: rotate(45deg);
+  }
+  .scene h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.1rem;
+    font-weight: 600;
+    color: #0a2820;
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  /* ─── Verse blocks ─── */
+  .verse {
+    margin: 2rem 0;
+    padding: 1.5rem 1.75rem;
+    background: linear-gradient(135deg, rgba(255,255,255,0.7), rgba(250,246,237,0.85));
+    border: 1px solid rgba(201,169,97,0.3);
+    border-left: none; border-right: none;
+    border-radius: 0;
+    position: relative;
+  }
+  .verse::before, .verse::after {
+    content: '';
+    position: absolute;
+    left: 50%; transform: translateX(-50%);
+    width: 60px; height: 1px;
+    background: linear-gradient(to right, transparent, #c9a961, transparent);
+  }
+  .verse::before { top: -1px; }
+  .verse::after { bottom: -1px; }
+  .verse .ar {
+    font-family: 'Amiri', serif;
+    font-size: 1.55rem;
+    color: #064e3b;
+    text-align: center;
+    line-height: 2.1;
+    margin-bottom: 0.75rem;
+    direction: rtl;
+  }
+  .verse .tr {
+    text-align: center;
+    color: #78716c;
+    font-size: 0.82rem;
+    font-style: italic;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.01em;
+  }
+  .verse .en {
+    text-align: center;
+    color: #2a3530;
+    font-family: 'EB Garamond', serif;
+    font-size: 1.05rem;
+    font-style: italic;
+    line-height: 1.6;
+  }
+  .verse .ref {
+    display: block;
+    text-align: center;
+    margin-top: 0.8rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #a8863f;
+    font-weight: 700;
+  }
+
+  /* ─── Pull quote ─── */
+  .pull {
+    margin: 2.5rem 0;
+    padding: 0 0 0 1.5rem;
+    border-left: 3px solid #c9a961;
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 1.4rem;
+    line-height: 1.45;
+    color: #064e3b;
+  }
+
+  /* ─── Aside note ─── */
+  .aside-note {
+    margin: 1.75rem 0;
+    padding: 1.1rem 1.35rem;
+    background: rgba(201,169,97,0.10);
+    border-left: 3px solid #c9a961;
+    border-radius: 0 8px 8px 0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #57534e;
+    font-family: 'EB Garamond', serif;
+  }
+  .aside-note .label {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #a8863f;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+  }
+
+  /* ─── Sticky scene index (desktop) ─── */
+  .scene-index {
+    position: fixed;
+    top: 90px;
+    left: max(1rem, calc((100vw - 680px) / 2 - 200px));
+    width: 180px;
+    z-index: 5;
+  }
+  @media (max-width: 1080px) { .scene-index { display: none; } }
+  .scene-index-title {
+    font-size: 0.62rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: #a8863f;
+    font-weight: 700;
+    margin-bottom: 0.85rem;
+    padding-left: 1rem;
+  }
+  .scene-index ol {
+    list-style: none; padding: 0; margin: 0;
+    border-left: 1px solid rgba(201,169,97,0.35);
+  }
+  .scene-index a {
+    display: block;
+    padding: 0.45rem 0.85rem;
+    font-size: 0.82rem;
+    color: #78716c;
+    text-decoration: none;
+    border-left: 2px solid transparent;
+    margin-left: -1px;
+    transition: all 0.15s ease;
+    line-height: 1.35;
+  }
+  .scene-index a:hover { color: #064e3b; }
+  .scene-index a.active {
+    color: #064e3b;
+    font-weight: 600;
+    border-left-color: #c9a961;
+  }
+
+  /* ─── Themes summary section ─── */
+  .themes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+  .theme-card {
+    background: rgba(255,255,255,0.6);
+    border: 1px solid rgba(201,169,97,0.3);
+    border-radius: 10px;
+    padding: 1.1rem 1.2rem;
+  }
+  .theme-card h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    color: #064e3b;
+    font-size: 1.1rem;
+    margin-bottom: 0.4rem;
+  }
+  .theme-card p {
+    font-size: 0.88rem;
+    color: #57534e;
+    line-height: 1.55;
+  }
+
+  /* ─── Ending block ─── */
+  .ending {
+    text-align: center;
+    margin: 4rem 0 2rem;
+    padding: 2.5rem 1rem;
+    background: linear-gradient(135deg, rgba(201,169,97,0.10), rgba(6,78,59,0.06));
+    border: 1px solid rgba(201,169,97,0.35);
+    border-radius: 14px;
+  }
+  .ending .ar {
+    font-family: 'Amiri', serif;
+    font-size: 1.8rem;
+    color: #064e3b;
+    margin-bottom: 0.6rem;
+    direction: rtl;
+  }
+  .ending .tr { font-style: italic; color: #78716c; font-size: 0.95rem; margin-bottom: 0.85rem; }
+  .ending .note { color: #57534e; max-width: 460px; margin: 0 auto; font-size: 0.95rem; line-height: 1.5; font-family: 'EB Garamond', serif; font-style: italic; }
+  .ending-links { margin-top: 1.5rem; display: flex; gap: 1.25rem; justify-content: center; flex-wrap: wrap; }
+  .ending-links a { color: #064e3b; text-decoration: none; font-weight: 600; font-size: 0.92rem; padding: 0.5rem 1.1rem; border: 1px solid #c9a961; border-radius: 999px; transition: all 0.15s ease; }
+  .ending-links a:hover { background: #064e3b; color: #faf6ed; }
+
+  /* ─── Dark mode ─── */
+  [data-theme="dark"] body { color: #d6d0c2; }
+  [data-theme="dark"] .hero-name-ar { color: #f3e8c2; }
+  [data-theme="dark"] .hero-title { color: #f3e8c2; }
+  [data-theme="dark"] .hero-subtitle { color: #b8b2a3; }
+  [data-theme="dark"] .narrative { color: #d6d0c2; }
+  [data-theme="dark"] .narrative > p:first-of-type::first-letter { color: #f3e8c2; }
+  [data-theme="dark"] .narrative em { color: #d4a957; }
+  [data-theme="dark"] .narrative strong { color: #f3e8c2; }
+  [data-theme="dark"] .scene h2 { color: #f3e8c2; }
+  [data-theme="dark"] .verse { background: linear-gradient(135deg, rgba(20,36,32,0.7), rgba(14,26,20,0.85)); border-color: rgba(201,169,97,0.3); }
+  [data-theme="dark"] .verse .ar { color: #f3e8c2; }
+  [data-theme="dark"] .verse .tr { color: #b8b2a3; }
+  [data-theme="dark"] .verse .en { color: #e7e2d0; }
+  [data-theme="dark"] .verse .ref { color: #d4a957; }
+  [data-theme="dark"] .pull { color: #f3e8c2; }
+  [data-theme="dark"] .aside-note { background: rgba(201,169,97,0.12); color: #d6d0c2; }
+  [data-theme="dark"] .scene-index a { color: #b8b2a3; }
+  [data-theme="dark"] .scene-index a.active { color: #f3e8c2; }
+  [data-theme="dark"] .theme-card { background: rgba(20,36,32,0.6); border-color: rgba(201,169,97,0.3); }
+  [data-theme="dark"] .theme-card h4 { color: #f3e8c2; }
+  [data-theme="dark"] .theme-card p { color: #c4beb0; }
+  [data-theme="dark"] .ending { background: linear-gradient(135deg, rgba(201,169,97,0.10), rgba(6,78,59,0.18)); }
+  [data-theme="dark"] .ending .ar { color: #f3e8c2; }
+  [data-theme="dark"] .ending .tr { color: #b8b2a3; }
+  [data-theme="dark"] .ending .note { color: #c4beb0; }
+  [data-theme="dark"] .ending-links a { color: #f3e8c2; border-color: rgba(201,169,97,0.5); }
+  [data-theme="dark"] .ending-links a:hover { background: #064e3b; }
 </style>
 </head>
-<body class="geo-pattern min-h-screen">
+<body class="min-h-screen">
 
-<div class="max-w-6xl mx-auto px-6 py-10">
+<div class="read-progress"><div class="bar" id="rp-bar"></div></div>
 
-  <nav class="flex justify-between items-center mb-6 flex-wrap gap-3">
+<aside class="scene-index" id="scene-index">
+  <div class="scene-index-title">Scenes</div>
+  <ol id="scene-index-list"></ol>
+</aside>
+
+<div class="max-w-5xl mx-auto px-5 pt-8 pb-16">
+
+  <div class="top-strip">
     <a href="stories.html" class="text-emerald-900 hover:text-amber-700 text-sm font-semibold">← Stories</a>
     <div class="depth-pill">
-      <a href="story-adam.html" data-mode="moderate">Moderate</a>
-      <a href="story-adam-deep.html" data-mode="deep">Deep</a>
-      <a href="story-adam.html?single=1" data-mode="single">One page</a>
+      <a href="story-adam.html" class="active">Moderate</a>
+      <a href="story-adam-deep.html">Deep</a>
     </div>
-    <div class="text-sm text-stone-500"><span id="step-num">1</span> / <span id="step-total">9</span></div>
-  </nav>
+  </div>
 
-  <header class="text-center mb-8">
-    <div class="gold-line mb-4 max-w-[180px] mx-auto"></div>
-    <div class="arabic text-3xl text-emerald-900 mb-2">آدَم</div>
-    <h1 class="display text-4xl md:text-5xl text-emerald-950 font-semibold">Adam</h1>
-    <div class="text-stone-600 mt-2">The first man, the first prophet</div>
-    <div class="gold-line mt-4 max-w-[180px] mx-auto"></div>
+  <header class="hero">
+    <div class="gold-line mb-6 max-w-[140px] mx-auto"></div>
+    <div class="hero-name-ar">آدَم ﷺ</div>
+    <h1 class="hero-title">Ādam</h1>
+    <div class="hero-subtitle">The first man. The first prophet. The first repentance.</div>
+    <div class="hero-meta">
+      <span>● 9 scenes</span>
+      <span>● ~8 min read</span>
+      <span>● Q 2 · 7 · 15 · 17 · 20 · 38</span>
+    </div>
+    <div class="gold-line mt-6 max-w-[140px] mx-auto"></div>
   </header>
 
-  <div class="grid md:grid-cols-[220px_1fr] gap-6">
-    <aside class="md:sticky md:top-6 md:self-start">
-      <div class="article-card p-3 shadow-sm">
-        <div class="text-xs uppercase tracking-wider text-amber-700 font-semibold mb-2 px-2">Scenes</div>
-        <nav id="step-nav" class="space-y-1"></nav>
-      </div>
-    </aside>
-    <main id="step-container"></main>
-  </div>
+  <article class="reading-layout">
 
-  <div class="flex justify-between mt-8 gap-4">
-    <button id="prev-step" class="btn-secondary flex-1 md:flex-none px-6 py-3 rounded-lg font-semibold disabled:opacity-30 disabled:cursor-not-allowed">← Previous</button>
-    <button id="next-step" class="btn-primary flex-1 md:flex-none px-6 py-3 rounded-lg font-semibold">Next →</button>
-  </div>
+    <section class="scene" id="s1">
+      <div class="scene-divider"><span class="scene-mark"><span class="ornament"></span>Scene 1 · The setting</span></div>
+      <h2>Where Adam appears</h2>
+      <div class="narrative">
+        <p>Adam — the first human and the first prophet — appears in the Quran <strong>across many surahs, never in one continuous chapter</strong>. The story is told and retold from different angles, each pass adding a layer the previous didn't show.</p>
+        <p>The main passages: <em>Q 2:30–39</em> (the decision, naming, prostration, fall, repentance); <em>Q 7:11–27</em> (the fall in detail, Iblīs's whisper, repentance); <em>Q 15:26–44</em> (creation from clay, Iblīs's reasoning); <em>Q 17:61–65</em> (Iblīs swears to mislead); <em>Q 20:115–123</em> (the forgetting, the descent); <em>Q 38:71–85</em> (the prostration retold); <em>Q 5:27–32</em> (the two sons).</p>
+        <p>What follows moves through the story in narrative order, drawing the right verse from wherever it sits.</p>
+      </div>
+    </section>
+
+    <section class="scene" id="s2">
+      <div class="scene-divider"><span class="scene-mark"><span class="ornament"></span>Scene 2 · Before humanity</span></div>
+      <h2>The decision</h2>
+      <div class="narrative">
+        <p>Before humanity exists, Allah announces His intention to the angels: He will place a <em>khalīfa</em> — a vicegerent, a steward — on the earth. The angels question Him. Will You place there one who will spill blood and cause corruption, while we already glorify You?</p>
+        <p>The reply is brief and definitive.</p>
+      </div>
+      <div class="verse">
+        <div class="ar">إِنِّي أَعْلَمُ مَا لَا تَعْلَمُونَ</div>
+        <div class="tr">Innī aʿlamu mā lā taʿlamūn</div>
+        <div class="en">"I know what you do not know."</div>
+        <span class="ref">Quran 2:30</span>
+      </div>
+      <div class="narrative">
+        <p>The angels' worry was partly right — humans <em>have</em> caused much harm. But Allah tells them their picture is incomplete. There is something about humanity they haven't yet seen.</p>
+      </div>
+    </section>
+
+    <section class="scene" id="s3">
+      <div class="scene-divider"><span class="scene-mark"><span class="ornament"></span>Scene 3 · The gift</span></div>
+      <h2>The teaching of names</h2>
+      <div class="narrative">
+        <p>What the angels couldn't see is revealed in the next scene. Allah teaches Adam <strong>"the names — all of them"</strong>, then asks the angels to name them. They cannot.</p>
+      </div>
+      <div class="verse">
+        <div class="ar">وَعَلَّمَ آدَمَ الْأَسْمَاءَ كُلَّهَا</div>
+        <div class="tr">Wa-ʿallama Ādama l-asmāʾa kullahā</div>
+        <div class="en">"And He taught Adam the names — all of them."</div>
+        <span class="ref">Quran 2:31</span>
+      </div>
+      <div class="narrative">
+        <p>When the angels admit they have no knowledge except what Allah has given them, Adam tells them the names. The angels see for themselves what kind of creature this new being is — not just powerful, but <strong>capable of language, knowledge, and learning</strong>.</p>
+      </div>
+      <div class="pull">This is humanity's introduction. Not strength, not size — but the capacity to know.</div>
+    </section>
+
+    <section class="scene" id="s4">
+      <div class="scene-divider"><span class="scene-mark"><span class="ornament"></span>Scene 4 · The refusal</span></div>
+      <h2>The prostration &amp; Iblīs's pride</h2>
+      <div class="narrative">
+        <p>Allah commands all the angels to prostrate to Adam — a gesture of honour, not worship. They all comply <strong>except Iblīs</strong>, who refuses.</p>
+      </div>
+      <div class="verse">
+        <div class="ar">أَنَا خَيْرٌ مِّنْهُ ۖ خَلَقْتَنِي مِن نَّارٍ وَخَلَقْتَهُ مِن طِينٍ</div>
+        <div class="tr">Anā khayrun minhu, khalaqtanī min nārin wa-khalaqtahu min ṭīn</div>
+        <div class="en">"I am better than him. You created me from fire, and You created him from clay."</div>
+        <span class="ref">Quran 7:12</span>
+      </div>
+      <div class="narrative">
+        <p>This is the first sin — and it is <strong>pride</strong>, not lust or greed. Iblīs values his own substance over Allah's command. Cast out, he asks for respite until the Day of Judgment, swearing to mislead Adam's descendants.</p>
+      </div>
+      <div class="aside-note">
+        <span class="label">Note</span>
+        Q 18:50 specifies that Iblīs was actually one of the jinn, present among the angels — not an angel himself. Angels in Islam cannot disobey.
+      </div>
+    </section>
+
+    <section class="scene" id="s5">
+      <div class="scene-divider"><span class="scene-mark"><span class="ornament"></span>Scene 5 · The garden</span></div>
+      <h2>One tree</h2>
+      <div class="narrative">
+        <p>Adam and his wife are placed in the Garden, given everything in abundance, and warned about <strong>one tree</strong>.</p>
+      </div>
+      <div class="verse">
+        <div class="ar">وَكُلَا مِنْهَا رَغَدًا حَيْثُ شِئْتُمَا وَلَا تَقْرَبَا هَٰذِهِ الشَّجَرَةَ</div>
+        <div class="tr">Wa-kulā minhā raghadan ḥaythu shiʾtumā wa-lā taqrabā hādhihi sh-shajarah</div>
+        <div class="en">"Eat from it freely, wherever you both wish — but do not approach this tree."</div>
+        <span class="ref">Quran 2:35</span>
+      </div>
+      <div class="narrative">
+        <p>The Quran does not say what tree it was. Wheat, grape, fig — classical commentators guessed, then admitted: God doesn't tell us. The point is the principle, not the species.</p>
+      </div>
+      <div class="aside-note">
+        <span class="label">A note on Ḥawwāʾ</span>
+        Adam's wife (Ḥawwāʾ / Eve) is not named in the Quran but is named in hadith. Importantly: in Islam, she is not blamed for the fall. They are addressed as <em>"both of you"</em> throughout.
+      </div>
+    </section>
+
+    <section class="scene" id="s6">
+      <div class="scene-divider"><span class="scene-mark"><span class="ornament"></span>Scene 6 · The slip</span></div>
+      <h2>The fall</h2>
+      <div class="narrative">
+        <p>Iblīs whispers. He approaches them with a lie tailored to their dignity — this tree, he says, leads to immortality and angelic status.</p>
+      </div>
+      <div class="verse">
+        <div class="ar">مَا نَهَاكُمَا رَبُّكُمَا عَنْ هَٰذِهِ الشَّجَرَةِ إِلَّا أَن تَكُونَا مَلَكَيْنِ أَوْ تَكُونَا مِنَ الْخَالِدِينَ</div>
+        <div class="tr">Mā nahākumā rabbukumā ʿan hādhihi sh-shajarati illā an takūnā malakayni aw takūnā mina l-khālidīn</div>
+        <div class="en">"Your Lord forbade you this tree only because you would become angels, or among the immortals."</div>
+        <span class="ref">Quran 7:20</span>
+      </div>
+      <div class="narrative">
+        <p>They eat. Their nakedness is made apparent to them — a metaphor for shame, vulnerability, the loss of innocence. They begin to cover themselves with leaves of the Garden.</p>
+      </div>
+    </section>
+
+    <section class="scene" id="s7">
+      <div class="scene-divider"><span class="scene-mark"><span class="ornament"></span>Scene 7 · The turning</span></div>
+      <h2>Repentance</h2>
+      <div class="narrative">
+        <p>Allah calls out: didn't I forbid you that tree? They do not blame each other or the snake or anyone else. They <strong>own it</strong>.</p>
+      </div>
+      <div class="verse">
+        <div class="ar">رَبَّنَا ظَلَمْنَا أَنفُسَنَا وَإِن لَّمْ تَغْفِرْ لَنَا وَتَرْحَمْنَا لَنَكُونَنَّ مِنَ الْخَاسِرِينَ</div>
+        <div class="tr">Rabbanā ẓalamnā anfusanā wa-in lam taghfir lanā wa-tarḥamnā la-nakūnanna mina l-khāsirīn</div>
+        <div class="en">"Our Lord, we have wronged ourselves. If You do not forgive us and have mercy on us, we will surely be among the lost."</div>
+        <span class="ref">Quran 7:23</span>
+      </div>
+      <div class="narrative">
+        <p>Allah accepts. The <strong>contrast with Iblīs is the point</strong>. Both disobeyed. Iblīs argued and persisted. Adam acknowledged and repented. The first was cast away. The second was forgiven.</p>
+      </div>
+      <div class="pull">No "original sin." Adam's mistake was Adam's — not inherited by his descendants. Each person answers for their own actions.</div>
+    </section>
+
+    <section class="scene" id="s8">
+      <div class="scene-divider"><span class="scene-mark"><span class="ornament"></span>Scene 8 · The descent</span></div>
+      <h2>Earth, and the first murder</h2>
+      <div class="narrative">
+        <p>Adam and his wife are sent down to earth. Life as we know it begins. They have children — and the very first generation contains the first conflict.</p>
+        <p><strong>Two sons</strong> (traditionally Qābīl and Hābīl — Cain and Abel) each offer a sacrifice. One is accepted, one is not. The rejected son threatens to kill the other.</p>
+      </div>
+      <div class="verse">
+        <div class="ar">لَئِن بَسَطتَ إِلَيَّ يَدَكَ لِتَقْتُلَنِي مَا أَنَا بِبَاسِطٍ يَدِيَ إِلَيْكَ لِأَقْتُلَكَ ۖ إِنِّي أَخَافُ اللَّهَ رَبَّ الْعَالَمِينَ</div>
+        <div class="tr">Laʾin basaṭta ilayya yadaka li-taqtulanī mā anā bi-bāsiṭin yadiya ilayka li-aqtulak, innī akhāfu Allāha rabba l-ʿālamīn</div>
+        <div class="en">"If you stretch your hand to kill me, I will not stretch mine to kill you. I fear Allah, Lord of all the worlds."</div>
+        <span class="ref">Quran 5:28</span>
+      </div>
+      <div class="narrative">
+        <p>The murder happens anyway. The Quran follows immediately with one of its most-quoted verses:</p>
+      </div>
+      <div class="verse">
+        <div class="ar">مَن قَتَلَ نَفْسًا بِغَيْرِ نَفْسٍ أَوْ فَسَادٍ فِي الْأَرْضِ فَكَأَنَّمَا قَتَلَ النَّاسَ جَمِيعًا</div>
+        <div class="tr">Man qatala nafsan bi-ghayri nafsin aw fasādin fī l-arḍi fa-kaʾannamā qatala n-nāsa jamīʿā</div>
+        <div class="en">"Whoever kills a soul — unless for a soul, or for corruption in the land — it is as if he had killed all of humanity."</div>
+        <span class="ref">Quran 5:32</span>
+      </div>
+      <div class="narrative">
+        <p>A crow then teaches the murderer how to bury his brother. The Quran ends the scene there.</p>
+      </div>
+    </section>
+
+    <section class="scene" id="s9">
+      <div class="scene-divider"><span class="scene-mark"><span class="ornament"></span>Scene 9 · The threads</span></div>
+      <h2>What the story carries</h2>
+      <div class="narrative">
+        <p>A few of the threads the story carries forward through the rest of the Quran:</p>
+      </div>
+      <div class="themes-grid">
+        <div class="theme-card">
+          <h4>Knowledge as the gift</h4>
+          <p>Adam isn't honoured for strength but for what he can <em>learn</em>. Humans are the species defined by language and understanding.</p>
+        </div>
+        <div class="theme-card">
+          <h4>Pride as the original sin</h4>
+          <p>Iblīs's refusal is rooted in feeling superior. The Quran returns to this theme often — pride is consistently named as the gateway sin.</p>
+        </div>
+        <div class="theme-card">
+          <h4>Owning your mistake</h4>
+          <p>The model of repentance: don't argue, don't deflect. "We have wronged ourselves." Forgiveness follows.</p>
+        </div>
+        <div class="theme-card">
+          <h4>No inherited guilt</h4>
+          <p>Adam's error is Adam's, not yours. You are born clean and answer for your own choices.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="ending">
+      <div class="ar">رَبَّنَا ظَلَمْنَا أَنفُسَنَا</div>
+      <div class="tr">Rabbanā ẓalamnā anfusanā</div>
+      <div class="note">"Our Lord, we have wronged ourselves." The first prayer of the first repentance — used by Muslims today in their own.</div>
+      <div class="ending-links">
+        <a href="story-adam-deep.html">Deep dive →</a>
+        <a href="stories.html">All stories</a>
+      </div>
+    </div>
+
+  </article>
 
 </div>
 
 <script>
-function v(ar, tr, en, ref) {
-  return `<div class="verse-quote"><div class="ar">${ar}</div><div class="tr">${tr}</div><div class="en">"${en}"</div><span class="ref">${ref}</span></div>`;
-}
-
-const steps = [
-  {
-    title: "Where Adam appears",
-    icon: "📜",
-    body: `
-      <p class="text-gray-700 mb-4 text-lg">Adam — the first human and the first prophet — appears in the Quran <strong>across many surahs, never in one continuous chapter</strong>. The story is told and retold from different angles, each telling adding a different angle.</p>
-      <div class="bg-white border border-amber-200 rounded-xl p-5 mb-4">
-        <div class="text-xs uppercase tracking-widest text-amber-700 font-semibold mb-2">Main passages</div>
-        <ul class="text-sm text-gray-700 space-y-1">
-          <li>· <strong>Q 2:30–39</strong> — the decision, naming, prostration, fall, repentance</li>
-          <li>· <strong>Q 7:11–27</strong> — the fall in detail, Iblīs's whisper, repentance</li>
-          <li>· <strong>Q 15:26–44</strong> — creation from clay, Iblīs's reasoning</li>
-          <li>· <strong>Q 17:61–65</strong> — Iblīs swears to mislead</li>
-          <li>· <strong>Q 20:115–123</strong> — the forgetting, the descent</li>
-          <li>· <strong>Q 38:71–85</strong> — the prostration scene retold</li>
-          <li>· <strong>Q 5:27–32</strong> — the two sons (Cain &amp; Abel)</li>
-        </ul>
-      </div>
-      <p class="text-gray-700">Each retelling emphasizes something different. We'll move through the story in narrative order, drawing the key verse from wherever it sits.</p>
-    `
-  },
-  {
-    title: "The decision",
-    icon: "👑",
-    body: `
-      <p class="text-gray-700 mb-3">Before humanity exists, Allah announces His intention to the angels: He will place a <em>khalīfa</em> — a vicegerent, a steward — on earth.</p>
-      <p class="text-gray-700 mb-3">The angels question: Will You place there one who will spill blood and cause corruption, while we already glorify You? The reply is brief and definitive.</p>
-      ${v(
-        "إِنِّي أَعْلَمُ مَا لَا تَعْلَمُونَ",
-        "Innī aʿlamu mā lā taʿlamūn",
-        "I know what you do not know.",
-        "Quran 2:30"
-      )}
-      <p class="text-gray-700 text-sm italic">The angels' question turns out to be partly right — humans <em>have</em> caused much harm. But Allah tells them their picture is incomplete. There is something about humanity they haven't seen yet.</p>
-    `
-  },
-  {
-    title: "The teaching of names",
-    icon: "📖",
-    body: `
-      <p class="text-gray-700 mb-3">What the angels couldn't see is revealed in the next scene. Allah teaches Adam <strong>"the names — all of them"</strong>, then asks the angels to name them. They cannot.</p>
-      ${v(
-        "وَعَلَّمَ آدَمَ الْأَسْمَاءَ كُلَّهَا",
-        "Wa-ʿallama Ādama l-asmāʾa kullahā",
-        "And He taught Adam the names — all of them.",
-        "Quran 2:31"
-      )}
-      <p class="text-gray-700 mb-3">When the angels admit they have no knowledge except what Allah has given them, Adam tells them the names. The angels see for themselves what kind of creature this new being is — not just powerful, but <strong>capable of language, knowledge, and learning</strong>.</p>
-      <p class="text-gray-700 text-sm italic">This is humanity's introduction. Not strength, not size — but the capacity to know.</p>
-    `
-  },
-  {
-    title: "The prostration & Iblīs's refusal",
-    icon: "🔥",
-    body: `
-      <p class="text-gray-700 mb-3">Allah commands all the angels to prostrate to Adam — a gesture of honor, not worship. They all comply <strong>except Iblīs</strong>, who refuses.</p>
-      ${v(
-        "أَنَا خَيْرٌ مِّنْهُ ۖ خَلَقْتَنِي مِن نَّارٍ وَخَلَقْتَهُ مِن طِينٍ",
-        "Anā khayrun minhu, khalaqtanī min nārin wa-khalaqtahu min ṭīn",
-        "I am better than him. You created me from fire, and You created him from clay.",
-        "Quran 7:12"
-      )}
-      <p class="text-gray-700 mb-3">This is the first sin — and it is <strong>pride</strong>, not lust or greed. Iblīs values his own substance over Allah's command. Cast out, he asks for respite until the Day of Judgment, swearing to mislead Adam's descendants.</p>
-      <p class="text-gray-700 text-sm italic">Note: Q 18:50 specifies that Iblīs was actually one of the jinn, present among the angels — not an angel himself. Angels in Islam cannot disobey.</p>
-    `
-  },
-  {
-    title: "The Garden",
-    icon: "🌳",
-    body: `
-      <p class="text-gray-700 mb-3">Adam and his wife are placed in the Garden, given everything in abundance, and warned about <strong>one tree</strong>.</p>
-      ${v(
-        "وَكُلَا مِنْهَا رَغَدًا حَيْثُ شِئْتُمَا وَلَا تَقْرَبَا هَٰذِهِ الشَّجَرَةَ",
-        "Wa-kulā minhā raghadan ḥaythu shiʾtumā wa-lā taqrabā hādhihi sh-shajarah",
-        "Eat from it freely, wherever you both wish — but do not approach this tree.",
-        "Quran 2:35"
-      )}
-      <p class="text-gray-700 mb-3">The Quran does not say what tree it was. Wheat, grape, fig — classical commentators guessed, then admitted: God doesn't tell us. The point is the principle, not the species.</p>
-      <p class="text-gray-700 text-sm italic">Adam's wife (Ḥawwāʾ / Eve) is not named in the Quran but is named in hadith. Importantly: in Islam, she is not blamed for the fall. They are addressed as <em>"both of you"</em> throughout.</p>
-    `
-  },
-  {
-    title: "The fall",
-    icon: "🍎",
-    body: `
-      <p class="text-gray-700 mb-3">Iblīs whispers. He approaches them with a lie tailored to their dignity: this tree leads to immortality and angelic status.</p>
-      ${v(
-        "مَا نَهَاكُمَا رَبُّكُمَا عَنْ هَٰذِهِ الشَّجَرَةِ إِلَّا أَن تَكُونَا مَلَكَيْنِ أَوْ تَكُونَا مِنَ الْخَالِدِينَ",
-        "Mā nahākumā rabbukumā ʿan hādhihi sh-shajarati illā an takūnā malakayni aw takūnā mina l-khālidīn",
-        "Your Lord forbade you this tree only because you would become angels, or among the immortals.",
-        "Quran 7:20"
-      )}
-      <p class="text-gray-700 mb-3">They eat. Their nakedness is made apparent to them — a metaphor for shame, vulnerability, the loss of innocence. They begin to cover themselves with leaves of the Garden.</p>
-    `
-  },
-  {
-    title: "Repentance",
-    icon: "🤲",
-    body: `
-      <p class="text-gray-700 mb-3">Allah calls out: didn't I forbid you that tree? They do not blame each other or the snake or anyone else. They <strong>own it</strong>.</p>
-      ${v(
-        "رَبَّنَا ظَلَمْنَا أَنفُسَنَا وَإِن لَّمْ تَغْفِرْ لَنَا وَتَرْحَمْنَا لَنَكُونَنَّ مِنَ الْخَاسِرِينَ",
-        "Rabbanā ẓalamnā anfusanā wa-in lam taghfir lanā wa-tarḥamnā la-nakūnanna mina l-khāsirīn",
-        "Our Lord, we have wronged ourselves. If You do not forgive us and have mercy on us, we will surely be among the lost.",
-        "Quran 7:23"
-      )}
-      <p class="text-gray-700 mb-3">Allah accepts. The <strong>contrast with Iblīs is the point</strong>: both disobeyed. Iblīs argued and persisted. Adam acknowledged and repented. The first was cast away. The second was forgiven.</p>
-      <div class="bg-emerald-50/80 border-l-4 border-emerald-700 p-5 rounded-r-lg my-4">
-        <p class="text-emerald-900 text-sm"><strong>No "original sin."</strong> In Islam, Adam's mistake was Adam's — not inherited by his descendants. We are born with <em>fiṭra</em>, the natural inclination toward God. Each person answers for their own actions.</p>
-      </div>
-    `
-  },
-  {
-    title: "The descent &amp; the two sons",
-    icon: "🌍",
-    body: `
-      <p class="text-gray-700 mb-3">Adam and his wife are sent down to earth. Life as we know it begins. They have children — and the very first generation contains the first conflict.</p>
-      <p class="text-gray-700 mb-3"><strong>Two sons</strong> (traditionally Qābīl / Cain and Hābīl / Abel) each offer a sacrifice. One is accepted, one is not. The rejected son threatens to kill the other.</p>
-      ${v(
-        "لَئِن بَسَطتَ إِلَيَّ يَدَكَ لِتَقْتُلَنِي مَا أَنَا بِبَاسِطٍ يَدِيَ إِلَيْكَ لِأَقْتُلَكَ ۖ إِنِّي أَخَافُ اللَّهَ رَبَّ الْعَالَمِينَ",
-        "Laʾin basaṭta ilayya yadaka li-taqtulanī mā anā bi-bāsiṭin yadiya ilayka li-aqtulak, innī akhāfu Allāha rabba l-ʿālamīn",
-        "If you stretch your hand to kill me, I will not stretch mine to kill you. I fear Allah, Lord of all the worlds.",
-        "Quran 5:28"
-      )}
-      <p class="text-gray-700 mb-3">The murder happens anyway. The Quran follows immediately with one of its most-quoted verses:</p>
-      ${v(
-        "مَن قَتَلَ نَفْسًا بِغَيْرِ نَفْسٍ أَوْ فَسَادٍ فِي الْأَرْضِ فَكَأَنَّمَا قَتَلَ النَّاسَ جَمِيعًا",
-        "Man qatala nafsan bi-ghayri nafsin aw fasādin fī l-arḍi fa-kaʾannamā qatala n-nāsa jamīʿā",
-        "Whoever kills a soul — unless for a soul, or for corruption in the land — it is as if he had killed all of humanity.",
-        "Quran 5:32"
-      )}
-      <p class="text-gray-700 text-sm italic">A crow then teaches the murderer how to bury his brother. The Quran ends the scene there.</p>
-    `
-  },
-  {
-    title: "Themes &amp; lessons",
-    icon: "💡",
-    body: `
-      <p class="text-gray-700 mb-4">A few of the threads the story carries:</p>
-      <div class="space-y-3 mb-4">
-        <div class="bg-white border border-amber-200 rounded-lg p-4">
-          <div class="display font-semibold text-emerald-900 mb-1">Knowledge as the gift</div>
-          <p class="text-sm text-gray-700">Adam isn't honored for strength but for what he can <em>learn</em>. Humans are the species defined by language and understanding.</p>
-        </div>
-        <div class="bg-white border border-amber-200 rounded-lg p-4">
-          <div class="display font-semibold text-emerald-900 mb-1">Pride as the original sin</div>
-          <p class="text-sm text-gray-700">Iblīs's refusal is rooted in feeling superior. The Quran returns to this theme often — pride is consistently named as the gateway sin.</p>
-        </div>
-        <div class="bg-white border border-amber-200 rounded-lg p-4">
-          <div class="display font-semibold text-emerald-900 mb-1">Owning your mistake</div>
-          <p class="text-sm text-gray-700">The model of repentance: don't argue, don't deflect. "We have wronged ourselves." Forgiveness follows.</p>
-        </div>
-        <div class="bg-white border border-amber-200 rounded-lg p-4">
-          <div class="display font-semibold text-emerald-900 mb-1">No inherited guilt</div>
-          <p class="text-sm text-gray-700">Adam's error is Adam's, not yours. You are born clean and answer for your own choices.</p>
-        </div>
-      </div>
-      <div class="bg-gradient-to-r from-emerald-50 to-amber-50 border border-amber-300 rounded-xl p-6 text-center my-6">
-        <div class="arabic text-2xl text-emerald-900 mb-1">رَبَّنَا ظَلَمْنَا أَنفُسَنَا</div>
-        <div class="text-sm italic text-stone-600 mb-3">Rabbanā ẓalamnā anfusanā — "Our Lord, we have wronged ourselves."</div>
-        <div class="text-sm text-gray-700">The first prayer of the first repentance. Used by Muslims today in their own.</div>
-      </div>
-      <div class="text-center text-sm space-x-4">
-        <a href="story-adam-deep.html" class="text-emerald-800 underline font-semibold">Deep version of this story →</a>
-        <a href="stories.html" class="text-emerald-800 underline font-semibold">Back to stories</a>
-      </div>
-    `
-  }
+const SCENES = [
+  { id: "s1", title: "The setting" },
+  { id: "s2", title: "The decision" },
+  { id: "s3", title: "The teaching of names" },
+  { id: "s4", title: "The refusal" },
+  { id: "s5", title: "One tree" },
+  { id: "s6", title: "The fall" },
+  { id: "s7", title: "Repentance" },
+  { id: "s8", title: "Earth & first murder" },
+  { id: "s9", title: "What it carries" },
 ];
 
-let currentStep = 0;
-const nav = document.getElementById("step-nav");
-const container = document.getElementById("step-container");
-const stepNum = document.getElementById("step-num");
-const stepTotal = document.getElementById("step-total");
-const prevBtn = document.getElementById("prev-step");
-const nextBtn = document.getElementById("next-step");
-stepTotal.textContent = steps.length;
+// Build scene index
+const indexEl = document.getElementById("scene-index-list");
+indexEl.innerHTML = SCENES.map((s, i) =>
+  `<li><a href="#${s.id}" data-id="${s.id}">${String(i+1).padStart(2,'0')}. ${s.title}</a></li>`
+).join("");
 
-function render() {
-  nav.innerHTML = steps.map((s, i) => `<button class="step-btn w-full text-left px-3 py-2 rounded-lg border border-transparent text-sm hover:bg-amber-50 ${i === currentStep ? 'active' : ''}" data-i="${i}"><span class="mr-2">${s.icon}</span>${s.title}</button>`).join("");
-  container.innerHTML = `<article class="article-card shadow-sm p-8"><div class="flex items-center gap-4 mb-6 pb-4 border-b border-amber-100"><div class="text-5xl">${steps[currentStep].icon}</div><div><div class="text-xs text-amber-700 font-semibold uppercase tracking-widest">Scene ${currentStep + 1}</div><h2 class="display text-3xl text-emerald-950 font-semibold">${steps[currentStep].title}</h2></div></div><div>${steps[currentStep].body}</div></article>`;
-  stepNum.textContent = currentStep + 1; prevBtn.disabled = currentStep === 0;
-  nextBtn.textContent = currentStep === steps.length - 1 ? "Finish" : "Next →";
-  nav.querySelectorAll(".step-btn").forEach(b => { b.addEventListener("click", () => { currentStep = parseInt(b.dataset.i); render(); }); });
+// Reading progress bar
+const bar = document.getElementById("rp-bar");
+function updateProgress() {
+  const doc = document.documentElement;
+  const h = doc.scrollHeight - doc.clientHeight;
+  const pct = h > 0 ? (window.scrollY / h) * 100 : 0;
+  bar.style.width = Math.max(0, Math.min(100, pct)) + "%";
 }
+window.addEventListener("scroll", updateProgress, { passive: true });
+window.addEventListener("resize", updateProgress);
+updateProgress();
 
-const MODULE_ID = "STORY-Adam"; const STORAGE_KEY = "islamapp-progress-v1";
+// Active scene in TOC
+const tocLinks = indexEl.querySelectorAll("a");
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(en => {
+    if (en.isIntersecting) {
+      const id = en.target.id;
+      tocLinks.forEach(a => a.classList.toggle("active", a.dataset.id === id));
+    }
+  });
+}, { rootMargin: "-30% 0px -55% 0px", threshold: 0 });
+document.querySelectorAll(".scene").forEach(s => observer.observe(s));
+
+// Progress tracking
+const MODULE_ID = "STORY-Adam";
+const STORAGE_KEY = "islamapp-progress-v1";
 function loadProgress() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; } }
-function markInProgress() { const p = loadProgress(); if (p[MODULE_ID] !== "done") { p[MODULE_ID] = "inprogress"; localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); } }
-function markComplete() { const p = loadProgress(); p[MODULE_ID] = "done"; localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); }
+function saveProgress(p) { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); } catch {} }
+function markInProgress() { const p = loadProgress(); if (p[MODULE_ID] !== "done") { p[MODULE_ID] = "inprogress"; saveProgress(p); } }
+function markComplete() { const p = loadProgress(); p[MODULE_ID] = "done"; saveProgress(p); }
+markInProgress();
 
-prevBtn.addEventListener("click", () => { if (currentStep > 0) { currentStep--; render(); } });
-nextBtn.addEventListener("click", () => { if (currentStep < steps.length - 1) { currentStep++; render(); } else { markComplete(); window.location.href = "stories.html"; } });
-
-document.addEventListener("keydown", (e) => {
-  if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.isContentEditable) return;
-  if (e.key === "ArrowLeft" && !prevBtn.disabled) prevBtn.click();
-  else if (e.key === "ArrowRight") nextBtn.click();
-});
-
-const isSingleMode = new URLSearchParams(window.location.search).get('single') === '1';
-const currentMode = isSingleMode ? 'single' : 'moderate';
-document.querySelectorAll('.depth-pill a').forEach(a => a.classList.toggle('active', a.dataset.mode === currentMode));
-
-if (isSingleMode) {
-  document.querySelector('aside').style.display = 'none';
-  prevBtn.parentElement.style.display = 'none';
-  document.querySelector('main').parentElement.style.display = 'block';
-  document.querySelector('#step-num').parentElement.style.visibility = 'hidden';
-
-  container.innerHTML = steps.map((s, i) => `
-    <article class="article-card shadow-sm p-8 mb-6">
-      <div class="flex items-center gap-4 mb-6 pb-4 border-b border-amber-100">
-        <div class="text-5xl">${s.icon}</div>
-        <div>
-          <div class="text-xs text-amber-700 font-semibold uppercase tracking-widest">Scene ${i + 1}</div>
-          <h2 class="display text-3xl text-emerald-950 font-semibold">${s.title}</h2>
-        </div>
-      </div>
-      <div>${s.body}</div>
-    </article>
-  `).join("");
-  markInProgress();
-} else {
-  markInProgress();
-  render();
-}
+// Mark complete when user reaches the last scene fully
+const finishObs = new IntersectionObserver(entries => {
+  entries.forEach(en => { if (en.isIntersecting) markComplete(); });
+}, { threshold: 0.55 });
+const last = document.querySelector(".ending");
+if (last) finishObs.observe(last);
 </script>
 
 </body>
