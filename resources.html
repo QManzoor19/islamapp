@@ -71,7 +71,7 @@
   }
   .resource-card.user-added { border-color: #c9a961; box-shadow: inset 3px 0 0 #c9a961; }
 
-  /* Video cards — with thumbnail */
+  /* Video cards — with thumbnail (compact) */
   .resource-card.video { padding: 0; overflow: hidden; }
   .video-thumb {
     position: relative;
@@ -83,7 +83,7 @@
   .video-thumb::before {
     content: '';
     position: absolute; inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23c9a961' fill-opacity='0.08'%3E%3Cpath d='M20 0l5 15h15l-12.5 9 5 16L20 30l-12.5 10 5-16L0 15h15z'/%3E%3C/g%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23c9a961' fill-opacity='0.08'%3E%3Cpath d='M16 0l4 12h12l-10 7 4 13L16 24l-10 8 4-13L0 12h12z'/%3E%3C/g%3E%3C/svg%3E");
     pointer-events: none;
   }
   .video-thumb.t-gold     { background: linear-gradient(135deg, #c9a961 0%, #a8863f 100%); }
@@ -95,41 +95,44 @@
   .video-thumb.t-amber    { background: linear-gradient(135deg, #b45309 0%, #78350f 100%); }
   .video-play {
     position: relative; z-index: 2;
-    width: 56px; height: 56px;
+    width: 38px; height: 38px;
     border-radius: 50%;
     background: rgba(255,255,255,0.92);
     color: #064e3b;
     display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 8px 22px -8px rgba(0,0,0,0.5);
+    box-shadow: 0 5px 14px -5px rgba(0,0,0,0.5);
     transition: transform 0.2s ease, background 0.2s ease;
   }
-  .video-play svg { width: 22px; height: 22px; margin-left: 3px; }
+  .video-play svg { width: 14px; height: 14px; margin-left: 2px; }
   a.resource-card.video:hover .video-play { transform: scale(1.12); background: #fff; }
   .video-source {
-    position: absolute; top: 10px; left: 12px; z-index: 2;
+    position: absolute; top: 7px; left: 9px; z-index: 2;
     color: rgba(255,255,255,0.92);
-    font-size: 0.62rem;
-    letter-spacing: 0.18em;
+    font-size: 0.54rem;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
     font-weight: 700;
     text-shadow: 0 1px 3px rgba(0,0,0,0.4);
   }
   .video-badge {
-    position: absolute; bottom: 10px; right: 12px; z-index: 2;
+    position: absolute; bottom: 7px; right: 9px; z-index: 2;
     background: rgba(0,0,0,0.65);
     color: #faf6ed;
-    font-size: 0.7rem;
+    font-size: 0.6rem;
     font-weight: 600;
-    padding: 3px 9px;
-    border-radius: 4px;
+    padding: 2px 7px;
+    border-radius: 3px;
     letter-spacing: 0.02em;
   }
   .video-icon {
-    position: absolute; bottom: 10px; left: 12px; z-index: 2;
-    font-size: 1.3rem;
+    position: absolute; bottom: 7px; left: 9px; z-index: 2;
+    font-size: 0.95rem;
   }
-  .resource-card.video .video-info { padding: 1.1rem 1.25rem 1.25rem; }
-  .resource-card.video .res-link-arrow { color: #a8863f; }
+  .resource-card.video .video-info { padding: 0.7rem 0.85rem 0.85rem; }
+  .resource-card.video .resource-meta { font-size: 0.6rem; margin-bottom: 0.15rem; }
+  .resource-card.video .res-title { font-size: 0.95rem !important; margin-bottom: 0.3rem !important; }
+  .resource-card.video .res-link-arrow { color: #a8863f; margin-left: 0.25rem; }
+  .resource-card.video p { font-size: 0.78rem !important; line-height: 1.45 !important; }
   [data-theme="dark"] .video-play { background: #1a2820; color: #f3e8c2; }
   [data-theme="dark"] a.resource-card.video:hover .video-play { background: #233830; }
   .resource-card .delete-btn {
@@ -285,7 +288,7 @@
   <div id="modern" class="grid md:grid-cols-2 gap-4"></div>
 
   <div class="section-heading">Videos &amp; Series</div>
-  <div id="videos" class="grid md:grid-cols-2 gap-4"></div>
+  <div id="videos" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
 
   <div class="section-heading">Websites</div>
   <div id="websites" class="grid md:grid-cols-2 gap-4"></div>
