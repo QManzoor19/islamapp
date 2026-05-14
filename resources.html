@@ -70,6 +70,68 @@
     font-weight: 600;
   }
   .resource-card.user-added { border-color: #c9a961; box-shadow: inset 3px 0 0 #c9a961; }
+
+  /* Video cards — with thumbnail */
+  .resource-card.video { padding: 0; overflow: hidden; }
+  .video-thumb {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    background: linear-gradient(135deg, #064e3b 0%, #022c22 100%);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .video-thumb::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23c9a961' fill-opacity='0.08'%3E%3Cpath d='M20 0l5 15h15l-12.5 9 5 16L20 30l-12.5 10 5-16L0 15h15z'/%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+  .video-thumb.t-gold     { background: linear-gradient(135deg, #c9a961 0%, #a8863f 100%); }
+  .video-thumb.t-emerald  { background: linear-gradient(135deg, #064e3b 0%, #022c22 100%); }
+  .video-thumb.t-rose     { background: linear-gradient(135deg, #831843 0%, #500724 100%); }
+  .video-thumb.t-night    { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); }
+  .video-thumb.t-saffron  { background: linear-gradient(135deg, #c2410c 0%, #7c2d12 100%); }
+  .video-thumb.t-teal     { background: linear-gradient(135deg, #0f766e 0%, #134e4a 100%); }
+  .video-thumb.t-amber    { background: linear-gradient(135deg, #b45309 0%, #78350f 100%); }
+  .video-play {
+    position: relative; z-index: 2;
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.92);
+    color: #064e3b;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 8px 22px -8px rgba(0,0,0,0.5);
+    transition: transform 0.2s ease, background 0.2s ease;
+  }
+  .video-play svg { width: 22px; height: 22px; margin-left: 3px; }
+  a.resource-card.video:hover .video-play { transform: scale(1.12); background: #fff; }
+  .video-source {
+    position: absolute; top: 10px; left: 12px; z-index: 2;
+    color: rgba(255,255,255,0.92);
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+  }
+  .video-badge {
+    position: absolute; bottom: 10px; right: 12px; z-index: 2;
+    background: rgba(0,0,0,0.65);
+    color: #faf6ed;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 4px;
+    letter-spacing: 0.02em;
+  }
+  .video-icon {
+    position: absolute; bottom: 10px; left: 12px; z-index: 2;
+    font-size: 1.3rem;
+  }
+  .resource-card.video .video-info { padding: 1.1rem 1.25rem 1.25rem; }
+  .resource-card.video .res-link-arrow { color: #a8863f; }
+  [data-theme="dark"] .video-play { background: #1a2820; color: #f3e8c2; }
+  [data-theme="dark"] a.resource-card.video:hover .video-play { background: #233830; }
   .resource-card .delete-btn {
     position: absolute; top: 8px; right: 10px;
     background: transparent; border: none; cursor: pointer;
@@ -187,6 +249,18 @@
         <label>Link (optional)</label>
         <input type="url" id="r-href" placeholder="https://…" />
 
+        <label>Thumbnail tone (for videos, optional)</label>
+        <select id="r-thumb">
+          <option value="">— no thumbnail —</option>
+          <option value="emerald">Emerald</option>
+          <option value="gold">Gold</option>
+          <option value="rose">Rose</option>
+          <option value="night">Night</option>
+          <option value="saffron">Saffron</option>
+          <option value="teal">Teal</option>
+          <option value="amber">Amber</option>
+        </select>
+
         <div class="add-actions">
           <button type="button" class="btn-cancel" id="cancel-add">Cancel</button>
           <button type="submit" class="btn-save">Save</button>
@@ -269,16 +343,16 @@ const modern = [
 ];
 
 const videos = [
-  { title: "Seerah of the Prophet ﷺ", meta: "Sh. Yasir Qadhi · ~106 episodes", note: "The most comprehensive biography of the Prophet ﷺ on YouTube. Begins from before Islam through the Farewell Sermon. The standard long-form English seerah course.", href: "https://www.youtube.com/playlist?list=PLAEA99D24CE2B6920" },
-  { title: "Lives of the Sahabah", meta: "Sh. Yasir Qadhi · 50+ episodes", note: "Companion to the seerah series — deep biographies of Abū Bakr, ʿUmar, ʿUthmān, ʿAlī, and others. Excellent character study.", href: "https://www.youtube.com/playlist?list=PLAEA99D24CE2B6920" },
-  { title: "Stories of the Prophets", meta: "Mufti Menk · ~32 episodes", note: "Engaging short lectures (~20–40 min each) on every named prophet from Adam ﷺ to Muḥammad ﷺ. A natural complement to the Stories module.", href: "https://www.youtube.com/playlist?list=PLBuBjk7BdEWXxhwYCY3Wn5GePxmKhc8aL" },
-  { title: "Tafsir of Sūrat al-Baqara", meta: "Nouman Ali Khan · Bayyinah", note: "Verse-by-verse explanation of the longest surah of the Quran. Strong on linguistic nuance and the surah's overall coherence.", href: "https://bayyinahtv.com/" },
-  { title: "Quran Weekly", meta: "Nouman Ali Khan · YouTube", note: "Short (5–10 min) reflections on individual verses. Easy to dip into; great for a daily habit.", href: "https://www.youtube.com/@quranweekly" },
-  { title: "The Firsts", meta: "Sh. Omar Suleiman · Yaqeen", note: "Series on the early Companions — the first to convert, the first martyrs, the first muezzin. Polished production by Yaqeen Institute.", href: "https://yaqeeninstitute.org/series/the-firsts" },
-  { title: "Mindful Hearts of Ramadan", meta: "Yaqeen Institute · annual", note: "Daily 5-minute reflections released during Ramadan. Pairs theological grounding with practical action for the month.", href: "https://yaqeeninstitute.org/series/mindful-hearts" },
-  { title: "Bayyinah TV", meta: "Subscription · Nouman Ali Khan", note: "Full library of Quranic tafsīr, Arabic grammar, and thematic courses. The most structured paid platform for Quran study.", href: "https://bayyinahtv.com/" },
-  { title: "Deen Academy", meta: "OnePath Network · YouTube", note: "Slickly produced short videos and series on Islamic history, theology, and contemporary issues. Aimed at younger audiences.", href: "https://www.youtube.com/@OnePathNetwork" },
-  { title: "Sandala Lectures", meta: "Sh. Hamza Yusuf · Zaytuna", note: "Long-form talks on Islamic spirituality, ethics, and the meeting of Islam with modernity. Slower paced, more reflective.", href: "https://sandala.org/category/audio-and-video/" }
+  { title: "Seerah of the Prophet ﷺ",      meta: "Sh. Yasir Qadhi · ~106 episodes", note: "The most comprehensive biography of the Prophet ﷺ on YouTube. Begins from before Islam through the Farewell Sermon. The standard long-form English seerah course.", href: "https://www.youtube.com/playlist?list=PLAEA99D24CE2B6920", thumb: { tone: "emerald", source: "Yasir Qadhi", badge: "~106 ep · seerah", icon: "🕌" } },
+  { title: "Lives of the Sahabah",          meta: "Sh. Yasir Qadhi · 50+ episodes",  note: "Companion to the seerah series — deep biographies of Abū Bakr, ʿUmar, ʿUthmān, ʿAlī, and others. Excellent character study.",                                       href: "https://www.youtube.com/playlist?list=PLAEA99D24CE2B6920", thumb: { tone: "amber",   source: "Yasir Qadhi", badge: "50+ ep · biography", icon: "👥" } },
+  { title: "Stories of the Prophets",       meta: "Mufti Menk · ~32 episodes",       note: "Engaging short lectures (~20–40 min each) on every named prophet from Adam ﷺ to Muḥammad ﷺ. A natural complement to the Stories module.",                            href: "https://www.youtube.com/playlist?list=PLBuBjk7BdEWXxhwYCY3Wn5GePxmKhc8aL", thumb: { tone: "gold",    source: "Mufti Menk",   badge: "~32 ep · stories",   icon: "📖" } },
+  { title: "Tafsir of Sūrat al-Baqara",    meta: "Nouman Ali Khan · Bayyinah",      note: "Verse-by-verse explanation of the longest surah of the Quran. Strong on linguistic nuance and the surah's overall coherence.",                                     href: "https://bayyinahtv.com/",                                  thumb: { tone: "teal",    source: "Bayyinah",      badge: "tafsīr · long-form", icon: "📜" } },
+  { title: "Quran Weekly",                  meta: "Nouman Ali Khan · YouTube",       note: "Short (5–10 min) reflections on individual verses. Easy to dip into; great for a daily habit.",                                                                       href: "https://www.youtube.com/@quranweekly",                     thumb: { tone: "saffron", source: "Quran Weekly",  badge: "5–10 min reflections", icon: "🕋" } },
+  { title: "The Firsts",                    meta: "Sh. Omar Suleiman · Yaqeen",      note: "Series on the early Companions — the first to convert, the first martyrs, the first muezzin. Polished production by Yaqeen Institute.",                                href: "https://yaqeeninstitute.org/series/the-firsts",            thumb: { tone: "rose",    source: "Yaqeen",        badge: "the early Companions", icon: "✨" } },
+  { title: "Mindful Hearts of Ramadan",     meta: "Yaqeen Institute · annual",       note: "Daily 5-minute reflections released during Ramadan. Pairs theological grounding with practical action for the month.",                                                href: "https://yaqeeninstitute.org/series/mindful-hearts",        thumb: { tone: "night",   source: "Yaqeen",        badge: "Ramadan · daily 5 min", icon: "🌙" } },
+  { title: "Bayyinah TV",                   meta: "Subscription · Nouman Ali Khan",  note: "Full library of Quranic tafsīr, Arabic grammar, and thematic courses. The most structured paid platform for Quran study.",                                            href: "https://bayyinahtv.com/",                                  thumb: { tone: "emerald", source: "Bayyinah",      badge: "subscription library", icon: "🎓" } },
+  { title: "Deen Academy",                  meta: "OnePath Network · YouTube",       note: "Slickly produced short videos and series on Islamic history, theology, and contemporary issues. Aimed at younger audiences.",                                         href: "https://www.youtube.com/@OnePathNetwork",                  thumb: { tone: "amber",   source: "OnePath",       badge: "short docs · history", icon: "🎬" } },
+  { title: "Sandala Lectures",              meta: "Sh. Hamza Yusuf · Zaytuna",       note: "Long-form talks on Islamic spirituality, ethics, and the meeting of Islam with modernity. Slower paced, more reflective.",                                            href: "https://sandala.org/category/audio-and-video/",            thumb: { tone: "gold",    source: "Sandala",       badge: "long-form · spirituality", icon: "🌿" } }
 ];
 
 const websites = [
@@ -324,12 +398,33 @@ function esc(s) {
 function cardHtml(r, isUser, idx) {
   const userPill = isUser ? `<span class="user-pill">Yours</span>` : "";
   const deleteBtn = isUser ? `<button class="delete-btn" data-del="${idx}" title="Remove">✕</button>` : "";
-  // Determine if internal (relative) or external link
   const isExternal = r.href && /^https?:\/\//i.test(r.href);
   const linkAttrs = r.href ? `href="${esc(r.href)}"${isExternal ? ' target="_blank" rel="noopener"' : ''}` : "";
   const arrow = r.href ? `<span class="res-link-arrow">${isExternal ? '↗' : '→'}</span>` : "";
   const tag = r.href ? "a" : "div";
   const titleHtml = `<div class="display text-lg text-emerald-950 font-semibold mb-2 leading-snug res-title">${esc(r.title)}${arrow}${userPill}</div>`;
+  const isVideo = !!r.thumb;
+  if (isVideo) {
+    const t = r.thumb;
+    const tone = t.tone || "emerald";
+    const playSvg = `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 3.5v17a1 1 0 0 0 1.5.87l14-8.5a1 1 0 0 0 0-1.74l-14-8.5A1 1 0 0 0 5 3.5z"/></svg>`;
+    return `
+      <${tag} ${linkAttrs} class="resource-card video${isUser ? ' user-added' : ''}">
+        ${deleteBtn}
+        <div class="video-thumb t-${esc(tone)}">
+          ${t.source ? `<div class="video-source">${esc(t.source)}</div>` : ""}
+          ${t.icon ? `<div class="video-icon">${t.icon}</div>` : ""}
+          ${t.badge ? `<div class="video-badge">${esc(t.badge)}</div>` : ""}
+          <div class="video-play">${playSvg}</div>
+        </div>
+        <div class="video-info">
+          <div class="resource-meta mb-1">${esc(r.meta)}</div>
+          ${titleHtml}
+          <p class="text-sm text-stone-600 leading-snug">${esc(r.note)}</p>
+        </div>
+      </${tag}>
+    `;
+  }
   return `
     <${tag} ${linkAttrs} class="resource-card${isUser ? ' user-added' : ''}">
       ${deleteBtn}
@@ -379,6 +474,7 @@ document.addEventListener("keydown", e => { if (e.key === "Escape" && addModal.c
 
 addForm.addEventListener("submit", e => {
   e.preventDefault();
+  const thumbTone = document.getElementById("r-thumb").value;
   const entry = {
     title: document.getElementById("r-title").value.trim(),
     meta:  document.getElementById("r-meta").value.trim() || "Your addition",
@@ -386,6 +482,7 @@ addForm.addEventListener("submit", e => {
     note:  document.getElementById("r-note").value.trim(),
     href:  document.getElementById("r-href").value.trim(),
   };
+  if (thumbTone) entry.thumb = { tone: thumbTone, source: entry.meta.split("·")[0].trim(), badge: "video / series", icon: "▶" };
   if (!entry.title) return;
   const list = loadUser();
   list.push(entry);
