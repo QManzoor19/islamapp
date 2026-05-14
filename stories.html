@@ -32,29 +32,173 @@
   .geo-pattern {
     background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23064e3b' fill-opacity='0.05'%3E%3Cpath d='M30 0l7.5 22.5H60L41.25 37.5l7.5 22.5L30 45l-18.75 15 7.5-22.5L0 22.5h22.5z'/%3E%3C/g%3E%3C/svg%3E");
   }
-  .story-card {
-    background: #fff;
-    border: 1px solid rgba(201,169,97,0.35);
-    border-radius: 14px 14px 6px 6px;
-    transition: all 0.25s ease;
+  .gold-line { height: 1px; background: linear-gradient(to right, transparent, #c9a961, transparent); }
+
+  /* ─── Timeline ─── */
+  .timeline {
     position: relative;
+    padding: 2rem 0;
   }
-  .story-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 24px -10px rgba(6,78,59,0.25);
-    border-color: #c9a961;
-  }
-  .story-card::before {
+  .timeline::before {
     content: '';
     position: absolute;
-    top: -1px; left: 50%;
-    transform: translateX(-50%);
-    width: 35%; height: 10px;
-    background: linear-gradient(180deg, rgba(201,169,97,0.2), transparent);
-    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
-    border-top: 1px solid rgba(201,169,97,0.4);
+    left: 50%; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg,
+      transparent 0,
+      rgba(201,169,97,0.4) 6%,
+      rgba(201,169,97,0.6) 50%,
+      rgba(201,169,97,0.4) 94%,
+      transparent 100%);
+    transform: translateX(-1px);
   }
-  .gold-line { height: 1px; background: linear-gradient(to right, transparent, #c9a961, transparent); }
+  .t-row {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 60px 1fr;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+  .t-marker {
+    grid-column: 2;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: #faf6ed;
+    border: 2px solid #c9a961;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #064e3b;
+    margin: 0 auto;
+    z-index: 2;
+    position: relative;
+    box-shadow: 0 4px 10px -2px rgba(6,78,59,0.2);
+  }
+  .t-marker.ulul-azm {
+    width: 54px; height: 54px;
+    background: linear-gradient(135deg, #c9a961, #a8863f);
+    color: #faf6ed;
+    border-color: #064e3b;
+    font-size: 1.1rem;
+    box-shadow: 0 6px 14px -3px rgba(168,134,63,0.6);
+  }
+  .t-marker.ulul-azm::after {
+    content: '★';
+    position: absolute;
+    top: -10px; right: -10px;
+    width: 22px; height: 22px;
+    background: #064e3b;
+    color: #c9a961;
+    border-radius: 50%;
+    font-size: 0.7rem;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .t-card {
+    background: #fff;
+    border: 1px solid rgba(201,169,97,0.4);
+    border-radius: 12px;
+    padding: 1.1rem 1.25rem;
+    box-shadow: 0 4px 10px -4px rgba(6,78,59,0.15);
+    transition: all 0.2s ease;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    position: relative;
+  }
+  .t-card:hover {
+    transform: translateY(-1px);
+    border-color: #c9a961;
+    box-shadow: 0 12px 24px -10px rgba(6,78,59,0.3);
+  }
+  .t-row.left .t-card { grid-column: 1; margin-right: 1.5rem; text-align: right; }
+  .t-row.right .t-card { grid-column: 3; margin-left: 1.5rem; }
+  .t-row.left .t-card::before, .t-row.right .t-card::before {
+    content: '';
+    position: absolute;
+    top: 50%; transform: translateY(-50%);
+    width: 1.5rem; height: 2px;
+    background: rgba(201,169,97,0.4);
+  }
+  .t-row.left .t-card::before { right: -1.5rem; }
+  .t-row.right .t-card::before { left: -1.5rem; }
+  .t-card.featured {
+    background: linear-gradient(135deg, #fff 0%, #faf6ed 100%);
+    border: 1.5px solid #c9a961;
+  }
+  .t-card .arabic-name { font-family: 'Amiri', serif; font-size: 1.5rem; color: #064e3b; margin-bottom: 0.25rem; }
+  .t-card .en-name { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 600; color: #064e3b; margin-bottom: 0.5rem; }
+  .t-card .gloss { font-size: 0.83rem; color: #57534e; line-height: 1.5; margin-bottom: 0.65rem; }
+  .t-card .refs { font-size: 0.7rem; color: #a8863f; font-family: 'Inter', monospace; letter-spacing: 0.03em; }
+  .ready-badge {
+    display: inline-block;
+    background: #064e3b;
+    color: #c9a961;
+    font-size: 0.6rem;
+    padding: 2px 8px;
+    border-radius: 999px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-left: 0.4rem;
+  }
+  .ulul-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #c9a961, #a8863f);
+    color: #faf6ed;
+    font-size: 0.6rem;
+    padding: 2px 8px;
+    border-radius: 999px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-top: 0.5rem;
+  }
+
+  /* Other stories — themed clusters */
+  .cluster {
+    background: #fff;
+    border: 1px solid rgba(201,169,97,0.35);
+    border-radius: 14px;
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+  .cluster-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    color: #064e3b;
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+  }
+  .cluster-arabic { font-family: 'Amiri', serif; font-size: 1.1rem; color: #a8863f; margin-bottom: 0.85rem; }
+  .cluster-item {
+    padding: 0.85rem 0;
+    border-top: 1px solid rgba(201,169,97,0.25);
+  }
+  .cluster-item:first-of-type { border-top: none; padding-top: 0; }
+  .cluster-item .row { display: flex; justify-content: space-between; align-items: baseline; gap: 0.75rem; margin-bottom: 0.3rem; flex-wrap: wrap; }
+  .cluster-item .name { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 600; color: #064e3b; }
+  .cluster-item .arname { font-family: 'Amiri', serif; font-size: 1.15rem; color: #064e3b; }
+  .cluster-item .gloss { font-size: 0.85rem; color: #57534e; line-height: 1.5; }
+  .cluster-item .refs { font-size: 0.7rem; color: #a8863f; font-family: 'Inter', monospace; margin-top: 0.3rem; }
+
+  /* Legend */
+  .legend {
+    display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;
+    background: rgba(255,255,255,0.5);
+    border: 1px solid rgba(201,169,97,0.3);
+    border-radius: 12px;
+    padding: 0.9rem 1.25rem;
+    font-size: 0.85rem;
+    color: #57534e;
+    margin-bottom: 2rem;
+  }
+  .legend-item { display: flex; align-items: center; gap: 0.5rem; }
+  .legend-dot { width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0; }
+  .legend-dot.standard { background: #faf6ed; border: 2px solid #c9a961; }
+  .legend-dot.ulul { background: linear-gradient(135deg, #c9a961, #a8863f); }
+  .legend-dot.ready { background: #064e3b; }
+
   .section-heading {
     display: flex; align-items: center; gap: 12px;
     color: #a8863f;
@@ -69,29 +213,75 @@
     flex: 1; height: 1px;
     background: linear-gradient(to right, transparent, #c9a961, transparent);
   }
+
+  /* Mobile: collapse timeline to single column on the left */
+  @media (max-width: 720px) {
+    .timeline::before { left: 28px; }
+    .t-row { grid-template-columns: 56px 1fr; }
+    .t-marker { grid-column: 1; margin: 0; }
+    .t-row.left .t-card, .t-row.right .t-card {
+      grid-column: 2;
+      margin-left: 1rem;
+      margin-right: 0;
+      text-align: left;
+    }
+    .t-row.left .t-card::before, .t-row.right .t-card::before {
+      left: -1rem; right: auto;
+    }
+  }
+
+  /* Dark mode */
+  [data-theme="dark"] .t-card {
+    background: #142420;
+    border-color: rgba(201,169,97,0.3);
+    color: #e7e2d0;
+  }
+  [data-theme="dark"] .t-card.featured {
+    background: linear-gradient(135deg, #142420 0%, #1a2820 100%);
+    border-color: #c9a961;
+  }
+  [data-theme="dark"] .t-card .arabic-name,
+  [data-theme="dark"] .t-card .en-name { color: #f3e8c2; }
+  [data-theme="dark"] .t-card .gloss { color: #c4beb0; }
+  [data-theme="dark"] .t-card .refs { color: #d4a957; }
+  [data-theme="dark"] .t-marker { background: #1a2820; color: #f3e8c2; border-color: rgba(201,169,97,0.5); }
+  [data-theme="dark"] .cluster { background: #142420; border-color: rgba(201,169,97,0.3); color: #e7e2d0; }
+  [data-theme="dark"] .cluster-title { color: #f3e8c2; }
+  [data-theme="dark"] .cluster-arabic { color: #d4a957; }
+  [data-theme="dark"] .cluster-item .name, [data-theme="dark"] .cluster-item .arname { color: #f3e8c2; }
+  [data-theme="dark"] .cluster-item .gloss { color: #c4beb0; }
+  [data-theme="dark"] .cluster-item .refs { color: #d4a957; }
+  [data-theme="dark"] .cluster-item { border-top-color: rgba(201,169,97,0.2); }
+  [data-theme="dark"] .legend { background: rgba(20,36,32,0.5); color: #c4beb0; border-color: rgba(201,169,97,0.3); }
 </style>
 </head>
 <body class="geo-pattern min-h-screen">
 
-<div class="max-w-5xl mx-auto px-5 py-12">
+<div class="max-w-4xl mx-auto px-5 py-12">
 
   <nav class="mb-8">
     <a href="index.html" class="text-emerald-900 hover:text-amber-700 text-sm font-semibold">← Curriculum</a>
   </nav>
 
-  <header class="text-center mb-10">
+  <header class="text-center mb-8">
     <div class="gold-line mb-5 max-w-[180px] mx-auto"></div>
     <div class="arabic text-4xl text-emerald-900 mb-3">قَصَص القُرْآن</div>
     <h1 class="display text-5xl md:text-6xl text-emerald-950 font-semibold mb-3">Stories of the Quran</h1>
-    <p class="text-stone-600 max-w-xl mx-auto">Roughly a third of the Quran is narrative — the prophets, past nations, and a few remarkable souls outside the prophetic line.</p>
+    <p class="text-stone-600 max-w-xl mx-auto">Roughly a third of the Quran is narrative. A chain of <strong>25 named prophets</strong> from Adam to Muḥammad ﷺ, plus a smaller cast of remarkable souls outside the prophetic line.</p>
     <div class="gold-line mt-5 max-w-[180px] mx-auto"></div>
   </header>
 
-  <div class="section-heading">The Prophets</div>
-  <div id="prophets-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+  <div class="legend">
+    <div class="legend-item"><span class="legend-dot standard"></span>Named prophet</div>
+    <div class="legend-item"><span class="legend-dot ulul"></span>Ūlu&nbsp;l-ʿAzm — the five great messengers</div>
+    <div class="legend-item"><span class="legend-dot ready"></span><span>Deep-dive page available</span></div>
+  </div>
 
-  <div class="section-heading">Other Stories</div>
-  <div id="others-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+  <div class="section-heading">The Prophets — chronological</div>
+  <div id="timeline" class="timeline"></div>
+
+  <div class="section-heading">Other Stories — by theme</div>
+  <div id="other-clusters"></div>
 
   <footer class="mt-16 text-center">
     <div class="gold-line mb-6 max-w-xs mx-auto"></div>
@@ -102,70 +292,127 @@
 </div>
 
 <script>
+// Ūlu l-ʿAzm — the five great messengers
+const ULUL_AZM = new Set(["Nuh","Ibrahim","Musa","Isa","Muhammad"]);
+
+// Prophets in (rough) chronological order
 const prophets = [
-  { name: "Adam", arabic: "آدَم", gloss: "The first human, created by God; deceived by Satan, then forgiven.", refs: "2:30–39, 7:11–27, 20:115–123", href: "story-adam.html" },
-  { name: "Idris", arabic: "إِدْرِيس", gloss: "Raised to a lofty station by God. Identified with Enoch.", refs: "19:56–57, 21:85" },
-  { name: "Nuh (Noah)", arabic: "نُوح", gloss: "Preached 950 years; the Flood; the ark; the disbelieving son.", refs: "Surah 71, 11:25–49" },
-  { name: "Hud", arabic: "هُود", gloss: "Sent to the people of ʿAd, destroyed by a roaring wind.", refs: "7:65–72, 11:50–60, 46:21–26" },
-  { name: "Salih", arabic: "صَالِح", gloss: "Sent to Thamud; the miraculous she-camel; the earthquake.", refs: "7:73–79, 11:61–68, 26:141–159" },
-  { name: "Ibrahim (Abraham)", arabic: "إِبْرَاهِيم", gloss: "Smashed the idols; the fire that did not burn; the vision of sacrificing his son.", refs: "Surah 14, 37:83–113, 6:74–83" },
-  { name: "Lut (Lot)", arabic: "لُوط", gloss: "His people's destruction; his wife's fate.", refs: "7:80–84, 11:77–83, 29:28–35" },
-  { name: "Ismail (Ishmael)", arabic: "إِسْمَاعِيل", gloss: "Abraham's firstborn; helped build the Kaʿba; ancestor of the Arabs.", refs: "2:125–127, 19:54–55, 37:100–107" },
-  { name: "Ishaq (Isaac)", arabic: "إِسْحَاق", gloss: "Abraham's son, promised in his old age; father of Jacob.", refs: "11:69–73, 37:112–113" },
-  { name: "Yaqub (Jacob)", arabic: "يَعْقُوب", gloss: "Also called Israel; father of Joseph; lost his sight from grief.", refs: "Surah 12, 2:132–133" },
-  { name: "Yusuf (Joseph)", arabic: "يُوسُف", gloss: "The dream, the pit, slavery, prison, interpretation of Pharaoh's dream, reunion. The single longest continuous narrative.", refs: "Surah 12 (all)" },
-  { name: "Shuayb (Jethro)", arabic: "شُعَيْب", gloss: "Sent to the people of Madyan; preached against cheating in trade.", refs: "7:85–93, 11:84–95, 26:176–191" },
-  { name: "Ayyub (Job)", arabic: "أَيُّوب", gloss: "The model of patience; tested with loss and illness, restored.", refs: "21:83–84, 38:41–44" },
-  { name: "Dhul-Kifl", arabic: "ذُو الكِفْل", gloss: "Mentioned briefly among the patient and righteous.", refs: "21:85–86, 38:48" },
-  { name: "Musa (Moses)", arabic: "مُوسَى", gloss: "The infant in the basket; the burning bush; the staff; the plagues; the parting of the sea; the golden calf; the tablets; the journey with Khidr. Most mentioned prophet.", refs: "Many — Surahs 7, 20, 26, 28" },
-  { name: "Harun (Aaron)", arabic: "هَارُون", gloss: "Moses' brother; the eloquent one; left in charge during Moses' absence.", refs: "20:29–36, 28:34–35, 37:114–122" },
-  { name: "Dawud (David)", arabic: "دَاوُود", gloss: "Slew Goliath; received the Psalms (Zabur); mountains and birds glorified with him.", refs: "2:251, 38:17–26, 21:78–80" },
-  { name: "Sulayman (Solomon)", arabic: "سُلَيْمَان", gloss: "Commanded the jinn and the wind; understood the speech of ants and birds; the Queen of Sheba.", refs: "27:15–44, 38:30–40, 21:81–82" },
-  { name: "Ilyas (Elijah)", arabic: "إِلْيَاس", gloss: "Confronted the worshippers of Baʿl.", refs: "37:123–132, 6:85" },
-  { name: "Alyasa (Elisha)", arabic: "الْيَسَع", gloss: "Named among the chosen.", refs: "6:86, 38:48" },
-  { name: "Yunus (Jonah)", arabic: "يُونُس", gloss: "Fled his people; swallowed by the great fish; cried out from the darkness and was saved.", refs: "Surah 10 (namesake), 21:87–88, 37:139–148, 68:48–50" },
-  { name: "Zakariya (Zechariah)", arabic: "زَكَرِيَّا", gloss: "Prayed for an heir in his old age; guardian of Mary.", refs: "3:37–41, 19:2–15, 21:89–90" },
-  { name: "Yahya (John the Baptist)", arabic: "يَحْيَى", gloss: "Son of Zechariah, given wisdom as a child.", refs: "3:39, 19:12–15, 21:90" },
-  { name: "Isa (Jesus)", arabic: "عِيسَى", gloss: "Virgin birth; spoke in the cradle; healed the blind and lepers; raised the dead by God's permission; was not crucified but raised to God.", refs: "Surah 3, Surah 19, 4:157–158, 5:110–120" },
-  { name: "Muhammad ﷺ", arabic: "مُحَمَّد", gloss: "The final messenger. The Night Journey, the opening of his chest, the migration, the victory at Badr.", refs: "Surah 93, 94, 108, and throughout", href: "story-muhammad.html" }
+  { key: "Adam",      arabic: "آدَم",          en: "Adam ﷺ",                gloss: "The first human, created by God; deceived by Iblīs, then forgiven.",                                                  refs: "2:30–39 · 7:11–27 · 20:115–123",            href: "story-adam.html" },
+  { key: "Idris",     arabic: "إِدْرِيس",       en: "Idrīs ﷺ",               gloss: "Raised to a lofty station by God. Often identified with Enoch.",                                                       refs: "19:56–57 · 21:85" },
+  { key: "Nuh",       arabic: "نُوح",           en: "Nūḥ (Noah) ﷺ",          gloss: "Preached 950 years; the Flood; the Ark; the disbelieving son.",                                                        refs: "Surah 71 · 11:25–49" },
+  { key: "Hud",       arabic: "هُود",           en: "Hūd ﷺ",                 gloss: "Sent to ʿĀd; the people destroyed by a roaring wind.",                                                                 refs: "7:65–72 · 11:50–60 · 46:21–26" },
+  { key: "Salih",     arabic: "صَالِح",         en: "Ṣāliḥ ﷺ",               gloss: "Sent to Thamūd; the miraculous she-camel; the earthquake.",                                                            refs: "7:73–79 · 11:61–68 · 26:141–159" },
+  { key: "Ibrahim",   arabic: "إِبْرَاهِيم",    en: "Ibrāhīm (Abraham) ﷺ",   gloss: "Smashed the idols; the fire that did not burn; the vision of sacrificing his son. Father of monotheism.",              refs: "Surah 14 · 37:83–113 · 6:74–83" },
+  { key: "Lut",       arabic: "لُوط",           en: "Lūṭ (Lot) ﷺ",           gloss: "His people's destruction; his wife's fate.",                                                                           refs: "7:80–84 · 11:77–83 · 29:28–35" },
+  { key: "Ismail",    arabic: "إِسْمَاعِيل",    en: "Ismāʿīl (Ishmael) ﷺ",   gloss: "Abraham's firstborn; helped build the Kaʿba; ancestor of the Arabs.",                                                  refs: "2:125–127 · 19:54–55 · 37:100–107" },
+  { key: "Ishaq",     arabic: "إِسْحَاق",       en: "Isḥāq (Isaac) ﷺ",       gloss: "Abraham's son, promised in his old age; father of Yaʿqūb.",                                                            refs: "11:69–73 · 37:112–113" },
+  { key: "Yaqub",     arabic: "يَعْقُوب",        en: "Yaʿqūb (Jacob) ﷺ",      gloss: "Also called Israel; father of Yūsuf; lost his sight from grief.",                                                     refs: "Surah 12 · 2:132–133" },
+  { key: "Yusuf",     arabic: "يُوسُف",         en: "Yūsuf (Joseph) ﷺ",      gloss: "The dream, the pit, slavery, prison, the interpretation, the reunion. The Quran's single longest continuous story.", refs: "Surah 12 (whole)" },
+  { key: "Shuayb",    arabic: "شُعَيْب",         en: "Shuʿayb (Jethro) ﷺ",    gloss: "Sent to Madyan; preached against cheating in trade.",                                                                  refs: "7:85–93 · 11:84–95 · 26:176–191" },
+  { key: "Ayyub",     arabic: "أَيُّوب",         en: "Ayyūb (Job) ﷺ",         gloss: "The model of patience; tested with loss and illness, then restored.",                                                  refs: "21:83–84 · 38:41–44" },
+  { key: "DhulKifl",  arabic: "ذُو الكِفْل",    en: "Dhū al-Kifl ﷺ",         gloss: "Mentioned briefly among the patient and righteous.",                                                                   refs: "21:85–86 · 38:48" },
+  { key: "Musa",      arabic: "مُوسَى",          en: "Mūsā (Moses) ﷺ",        gloss: "Basket on the river; the burning bush; the staff; the plagues; the parting of the sea; the tablets; Khiḍr. Most-mentioned prophet.", refs: "Surahs 7, 20, 26, 28 · many" },
+  { key: "Harun",     arabic: "هَارُون",         en: "Hārūn (Aaron) ﷺ",       gloss: "Moses' brother; the eloquent one; left in charge during the Tūr.",                                                    refs: "20:29–36 · 28:34–35 · 37:114–122" },
+  { key: "Dawud",     arabic: "دَاوُود",         en: "Dāwūd (David) ﷺ",       gloss: "Slew Jālūt (Goliath); given the Zabūr (Psalms); mountains and birds glorified with him.",                              refs: "2:251 · 38:17–26 · 21:78–80" },
+  { key: "Sulayman",  arabic: "سُلَيْمَان",     en: "Sulaymān (Solomon) ﷺ",  gloss: "Commanded the jinn and the wind; understood the speech of ants and birds; the Queen of Sheba.",                        refs: "27:15–44 · 38:30–40 · 21:81–82" },
+  { key: "Ilyas",     arabic: "إِلْيَاس",       en: "Ilyās (Elijah) ﷺ",      gloss: "Confronted the worshippers of Baʿl.",                                                                                  refs: "37:123–132 · 6:85" },
+  { key: "Alyasa",    arabic: "الْيَسَع",       en: "Al-Yasaʿ (Elisha) ﷺ",   gloss: "Named among the chosen.",                                                                                              refs: "6:86 · 38:48" },
+  { key: "Yunus",     arabic: "يُونُس",         en: "Yūnus (Jonah) ﷺ",       gloss: "Fled his people; swallowed by the great fish; cried from the darkness and was saved.",                                refs: "Surah 10 · 21:87–88 · 37:139–148 · 68:48–50" },
+  { key: "Zakariya",  arabic: "زَكَرِيَّا",     en: "Zakariyyā (Zechariah) ﷺ", gloss: "Prayed for an heir in his old age; guardian of Maryam.",                                                              refs: "3:37–41 · 19:2–15 · 21:89–90" },
+  { key: "Yahya",     arabic: "يَحْيَى",         en: "Yaḥyā (John) ﷺ",        gloss: "Son of Zakariyyā, given wisdom as a child.",                                                                          refs: "3:39 · 19:12–15 · 21:90" },
+  { key: "Isa",       arabic: "عِيسَى",         en: "ʿĪsā (Jesus) ﷺ",        gloss: "Virgin birth; spoke in the cradle; healed the blind and lepers; raised the dead by God's permission; raised to God.",  refs: "Surahs 3, 19 · 4:157–158 · 5:110–120" },
+  { key: "Muhammad",  arabic: "مُحَمَّد",        en: "Muḥammad ﷺ",            gloss: "The final messenger. The Night Journey, the opening of the chest, the migration, the victory at Badr, the Farewell Sermon.", refs: "Surahs 93, 94, 108 · throughout", href: "story-muhammad.html" },
 ];
 
-const others = [
-  { name: "Maryam (Mary)", arabic: "مَرْيَم", gloss: "Not a prophet but the most-mentioned woman; her chapter is named for her.", refs: "Surah 19, 3:35–47, 66:12" },
-  { name: "The People of the Cave", arabic: "أَصْحَاب الكَهْف", gloss: "Young believers who fled persecution and slept in a cave for centuries.", refs: "18:9–26" },
-  { name: "Dhul-Qarnayn", arabic: "ذُو القَرْنَيْن", gloss: "A righteous ruler who travelled east and west; built a wall against Gog and Magog.", refs: "18:83–98" },
-  { name: "Moses & Khidr", arabic: "مُوسَى وَالخَضِر", gloss: "Moses travels with a mysterious servant of God and learns that apparent injustices hold hidden wisdom.", refs: "18:60–82" },
-  { name: "Qarun (Korah)", arabic: "قَارُون", gloss: "Immensely wealthy, arrogant, and swallowed by the earth.", refs: "28:76–82" },
-  { name: "Companions of the Elephant", arabic: "أَصْحَاب الفِيل", gloss: "Abraha's army marching on the Kaʿba; destroyed by birds dropping stones.", refs: "Surah 105" },
-  { name: "The Owners of the Garden", arabic: "أَصْحَاب الجَنَّة", gloss: "Greedy brothers who plotted to deny the poor their share; their garden was destroyed overnight.", refs: "68:17–33" },
-  { name: "Saba (Sheba)", arabic: "سَبَأ", gloss: "A prosperous people whose ingratitude caused the collapse of their dam.", refs: "34:15–21" },
-  { name: "Luqman the Wise", arabic: "لُقْمَان", gloss: "A sage (not a prophet) whose advice to his son is preserved.", refs: "Surah 31, 31:12–19" },
-  { name: "The Two Sons of Adam", arabic: "ابْنَا آدَم", gloss: "The first murder; Cain and Abel.", refs: "5:27–32" },
-  { name: "Pharaoh's Wife (Asiya)", arabic: "امْرَأَة فِرْعَوْن", gloss: "A believing woman in a disbelieving household.", refs: "28:9, 66:11" },
-  { name: "Queen of Sheba (Bilqis)", arabic: "مَلِكَة سَبَأ", gloss: "The queen who accepted monotheism through Solomon.", refs: "27:22–44" }
+// Other stories — grouped by theme
+const clusters = [
+  {
+    title: "Believing Women",
+    arabic: "النِّسَاء المُؤْمِنَات",
+    items: [
+      { name: "Maryam (Mary)",         arname: "مَرْيَم",          gloss: "Not a prophet, but the most-mentioned woman in the Quran; her chapter is named for her. The virgin birth of ʿĪsā ﷺ.",                  refs: "Surah 19 · 3:35–47 · 66:12" },
+      { name: "Āsiya — Pharaoh's wife", arname: "آسِيَة",          gloss: "A believing woman in a tyrannical household. Held up as one of the four perfected women.",                                              refs: "28:9 · 66:11" },
+      { name: "Bilqīs — Queen of Sheba", arname: "بِلْقِيس",       gloss: "The queen who recognised the truth through Sulaymān ﷺ and accepted monotheism.",                                                       refs: "27:22–44" },
+    ]
+  },
+  {
+    title: "Communities Tested",
+    arabic: "أَقْوَام مُمْتَحَنَة",
+    items: [
+      { name: "Companions of the Cave", arname: "أَصْحَاب الكَهْف", gloss: "Young believers who fled persecution and slept in a cave for centuries.",                                                                refs: "18:9–26" },
+      { name: "People of Sabaʾ (Sheba)", arname: "سَبَأ",          gloss: "A prosperous people whose ingratitude caused the collapse of their dam and the scattering of their nation.",                          refs: "34:15–21" },
+      { name: "Owners of the Garden",   arname: "أَصْحَاب الجَنَّة", gloss: "Greedy brothers who plotted to deny the poor their share; their garden was destroyed overnight.",                                      refs: "68:17–33" },
+      { name: "Companions of the Elephant", arname: "أَصْحَاب الفِيل", gloss: "Abraha's army marching on the Kaʿba — destroyed by birds dropping stones. The year of the Prophet's ﷺ birth.",                       refs: "Surah 105" },
+    ]
+  },
+  {
+    title: "Wisdom & Travel",
+    arabic: "الحِكْمَة وَالأَسْفَار",
+    items: [
+      { name: "Luqmān the Wise",        arname: "لُقْمَان",         gloss: "A sage (not a prophet) whose advice to his son is preserved as a model of parenting and counsel.",                                    refs: "Surah 31 · 31:12–19" },
+      { name: "Dhū al-Qarnayn",         arname: "ذُو القَرْنَيْن",  gloss: "A righteous ruler who travelled east and west; built a wall against Yājūj and Mājūj (Gog and Magog).",                                refs: "18:83–98" },
+      { name: "Mūsā ﷺ & al-Khiḍr",      arname: "مُوسَى وَالخَضِر", gloss: "Mūsā travels with a mysterious servant of God and learns that apparent injustices may hold hidden wisdom.",                            refs: "18:60–82" },
+    ]
+  },
+  {
+    title: "Cautionary Tales",
+    arabic: "العِبَر وَالتَّحْذِيرَات",
+    items: [
+      { name: "The Two Sons of Adam",   arname: "ابْنَا آدَم",      gloss: "The first murder — Qābīl and Hābīl (Cain and Abel) — and the verse \"whoever kills one soul, it is as if he killed all humanity.\"", refs: "5:27–32" },
+      { name: "Qārūn (Korah)",          arname: "قَارُون",          gloss: "Immensely wealthy, arrogant in his ingratitude — swallowed by the earth with all his wealth.",                                       refs: "28:76–82" },
+      { name: "Pharaoh (Firʿawn)",      arname: "فِرْعَوْن",        gloss: "The archetypal tyrant who claimed divinity. His body preserved as a sign for later generations.",                                     refs: "Surahs 7, 10, 28, 79" },
+      { name: "Iblīs",                  arname: "إِبْلِيس",         gloss: "The refusal that began everything — the jinn who would not bow to Adam, and his pledge to mislead.",                                  refs: "2:34 · 7:11–18 · 15:28–43" },
+    ]
+  },
 ];
 
-function renderGrid(el, items) {
-  el.innerHTML = items.map((s, i) => {
-    const href = s.href || `placeholder.html?id=STORY-${encodeURIComponent(s.name)}&title=${encodeURIComponent(s.name)}&tier=Library&tierName=${encodeURIComponent('Stories of the Quran')}`;
-    const ready = !!s.href;
+function renderTimeline() {
+  const el = document.getElementById("timeline");
+  el.innerHTML = prophets.map((p, i) => {
+    const side = i % 2 === 0 ? "left" : "right";
+    const isUlul = ULUL_AZM.has(p.key);
+    const num = String(i+1).padStart(2,'0');
+    const readyTag = p.href ? '<span class="ready-badge">Deep dive</span>' : '';
+    const ululTag = isUlul ? '<div><span class="ulul-badge">Ūlu l-ʿAzm</span></div>' : '';
+    const cardOpen = p.href ? `<a href="${p.href}" class="t-card${isUlul ? ' featured' : ''}">` : `<div class="t-card${isUlul ? ' featured' : ''}">`;
+    const cardClose = p.href ? '</a>' : '</div>';
     return `
-    <a href="${href}" class="story-card block p-5 relative">
-      <div class="flex items-baseline justify-between mb-3">
-        <div class="arabic text-2xl text-emerald-900">${s.arabic}</div>
-        <div class="text-[10px] uppercase tracking-widest text-amber-700/80 font-semibold">${String(i+1).padStart(2,'0')}</div>
+      <div class="t-row ${side}">
+        <div class="t-marker ${isUlul ? 'ulul-azm' : ''}">${num}</div>
+        ${cardOpen}
+          <div class="arabic-name">${p.arabic}</div>
+          <div class="en-name">${p.en}${readyTag}</div>
+          <div class="gloss">${p.gloss}</div>
+          <div class="refs">${p.refs}</div>
+          ${ululTag}
+        ${cardClose}
       </div>
-      <div class="display text-xl text-emerald-950 font-semibold mb-2">${s.name}</div>
-      <p class="text-sm text-stone-600 mb-3 leading-snug">${s.gloss}</p>
-      <div class="text-[11px] text-amber-700/90 font-mono">${s.refs}</div>
-      ${ready ? '<div class="absolute top-3 right-8 text-[9px] uppercase tracking-widest text-emerald-700 font-semibold">ready</div>' : ''}
-    </a>
     `;
   }).join("");
 }
 
-renderGrid(document.getElementById("prophets-grid"), prophets);
-renderGrid(document.getElementById("others-grid"), others);
+function renderClusters() {
+  const el = document.getElementById("other-clusters");
+  el.innerHTML = clusters.map(c => `
+    <div class="cluster">
+      <div class="cluster-arabic">${c.arabic}</div>
+      <div class="cluster-title">${c.title}</div>
+      ${c.items.map(it => `
+        <div class="cluster-item">
+          <div class="row">
+            <span class="name">${it.name}</span>
+            <span class="arname">${it.arname}</span>
+          </div>
+          <div class="gloss">${it.gloss}</div>
+          <div class="refs">${it.refs}</div>
+        </div>
+      `).join("")}
+    </div>
+  `).join("");
+}
+
+renderTimeline();
+renderClusters();
 </script>
 
 </body>
